@@ -19,6 +19,7 @@
 			$this->RegisterVariableInteger("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), "~UnixTimestamp", 10);
 			$this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", 11);
 			$this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", 12);
+            $this->RegisterVariableString("sunlightdurationstr", $this->Translate("sunlightduration"), "", 12);
 			$this->RegisterVariableFloat("sunazimut", $this->Translate("sunazimut"), "", 13);
 			$this->RegisterVariableString("sundirection", $this->Translate("sundirection"), "", 14);
 			$this->RegisterVariableFloat("sunelevation", $this->Translate("sunelevation"), "", 15);
@@ -127,7 +128,9 @@
 			$this->SetValue("sundistance", $sundistance);
 			$this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
 			$this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
-			$this->SetValue("sunlightduration", ($sunset - $sunrise)/60/60);
+            $sundura = ($sunset - $sunrise)/60/60;
+			$this->SetValue("sunlightduration", $sundura);
+            $this->SetValue("sunlightduration", intdiv($sundura, 1).":");
 			$this->SetValue("season", $this->Translate(ASTROSUN::Season($jc, $latitude)));
 
 
