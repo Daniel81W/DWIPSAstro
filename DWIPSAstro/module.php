@@ -7,6 +7,16 @@
 		{
 			//Never delete this line!
 			parent::Create();
+
+            if(!IPS_VariableProfileExists("DWIPS.".$this->Translate("season"))){
+                IPS_CreateVariableProfile("DWIPS.".$this->Translate("season"), 1);
+                IPS_SetVariableProfileValues("DWIPS.".$this->Translate("season"), 1, 4, 1);
+                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 1, $this->Translate("spring"), "", -1);
+                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 2, $this->Translate("summer"), "", -1);
+                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 3, $this->Translate("fall"), "", -1);
+                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 4, $this->Translate("winter"), "", -1);
+            }
+
             $jdid = $this->RegisterVariableFloat("juliandate",$this->Translate("juliandate"), "", 1);
 			$this->RegisterVariableFloat("juliancentury",$this->Translate("juliancentury"), "", 2);
 			$this->RegisterVariableInteger("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), "~UnixTimestamp", 3);
@@ -29,7 +39,8 @@
 			$this->RegisterVariableInteger("sundistance", $this->Translate("sundistance"), "", 19);
 			$this->RegisterVariableFloat("equationOfTime", $this->Translate("equationOfTime"), "", 20);
 			$this->RegisterVariableFloat("durationOfSunrise", $this->Translate("durationOfSunrise"), "", 21);
-			$this->RegisterVariableString("season", $this->Translate("season"), "", 22);
+			$this->RegisterVariableInteger("season", $this->Translate("season"), "DWIPS.".$this->Translate("season"), 22);
+            $this->RegisterVariableString("seasonstr", $this->Translate("season"), "", 22);
 			$this->RegisterVariableBoolean("day", $this->Translate("day"),"", 23);
 			$this->RegisterVariableBoolean("insideCivilTwilight", $this->Translate("insideCivilTwilight"), "", 24);
 			$this->RegisterVariableFloat("shadowLength", $this->Translate("shadowlength"), "", 25);
@@ -130,7 +141,6 @@
 			$this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
             $sundura = ($sunset - $sunrise)/60.0/60.0;
 			$this->SetValue("sunlightduration", $sundura);
-            $this->SetValue("sunlightdurationstr", intdiv($sundura, 1).":".$sundura % 1 * 60);
             $this->SetValue("sunlightdurationstr", date('H:i:s',($sunset - $sunrise - intval(date('Z',$sunset - $sunrise)))));
 			$this->SetValue("season", $this->Translate(ASTROSUN::Season($jc, $latitude)));
 
