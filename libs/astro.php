@@ -325,7 +325,7 @@ class ASTROSUN{
 
     public static function Season(float $julianCentury, float $latitude){
         $declination = ASTROSUN::Declination($julianCentury);
-        $declinationBef = ASTROSUN::Declination($julianCentury) - 0.00000002;
+        $declinationBef = ASTROSUN::Declination($julianCentury - 0.00000002);
         if($declination>=0){
             if($declination > $declinationBef){
                 if($latitude > 0){
