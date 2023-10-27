@@ -128,7 +128,7 @@
 			$this->SetValue("sundistance", $sundistance);
 			$this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
 			$this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
-            $sundura = ($sunset - $sunrise)/60/60;
+            $sundura = ($sunset - $sunrise)/60.0/60.0;
 			$this->SetValue("sunlightduration", $sundura);
             $this->SetValue("sunlightduration", intdiv($sundura, 1).":");
 			$this->SetValue("season", $this->Translate(ASTROSUN::Season($jc, $latitude)));
