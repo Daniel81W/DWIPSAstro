@@ -7,7 +7,7 @@ class ASTROGEN{
     /**
      * 
      */
-    public static function JulianDay(){
+    public static function  JulianDay(){
         $date = new DateTime();
        return ASTROGEN::JulianDayFromTimestamp($date->getTimestamp());
     }
