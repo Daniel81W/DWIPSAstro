@@ -1,0 +1,12 @@
+{
+    "id": "{F4E929E1-F34B-67CD-4B3A-31461C3B62A6}",
+    "name": "DWIPSAstro",
+    "author": "Daniel Weber",
+    "url": "https://github.com/Daniel81W/DWIPSAstro.git",
+    "compatibility": {
+        "version": "5.4"
+    },
+    "version": "0.1.9",
+    "build": 0,
+    "date": 0
+}
