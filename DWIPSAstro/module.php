@@ -1,7 +1,7 @@
 <?php
 
 	include_once("/var/lib/symcon/modules/DWIPSAstro/libs/astro.php");
-	class DWIPSAstro extends IPSModule {
+	class DWIPSAstronomy extends IPSModule {
 
 		public function Create()
 		{
@@ -40,7 +40,6 @@
 			$this->RegisterVariableFloat("equationOfTime", $this->Translate("equationOfTime"), "", 20);
 			$this->RegisterVariableFloat("durationOfSunrise", $this->Translate("durationOfSunrise"), "", 21);
 			$this->RegisterVariableInteger("season", $this->Translate("season"), "DWIPS.".$this->Translate("season"), 22);
-            $this->RegisterVariableString("seasonstr", $this->Translate("season"), "", 22);
 			$this->RegisterVariableBoolean("day", $this->Translate("day"),"", 23);
 			$this->RegisterVariableBoolean("insideCivilTwilight", $this->Translate("insideCivilTwilight"), "", 24);
 			$this->RegisterVariableFloat("shadowLength", $this->Translate("shadowlength"), "", 25);
@@ -143,7 +142,6 @@
 			$this->SetValue("sunlightduration", $sundura);
             $this->SetValue("sunlightdurationstr", date('H:i:s',($sunset - $sunrise - intval(date('Z',$sunset - $sunrise)))));
 			$this->SetValue("season", ASTROSUN::Season($jc, $latitude));
-            $this->SetValue("seasonstr", $this->Translate(ASTROSUN::Season($jc, $latitude)));
 
 
 				$this->SetValue("sunrise", $sunrise);
