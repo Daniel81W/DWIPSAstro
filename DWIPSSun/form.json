@@ -131,7 +131,7 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "nutationObl",
-                    "caption": " nutation in obliquity"
+                    "caption": "nutation in obliquity"
                 }
             ]
         }
