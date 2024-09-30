@@ -161,7 +161,7 @@ class DWIPSSun extends IPSModule
         
         $this->UpdateFormField("nutationLong", "value", $this->ReadAttributeFloat("nutationLongitude"));
         $this->UpdateFormField("nutationObl", "value", $this->ReadAttributeFloat("nutationObliquity"));
-        /*
+        
         $timezone = 1;
         if (date('I')) {
             $timezone = 2;
@@ -287,7 +287,7 @@ class DWIPSSun extends IPSModule
             $this->SetValue("insideCivilTwilight", false);
         }
 
-        $this->SetValue("moonphase", ASTROMOON::PhaseStr());*/
+        $this->SetValue("moonphase", ASTROMOON::PhaseStr());
     }
 
 
