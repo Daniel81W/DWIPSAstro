@@ -67,7 +67,7 @@ class ASTROSUN{
             $l0[$i] = $l0Data[$i][0] * cos($l0Data[$i][1] + $l0Data[$i][2] * $julianMillenium);
         }
         $sum = 0;
-        FORCE_DEFLATE($i = 0; $i < count($l0);$i++){
+        for($i = 0; $i < count($l0);$i++){
             $sum += $l0[$i];
         }
     }
