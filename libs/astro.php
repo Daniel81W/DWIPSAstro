@@ -1,19 +1,24 @@
-<?php
+﻿<?php
 
 //TODO Mond
 
 class ASTROGEN{
 
+    // Julian Date Functions
+
     /**
-     * 
+     * Computes the Julian Date for the current time.
+     * @return float Current Julian Date
      */
-    public static function  JulianDay(){
+    public static function JulianDay():float{
         $date = new DateTime();
        return ASTROGEN::JulianDayFromTimestamp($date->getTimestamp());
     }
 
     /**
-     * 
+     * Computes the Julian Date for the given timestamp.
+     * @param int $timestamp Timestamp the Julian Date is to compute for
+     * @return float Julian Date for the given timestamp
      */
     public static function JulianDayFromTimestamp(int $timestamp){
 
@@ -34,7 +39,14 @@ class ASTROGEN{
     }
 
     /**
-     * 
+     * Summary of JulianDayFromDateTime
+     * @param int $year 
+     * @param int $month 
+     * @param int $day 
+     * @param int $hour 
+     * @param int $minute 
+     * @param int $second 
+     * @return float
      */
     public static function JulianDayFromDateTime(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0){
        $date = mktime($hour, $minute, $second , $month, $day, $year);
@@ -42,20 +54,30 @@ class ASTROGEN{
     }
 
     /**
-     * 
+     * Summary of JulianCentury
+     * @param float $julianDay 
+     * @return float
      */
     public static function JulianCentury(float $julianDay){
         return ($julianDay - 2451545.0) / 36525.0;
     }
 
     /**
-     * 
+     * Summary of JulianMillennium
+     * @param float $julianCentury 
+     * @return float
      */
     public static function JulianMillennium(float $julianCentury)
     {
         return ($julianCentury) / 10.0;
     }
 
+    /**
+     * Summary of JDE
+     * @param float $julianDay 
+     * @param mixed $deltaT 
+     * @return float
+     */
     public static function JDE(float $julianDay, $deltaT){
         return $julianDay + $deltaT / 86400;
     }
@@ -63,9 +85,16 @@ class ASTROGEN{
 }
 
 class ASTROSUN{
+    /**
+     * Astronomical unit (mean distance earth - sun) in m
+     */
+    const AU = 149597870700;
 
-    const AE = 149597870700;
-
+    /**
+     * Summary of HeliocentricLongitudeRAD
+     * @param mixed $julianMillenium 
+     * @return float
+     */
     public static function HeliocentricLongitudeRAD($julianMillenium){
         return (ASTROSUN::L0($julianMillenium)
             + ASTROSUN::L1($julianMillenium) * pow($julianMillenium, 1)
@@ -113,6 +142,79 @@ class ASTROSUN{
 
     public static function GeocentricLatitude($HeliocentricLatitude){
         return -1 * $HeliocentricLatitude;
+    }
+
+    //Nutuation
+    public static function MeanElongationOfTheMoon($julianCentury){
+        297.85036 + 445267.111480 * $julianCentury − 0.0019142 * pow($julianCentury, 2) + pow($julianCentury,3)/189474;
+    }
+
+    public static function MeanAnomalyOfTheSun($julianCentury){
+        357.52772 + 35999.050340 * $julianCentury − 0.0001603 * pow($julianCentury, 2) + pow($julianCentury,3)/300000;
+    }
+
+    public static function MeanAnomalyOfTheMoon($julianCentury){
+        134.96298 + 477198.867398 * $julianCentury − 0.0086972 * pow($julianCentury, 2) + pow($julianCentury,3)/56250;
+    }
+
+    public static function MoonsArgumentOfLatitude($julianCentury){
+        93.27191 + 483202.017538 * $julianCentury − 0.0036825 * pow($julianCentury, 2) + pow($julianCentury,3)/327270;
+    }
+
+    public static function LongitudeOfTheAscendingNodeOfTheMoon($julianCentury){
+        = 125.04452 + 1934.136261 * $julianCentury − 0.0020708 * pow($julianCentury, 2) + pow($julianCentury,3)/450000;
+    }
+
+    public static function NutationInLongitude($julianCentury){
+        $psi = array();
+        $terms = ASTROSUN::PeriodicTermsForTheNutation();
+        for($i = 0; $i < count($terms); $i++){
+            $sumterm = 0;
+            for($j = 0; $j < 5; $j++){
+                $sumterm += ASTROSUN::X($j, $julianCentury) * $terms[$i]['y'][$j]
+            }
+            $psi[$i] = ($terms[$i]['a']+$terms[$i]['b']*$julianCentury)*sin($sumterm);    
+        }
+        $sum = 0;
+        for($i = 0; $i < count($psi);$i++){
+            $sum += $psi[$i];
+        }
+        return $sum/36000000;
+    }
+
+    public static function NutationInObliquity($julianCentury){
+        $eps = array();
+        $terms = ASTROSUN::PeriodicTermsForTheNutation();
+        for($i = 0; $i < count($terms); $i++){
+            $sumterm = 0;
+            for($j = 0; $j < 5; $j++){
+                $sumterm += ASTROSUN::X($j, $julianCentury) * $terms[$i]['y'][$j]
+            }
+            $eps[$i] = ($terms[$i]['c']+$terms[$i]['d']*$julianCentury)*cos($sumterm);    
+        }
+        $sum = 0;
+        for($i = 0; $i < count($eps);$i++){
+            $sum += $eps[$i];
+        }
+        return $sum/36000000;
+    }
+    
+    // Hilfsfunktionen
+    public static function X($i, $julianCentury){
+        switch $i{
+            case 0:
+                return ASTROSUN::MeanElongationOfTheMoon($julianCentury);
+            case 1:
+                return ASTROSUN::MeanAnomalyOfTheSun($julianCentury);
+            case 2:
+                return ASTROSUN::MeanAnomalyOfTheMoon($julianCentury);
+            case 3:
+                return ASTROSUN::MoonsArgumentOfLatitude($julianCentury);
+            case 4:
+                return ASTROSUN::LongitudeOfTheAscendingNodeOfTheMoon($julianCentury);
+            default:
+                return 0;
+        }
     }
 
     public static function L0($julianMillenium){
@@ -902,6 +1004,391 @@ class ASTROSUN{
             array(4, 2.56, 6283.08)
         );
         return $r4;
+    }
+
+    public static function PeriodicTermsForTheNutation()
+    {
+        $pt = array(
+            array( 'y' => array(0, 0, 0, 0, 1),
+                'a' => -171996,
+                'b' => -174.2,
+                'c' => 92025,
+                'd' => 8.9
+            ),
+            array( 'y' => array(-2, 0, 0, 2, 2),
+                'a' => -13187,
+                'b' => -1.6,
+                'c' => 5736,
+                'd' => -3.1
+            ),
+            array( 'y' => array(0, 0, 0, 2, 2),
+                'a' => -2274,
+                'b' => -0.2,
+                'c' => 977,
+                'd' => -0.5
+            ),
+            array( 'y' => array(0, 0, 0, 0, 2),
+                'a' => 2062,
+                'b' => 0.2,
+                'c' => -895,
+                'd' => 0.5
+            ),
+            array( 'y' => array(0, 1, 0, 0, 0),
+                'a' => 1426,
+                'b' => -3.4,
+                'c' => 54,
+                'd' => -0.1
+            ),
+            array( 'y' => array(0, 0, 1, 0, 0),
+                'a' => 712,
+                'b' => 0.1,
+                'c' => -7,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 1, 0, 2, 2),
+                'a' => -517,
+                'b' => 1.2,
+                'c' => 224,
+                'd' => -0.6
+            ),
+            array( 'y' => array(0, 0, 0, 2, 1),
+                'a' => -386,
+                'b' => -0.4,
+                'c' => 200,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 1, 2, 2),
+                'a' => -301,
+                'b' => 0,
+                'c' =>  129,
+                'd' => -0.1
+            ),
+            array( 'y' => array(-2, -1, 0, 2, 2),
+                'a' => 217,
+                'b' => -0.5,
+                'c' => -95,
+                'd' => 0.3
+            ),
+            array( 'y' => array(-2, 0, 1, 0, 0),
+                'a' => -158,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 0, 2, 1),
+                'a' => 129,
+                'b' => 0.1,
+                'c' => -70,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, -1, 2, 2),
+                'a' => 123,
+                'b' => 0,
+                'c' =>  -53,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, 0, 0, 0),
+                'a' => 63,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 1, 0, 1),
+                'a' => 63,
+                'b' => 0.1,
+                'c' => -33,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, -1, 2, 2),
+                'a' => -59,
+                'b' => 0,
+                'c' => 26,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, -1, 0, 1),
+                'a' => -58,
+                'b' =>  -0.1,
+                'c' =>  32,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 1, 2, 1),
+                'a' => -51,
+                'b' => 0,
+                'c' => 27,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 2, 0, 0),
+                'a' => 48,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, -2, 2, 1),
+                'a' => 46,
+                'b' => 0,
+                'c' => -24,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, 0, 2, 2),
+                'a' => -38,
+                'b' => 0,
+                'c' => 16,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 2, 2, 2),
+                'a' => -31,
+                'b' => 0,
+                'c' => 13,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 2, 0, 0),
+                'a' => 29,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 1, 2, 2),
+                'a' => 29,
+                'b' => 0,
+                'c' => -12,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 0, 2, 0),
+                'a' => 26,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 0, 2, 0),
+                'a' => -22,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, -1, 2, 1),
+                'a' => 21,
+                'b' => 0,
+                'c' => -10,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 2, 0, 0, 0),
+                'a' => 17,
+                'b' => -0.1,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, -1, 0, 1),
+                'a' => 16,
+                'b' => 0,
+                'c' => -8,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 2, 0, 2, 2),
+                'a' => -16,
+                'b' => 0.1,
+                'c' => 7,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 1, 0, 0, 1),
+                'a' => -15,
+                'b' => 0,
+                'c' => 9,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 1, 0, 1),
+                'a' => -13,
+                'b' => 0,
+                'c' => 7,
+                'd' => 0
+            ),
+            array( 'y' => array(0, -1, 0, 0, 1),
+                'a' => -12,
+                'b' => 0,
+                'c' => 6,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 2, -2, 0),
+                'a' => 11,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, -1, 2, 1),
+                'a' => -10,
+                'b' => 0,
+                'c' => 5,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, 1, 2, 2),
+                'a' => -8,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 1, 0, 2, 2),
+                'a' => 7,
+                'b' => 0,
+                'c' => -3,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 1, 1, 0, 0),
+                'a' => -7,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, -1, 0, 2, 2),
+                'a' => -7,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, 0, 2, 1),
+                'a' => -7,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, 1, 0, 0),
+                'a' => 6,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 2, 2, 2),
+                'a' => 6,
+                'b' => 0,
+                'c' => -3,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 1, 2, 1),
+                'a' => 6,
+                'b' => 0,
+                'c' => -3,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, -2, 0, 1),
+                'a' => -6,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(2, 0, 0, 0, 1),
+                'a' => -6,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(0, -1, 1, 0, 0),
+                'a' => 5,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, -1, 0, 2, 1),
+                'a' => -5,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 0, 0, 1),
+                'a' => -5,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 2, 2, 1),
+                'a' => -5,
+                'b' => 0,
+                'c' => 3,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 0, 2, 0, 1),
+                'a' => 4,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 1, 0, 2, 1),
+                'a' => 4,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 1, -2, 0),
+                'a' => 4,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-1, 0, 1, 0, 0),
+                'a' => -4,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-2, 1, 0, 0, 0),
+                'a' => -4,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(1, 0, 0, 0, 0),
+                'a' => -4,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 1, 2, 0),
+                'a' => 3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, -2, 2, 2),
+                'a' => -3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(-1, -1, 1, 0, 0),
+                'a' => -3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 1, 1, 0, 0),
+                'a' => -3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, -1, 1, 2, 2),
+                'a' => -3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(2, -1, -1, 2, 2),
+                'a' => -3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(0, 0, 3, 2, 2),
+                'a' => -3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            ),
+            array( 'y' => array(2, -1, 0, 2, 2),
+                'a' => -3,
+                'b' => 0,
+                'c' => 0,
+                'd' => 0
+            )
+        );
+        return $pt;
     }
 }
 

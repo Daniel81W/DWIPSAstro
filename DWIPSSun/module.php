@@ -71,6 +71,8 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("earthRadVec", 0);
         $this->RegisterAttributeFloat("geoCentLong", 0);
         $this->RegisterAttributeFloat("geoCentLat", 0);
+        $this->RegisterAttributeFloat("nutationLongitude", 0);
+        $this->RegisterAttributeFloat("nutationObliquity", 0);
     }
 
     public function Destroy()
@@ -109,6 +111,9 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
         $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
 
+        $jsonForm["actions"][4]["items"][0]["value"] = $this->ReadAttributeFloat("nutationLongitude");
+        $jsonForm["actions"][4]["items"][1]["value"] = $this->ReadAttributeFloat("nutationObliquity");
+
         return json_encode($jsonForm);
     }
 
@@ -135,6 +140,9 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("helioCentLong")));
         $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("helioCentLat")));
 
+        $this->WriteAttributeFloat("nutationLongitude", ASTROSUN::NutationInLongitude($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("nutationObliquity", ASTROSUN::NutationInObliquity($this->ReadAttributeFloat("jce")));
+
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
         $this->UpdateFormField("jm", "value", $this->ReadAttributeFloat("jm"));
@@ -147,6 +155,9 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("earthRadVec", "value", $this->ReadAttributeFloat("earthRadVec"));
         $this->UpdateFormField("geoCentLong", "value", $this->ReadAttributeFloat("geoCentLong"));
         $this->UpdateFormField("geoCentLat", "value", $this->ReadAttributeFloat("geoCentLat"));
+
+        $this->UpdateFormField("nutationLong", "value", $this->ReadAttributeFloat("nutationLongitude"));
+        $this->UpdateFormField("nutationObl", "value", $this->ReadAttributeFloat("nutationObliquity"));
 
         $timezone = 1;
         if (date('I')) {
@@ -203,7 +214,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sunelevation", $sunelevation);
         $this->SetValue("sunelevationmin", -90 + $latitude + ASTROSUN::Declination($jc));
         $this->SetValue("sunelevationmax", 90 - $latitude + ASTROSUN::Declination($jc));
-        $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AE);
+        $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
         $this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
         $this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
         $sundura = ($sunset - $sunrise) / 60.0 / 60.0;

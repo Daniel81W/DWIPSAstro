@@ -119,6 +119,21 @@
                     "caption": "geocentric latitude"
                 }
             ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "nutationLong",
+                    "caption": "nutation in longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "nutationObl",
+                    "caption": " nutation in obliquity"
+                }
+            ]
         }
     ],
     "status": []
