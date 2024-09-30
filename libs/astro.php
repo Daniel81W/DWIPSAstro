@@ -396,10 +396,10 @@ class ASTROSUN{
     }
 
     public static function L0Arr(){
-        $l0 = [
-            [175347046,0,0],
-            [3341656,4.6692568,6283.07585]
-        ];
+        $l0 = array(
+            array(175347046, 0, 0),
+            array(3341656, 4.6692568, 6283.07585)
+        );
         return $l0;
     }
 }
