@@ -95,7 +95,7 @@ class ASTROSUN{
      * @param mixed $julianMillenium 
      * @return float
      */
-    /*public static function HeliocentricLongitudeRAD($julianMillenium){
+    public static function HeliocentricLongitudeRAD($julianMillenium){
         return (ASTROSUN::L0($julianMillenium)
             + ASTROSUN::L1($julianMillenium) * pow($julianMillenium, 1)
             + ASTROSUN::L2($julianMillenium) * pow($julianMillenium, 2)
@@ -143,7 +143,7 @@ class ASTROSUN{
     public static function GeocentricLatitude($HeliocentricLatitude){
         return -1 * $HeliocentricLatitude;
     }
-    */
+    
     //Nutuation
     /*
     public static function MeanElongationOfTheMoon($julianCentury){
