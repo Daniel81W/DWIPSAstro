@@ -164,7 +164,7 @@ class ASTROSUN{
     public static function LongitudeOfTheAscendingNodeOfTheMoon($julianCentury){
         return  125.04452 + 1934.136261 * $julianCentury - 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3)/450000;
     }
-    
+    /*
     public static function NutationInLongitude($julianCentury){
         $psi = array();
         $terms = ASTROSUN::PeriodicTermsForTheNutation();
@@ -197,7 +197,7 @@ class ASTROSUN{
             $sum += $eps[$i];
         }
         return $sum/36000000;
-    }
+    }*/
     
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
