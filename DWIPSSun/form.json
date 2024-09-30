@@ -119,6 +119,21 @@
                     "caption": "geocentriclatitude"
                 }
             ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLong1",
+                    "caption": "geocentric longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLat1",
+                    "caption": "geocentriclatitude"
+                }
+            ]
         }
     ],
     "status": []

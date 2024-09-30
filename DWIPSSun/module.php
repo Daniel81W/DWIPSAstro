@@ -70,8 +70,8 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("earthRadVec", 0);
         $this->RegisterAttributeFloat("geoCentLong", 0);
         $this->RegisterAttributeFloat("geoCentLat", 0);
-        $this->RegisterAttributeFloat("nutationLongitude", 0);
-        $this->RegisterAttributeFloat("nutationObliquity", 0);
+        //$this->RegisterAttributeFloat("nutationLongitude", 0);
+        //$this->RegisterAttributeFloat("nutationObliquity", 0);
 
 
 
