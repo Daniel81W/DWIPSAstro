@@ -145,11 +145,11 @@ class ASTROSUN{
     }
 
     //Nutuation
-    /*
     public static function MeanElongationOfTheMoon($julianCentury){
         297.85036 + 445267.111480 * $julianCentury − 0.0019142 * pow($julianCentury, 2) + pow($julianCentury,3)/189474;
     }
-
+    
+    /*
     public static function MeanAnomalyOfTheSun($julianCentury){
         357.52772 + 35999.050340 * $julianCentury − 0.0001603 * pow($julianCentury, 2) + pow($julianCentury,3)/300000;
     }
