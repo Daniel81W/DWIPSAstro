@@ -149,11 +149,11 @@ class ASTROSUN{
         return 297.85036 + 445267.111480 * $julianCentury - 0.0019142 * pow($julianCentury, 2) + pow($julianCentury, 3)/189474;
     }
     
-    /*
     public static function MeanAnomalyOfTheSun($julianCentury){
-        357.52772 + 35999.050340 * $julianCentury − 0.0001603 * pow($julianCentury, 2) + pow($julianCentury, 3)/300000;
+        return 357.52772 + 35999.050340 * $julianCentury - 0.0001603 * pow($julianCentury, 2) + pow($julianCentury, 3)/300000;
     }
-
+    
+    /*
     public static function MeanAnomalyOfTheMoon($julianCentury){
         134.96298 + 477198.867398 * $julianCentury − 0.0086972 * pow($julianCentury, 2) + pow($julianCentury, 3)/56250;
     }
