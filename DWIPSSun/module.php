@@ -58,7 +58,6 @@ class DWIPSSun extends IPSModule
         $this->RegisterPropertyFloat("deltaT", 69.184);
 
         $this->RegisterPropertyInteger("UpdateInterval", 1);
-        $this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
 
         $this->RegisterAttributeFloat("jd", 0);
         $this->RegisterAttributeFloat("jc", 0);
@@ -73,6 +72,9 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("geoCentLat", 0);
         $this->RegisterAttributeFloat("nutationLongitude", 0);
         $this->RegisterAttributeFloat("nutationObliquity", 0);
+
+
+        $this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
     }
 
     public function Destroy()
@@ -140,8 +142,8 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("helioCentLong")));
         $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("helioCentLat")));
 
-        $this->WriteAttributeFloat("nutationLongitude", ASTROSUN::NutationInLongitude($this->ReadAttributeFloat("jce")));
-        $this->WriteAttributeFloat("nutationObliquity", ASTROSUN::NutationInObliquity($this->ReadAttributeFloat("jce")));
+        //$this->WriteAttributeFloat("nutationLongitude", ASTROSUN::NutationInLongitude($this->ReadAttributeFloat("jce")));
+        //$this->WriteAttributeFloat("nutationObliquity", ASTROSUN::NutationInObliquity($this->ReadAttributeFloat("jce")));
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
@@ -156,8 +158,8 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("geoCentLong", "value", $this->ReadAttributeFloat("geoCentLong"));
         $this->UpdateFormField("geoCentLat", "value", $this->ReadAttributeFloat("geoCentLat"));
 
-        $this->UpdateFormField("nutationLong", "value", $this->ReadAttributeFloat("nutationLongitude"));
-        $this->UpdateFormField("nutationObl", "value", $this->ReadAttributeFloat("nutationObliquity"));
+        //$this->UpdateFormField("nutationLong", "value", $this->ReadAttributeFloat("nutationLongitude"));
+        //$this->UpdateFormField("nutationObl", "value", $this->ReadAttributeFloat("nutationObliquity"));
 
         $timezone = 1;
         if (date('I')) {
