@@ -94,6 +94,7 @@
 			$jd = ASTROGEN::JulianDay();
 			$jc = ASTROGEN::JulianCentury($jd);
 			$jm = ASTROGEN::JulianMillennium($jc);
+			$this->SendDebug('TZ', date_default_timezone_get(), 0);
 			$this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLongitudeRAD($jm), 0);
 			$this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLongitudeDEG($jm), 0);
 			$this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLatitude($jm), 0);
