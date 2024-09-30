@@ -84,6 +84,26 @@
                     "caption": "Julian Ephemeris Millennium"
                 }
             ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "helioCentLong",
+                    "caption": "heliocentric longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "helioCentLat",
+                    "caption": "heliocentric latitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "earthRadVec",
+                    "caption": "Earth radius vector"
+                }
+            ]
         }
     ],
     "status": []

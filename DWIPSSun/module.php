@@ -66,6 +66,9 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("jde", 0);
         $this->RegisterAttributeFloat("jce", 0);
         $this->RegisterAttributeFloat("jme", 0);
+        $this->RegisterAttributeFloat("helioCentLong", 0);
+        $this->RegisterAttributeFloat("helioCentLat", 0);
+        $this->RegisterAttributeFloat("earthRadVec", 0);
     }
 
     public function Destroy()
@@ -96,6 +99,10 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][1]["items"][0]["value"] = $this->ReadAttributeFloat("jde");
         $jsonForm["actions"][1]["items"][1]["value"] = $this->ReadAttributeFloat("jce");
         $jsonForm["actions"][1]["items"][2]["value"] = $this->ReadAttributeFloat("jme");
+
+        $jsonForm["actions"][2]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLong");
+        $jsonForm["actions"][2]["items"][1]["value"] = $this->ReadAttributeFloat("helioCentLat");
+        $jsonForm["actions"][2]["items"][2]["value"] = $this->ReadAttributeFloat("earthRadVec");
 
         return json_encode($jsonForm);
     }
