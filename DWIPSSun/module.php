@@ -136,7 +136,7 @@ class DWIPSSun extends IPSModule
 
 
 
-        $this->UpdateFormField("jd", "Value", $this->ReadAttributeFloat("jd"));
+        $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
 
         $timezone = 1;
         if (date('I')) {
