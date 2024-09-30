@@ -137,6 +137,17 @@ class DWIPSSun extends IPSModule
 
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
+        $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
+        $this->UpdateFormField("jm", "value", $this->ReadAttributeFloat("jm"));
+        $this->UpdateFormField("jde", "value", $this->ReadAttributeFloat("jde"));
+        $this->UpdateFormField("jce", "value", $this->ReadAttributeFloat("jce"));
+        $this->UpdateFormField("jme", "value", $this->ReadAttributeFloat("jme"));
+
+        $this->UpdateFormField("helioCentLong", "value", $this->ReadAttributeFloat("helioCentLong"));
+        $this->UpdateFormField("helioCentLat", "value", $this->ReadAttributeFloat("helioCentLat"));
+        $this->UpdateFormField("earthRadVec", "value", $this->ReadAttributeFloat("earthRadVec"));
+        $this->UpdateFormField("geoCentLong", "value", $this->ReadAttributeFloat("geoCentLong"));
+        $this->UpdateFormField("geoCentLat", "value", $this->ReadAttributeFloat("geoCentLat"));
 
         $timezone = 1;
         if (date('I')) {
