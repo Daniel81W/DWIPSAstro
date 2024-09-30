@@ -206,7 +206,7 @@ class ASTROSUN{
             - 249,67 * pow($u, 5) - 39.05 * pow($u, 6) + 7.12 * pow($u, 7) + 27.87 * pow($u, 8) + 5.79 * pow($u, 9)
             + 2.45 * pow($u, 10);
     }
-
+    */
     public static function TrueObliquityOfTheEcliptic($meanObl, $nutObl){
         return $meanObl / 3600 + $nutObl;
     }
@@ -218,7 +218,7 @@ class ASTROSUN{
     public static function ApparentSunLongitude($geoCentLong, $nutLong, $abCorr){
         return $geoCentLong + $nutLong + $abCorr;
     }
-
+    /*
     public static function ApparentSiderealTimeAtGreenwich($julianDate, $julianCentury){
         $v0 = 280.46061837 + 360.98564736629 * ($julianDate - 2451545) + 0.000387933 * pow($julianCentury, 2) - pow($julianCentury, 3) / 38710000;
         $f = $v0 / 360 - floor($l / 360);
