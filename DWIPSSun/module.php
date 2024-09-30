@@ -131,7 +131,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("helioCentLong", ASTROSUN::HeliocentricLongitudeDEG($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("helioCentLat", ASTROSUN::HeliocentricLatitude($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jme")));
-        $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitudeDEG($this->ReadAttributeFloat("helioCentLong")));
+        $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("helioCentLong")));
         $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("helioCentLat")));
 
 
