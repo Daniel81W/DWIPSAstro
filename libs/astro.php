@@ -47,6 +47,14 @@ class ASTROGEN{
     public static function JulianCentury(float $julianDay){
         return ($julianDay - 2451545.0) / 36525.0;
     }
+
+    /**
+     * 
+     */
+    public static function JulianMillenium(float $julianCentury)
+    {
+        return ($julianCentury) / 10.0;
+    }
     
 }
 
@@ -374,6 +382,11 @@ class ASTROSUN{
     public static function DurationOfSunrise(float $latitude, float $longitude, float $julianCentury){
         return ASTROSUN::TimeForElevation(0.833, $latitude, $longitude, 1, $julianCentury, true) - ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, 1, $julianCentury, true);
     }
+
+    public static array L0 = [
+        [175347046,0,0],
+        [3341656,4.6692568,6283.07585]
+    ];
 }
 
 class ASTROMOON{
