@@ -8,7 +8,7 @@ class DWIPSSun extends IPSModule
     {
         //Never delete this line!
         parent::Create();
-        /*
+        
         if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("season"))) {
             IPS_CreateVariableProfile("DWIPS." . $this->Translate("season"), 1);
             IPS_SetVariableProfileValues("DWIPS." . $this->Translate("season"), 1, 4, 1);
@@ -75,7 +75,7 @@ class DWIPSSun extends IPSModule
 
 
 
-        $this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");*/
+        //$this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
     }
 
     public function Destroy()
