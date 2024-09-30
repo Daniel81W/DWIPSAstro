@@ -242,8 +242,12 @@ class ASTROSUN{
         }
     }
 
-    public static function GeocentricSunDeclination(){
-        return 0;
+    public static function GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong){
+        return rad2deg(
+            asin(
+                sin(deg2rad($geoCentLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($appSunLong)),
+            )
+        );
     }
     
     // Hilfsfunktionen
