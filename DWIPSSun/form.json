@@ -1,9 +1,140 @@
 {
     "elements": [
-    	
+    	{ 
+            "type": "NumberSpinner", 
+            "name": "Latitude", 
+            "caption": "Latitude", 
+            "digits": 6,
+            "minimum": -90,
+            "maximum": 90
+        },
+        {
+            "type": "SelectVariable",
+            "name":"LatitudeVariable",
+            "caption": "Latitude"            
+        },
+    	{ 
+            "type": "NumberSpinner", 
+            "name": "Longitude", 
+            "caption": "Longitude", 
+            "digits": 6,
+            "minimum": -180,
+            "maximum": 180
+        },
+        {
+            "type": "SelectVariable",
+            "name":"LongitudeVariable",
+            "caption": "Longitude"            
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "UpdateInterval",
+            "caption": "UpdateInterval",
+            "digits": 0,
+            "minimum": 0,
+            "maximum": 120,
+            "suffix": "Minuten"
+        },
+        {
+            "type": "NumberSpinner",
+            "caption": "delta T",
+            "digits": 2,
+            "moreDigits": true,
+            "name": "deltaT",
+            "value":  69.18
+        }
     ],
     "actions": [
-        
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jd",
+                    "caption": "Julian Date"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jc",
+                    "caption": "Julian Century"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jm",
+                    "caption": "Julian Millennium"
+                }
+            ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jde",
+                    "caption": "Julian Ephemeris Date"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jce",
+                    "caption": "Julian Ephemeris Century"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jme",
+                    "caption": "Julian Ephemeris Millennium"
+                }
+            ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "helioCentLong",
+                    "caption": "heliocentric longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "helioCentLat",
+                    "caption": "heliocentric latitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "earthRadVec",
+                    "caption": "Earth radius vector"
+                }
+            ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLong",
+                    "caption": "geocentric longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLat",
+                    "caption": "geocentriclatitude"
+                }
+            ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLong1",
+                    "caption": "geocentric longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLat1",
+                    "caption": "geocentriclatitude"
+                }
+            ]
+        }
     ],
     "status": []
 }
