@@ -201,7 +201,7 @@ class ASTROSUN{
     
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
-        switch $i{
+        switch ($i){
             case 0:
                 return ASTROSUN::MeanElongationOfTheMoon($julianCentury);
             case 1:
