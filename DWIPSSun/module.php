@@ -75,7 +75,7 @@ class DWIPSSun extends IPSModule
 
 
 
-        //$this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
+        $this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
     }
 
     public function Destroy()
@@ -88,9 +88,9 @@ class DWIPSSun extends IPSModule
     {
         //Never delete this line!
         parent::ApplyChanges();
-        //$this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval") * 60 * 1000);
+        $this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval") * 60 * 1000);
 
-        //DWIPSSUN_Update($this->InstanceID);
+        DWIPSSUN_Update($this->InstanceID);
     }
 
     public function GetConfigurationForm()
