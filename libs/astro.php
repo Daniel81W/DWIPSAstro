@@ -20,7 +20,7 @@ class ASTROGEN{
      * @param int $timestamp Timestamp the Julian Date is to compute for
      * @return float Julian Date for the given timestamp
      */
-    //public static function JulianDayFromTimestamp(int $timestamp){
+    public static function JulianDayFromTimestamp(int $timestamp){
 
         $dy = 0;
         $dm = 0;
@@ -48,7 +48,7 @@ class ASTROGEN{
      * @param int $second 
      * @return float
      */
-    //public static function JulianDayFromDateTime(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0){
+    public static function JulianDayFromDateTime(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0){
        $date = mktime($hour, $minute, $second , $month, $day, $year);
        return ASTROGEN::JulianDayFromTimestamp($date);
     }
@@ -58,7 +58,7 @@ class ASTROGEN{
      * @param float $julianDay 
      * @return float
      */
-    //public static function JulianCentury(float $julianDay){
+    public static function JulianCentury(float $julianDay){
         return ($julianDay - 2451545.0) / 36525.0;
     }
 
@@ -67,7 +67,7 @@ class ASTROGEN{
      * @param float $julianCentury 
      * @return float
      */
-    //public static function JulianMillennium(float $julianCentury)
+    public static function JulianMillennium(float $julianCentury)
     {
         return ($julianCentury) / 10.0;
     }
@@ -78,7 +78,7 @@ class ASTROGEN{
      * @param mixed $deltaT 
      * @return float
      */
-    //public static function JDE(float $julianDay, $deltaT){
+    public static function JDE(float $julianDay, $deltaT){
         return $julianDay + $deltaT / 86400;
     }
     
@@ -88,7 +88,7 @@ class ASTROSUN{
     /**
      * Astronomical unit (mean distance earth - sun) in m
      */
-    //const AU = 149597870700;
+    const AU = 149597870700;
 
     /**
      * Summary of HeliocentricLongitudeRAD
