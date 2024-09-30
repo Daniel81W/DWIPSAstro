@@ -199,6 +199,36 @@ class ASTROSUN{
         return $sum/36000000;
     }
     
+    //mean obliquity of the ecliptic
+    public static function MeanObliquityOfTheEcliptic($julianMillenium){
+        $u = $julianMillenium / 10;
+        return 84381.448 - 4680.93 * pow($u, 1) - 1.55 * pow($u, 2) + 1999.25 * pow($u, 3) - 51.38 * pow($u, 4)
+            - 249,67 * pow($u, 5) - 39.05 * pow($u, 6) + 7.12 * pow($u, 7) + 27.87 * pow($u, 8) + 5.79 * pow($u, 9)
+            + 2.45 * pow($u, 10);
+    }
+
+    public static function TrueObliquityOfTheEcliptic($meanObl, $nutObl){
+        return $meanObl / 3600 + $nutObl;
+    }
+
+    public static function AberrationCorrection($earthRadVec){
+        return -20.4898 / (3600 * $earthRadVec);
+    }
+
+    public static function ApparentSunLongitude($geoCentLong, $nutLong, $abCorr){
+        return $geoCentLong + $nutLong + $abCorr;
+    }
+
+    public static function ApparentSiderealTimeAtGreenwich($julianDate, $julianCentury){
+        $v0 = 280.46061837 + 360.98564736629 * ($julianDate - 2451545) + 0.000387933 * pow($julianCentury, 2) - pow($julianCentury, 3) / 38710000;
+        $f = $v0 / 360 - floor($l / 360);
+        if ($v0 >= 0) {
+            return 360 * $f;
+        } else {
+            return 360 - 360 * $f;
+        }
+    }
+
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
         switch ($i){
