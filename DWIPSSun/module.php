@@ -1,6 +1,6 @@
 <?php
 
-//include_once ("/var/lib/symcon/modules/DWIPSAstro/libs/astro.php");
+include_once ("/var/lib/symcon/modules/DWIPSAstro/libs/astro.php");
 class DWIPSSun extends IPSModule
 {
 
