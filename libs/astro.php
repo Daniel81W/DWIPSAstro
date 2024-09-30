@@ -71,7 +71,9 @@ class ASTROSUN{
 
     public static function HeliocentricLongitudeDEG($julianMillenium)
     {
-        return ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
+        $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
+        $f = $l % 360;
+        return $f;
     }
 
     public static function L0($julianMillenium){
