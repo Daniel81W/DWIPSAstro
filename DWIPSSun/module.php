@@ -128,13 +128,12 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("jde", ASTROGEN::JDE($this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("deltaT")));
         $this->WriteAttributeFloat("jce", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jde")));
         $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
+        
         $this->WriteAttributeFloat("helioCentLong", ASTROSUN::HeliocentricLongitudeDEG($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("helioCentLat", ASTROSUN::HeliocentricLatitude($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("helioCentLong")));
         $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("helioCentLat")));
-
-
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
@@ -204,7 +203,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sunelevation", $sunelevation);
         $this->SetValue("sunelevationmin", -90 + $latitude + ASTROSUN::Declination($jc));
         $this->SetValue("sunelevationmax", 90 - $latitude + ASTROSUN::Declination($jc));
-        $this->SetValue("sundistance", $sundistance);
+        $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AE);
         $this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
         $this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
         $sundura = ($sunset - $sunrise) / 60.0 / 60.0;

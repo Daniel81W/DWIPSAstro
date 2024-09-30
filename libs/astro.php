@@ -64,6 +64,8 @@ class ASTROGEN{
 
 class ASTROSUN{
 
+    const AE = 149597870700;
+
     public static function HeliocentricLongitudeRAD($julianMillenium){
         return (ASTROSUN::L0($julianMillenium)
             + ASTROSUN::L1($julianMillenium) * pow($julianMillenium, 1)
