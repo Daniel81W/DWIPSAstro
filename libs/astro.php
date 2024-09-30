@@ -1006,7 +1006,7 @@ class ASTROSUN{
         );
         return $r4;
     }
-
+    /*
     public static function PeriodicTermsForTheNutation()
     {
         $pt = array(
@@ -1390,7 +1390,7 @@ class ASTROSUN{
             )
         );
         return $pt;
-    }
+    }*/
 }
 
 class ASTROMOON{
