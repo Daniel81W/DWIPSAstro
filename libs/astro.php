@@ -73,6 +73,8 @@ class ASTROSUN{
     {
         $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
         $f = $l % 360;
+        $f = $l / 360 - floor($l / 360);
+        $f = 360 * $f;
         return $f;
     }
 
