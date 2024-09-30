@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 //TODO Mond
 
@@ -10,7 +10,7 @@ class ASTROGEN{
      * Computes the Julian Date for the current time.
      * @return float Current Julian Date
      */
-   // public static function JulianDay():float{
+    public static function JulianDay():float{
         $date = new DateTime();
        return ASTROGEN::JulianDayFromTimestamp($date->getTimestamp());
     }
