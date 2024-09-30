@@ -57,6 +57,10 @@
 
 			$this->RegisterPropertyInteger("UpdateInterval", 1);
 			$this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
+
+			$this->RegisterAttributeFloat("jd");
+			$this->RegisterAttributeFloat("jc");
+			$this->RegisterAttributeFloat("jm");
 		}
 
 		public function Destroy()
@@ -74,6 +78,19 @@
 			DWIPSSUN_Update($this->InstanceID);
 		}
 
+    public function GetConfigurationForm()
+    {
+        //load form from file
+        $jsonForm = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
+
+
+        $jsonForm["actions"][0]["value"] = $this->ReadAttributeFloat("jd");
+        $jsonForm["actions"][1]["value"] = $this->ReadAttributeFloat("jc");
+        $jsonForm["actions"][2]["value"] = $this->ReadAttributeFloat("jm");
+
+        return json_encode($jsonForm);
+    }
+
 		/**
         * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
         * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
@@ -82,6 +99,13 @@
         *
         */
 		public function Update(){
+
+			$this->WriteAttributeFloat("jd", ASTROGEN::JulianDay());
+
+
+
+
+
 			$timezone = 1;
 			if(date('I')){
 				$timezone = 2;
