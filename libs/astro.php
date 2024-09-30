@@ -60,13 +60,18 @@ class ASTROGEN{
 
 class ASTROSUN{
 
-    public static function HeliocentricLongitude($julianMillenium){
+    public static function HeliocentricLongitudeRAD($julianMillenium){
         return (ASTROSUN::L0($julianMillenium)
             + ASTROSUN::L1($julianMillenium) * pow($julianMillenium, 1)
             + ASTROSUN::L2($julianMillenium) * pow($julianMillenium, 2)
             + ASTROSUN::L3($julianMillenium) * pow($julianMillenium, 3)
             + ASTROSUN::L4($julianMillenium) * pow($julianMillenium, 4)
             + ASTROSUN::L5($julianMillenium) * pow($julianMillenium, 5)) / pow(10, 8);
+    }
+
+    public static function HeliocentricLongitudeDEG($julianMillenium)
+    {
+        return ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
     }
 
     public static function L0($julianMillenium){
