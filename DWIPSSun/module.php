@@ -92,32 +92,7 @@ class DWIPSSun extends IPSModule
         DWIPSSUN_Update($this->InstanceID);
     }
 
-    public function GetConfigurationForm()
-    {
-        //load form from file
-        $jsonForm = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
-
-
-        $jsonForm["actions"][0]["items"][0]["value"] = $this->ReadAttributeFloat("jd");
-        $jsonForm["actions"][0]["items"][1]["value"] = $this->ReadAttributeFloat("jc");
-        $jsonForm["actions"][0]["items"][2]["value"] = $this->ReadAttributeFloat("jm");
-
-        $jsonForm["actions"][1]["items"][0]["value"] = $this->ReadAttributeFloat("jde");
-        $jsonForm["actions"][1]["items"][1]["value"] = $this->ReadAttributeFloat("jce");
-        $jsonForm["actions"][1]["items"][2]["value"] = $this->ReadAttributeFloat("jme");
-
-        $jsonForm["actions"][2]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLong");
-        $jsonForm["actions"][2]["items"][1]["value"] = $this->ReadAttributeFloat("helioCentLat");
-        $jsonForm["actions"][2]["items"][2]["value"] = $this->ReadAttributeFloat("earthRadVec");
-
-        $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
-        $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
-
-        //$jsonForm["actions"][4]["items"][0]["value"] = $this->ReadAttributeFloat("nutationLongitude");
-        //$jsonForm["actions"][4]["items"][1]["value"] = $this->ReadAttributeFloat("nutationObliquity");
-
-        return json_encode($jsonForm);
-    }
+    
 
     /**
      * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
