@@ -228,7 +228,7 @@ class ASTROSUN{
             return 360 - 360 * $f;
         }
     }
-    *
+    */
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
         switch ($i){
