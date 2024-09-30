@@ -36,6 +36,22 @@
             "suffix": "Minuten"
         }
     ],
-    "actions": [],
+    "actions": [
+        {
+            "type": "ValidationTextBox",
+            "name": "jd",
+            "caption": "Julian Date"
+        },
+        {
+            "type": "ValidationTextBox",
+            "name": "jc",
+            "caption": "Julian Century"
+        },
+        {
+            "type": "ValidationTextBox",
+            "name": "jm",
+            "caption": "Julian Millennium"
+        }
+    ],
     "status": []
 }

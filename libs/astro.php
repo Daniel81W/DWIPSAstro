@@ -51,7 +51,7 @@ class ASTROGEN{
     /**
      * 
      */
-    public static function JulianMillenium(float $julianCentury)
+    public static function JulianMillennium(float $julianCentury)
     {
         return ($julianCentury) / 10.0;
     }
@@ -93,6 +93,20 @@ class ASTROSUN{
             + ASTROSUN::R2($julianMillenium) * pow($julianMillenium, 2)
             + ASTROSUN::R3($julianMillenium) * pow($julianMillenium, 3)
             + ASTROSUN::R4($julianMillenium) * pow($julianMillenium, 4)) / pow(10, 8);
+    }
+
+    public static function GeocentricLongitude($HeliocentricLongitude){
+        $glong = $HeliocentricLongitude + 180;
+        $f = $glong / 360 - floor($glong / 360);
+        if ($glong >= 0) {
+            return 360 * $f;
+        } else {
+            return 360 - 360 * $f;
+        }
+    }
+
+    public static function GeocentricLatitude($HeliocentricLatitude){
+        return -1 * $HeliocentricLatitude;
     }
 
     public static function L0($julianMillenium){
