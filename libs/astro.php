@@ -200,7 +200,7 @@ class ASTROSUN{
     }
     
     // Hilfsfunktionen
-    /*public static function X($i, $julianCentury){
+    public static function X($i, $julianCentury){
         switch ($i){
             case 0:
                 return ASTROSUN::MeanElongationOfTheMoon($julianCentury);
@@ -215,8 +215,8 @@ class ASTROSUN{
             default:
                 return 0;
         }
-    }*/
-/*
+    }
+
     public static function L0($julianMillenium){
         $l0 = array();
         $l0Data = ASTROSUN::L0Arr();
@@ -397,7 +397,7 @@ class ASTROSUN{
         }
         return $sum;
     }
-    */
+    
     /**
      * 
      */
