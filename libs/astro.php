@@ -16,7 +16,20 @@ class ASTROGEN{
      * 
      */
     public static function JulianDayFromTimestamp(int $timestamp){
-        return floor(365.25 * (idate('Y', $timestamp) + 4716)) + floor(30.6001 * (idate('m', $timestamp) + 1)) + idate('d', $timestamp) + 0 -1524.5;
+
+        $dy = 0;
+        $dm = 0;
+        if (idate('m', $timestamp) <= 2) {
+            $dy = -1;
+            $dm = +12;
+        }
+        $jd = floor(365.25 * (idate('Y', $timestamp) + $dy + 4716)) + floor(30.6001 * (idate('m', $timestamp) + $dm + 1)) + idate('d', $timestamp) + $timestamp / 86400 - floor($timestamp / 86400) - 1524.5;
+
+        if ($jd >= 2299160) {
+            $jd += (2 - floor(idate('Y', $timestamp) / 100) + floor(floor(idate('Y', $timestamp) / 100) / 4));
+        }
+
+        return $jd;
             
     }
 
