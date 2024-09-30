@@ -125,13 +125,13 @@
             "items": [
                 {
                     "type": "ValidationTextBox",
-                    "name": "geoCentLong1",
-                    "caption": "geocentric longitude"
+                    "name": "nutuationLong",
+                    "caption": "nutation in longitude"
                 },
                 {
                     "type": "ValidationTextBox",
-                    "name": "geoCentLat1",
-                    "caption": "geocentriclatitude"
+                    "name": "nutuationObl",
+                    "caption": " nutation in obliquity"
                 }
             ]
         }
