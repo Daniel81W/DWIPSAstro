@@ -63,7 +63,7 @@ class ASTROSUN{
     public static function HeliocentricLongitude($julianMillenium){
         $l0 = array();
         $l0Data = ASTROSUN::L0Arr();
-        for($i =0; $i < count($l0data); $i++){
+        for($i =0; $i < count($l0Data); $i++){
             $l0[$i] = $l0Data[$i][0] * cos($l0Data[$i][1] + $l0Data[$i][2] * $julianMillenium);
         }
         $sum = 0;
