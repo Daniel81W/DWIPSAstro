@@ -72,10 +72,27 @@ class ASTROSUN{
     public static function HeliocentricLongitudeDEG($julianMillenium)
     {
         $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
-        $f = $l % 360;
         $f = $l / 360 - floor($l / 360);
-        $f = 360 * $f;
-        return $f;
+        if ($l >= 0) {
+            return 360 * $f;
+        } else {
+            return 360 - 360 * $f;
+        }
+    }
+
+    public static function HeliocentricLatitude($julianMillenium)
+    {
+        return (ASTROSUN::B0($julianMillenium)
+            + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)) / pow(10, 8);
+    }
+
+    public static function EarthRadiusVector($julianMillenium)
+    {
+        return (ASTROSUN::R0($julianMillenium)
+            + ASTROSUN::R1($julianMillenium) * pow($julianMillenium, 1)
+            + ASTROSUN::R2($julianMillenium) * pow($julianMillenium, 2)
+            + ASTROSUN::R3($julianMillenium) * pow($julianMillenium, 3)
+            + ASTROSUN::R4($julianMillenium) * pow($julianMillenium, 4)) / pow(10, 8);
     }
 
     public static function L0($julianMillenium){
@@ -157,6 +174,104 @@ class ASTROSUN{
         $sum = 0;
         for ($i = 0; $i < count($l5); $i++) {
             $sum += $l5[$i];
+        }
+        return $sum;
+    }
+
+    public static function B0($julianMillenium)
+    {
+        $l0 = array();
+        $l0Data = ASTROSUN::B0Arr();
+        for ($i = 0; $i < count($l0Data); $i++) {
+            $l0[$i] = $l0Data[$i][0] * cos($l0Data[$i][1] + $l0Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l0); $i++) {
+            $sum += $l0[$i];
+        }
+        return $sum;
+    }
+
+    public static function B1($julianMillenium)
+    {
+        $l1 = array();
+        $l1Data = ASTROSUN::B1Arr();
+        for ($i = 0; $i < count($l1Data); $i++) {
+            $l1[$i] = $l1Data[$i][0] * cos($l1Data[$i][1] + $l1Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l1); $i++) {
+            $sum += $l1[$i];
+        }
+        return $sum;
+    }
+
+    public static function R0($julianMillenium)
+    {
+        $l0 = array();
+        $l0Data = ASTROSUN::R0Arr();
+        for ($i = 0; $i < count($l0Data); $i++) {
+            $l0[$i] = $l0Data[$i][0] * cos($l0Data[$i][1] + $l0Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l0); $i++) {
+            $sum += $l0[$i];
+        }
+        return $sum;
+    }
+
+    public static function R1($julianMillenium)
+    {
+        $l1 = array();
+        $l1Data = ASTROSUN::R1Arr();
+        for ($i = 0; $i < count($l1Data); $i++) {
+            $l1[$i] = $l1Data[$i][0] * cos($l1Data[$i][1] + $l1Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l1); $i++) {
+            $sum += $l1[$i];
+        }
+        return $sum;
+    }
+
+    public static function R2($julianMillenium)
+    {
+        $l2 = array();
+        $l2Data = ASTROSUN::R2Arr();
+        for ($i = 0; $i < count($l2Data); $i++) {
+            $l2[$i] = $l2Data[$i][0] * cos($l2Data[$i][1] + $l2Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l2); $i++) {
+            $sum += $l2[$i];
+        }
+        return $sum;
+    }
+
+    public static function R3($julianMillenium)
+    {
+        $l3 = array();
+        $l3Data = ASTROSUN::R3Arr();
+        for ($i = 0; $i < count($l3Data); $i++) {
+            $l3[$i] = $l3Data[$i][0] * cos($l3Data[$i][1] + $l3Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l3); $i++) {
+            $sum += $l3[$i];
+        }
+        return $sum;
+    }
+
+    public static function R4($julianMillenium)
+    {
+        $l4 = array();
+        $l4Data = ASTROSUN::R4Arr();
+        for ($i = 0; $i < count($l4Data); $i++) {
+            $l4[$i] = $l4Data[$i][0] * cos($l4Data[$i][1] + $l4Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l4); $i++) {
+            $sum += $l4[$i];
         }
         return $sum;
     }
@@ -657,9 +772,116 @@ class ASTROSUN{
     public static function B0Arr()
     {
         $b0 = array(
-            array(),
+            array(280, 3.199, 84334.662),
+            array(102, 5.422, 5507.553),
+            array(80, 3.88, 5223.69),
+            array(44, 3.7, 2352.87),
+            array(32, 4, 1577.34)
         );
         return $b0;
+    }
+
+    public static function B1Arr()
+    {
+        $b1 = array(
+            array(9, 3.9, 5507.55),
+            array(6, 1.73, 5223.69)
+        );
+        return $b1;
+    }
+
+    public static function R0Arr()
+    {
+        $r0 = array(
+            array(100013989, 0, 0),
+            array(1670700, 3.0984635, 6283.07585),
+            array(13956, 3.05525, 12566.1517),
+            array(3084, 5.1985, 77713.7715),
+            array(1628, 1.1739, 5753.3849),
+            array(1576, 2.8469, 7860.4194),
+            array(925, 5.453, 11506.77),
+            array(542, 4.564, 3930.21),
+            array(472, 3.661, 5884.927),
+            array(346, 0.964, 5507.553),
+            array(329, 5.9, 5223.694),
+            array(307, 0.299, 5573.143),
+            array(243, 4.273, 11790.629),
+            array(212, 5.847, 1577.344),
+            array(186, 5.022, 10977.079),
+            array(175, 3.012, 18849.228),
+            array(110, 5.055, 5486.778),
+            array(98, 0.89, 6069.78),
+            array(86, 5.69, 15720.84),
+            array(86, 1.27, 161000.69),
+            array(65, 0.27, 17260.15),
+            array(63, 0.92, 529.69),
+            array(57, 2.01, 83996.85),
+            array(56, 5.24, 71430.7),
+            array(49, 3.25, 2544.31),
+            array(47, 2.58, 775.52),
+            array(45, 5.54, 9437.76),
+            array(43, 6.01, 6275.96),
+            array(39, 5.36, 4694),
+            array(38, 2.39, 8827.39),
+            array(37, 0.83, 19651.05),
+            array(37, 4.9, 12139.55),
+            array(36, 1.67, 12036.46),
+            array(35, 1.84, 2942.46),
+            array(33, 0.24, 7084.9),
+            array(32, 0.18, 5088.63),
+            array(32, 1.78, 398.15),
+            array(28, 1.21, 6286.6),
+            array(28, 1.9, 6279.55),
+            array(26, 4.59, 10447.39)
+        );
+        return $r0;
+    }
+
+    public static function R1Arr()
+    {
+        $r1 = array(
+            array(103019, 1.10749, 6283.07585),
+            array(1721, 1.0644, 12566.1517),
+            array(702, 3.142, 0),
+            array(32, 1.02, 18849.23),
+            array(31, 2.84, 5507.55),
+            array(25, 1.32, 5223.69),
+            array(18, 1.42, 1577.34),
+            array(10, 5.91, 10977.08),
+            array(9, 1.42, 6275.96),
+            array(9, 0.27, 5486.78)
+        );
+        return $r1;
+    }
+
+    public static function R2Arr()
+    {
+        $r2 = array(
+            array(4359, 5.7846, 6283.0758),
+            array(124, 5.579, 12566.152),
+            array(12, 3.14, 0),
+            array(9, 3.63, 77713.77),
+            array(6, 1.87, 5573.14),
+            array(3, 5.47, 18849.23)
+        );
+        return $r2;
+    }
+
+    public static function R3Arr()
+    {
+        $r3 = array(
+            array(145, 4.273, 6283.076),
+            array(7, 3.92, 12566.15)
+        );
+        return $r3;
+    }
+
+    public static function R4Arr()
+    {
+        $r4 = array(
+            array(4, 2.56, 6283.08)
+        );
+        return $r4;
     }
 }
 

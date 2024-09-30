@@ -96,6 +96,8 @@
 			$jm = ASTROGEN::JulianMillenium($jc);
 			$this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLongitudeRAD($jm), 0);
 			$this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLongitudeDEG($jm), 0);
+			$this->SendDebug('JM = ' . $jm, ASTROSUN::Heliocentricatitude($jm), 0);
+			$this->SendDebug('JM = ' . $jm, ASTROSUN::EarthRadiusVector($jm), 0);
 			$jdtomorrow = $jd + 1;
 			$jctomorrow = ASTROGEN::JulianCentury($jdtomorrow);
 
