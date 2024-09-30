@@ -101,6 +101,8 @@
 		public function Update(){
 
 			$this->WriteAttributeFloat("jd", ASTROGEN::JulianDay());
+			$this->WriteAttributeFloat("jc", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jd")));
+			$this->WriteAttributeFloat("jm", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jc")));
 
 
 
