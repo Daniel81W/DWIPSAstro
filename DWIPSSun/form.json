@@ -104,6 +104,21 @@
                     "caption": "Earth radius vector"
                 }
             ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLong",
+                    "caption": "geocentric longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoCentLat",
+                    "caption": "geocentric latitude"
+                }
+            ]
         }
     ],
     "status": []

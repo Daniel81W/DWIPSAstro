@@ -69,6 +69,8 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("helioCentLong", 0);
         $this->RegisterAttributeFloat("helioCentLat", 0);
         $this->RegisterAttributeFloat("earthRadVec", 0);
+        $this->RegisterAttributeFloat("geoCentLong", 0);
+        $this->RegisterAttributeFloat("geoCentLat", 0);
     }
 
     public function Destroy()
@@ -104,6 +106,9 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][2]["items"][1]["value"] = $this->ReadAttributeFloat("helioCentLat");
         $jsonForm["actions"][2]["items"][2]["value"] = $this->ReadAttributeFloat("earthRadVec");
 
+        $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
+        $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
+
         return json_encode($jsonForm);
     }
 
@@ -126,6 +131,8 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("helioCentLong", ASTROSUN::HeliocentricLongitudeDEG($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("helioCentLat", ASTROSUN::HeliocentricLatitude($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitudeDEG($this->ReadAttributeFloat("helioCentLong")));
+        $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("helioCentLat")));
 
 
 
@@ -144,10 +151,6 @@ class DWIPSSun extends IPSModule
         $jc = ASTROGEN::JulianCentury($jd);
         $jm = ASTROGEN::JulianMillennium($jc);
         $this->SendDebug('TZ', date_default_timezone_get(), 0);
-        $this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLongitudeRAD($jm), 0);
-        $this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLongitudeDEG($jm), 0);
-        $this->SendDebug('JM = ' . $jm, ASTROSUN::HeliocentricLatitude($jm), 0);
-        $this->SendDebug('JM = ' . $jm, ASTROSUN::EarthRadiusVector($jm), 0);
         $jdtomorrow = $jd + 1;
         $jctomorrow = ASTROGEN::JulianCentury($jdtomorrow);
 
