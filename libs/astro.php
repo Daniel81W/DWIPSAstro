@@ -61,6 +61,15 @@ class ASTROGEN{
 class ASTROSUN{
 
     public static function HeliocentricLongitude($julianMillenium){
+        return (ASTROSUN::L0($julianMillenium)
+            + ASTROSUN::L1($julianMillenium) * pow($julianMillenium, 1)
+            + ASTROSUN::L2($julianMillenium) * pow($julianMillenium, 2)
+            + ASTROSUN::L3($julianMillenium) * pow($julianMillenium, 3)
+            + ASTROSUN::L4($julianMillenium) * pow($julianMillenium, 4)
+            + ASTROSUN::L5($julianMillenium) * pow($julianMillenium, 5)) / pow(10, 8);
+    }
+
+    public static function L0($julianMillenium){
         $l0 = array();
         $l0Data = ASTROSUN::L0Arr();
         for($i =0; $i < count($l0Data); $i++){
@@ -69,6 +78,76 @@ class ASTROSUN{
         $sum = 0;
         for($i = 0; $i < count($l0);$i++){
             $sum += $l0[$i];
+        }
+        return $sum;
+    }
+
+    public static function L1($julianMillenium)
+    {
+        $l1 = array();
+        $l1Data = ASTROSUN::L1Arr();
+        for ($i = 0; $i < count($l1Data); $i++) {
+            $l1[$i] = $l1Data[$i][0] * cos($l1Data[$i][1] + $l1Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l1); $i++) {
+            $sum += $l1[$i];
+        }
+        return $sum;
+    }
+
+    public static function L2($julianMillenium)
+    {
+        $l2 = array();
+        $l2Data = ASTROSUN::L2Arr();
+        for ($i = 0; $i < count($l2Data); $i++) {
+            $l2[$i] = $l2Data[$i][0] * cos($l2Data[$i][1] + $l2Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l2); $i++) {
+            $sum += $l2[$i];
+        }
+        return $sum;
+    }
+
+    public static function L3($julianMillenium)
+    {
+        $l3 = array();
+        $l3Data = ASTROSUN::L3Arr();
+        for ($i = 0; $i < count($l3Data); $i++) {
+            $l3[$i] = $l3Data[$i][0] * cos($l3Data[$i][1] + $l3Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l3); $i++) {
+            $sum += $l3[$i];
+        }
+        return $sum;
+    }
+
+    public static function L4($julianMillenium)
+    {
+        $l4 = array();
+        $l4Data = ASTROSUN::L4Arr();
+        for ($i = 0; $i < count($l4Data); $i++) {
+            $l4[$i] = $l4Data[$i][0] * cos($l4Data[$i][1] + $l4Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l4); $i++) {
+            $sum += $l4[$i];
+        }
+        return $sum;
+    }
+
+    public static function L5($julianMillenium)
+    {
+        $l5 = array();
+        $l5Data = ASTROSUN::L5Arr();
+        for ($i = 0; $i < count($l5Data); $i++) {
+            $l5[$i] = $l5Data[$i][0] * cos($l5Data[$i][1] + $l5Data[$i][2] * $julianMillenium);
+        }
+        $sum = 0;
+        for ($i = 0; $i < count($l5); $i++) {
+            $sum += $l5[$i];
         }
         return $sum;
     }
@@ -464,6 +543,114 @@ class ASTROSUN{
             array(25, 3.16, 4690.48)
         );
         return $l0;
+    }
+
+    public static function L1Arr()
+    {
+        $l1 = array(
+            array(628331966747, 0, 0),
+            array(206059, 2.678235, 6283.07585),
+            array(4303, 2.6351, 12566.1517),
+            array(425, 1.59, 3.523),
+            array(119, 5.796, 26.298),
+            array(109, 2.966, 1577.344),
+            array(93, 2.59, 18849.23),
+            array(72, 1.14, 529.69),
+            array(68, 1.87, 398.15),
+            array(67, 4.41, 5507.55),
+            array(59, 2.89, 5223.69),
+            array(56, 2.17, 155.42),
+            array(45, 0.4, 796.3),
+            array(36, 0.47, 775.52),
+            array(29, 2.65, 7.11),
+            array(21, 5.34, 0.98),
+            array(19, 1.85, 5486.78),
+            array(19, 4.97, 213.3),
+            array(17, 2.99, 6275.96),
+            array(16, 0.03, 2544.31),
+            array(16, 1.43, 2146.17),
+            array(15, 1.21, 10977.08),
+            array(12, 2.83, 1748.02),
+            array(12, 3.26, 5088.63),
+            array(12, 5.27, 1194.45),
+            array(12, 2.08, 4694),
+            array(11, 0.77, 553.57),
+            array(10, 1.3, 6286.6),
+            array(10, 4.24, 1349.87),
+            array(9, 2.7, 242.73),
+            array(9, 5.64, 951.72),
+            array(8, 5.3, 2352.87),
+            array(6, 2.65, 9437.76),
+            array(6, 4.67, 4690.48)
+        );
+        return $l1;
+    }
+
+    public static function L2Arr()
+    {
+        $l2 = array(
+            array(52919, 0, 0),
+            array(8720, 1.0721, 6283.0758),
+            array(309, 0.867, 12566.152),
+            array(27, 0.05, 3.52),
+            array(16, 5.19, 26.3),
+            array(16, 3.68, 155.42),
+            array(10, 0.76, 18849.23),
+            array(9, 2.06, 77713.77),
+            array(7, 0.83, 775.52),
+            array(5, 4.66, 1577.34),
+            array(4, 1.03, 7.11),
+            array(4, 3.44, 5573.14),
+            array(3, 5.14, 796.3),
+            array(3, 6.05, 5507.55),
+            array(3, 1.19, 242.73),
+            array(3, 6.12, 529.69),
+            array(3, 0.31, 398.15),
+            array(3, 2.28, 553.57),
+            array(2, 4.38, 5223.69),
+            array(2, 3.75, 0.98)
+        );
+        return $l2;
+    }
+
+    public static function L3Arr()
+    {
+        $l3 = array(
+            array(289, 5.844, 6283.076),
+            array(35, 0, 0),
+            array(17, 5.49, 12566.15),
+            array(3, 5.2, 155.42),
+            array(1, 4.72, 3.52),
+            array(1, 5.3, 18849.23),
+            array(1, 5.97, 242.73)
+        );
+        return $l3;
+    }
+
+    public static function L4Arr()
+    {
+        $l4 = array(
+            array(114, 3.142, 0),
+            array(8, 4.13, 6283.08),
+            array(1, 3.84, 12566.15)
+        );
+        return $l4;
+    }
+
+    public static function L5Arr()
+    {
+        $l5 = array(
+            array(1, 3.14, 0),
+        );
+        return $l5;
+    }
+
+    public static function B0Arr()
+    {
+        $b0 = array(
+            array(),
+        );
+        return $b0;
     }
 }
 
