@@ -167,8 +167,8 @@ class ASTROSUN{
     
     public static function NutationInLongitude($julianCentury){
         $psi = array();
-        /*$terms = ASTROSUN::PeriodicTermsForTheNutation();
-        for($i = 0; $i < count($terms); $i++){
+        $terms = ASTROSUN::PeriodicTermsForTheNutation();
+        /*for($i = 0; $i < count($terms); $i++){
             $sumterm = 0;
             for($j = 0; $j < 5; $j++){
                 $sumterm += ASTROSUN::X($j, $julianCentury) * $terms[$i]['y'][$j]
