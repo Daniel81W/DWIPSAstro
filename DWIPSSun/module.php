@@ -77,6 +77,8 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("aberCorr", 0);
         $this->RegisterAttributeFloat("appSunLong", 0);
         $this->RegisterAttributeFloat("appSidTimeGreenwich", 0);
+        $this->RegisterAttributeFloat("geoSunRAsc", 0);
+        $this->RegisterAttributeFloat("geoSunDec", 0);
 
 
 
@@ -128,6 +130,9 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][5]["items"][3]["value"] = $this->ReadAttributeFloat("appSunLong");
         $jsonForm["actions"][5]["items"][4]["value"] = $this->ReadAttributeFloat("appSidTimeGreenwich");
 
+        $jsonForm["actions"][6]["items"][0]["value"] = $this->ReadAttributeFloat("geoSunRAsc");
+        $jsonForm["actions"][6]["items"][1]["value"] = $this->ReadAttributeFloat("geoSunDec");
+
         return json_encode($jsonForm);
     }
 
@@ -162,7 +167,10 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("aberCorr", ASTROSUN::AberrationCorrection($this->ReadAttributeFloat("earthRadVec")));
         $this->WriteAttributeFloat("appSunLong", ASTROSUN::ApparentSunLongitude($this->ReadAttributeFloat("geoCentLong"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("aberCorr")));
         $this->WriteAttributeFloat("appSidTimeGreenwich", ASTROSUN::ApparentSiderealTimeAtGreenwich($this->ReadAttributeFloat("jd"), $this->ReadAttributeFloat("jc")));
-        
+
+        $this->WriteAttributeFloat("geoSunRAsc", ASTROSUN::GeocentricSunRightAscension($this->ReadAttributeFloat("appSunLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("geoCentLat")));
+        $this->WriteAttributeFloat("geoSunDec", ASTROSUN::GeocentricSunDeclination());
+
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
         $this->UpdateFormField("jm", "value", $this->ReadAttributeFloat("jm"));
@@ -184,6 +192,9 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("aberCorr", "value", $this->ReadAttributeFloat("aberCorr"));
         $this->UpdateFormField("appSunLong", "value", $this->ReadAttributeFloat("appSunLong"));
         $this->UpdateFormField("appSidTimeGreenwich", "value", $this->ReadAttributeFloat("appSidTimeGreenwich"));
+
+        $this->UpdateFormField("geoSunRAsc", "value", $this->ReadAttributeFloat("geoSunRAsc"));
+        $this->UpdateFormField("geoSunDec", "value", $this->ReadAttributeFloat("geoSunDec"));
         
         $timezone = 1;
         if (date('I')) {

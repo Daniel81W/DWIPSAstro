@@ -226,6 +226,20 @@ class ASTROSUN{
             return 360 - 360 * $f;
         }
     }
+
+    public static function GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat){
+        $a = rad2deg(atan2(sin(dg2rad($appSunLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)),cos(deg2rad($appSunLong))));
+        $f = $a / 360 - floor($a / 360);
+        if ($a >= 0) {
+            return 360 * $f;
+        } else {
+            return 360 - 360 * $f;
+        }
+    }
+
+    public static function GeocentricSunDeclination(){
+        return 0;
+    }
     
     // Hilfsfunktionen
     public static function X($i, $julianCentury){

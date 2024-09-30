@@ -164,6 +164,21 @@
                     "caption": "apparent sidereal time at Greenwich"
                 }
             ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoSunRAsc",
+                    "caption": "Geocentric Sun Right Ascension"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "geoSunDec",
+                    "caption": "geocentric sun declination"
+                }
+            ]
         }
     ],
     "status": []
