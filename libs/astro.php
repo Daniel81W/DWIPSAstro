@@ -55,6 +55,10 @@ class ASTROGEN{
     {
         return ($julianCentury) / 10.0;
     }
+
+    public static function JDE(float $julianDay, $deltaT){
+        return $julianDay + $deltaT / 86400;
+    }
     
 }
 

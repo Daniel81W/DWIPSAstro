@@ -34,6 +34,14 @@
             "minimum": 0,
             "maximum": 120,
             "suffix": "Minuten"
+        },
+        {
+            "type": "NumberSpinner",
+            "caption": "delta T",
+            "digits": 2,
+            "moreDigits": true,
+            "name": "deltaT",
+            "value":  69.18
         }
     ],
     "actions": [
@@ -54,6 +62,26 @@
                     "type": "ValidationTextBox",
                     "name": "jm",
                     "caption": "Julian Millennium"
+                }
+            ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jde",
+                    "caption": "Julian Ephemeris Date"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jce",
+                    "caption": "Julian Ephemeris Century"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "jme",
+                    "caption": "Julian Ephemeris Millennium"
                 }
             ]
         }

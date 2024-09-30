@@ -55,6 +55,7 @@ class DWIPSSun extends IPSModule
 
         $this->RegisterPropertyFloat("Latitude", 50.0);
         $this->RegisterPropertyFloat("Longitude", 9);
+        $this->RegisterPropertyFloat("deltaT", 69.184);
 
         $this->RegisterPropertyInteger("UpdateInterval", 1);
         $this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
@@ -62,6 +63,9 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("jd", 0);
         $this->RegisterAttributeFloat("jc", 0);
         $this->RegisterAttributeFloat("jm", 0);
+        $this->RegisterAttributeFloat("jde", 0);
+        $this->RegisterAttributeFloat("jce", 0);
+        $this->RegisterAttributeFloat("jme", 0);
     }
 
     public function Destroy()
@@ -89,6 +93,10 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][0]["items"][1]["value"] = $this->ReadAttributeFloat("jc");
         $jsonForm["actions"][0]["items"][2]["value"] = $this->ReadAttributeFloat("jm");
 
+        $jsonForm["actions"][1]["items"][0]["value"] = $this->ReadAttributeFloat("jde");
+        $jsonForm["actions"][1]["items"][1]["value"] = $this->ReadAttributeFloat("jce");
+        $jsonForm["actions"][1]["items"][2]["value"] = $this->ReadAttributeFloat("jme");
+
         return json_encode($jsonForm);
     }
 
@@ -105,6 +113,9 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("jd", ASTROGEN::JulianDay());
         $this->WriteAttributeFloat("jc", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jd")));
         $this->WriteAttributeFloat("jm", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jc")));
+        $this->WriteAttributeFloat("jde", ASTROGEN::JDE($this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("deltaT")));
+        $this->WriteAttributeFloat("jce", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jde")));
+        $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
 
 
 
