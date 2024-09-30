@@ -153,18 +153,17 @@ class ASTROSUN{
         return 357.52772 + 35999.050340 * $julianCentury - 0.0001603 * pow($julianCentury, 2) + pow($julianCentury, 3)/300000;
     }
     
-    /*
     public static function MeanAnomalyOfTheMoon($julianCentury){
-        134.96298 + 477198.867398 * $julianCentury − 0.0086972 * pow($julianCentury, 2) + pow($julianCentury, 3)/56250;
+        return 134.96298 + 477198.867398 * $julianCentury − 0.0086972 * pow($julianCentury, 2) + pow($julianCentury, 3)/56250;
     }
 
     public static function MoonsArgumentOfLatitude($julianCentury){
-        93.27191 + 483202.017538 * $julianCentury − 0.0036825 * pow($julianCentury, 2) + pow($julianCentury, 3)/327270;
+        return 93.27191 + 483202.017538 * $julianCentury − 0.0036825 * pow($julianCentury, 2) + pow($julianCentury, 3)/327270;
     }
 
     public static function LongitudeOfTheAscendingNodeOfTheMoon($julianCentury){
-        = 125.04452 + 1934.136261 * $julianCentury − 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3)/450000;
-    }*/
+        return  125.04452 + 1934.136261 * $julianCentury − 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3)/450000;
+    }
     /*
     public static function NutationInLongitude($julianCentury){
         $psi = array();
