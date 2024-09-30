@@ -58,9 +58,9 @@
 			$this->RegisterPropertyInteger("UpdateInterval", 1);
 			$this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
 
-			$this->RegisterAttributeFloat("jd");
-			$this->RegisterAttributeFloat("jc");
-			$this->RegisterAttributeFloat("jm");
+			$this->RegisterAttributeFloat("jd",0);
+			$this->RegisterAttributeFloat("jc",0);
+			$this->RegisterAttributeFloat("jm",0);
 		}
 
 		public function Destroy()
