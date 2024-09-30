@@ -131,7 +131,37 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "nutuationObl",
-                    "caption": " nutation in obliquity"
+                    "caption": "nutation in obliquity"
+                }
+            ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "ValidationTextBox",
+                    "name": "meanOblEcl",
+                    "caption": "mean obliquity of the ecliptic"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "trueOblEcl",
+                    "caption": "true obliquity of the ecliptic"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "aberCorr",
+                    "caption": "aberration correction"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "appSunLong",
+                    "caption": "apparent sun longitude"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "appSidTimeGreenwich",
+                    "caption": "apparent sidereal time at Greenwich"
                 }
             ]
         }
