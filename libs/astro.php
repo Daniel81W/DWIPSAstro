@@ -202,7 +202,7 @@ class ASTROSUN{
     //mean obliquity of the ecliptic
     public static function MeanObliquityOfTheEcliptic($julianMillenium){
         $u = $julianMillenium / 10;
-        return 84381.448 - 4680.93 * pow($u, 1);// - 1.55 * pow($u, 2) + 1999.25 * pow($u, 3) - 51.38 * pow($u, 4) - 249,67 * pow($u, 5) - 39.05 * pow($u, 6) + 7.12 * pow($u, 7) + 27.87 * pow($u, 8) + 5.79 * pow($u, 9) + 2.45 * pow($u, 10);
+        return 84381.448 - 4680.93 * pow($u, 1) - 1.55 * pow($u, 2) + 1999.25 * pow($u, 3) - 51.38 * pow($u, 4) - 249.67 * pow($u, 5) - 39.05 * pow($u, 6) + 7.12 * pow($u, 7) + 27.87 * pow($u, 8) + 5.79 * pow($u, 9) + 2.45 * pow($u, 10);
         return 0;
     }
     
