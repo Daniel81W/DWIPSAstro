@@ -641,7 +641,7 @@ class ASTROSUN{
             );
         }
     }
-    /*
+    
     public static function SolarDirection(float $solarAzimut){
         $sector = intdiv($solarAzimut, 22.5);
 
@@ -1005,7 +1005,7 @@ class ASTROSUN{
         );
         return $r4;
     }
-    */
+    
     /*
     public static function PeriodicTermsForTheNutation()
     {
