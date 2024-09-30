@@ -62,7 +62,7 @@ class ASTROSUN{
 
     public static function HeliocentricLongitude($julianMillenium){
         $l0 = array();
-        $l0Data = ASTROSUN::L0;
+        $l0Data = ASTROSUN::L0Arr();
         for(int $i =0; $i < count($l0data); $i++){
             $l0[$i] = $l0Data[$i][0] * cos($l0Data[$i][1] + $l0Data[$i][2] * $julianMillenium);
         }
@@ -395,10 +395,13 @@ class ASTROSUN{
         return ASTROSUN::TimeForElevation(0.833, $latitude, $longitude, 1, $julianCentury, true) - ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, 1, $julianCentury, true);
     }
 
-    public static array L0 = [
-        [175347046,0,0],
-        [3341656,4.6692568,6283.07585]
-    ];
+    public static function L0Arr(){
+        $l0 = [
+            [175347046,0,0],
+            [3341656,4.6692568,6283.07585]
+        ];
+        return $l0;
+    }
 }
 
 class ASTROMOON{
