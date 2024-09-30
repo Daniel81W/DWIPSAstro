@@ -70,6 +70,7 @@ class ASTROSUN{
         for($i = 0; $i < count($l0);$i++){
             $sum += $l0[$i];
         }
+        return $sum;
     }
 
     /**
