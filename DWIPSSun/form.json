@@ -122,7 +122,12 @@
                     "type": "ValidationTextBox",
                     "name": "L5",
                     "caption": "L5"
-                },
+                }
+            ]
+        },
+        {
+            "type": "RowLayout",
+            "items": [
                 {
                     "type": "ValidationTextBox",
                     "name": "helioCentLat",

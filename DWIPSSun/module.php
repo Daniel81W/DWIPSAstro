@@ -73,6 +73,8 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("L4", 0);
         $this->RegisterAttributeFloat("L5", 0);
         $this->RegisterAttributeFloat("helioCentLat", 0);
+        $this->RegisterAttributeFloat("B0", 0);
+        $this->RegisterAttributeFloat("B1", 0);
         $this->RegisterAttributeFloat("earthRadVec", 0);
         $this->RegisterAttributeFloat("geoCentLong", 0);
         $this->RegisterAttributeFloat("geoCentLat", 0);
@@ -127,23 +129,26 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][2]["items"][4]["value"] = $this->ReadAttributeFloat("L3");
         $jsonForm["actions"][2]["items"][5]["value"] = $this->ReadAttributeFloat("L4");
         $jsonForm["actions"][2]["items"][6]["value"] = $this->ReadAttributeFloat("L5");
-        $jsonForm["actions"][2]["items"][7]["value"] = $this->ReadAttributeFloat("helioCentLat");
-        $jsonForm["actions"][2]["items"][8]["value"] = $this->ReadAttributeFloat("earthRadVec");
 
-        $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
-        $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
+        $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLat");
+        $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("B0");
+        $jsonForm["actions"][3]["items"][2]["value"] = $this->ReadAttributeFloat("B1");
+        $jsonForm["actions"][3]["items"][3]["value"] = $this->ReadAttributeFloat("earthRadVec");
+
+        $jsonForm["actions"][4]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
+        $jsonForm["actions"][4]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
         
-        $jsonForm["actions"][4]["items"][0]["value"] = $this->ReadAttributeFloat("nutationLongitude");
-        $jsonForm["actions"][4]["items"][1]["value"] = $this->ReadAttributeFloat("nutationObliquity");
+        $jsonForm["actions"][5]["items"][0]["value"] = $this->ReadAttributeFloat("nutationLongitude");
+        $jsonForm["actions"][5]["items"][1]["value"] = $this->ReadAttributeFloat("nutationObliquity");
 
-        $jsonForm["actions"][5]["items"][0]["value"] = $this->ReadAttributeFloat("meanOblEcl");
-        $jsonForm["actions"][5]["items"][1]["value"] = $this->ReadAttributeFloat("trueOblEcl");
-        $jsonForm["actions"][5]["items"][2]["value"] = $this->ReadAttributeFloat("aberCorr");
-        $jsonForm["actions"][5]["items"][3]["value"] = $this->ReadAttributeFloat("appSunLong");
-        $jsonForm["actions"][5]["items"][4]["value"] = $this->ReadAttributeFloat("appSidTimeGreenwich");
+        $jsonForm["actions"][6]["items"][0]["value"] = $this->ReadAttributeFloat("meanOblEcl");
+        $jsonForm["actions"][6]["items"][1]["value"] = $this->ReadAttributeFloat("trueOblEcl");
+        $jsonForm["actions"][6]["items"][2]["value"] = $this->ReadAttributeFloat("aberCorr");
+        $jsonForm["actions"][6]["items"][3]["value"] = $this->ReadAttributeFloat("appSunLong");
+        $jsonForm["actions"][6]["items"][4]["value"] = $this->ReadAttributeFloat("appSidTimeGreenwich");
 
-        $jsonForm["actions"][6]["items"][0]["value"] = $this->ReadAttributeFloat("geoSunRAsc");
-        $jsonForm["actions"][6]["items"][1]["value"] = $this->ReadAttributeFloat("geoSunDec");
+        $jsonForm["actions"][7]["items"][0]["value"] = $this->ReadAttributeFloat("geoSunRAsc");
+        $jsonForm["actions"][7]["items"][1]["value"] = $this->ReadAttributeFloat("geoSunDec");
 
         return json_encode($jsonForm);
     }
@@ -174,6 +179,8 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("L4", ASTROSUN::L4($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("L5", ASTROSUN::L5($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("helioCentLat", ASTROSUN::HeliocentricLatitude($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("B0", ASTROSUN::B0($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("B1", ASTROSUN::B1($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("helioCentLong")));
         $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("helioCentLat")));
@@ -205,6 +212,8 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("L4", "value", $this->ReadAttributeFloat("L4"));
         $this->UpdateFormField("L5", "value", $this->ReadAttributeFloat("L5"));
         $this->UpdateFormField("helioCentLat", "value", $this->ReadAttributeFloat("helioCentLat"));
+        $this->UpdateFormField("B0", "value", $this->ReadAttributeFloat("B0"));
+        $this->UpdateFormField("B1", "value", $this->ReadAttributeFloat("B1"));
         $this->UpdateFormField("earthRadVec", "value", $this->ReadAttributeFloat("earthRadVec"));
         $this->UpdateFormField("geoCentLong", "value", $this->ReadAttributeFloat("geoCentLong"));
         $this->UpdateFormField("geoCentLat", "value", $this->ReadAttributeFloat("geoCentLat"));
