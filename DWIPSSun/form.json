@@ -95,7 +95,7 @@
                 },
                 {
                     "type": "ValidationTextBox",
-                    "name": "helioCentLong",
+                    "name": "L0",
                     "caption": "L0"
                 },
                 {
