@@ -217,7 +217,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("topoLocHourAngle", ASTROSUN::TopocentricLocalHourAngle($this->ReadAttributeFloat("earthRadVec"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Elevation"), $this->ReadAttributeFloat("locHourAngle"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("geoSunRAsc")));
         $this->WriteAttributeFloat("topoZenAngle", ASTROSUN::TopocentricZenithAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 820, 10));
         $this->WriteAttributeFloat("topoAziAngle", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
-        $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadPropertyFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
+        $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadAttributeFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
