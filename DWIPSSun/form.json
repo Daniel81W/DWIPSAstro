@@ -260,6 +260,11 @@
                     "type": "ValidationTextBox",
                     "name": "topoAziAngle",
                     "caption": "Topocentric azimuth angle (Φ)"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "eqOfTime",
+                    "caption": "Equation of tim (E)"
                 }
             ]
         }

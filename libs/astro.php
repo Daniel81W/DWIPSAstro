@@ -296,6 +296,15 @@ class ASTROSUN{
         return ASTROMISC::LimitTo360($t + 180);
     }
 
+    public static function EqOfTime($julianMillennium, $geoSunRAsc, $nutLong, $trueOblEcl){
+        $m = 280.4664567 + 360007.6982779 * $julianMillennium + 0.03032028 * pow($julianMillennium, 2) + pow($julianMillennium, 3) / 49931 - pow($julianMillennium, 4) / 15300 - pow($julianMillennium, ) / 2000000;
+        $m = ASTROMISC::LimitTo360($m);
+
+        $E = $m - 0.0057183 - $geoSunRAsc + $nutLong * cos(deg2rad($trueOblEcl));
+
+        return $E;
+    }
+
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
         switch ($i){

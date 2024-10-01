@@ -94,6 +94,7 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("topoLocHourAngle", 0);
         $this->RegisterAttributeFloat("topoZenAngle", 0);
         $this->RegisterAttributeFloat("topoAziAngle", 0);
+        $this->RegisterAttributeFloat("eqOfTime", 0);
 
 
 
@@ -162,6 +163,7 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][7]["items"][5]["value"] = $this->ReadAttributeFloat("topoLocHourAngle");
         $jsonForm["actions"][7]["items"][6]["value"] = $this->ReadAttributeFloat("topoZenAngle");
         $jsonForm["actions"][7]["items"][7]["value"] = $this->ReadAttributeFloat("topoAziAngle");
+        $jsonForm["actions"][7]["items"][8]["value"] = $this->ReadAttributeFloat("eqOfTime");
 
         return json_encode($jsonForm);
     }
@@ -215,6 +217,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("topoLocHourAngle", ASTROSUN::TopocentricLocalHourAngle($this->ReadAttributeFloat("earthRadVec"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Elevation"), $this->ReadAttributeFloat("locHourAngle"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("geoSunRAsc")));
         $this->WriteAttributeFloat("topoZenAngle", ASTROSUN::TopocentricZenithAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 820, 10));
         $this->WriteAttributeFloat("topoAziAngle", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
+        $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadPropertyFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
@@ -254,6 +257,7 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("topoLocHourAngle", "value", $this->ReadAttributeFloat("topoLocHourAngle"));
         $this->UpdateFormField("topoZenAngle", "value", $this->ReadAttributeFloat("topoZenAngle"));
         $this->UpdateFormField("topoAziAngle", "value", $this->ReadAttributeFloat("topoAziAngle"));
+        $this->UpdateFormField("eqOfTime", "value", $this->ReadAttributeFloat("eqOfTime"));
         
         $timezone = 1;
         if (date('I')) {
