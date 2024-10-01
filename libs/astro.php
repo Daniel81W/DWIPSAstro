@@ -281,7 +281,7 @@ class ASTROSUN{
 
         $de = $press / 1010 * 283 / (273 + $temp) * 1.02 / (60 * tan(deg2rad($e0+ 10.3 / ($e0 +5.11))));
 
-        
+        return $e0 + $de;
         
     }
 
