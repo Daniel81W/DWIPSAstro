@@ -175,7 +175,7 @@ class DWIPSSun extends IPSModule
     {
         
         $this->WriteAttributeFloat("jd", ASTROGEN::JulianDay());
-        $this->WriteAttributeFloat("jd", 2452930.312847);
+        //$this->WriteAttributeFloat("jd", 2452930.312847);
         $this->WriteAttributeFloat("jc", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jd")));
         $this->WriteAttributeFloat("jm", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jc")));
         $this->WriteAttributeFloat("jde", ASTROGEN::JDE($this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("deltaT")));
