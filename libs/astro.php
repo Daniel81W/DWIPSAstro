@@ -228,11 +228,25 @@ class ASTROSUN{
             asin(
                 sin(deg2rad($geoCentLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($appSunLong)),
             )
-        );
+        );//TODO Genauigkeit
     }
     
     public static function LocalHourAngle($appSidTimeGreenwich, $longitude , $geoSunRAsc){
         return $appSidTimeGreenwich + $longitude - $geoSunRAsc;
+    }
+     
+    public static function TopocentricSunRightAscension($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc){
+        $s = 8.794 / (3600 * $earthRadVec);
+
+        $u = atan(0.99664719 * tan(deg2rad($lat)));
+
+        $x = cos($u) + $elev / 6378140 * cos(deg2rad($lat));
+
+        $y = 0.99664719 sin($u) + $elev / 6378140 * sin(deg2rad($lat));
+
+        $da = atan2(-1 * $x * sin($s) * sin(deg2rad($locHourAngle)),  cos($geoSunDec) - $x * sin($s) * cos(deg2rad($locHourAngle)));
+
+        return $geoSunRAsc - $da;
     }
 
     // Hilfsfunktionen

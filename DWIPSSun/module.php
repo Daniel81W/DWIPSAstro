@@ -55,6 +55,7 @@ class DWIPSSun extends IPSModule
 
         $this->RegisterPropertyFloat("Latitude", 50.0);
         $this->RegisterPropertyFloat("Longitude", 9);
+        $this->RegisterPropertyFloat("Elevation", 1);
         $this->RegisterPropertyFloat("deltaT", 69.184);
 
         $this->RegisterPropertyInteger("UpdateInterval", 1);
@@ -88,6 +89,8 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("geoSunRAsc", 0);
         $this->RegisterAttributeFloat("geoSunDec", 0);
         $this->RegisterAttributeFloat("locHourAngle", 0);
+        $this->RegisterAttributeFloat("topoSunRAsc", 0);
+        $this->RegisterAttributeFloat("topoSunDec", 0);
 
 
 
@@ -151,6 +154,8 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][7]["items"][0]["value"] = $this->ReadAttributeFloat("geoSunRAsc");
         $jsonForm["actions"][7]["items"][1]["value"] = $this->ReadAttributeFloat("geoSunDec");
         $jsonForm["actions"][7]["items"][2]["value"] = $this->ReadAttributeFloat("locHourAngle");
+        $jsonForm["actions"][7]["items"][3]["value"] = $this->ReadAttributeFloat("topoSunRAsc");
+        $jsonForm["actions"][7]["items"][4]["value"] = $this->ReadAttributeFloat("topoSunDec");
 
         return json_encode($jsonForm);
     }
@@ -199,6 +204,8 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("geoSunRAsc", ASTROSUN::GeocentricSunRightAscension($this->ReadAttributeFloat("appSunLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("geoCentLat")));
         $this->WriteAttributeFloat("geoSunDec", ASTROSUN::GeocentricSunDeclination($this->ReadAttributeFloat("geoCentLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("appSunLong")));
         $this->WriteAttributeFloat("locHourAngle", ASTROSUN::LocalHourAngle($this->ReadAttributeFloat("appSidTimeGreenwich"), $this->ReadPropertyFloat("Longitude"), $this->ReadAttributeFloat("geoSunRAsc")));
+        $this->WriteAttributeFloat("topoSunRAsc", ASTROSUN::TopocentricSunRightAscension($this->ReadAttributeFloat("earthRadVec"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Elevation")));
+           // $this->WriteAttributeFloat("topoSunDec",
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
