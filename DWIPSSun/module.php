@@ -87,6 +87,7 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("appSidTimeGreenwich", 0);
         $this->RegisterAttributeFloat("geoSunRAsc", 0);
         $this->RegisterAttributeFloat("geoSunDec", 0);
+        $this->RegisterAttributeFloat("locHourAngle", 0);
 
 
 
@@ -149,6 +150,7 @@ class DWIPSSun extends IPSModule
 
         $jsonForm["actions"][7]["items"][0]["value"] = $this->ReadAttributeFloat("geoSunRAsc");
         $jsonForm["actions"][7]["items"][1]["value"] = $this->ReadAttributeFloat("geoSunDec");
+        $jsonForm["actions"][7]["items"][2]["value"] = $this->ReadAttributeFloat("locHourAngle");
 
         return json_encode($jsonForm);
     }
@@ -196,6 +198,7 @@ class DWIPSSun extends IPSModule
 
         $this->WriteAttributeFloat("geoSunRAsc", ASTROSUN::GeocentricSunRightAscension($this->ReadAttributeFloat("appSunLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("geoCentLat")));
         $this->WriteAttributeFloat("geoSunDec", ASTROSUN::GeocentricSunDeclination($this->ReadAttributeFloat("geoCentLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("appSunLong")));
+        $this->WriteAttributeFloat("locHourAngle", ASTROSUN::LocalHourAngle($this->ReadAttributeFloat("appSidTimeGreenwich"), $this->ReadPropertyFloat("Longitude"), $this->ReadAttributeFloat("geoSunRAsc")));
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
@@ -229,6 +232,7 @@ class DWIPSSun extends IPSModule
 
         $this->UpdateFormField("geoSunRAsc", "value", $this->ReadAttributeFloat("geoSunRAsc"));
         $this->UpdateFormField("geoSunDec", "value", $this->ReadAttributeFloat("geoSunDec"));
+        $this->UpdateFormField("locHourAngle", "value", $this->ReadAttributeFloat("locHourAngle"));
         
         $timezone = 1;
         if (date('I')) {

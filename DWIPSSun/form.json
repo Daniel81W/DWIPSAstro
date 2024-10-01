@@ -156,7 +156,7 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "geoCentLong",
-                    "caption": "geocentric longitude (θ)"
+                    "caption": "geocentric longitude (Θ)"
                 },
                 {
                     "type": "ValidationTextBox",
@@ -222,6 +222,11 @@
                     "type": "ValidationTextBox",
                     "name": "geoSunDec",
                     "caption": "geocentric sun declination (δ)"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "locHourAngle",
+                    "caption": "local hour angle (Η)"
                 }
             ]
         }

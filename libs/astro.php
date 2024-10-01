@@ -250,6 +250,10 @@ class ASTROSUN{
         );
     }
     
+    public static function LocalHourAngle($appSidTimeGreenwich, $longitude , $geoSunRAsc){
+        return $appSidTimeGreenwich + $longitude - $geoSunRAsc;
+    }
+
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
         switch ($i){
