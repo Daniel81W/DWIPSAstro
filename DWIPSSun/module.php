@@ -92,7 +92,7 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("topoSunRAsc", 0);
         $this->RegisterAttributeFloat("topoSunDec", 0);
         $this->RegisterAttributeFloat("topoLocHourAngle", 0);
-        $this->RegisterAttributeFloat("topoZenithAngle", 0);
+        $this->RegisterAttributeFloat("topoZenAngle", 0);
 
 
 
