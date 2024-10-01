@@ -238,11 +238,6 @@
                 },
                 {
                     "type": "ValidationTextBox",
-                    "name": "locHourAngle",
-                    "caption": "local hour angle (Η)"
-                },
-                {
-                    "type": "ValidationTextBox",
                     "name": "topoSunRAsc",
                     "caption": "Topocentric Sun Right Ascension (α\\')"
                 },
