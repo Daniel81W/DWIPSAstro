@@ -231,11 +231,7 @@ class ASTROSUN{
                 cos(deg2rad($appSunLong))
             )
         );
-        if ($a >= 0) {
-            return 360 * ($a / 360 - floor($a / 360));
-        } else {
-            return 360 + 360 * ($a / 360 - ceil($a / 360));
-        }
+        return ASTROMISC::LimitTo360($a);
     }
 
     public static function GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong){
@@ -1488,4 +1484,16 @@ class ASTROMOON{
         return $text;
     }
 }
+
+class ASTROMISC{
+    
+    public static function LimitTo360($angle){
+        if ($angle >= 0) {
+            return 360 * ($angle / 360 - floor($angle / 360));
+        } else {
+            return 360 + 360 * ($angle / 360 - ceil($angle / 360));
+        }
+    }
+}
+    
 ?>
