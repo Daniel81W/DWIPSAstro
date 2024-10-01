@@ -194,7 +194,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("trueOblEcl", ASTROSUN::TrueObliquityOfTheEcliptic($this->ReadAttributeFloat("meanOblEcl"), $this->ReadAttributeFloat("nutationObliquity")));
         $this->WriteAttributeFloat("aberCorr", ASTROSUN::AberrationCorrection($this->ReadAttributeFloat("earthRadVec")));
         $this->WriteAttributeFloat("appSunLong", ASTROSUN::ApparentSunLongitude($this->ReadAttributeFloat("geoCentLong"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("aberCorr")));
-        $this->WriteAttributeFloat("appSidTimeGreenwich", ASTROSUN::ApparentSiderealTimeAtGreenwich($this->ReadAttributeFloat("jd"), $this->ReadAttributeFloat("jc")));
+        $this->WriteAttributeFloat("appSidTimeGreenwich", ASTROSUN::ApparentSiderealTimeAtGreenwich($this->ReadAttributeFloat("jd"), $this->ReadAttributeFloat("jc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
 
         $this->WriteAttributeFloat("geoSunRAsc", ASTROSUN::GeocentricSunRightAscension($this->ReadAttributeFloat("appSunLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("geoCentLat")));
         $this->WriteAttributeFloat("geoSunDec", ASTROSUN::GeocentricSunDeclination($this->ReadAttributeFloat("geoCentLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("appSunLong")));
