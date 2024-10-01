@@ -131,7 +131,7 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "helioCentLat",
-                    "caption": "heliocentric latitude"
+                    "caption": "heliocentric latitude (B)"
                 },
                 {
                     "type": "ValidationTextBox",
@@ -146,7 +146,7 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "earthRadVec",
-                    "caption": "Earth radius vector"
+                    "caption": "Earth radius vector (R)"
                 }
             ]
         },
@@ -156,12 +156,12 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "geoCentLong",
-                    "caption": "geocentric longitude"
+                    "caption": "geocentric longitude (θ)"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "geoCentLat",
-                    "caption": "geocentriclatitude"
+                    "caption": "geocentric latitude (β)"
                 }
             ]
         },
