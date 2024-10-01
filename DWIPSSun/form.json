@@ -28,14 +28,6 @@
         },
         {
             "type": "NumberSpinner",
-            "name": "Elevation",
-            "caption": "Elevation",
-            "digits": 0,
-            "minimum": -200,
-            "maximum": 8848
-        },
-        {
-            "type": "NumberSpinner",
             "name": "UpdateInterval",
             "caption": "UpdateInterval",
             "digits": 0,
