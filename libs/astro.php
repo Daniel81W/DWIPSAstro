@@ -228,13 +228,14 @@ class ASTROSUN{
     }
 
     public static function GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat){
-        $a = (
+        $a = rad2deg(
             atan2(
-                sin(($appSunLong)) * cos(($trueOblEcl)) - tan(($geoCentLat)) * sin(($trueOblEcl)),
-                cos(($appSunLong))
+                sin(deg2rad($appSunLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)),
+                cos(deg2rad($appSunLong))
             )
         );
         $f = $a / 360 - floor($a / 360);
+        return $a;
         if ($a >= 0) {
             return 360 * $f;
         } else {
