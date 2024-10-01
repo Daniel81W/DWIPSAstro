@@ -234,7 +234,7 @@ class ASTROSUN{
         if ($a >= 0) {
             return 360 * ($a / 360 - floor($a / 360));
         } else {
-            return 360 - 360 * ($a / 360 - ceil($a / 360));
+            return 360 + 360 * ($a / 360 - ceil($a / 360));
         }
     }
 
