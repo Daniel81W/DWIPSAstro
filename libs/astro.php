@@ -113,11 +113,7 @@ class ASTROSUN{
     public static function HeliocentricLatitude($julianMillenium)
     {
         return (ASTROSUN::B0($julianMillenium)
-            + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)
-            + ASTROSUN::B0($julianMillenium) * pow($julianMillenium, 2)
-            + ASTROSUN::B0($julianMillenium) * pow($julianMillenium, 3)
-            + ASTROSUN::B0($julianMillenium) * pow($julianMillenium, 4)
-            + ASTROSUN::B0($julianMillenium) * pow($julianMillenium, 5)) / pow(10, 8);
+            + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)) / pow(10, 8);
     }
 
     public static function EarthRadiusVector($julianMillenium)
