@@ -301,8 +301,10 @@ class ASTROSUN{
         $m = ASTROMISC::LimitTo360($m);
 
         $E = $m - 0.0057183 - $geoSunRAsc + $nutLong * cos(deg2rad($trueOblEcl));
-
+        $E *= 4;
+        if($E)
         return $E;
+        //TODO LIMIT Eq to 20 min
     }
 
     // Hilfsfunktionen
