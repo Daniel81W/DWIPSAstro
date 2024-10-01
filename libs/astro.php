@@ -242,7 +242,7 @@ class ASTROSUN{
 
         $x = cos($u) + $elev / 6378140 * cos(deg2rad($lat));
 
-        $y = 0.99664719 sin($u) + $elev / 6378140 * sin(deg2rad($lat));
+        $y = 0.99664719 * sin($u) + $elev / 6378140 * sin(deg2rad($lat));
 
         $da = atan2(-1 * $x * sin($s) * sin(deg2rad($locHourAngle)),  cos($geoSunDec) - $x * sin($s) * cos(deg2rad($locHourAngle)));
 
