@@ -135,6 +135,16 @@
                 },
                 {
                     "type": "ValidationTextBox",
+                    "name": "B0",
+                    "caption": "B0"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "B1",
+                    "caption": "B1"
+                },
+                {
+                    "type": "ValidationTextBox",
                     "name": "earthRadVec",
                     "caption": "Earth radius vector"
                 }
