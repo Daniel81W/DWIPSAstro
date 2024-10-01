@@ -55,7 +55,7 @@ class DWIPSSun extends IPSModule
 
         $this->RegisterPropertyFloat("Latitude", 50.0);
         $this->RegisterPropertyFloat("Longitude", 9);
-        $this->RegisterPropertyFloat("Elevation", 1);
+        $this->RegisterPropertyInteger("Elevation", 1);
         $this->RegisterPropertyFloat("deltaT", 69.184);
 
         $this->RegisterPropertyInteger("UpdateInterval", 1);
