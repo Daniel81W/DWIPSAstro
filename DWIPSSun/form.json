@@ -171,12 +171,12 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "nutuationLong",
-                    "caption": "nutation in longitude"
+                    "caption": "nutation in longitude (Δψ)"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "nutuationObl",
-                    "caption": "nutation in obliquity"
+                    "caption": "nutation in obliquity (Δε)"
                 }
             ]
         },
@@ -186,27 +186,27 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "meanOblEcl",
-                    "caption": "mean obliquity of the ecliptic"
+                    "caption": "mean obliquity of the ecliptic (ε0)"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "trueOblEcl",
-                    "caption": "true obliquity of the ecliptic"
+                    "caption": "true obliquity of the ecliptic (ε)"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "aberCorr",
-                    "caption": "aberration correction"
+                    "caption": "aberration correction (Δτ)"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "appSunLong",
-                    "caption": "apparent sun longitude"
+                    "caption": "apparent sun longitude (λ)"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "appSidTimeGreenwich",
-                    "caption": "apparent sidereal time at Greenwich"
+                    "caption": "apparent sidereal time at Greenwich (ν)"
                 }
             ]
         },
@@ -216,12 +216,12 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "geoSunRAsc",
-                    "caption": "Geocentric Sun Right Ascension"
+                    "caption": "Geocentric Sun Right Ascension (α)"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "geoSunDec",
-                    "caption": "geocentric sun declination"
+                    "caption": "geocentric sun declination (δ)"
                 }
             ]
         }
