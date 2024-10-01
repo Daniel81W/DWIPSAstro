@@ -293,9 +293,7 @@ class ASTROSUN{
         ));
         $t = ASTROMISC::LimitTo360($t);
 
-        return $t;
-        //return 90 - ($e0 + $de);
-
+        return ASTROMISC::LimitTo360($t + 180);
     }
 
     // Hilfsfunktionen
