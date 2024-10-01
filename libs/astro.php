@@ -285,6 +285,18 @@ class ASTROSUN{
         
     }
 
+    public static function TopocentricAzimuthAngle($lat, $topoSunDec, $topoHourAngle)
+    {
+        $t = rad2deg(atan2(
+            sin(deg2rad($topoHourAngle)),
+            cos(deg2rad($topoHourAngle)) * sin(deg2rad($lat)) - tan(deg2rad($topoSunDec)) * cos(deg2rad($lat))
+        ));
+        $t = ASTROMISC::LimitTo360($t);
+
+        return $t;
+        //return 90 - ($e0 + $de);
+
+    }
 
     // Hilfsfunktionen
     public static function X($i, $julianCentury){

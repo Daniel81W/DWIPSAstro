@@ -30,7 +30,7 @@
             "type": "NumberSpinner",
             "name": "Elevation",
             "caption": "Elevation",
-            "digits": 0,
+            "digits": 2,
             "minimum": -200,
             "maximum": 8848
         },
@@ -255,6 +255,11 @@
                     "type": "ValidationTextBox",
                     "name": "topoZenAngle",
                     "caption": "Topocentric zenith angle (θ)"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "topoAziAngle",
+                    "caption": "Topocentric azimuth angle (Φ)"
                 }
             ]
         }
