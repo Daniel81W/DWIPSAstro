@@ -239,12 +239,12 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "topoSunRAsc",
-                    "caption": "Topocentric Sun Right Ascension (α\\')"
+                    "caption": "Topocentric Sun Right Ascension (α\')"
                 },
                 {
                     "type": "ValidationTextBox",
                     "name": "topoSunDec",
-                    "caption": "Topocentric sun declination (δ\\')"
+                    "caption": "Topocentric sun declination (δ\')"
                 }
             ]
         }

@@ -235,7 +235,7 @@ class ASTROSUN{
         return $appSidTimeGreenwich + $longitude - $geoSunRAsc;
     }
      
-    public static function TopocentricSunRightAscension($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc){
+    public static function DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec){
         $s = 8.794 / (3600 * $earthRadVec);
 
         $u = atan(0.99664719 * tan(deg2rad($lat)));
@@ -244,9 +244,32 @@ class ASTROSUN{
 
         $y = 0.99664719 * sin($u) + $elev / 6378140 * sin(deg2rad($lat));
 
-        $da = atan2(-1 * $x * sin($s) * sin(deg2rad($locHourAngle)),  cos($geoSunDec) - $x * sin($s) * cos(deg2rad($locHourAngle)));
+        $da = atan2(-1 * $x * sin($s) * sin(deg2rad($locHourAngle)),  cos(deg2rad($geoSunDec)) - $x * sin($s) * cos(deg2rad($locHourAngle)));
 
-        return $geoSunRAsc - $da;
+        return $da;
+    }
+
+    public static function TopocentricSunRightAscension($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc)
+    {
+       return $geoSunRAsc - ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec);
+    }
+
+    public static function TopocentricSunDeclination($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc)
+    {
+        $s = 8.794 / (3600 * $earthRadVec);
+
+        $u = atan(0.99664719 * tan(deg2rad($lat)));
+
+        $x = cos($u) + $elev / 6378140 * cos(deg2rad($lat));
+
+        $y = 0.99664719 * sin($u) + $elev / 6378140 * sin(deg2rad($lat));
+
+        return rad2deg(
+            atan2(
+                (sin(deg2rad($geoSunDec)) - $y * sin($s)) * cos(ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec)),
+                cos(deg2rad($geoSunDec)) -$x * sin($s) * cos($locHourAngle)
+            )
+        ); 
     }
 
     // Hilfsfunktionen
