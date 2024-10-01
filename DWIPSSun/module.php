@@ -66,6 +66,12 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("jce", 0);
         $this->RegisterAttributeFloat("jme", 0);
         $this->RegisterAttributeFloat("helioCentLong", 0);
+        $this->RegisterAttributeFloat("L0", 0);
+        $this->RegisterAttributeFloat("L1", 0);
+        $this->RegisterAttributeFloat("L2", 0);
+        $this->RegisterAttributeFloat("L3", 0);
+        $this->RegisterAttributeFloat("L4", 0);
+        $this->RegisterAttributeFloat("L5", 0);
         $this->RegisterAttributeFloat("helioCentLat", 0);
         $this->RegisterAttributeFloat("earthRadVec", 0);
         $this->RegisterAttributeFloat("geoCentLong", 0);
@@ -115,8 +121,14 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][1]["items"][2]["value"] = $this->ReadAttributeFloat("jme");
 
         $jsonForm["actions"][2]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLong");
-        $jsonForm["actions"][2]["items"][1]["value"] = $this->ReadAttributeFloat("helioCentLat");
-        $jsonForm["actions"][2]["items"][2]["value"] = $this->ReadAttributeFloat("earthRadVec");
+        $jsonForm["actions"][2]["items"][1]["value"] = $this->ReadAttributeFloat("L0");
+        $jsonForm["actions"][2]["items"][2]["value"] = $this->ReadAttributeFloat("L1");
+        $jsonForm["actions"][2]["items"][3]["value"] = $this->ReadAttributeFloat("L2");
+        $jsonForm["actions"][2]["items"][4]["value"] = $this->ReadAttributeFloat("L3");
+        $jsonForm["actions"][2]["items"][5]["value"] = $this->ReadAttributeFloat("L4");
+        $jsonForm["actions"][2]["items"][6]["value"] = $this->ReadAttributeFloat("L5");
+        $jsonForm["actions"][2]["items"][7]["value"] = $this->ReadAttributeFloat("helioCentLat");
+        $jsonForm["actions"][2]["items"][8]["value"] = $this->ReadAttributeFloat("earthRadVec");
 
         $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
         $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
@@ -155,6 +167,12 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
         
         $this->WriteAttributeFloat("helioCentLong", ASTROSUN::HeliocentricLongitudeDEG($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("L0", ASTROSUN::L0($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("L1", ASTROSUN::L1($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("L2", ASTROSUN::L2($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("L3", ASTROSUN::L3($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("L4", ASTROSUN::L4($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("L5", ASTROSUN::L5($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("helioCentLat", ASTROSUN::HeliocentricLatitude($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jme")));
         $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("helioCentLong")));
@@ -180,6 +198,12 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("jme", "value", $this->ReadAttributeFloat("jme"));
 
         $this->UpdateFormField("helioCentLong", "value", $this->ReadAttributeFloat("helioCentLong"));
+        $this->UpdateFormField("L0", "value", $this->ReadAttributeFloat("L0"));
+        $this->UpdateFormField("L1", "value", $this->ReadAttributeFloat("L1"));
+        $this->UpdateFormField("L2", "value", $this->ReadAttributeFloat("L2"));
+        $this->UpdateFormField("L3", "value", $this->ReadAttributeFloat("L3"));
+        $this->UpdateFormField("L4", "value", $this->ReadAttributeFloat("L4"));
+        $this->UpdateFormField("L5", "value", $this->ReadAttributeFloat("L5"));
         $this->UpdateFormField("helioCentLat", "value", $this->ReadAttributeFloat("helioCentLat"));
         $this->UpdateFormField("earthRadVec", "value", $this->ReadAttributeFloat("earthRadVec"));
         $this->UpdateFormField("geoCentLong", "value", $this->ReadAttributeFloat("geoCentLong"));

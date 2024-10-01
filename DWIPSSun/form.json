@@ -91,7 +91,37 @@
                 {
                     "type": "ValidationTextBox",
                     "name": "helioCentLong",
-                    "caption": "heliocentric longitude"
+                    "caption": "heliocentric longitude (L)"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "helioCentLong",
+                    "caption": "L0"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "L1",
+                    "caption": "L1"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "L2",
+                    "caption": "L2"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "L3",
+                    "caption": "L3"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "L4",
+                    "caption": "L4"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "L5",
+                    "caption": "L5"
                 },
                 {
                     "type": "ValidationTextBox",
