@@ -276,6 +276,16 @@ class ASTROSUN{
         return $locHourAngle - ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec);
     }
 
+    public static function TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp){
+        $e0 = rad2deg(asin( sin(deg2rad($lat)) * sin(deg2rad($geoSunDec)) + cos(deg2rad($lat)) * cos(deg2rad($geoSunDec)) * cos(deg2rad($topoHourAngle))));
+
+        $de = $press / 1010 * 283 / (273 + $temp) * 1.02 / (60 * tan(deg2rad($e0+ 10.3 / ($e0 +5.11))));
+
+        return $de;
+        
+    }
+
+
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
         switch ($i){
@@ -1522,6 +1532,15 @@ class ASTROMISC{
             return 360 * ($angle / 360 - floor($angle / 360));
         } else {
             return 360 + 360 * ($angle / 360 - ceil($angle / 360));
+        }
+    }
+
+    public static function LimitTo180($angle)
+    {
+        if ($angle >= 0) {
+            return 180 * ($angle / 180 - floor($angle / 180));
+        } else {
+            return 180 + 180 * ($angle / 180 - ceil($angle / 180));
         }
     }
 }

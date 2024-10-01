@@ -250,6 +250,11 @@
                     "type": "ValidationTextBox",
                     "name": "topoLocHourAngle",
                     "caption": "Topocentric local hour angle (Η')"
+                },
+                {
+                    "type": "ValidationTextBox",
+                    "name": "topoZenAngle",
+                    "caption": "Topocentric zenith angle (θ)"
                 }
             ]
         }
