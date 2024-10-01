@@ -210,7 +210,7 @@ class ASTROSUN{
     public static function ApparentSiderealTimeAtGreenwich($julianDate, $julianCentury, $nutationLong, $trueOblEcl){
         $v0 = 280.46061837 + 360.98564736629 * ($julianDate - 2451545) + 0.000387933 * pow($julianCentury, 2) - pow($julianCentury, 3) / 38710000;
         $mst = ASTROMISC::LimitTo360($v0);
-        return $v0 + $nutationLong * cos(deg2rad($trueOblEcl));
+        return $mst + $nutationLong * cos(deg2rad($trueOblEcl));
     }
 
     public static function GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat){
