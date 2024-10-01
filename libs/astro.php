@@ -107,11 +107,10 @@ class ASTROSUN{
     public static function HeliocentricLongitudeDEG($julianMillenium)
     {
         $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
-        $f = $l / 360 - floor($l / 360);
         if ($l >= 0) {
-            return 360 * $f;
+            return 360 * ($l / 360 - floor($l / 360));
         } else {
-            return 360 - 360 * $f;
+            return 360 - 360 * ($l / 360 - ceil($l / 360));
         }
     }
 
@@ -132,11 +131,10 @@ class ASTROSUN{
 
     public static function GeocentricLongitude($HeliocentricLongitude){
         $glong = $HeliocentricLongitude + 180;
-        $f = $glong / 360 - floor($glong / 360);
         if ($glong >= 0) {
-            return 360 * $f;
+            return 360 * ($glong / 360 - floor($glong / 360));
         } else {
-            return 360 - 360 * $f;
+            return 360 - 360 * ($glong / 360 - ceil($glong / 360));
         }
     }
 
@@ -219,11 +217,10 @@ class ASTROSUN{
     
     public static function ApparentSiderealTimeAtGreenwich($julianDate, $julianCentury){
         $v0 = 280.46061837 + 360.98564736629 * ($julianDate - 2451545) + 0.000387933 * pow($julianCentury, 2) - pow($julianCentury, 3) / 38710000;
-        $f = $v0 / 360 - floor($v0 / 360);
         if ($v0 >= 0) {
-            return 360 * $f;
+            return 360 * ($v0 / 360 - floor($v0 / 360));
         } else {
-            return 360 - 360 * $f;
+            return 360 - 360 * ($v0 / 360 - ceil($v0 / 360));
         }
     }
 
@@ -234,12 +231,10 @@ class ASTROSUN{
                 cos(deg2rad($appSunLong))
             )
         );
-        $f = $a / 360 - floor($a / 360);
-        return $a;
         if ($a >= 0) {
-            return 360 * $f;
+            return 360 * ($a / 360 - floor($a / 360));
         } else {
-            return 360 - 360 * $f;
+            return 360 - 360 * ($a / 360 - ceil($a / 360));
         }
     }
 
