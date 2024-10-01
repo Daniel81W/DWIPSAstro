@@ -107,11 +107,7 @@ class ASTROSUN{
     public static function HeliocentricLongitudeDEG($julianMillenium)
     {
         $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
-        if ($l >= 0) {
-            return 360 * ($l / 360 - floor($l / 360));
-        } else {
-            return 360 - 360 * ($l / 360 - ceil($l / 360));
-        }
+        return ASTROMISC::LimitTo360($l);
     }
 
     public static function HeliocentricLatitude($julianMillenium)
@@ -131,11 +127,7 @@ class ASTROSUN{
 
     public static function GeocentricLongitude($HeliocentricLongitude){
         $glong = $HeliocentricLongitude + 180;
-        if ($glong >= 0) {
-            return 360 * ($glong / 360 - floor($glong / 360));
-        } else {
-            return 360 - 360 * ($glong / 360 - ceil($glong / 360));
-        }
+        return ASTROMISC::LimitTo360($glong);
     }
 
     public static function GeocentricLatitude($HeliocentricLatitude){
@@ -217,11 +209,7 @@ class ASTROSUN{
     
     public static function ApparentSiderealTimeAtGreenwich($julianDate, $julianCentury){
         $v0 = 280.46061837 + 360.98564736629 * ($julianDate - 2451545) + 0.000387933 * pow($julianCentury, 2) - pow($julianCentury, 3) / 38710000;
-        if ($v0 >= 0) {
-            return 360 * ($v0 / 360 - floor($v0 / 360));
-        } else {
-            return 360 - 360 * ($v0 / 360 - ceil($v0 / 360));
-        }
+        return ASTROMISC::LimitTo360($v0);
     }
 
     public static function GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat){
