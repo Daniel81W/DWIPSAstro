@@ -272,6 +272,10 @@ class ASTROSUN{
         ); 
     }
 
+    public static function TopocentricLocalHourAngle($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc){
+        return $locHourAngle - ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec);
+    }
+
     // Hilfsfunktionen
     public static function X($i, $julianCentury){
         switch ($i){
