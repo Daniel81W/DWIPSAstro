@@ -90,6 +90,75 @@ class ASTROSUN{
      */
     const AU = 149597870700;
 
+    //
+    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long){
+        $timestamp_zero_ut = mktime(0, 0, 0, $month, $day, $year);
+        $JD_ZERO_UT = ASTROGEN::JulianDay($timestamp_zero_ut);
+        $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
+        $JM_ZERO_UT = ASTROGEN::JulianMillennium($JC_ZERO_UT);
+
+        $JD_ZERO_TT = ASTROGEN::JulianDay($timestamp_zero_ut + $deltaT);
+        $JC_ZERO_TT = ASTROGEN::JulianDay($JD_ZERO_TT);
+        $JM_ZERO_TT = ASTROGEN::JulianMillennium($JC_ZERO_TT);
+
+        $v = ASTROSUN::v($JD_ZERO_UT);
+        $am1 = ASTROSUN::a($JD_ZERO_TT - 1);
+        $a0 = ASTROSUN::a($JD_ZERO_TT);
+        $ap1 = ASTROSUN::a($JD_ZERO_TT + 1);
+        $dm1 = ASTROSUN::a($JD_ZERO_TT - 1);
+        $d0 = ASTROSUN::a($JD_ZERO_TT);
+        $dp1 = ASTROSUN::a($JD_ZERO_TT + 1);
+
+        $m0 = ()$a0 - $lat - $v) / 360;
+    }
+
+    public static function v($julianDay){
+        $jc = ASTROGEN::JulianCentury($julianDay);
+        $jm = ASTROGEN::JulianMillennium($jc);
+        $nutLong = ASTROSUN::NutationInLongitude($jc);
+        $nutObl = ASTROSUN::NutationInObliquity($jc);
+        $meanObl = ASTROSUN::MeanObliquityOfTheEcliptic($jm);
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($meanObl, $nutObl);
+        return ASTROSUN::ApparentSiderealTimeAtGreenwich($julianDay, $jc, $nutLong, $trueOblEcl);
+    }
+
+    public static function a($julianDay){
+        $jc = ASTROGEN::JulianCentury($julianDay);
+        $jm = ASTROGEN::JulianMillennium($jc);
+        
+        $nutLong = ASTROSUN::NutationInLongitude($jc);
+        $HeliocentricLongitude = ASTROSUN::HeliocentricLongitudeDEG($jm);
+        $HeliocentricLatitude = ASTROSUN::HeliocentricLatitude($jm);
+        $earthRadVec = ASTROSUN::EarthRadiusVector($jm);
+        $geoCentLong = ASTROSUN::GeocentricLongitude($HeliocentricLongitude);
+        $geoCentLat = ASTROSUN::GeocentricLatitude($HeliocentricLatitude);
+        $abCorr = ASTROSUN::AberrationCorrection($earthRadVec);
+        $appSunLong = ASTROSUN::ApparentSunLongitude($geoCentLong, $nutLong, $abCorr);
+        $nutObl = ASTROSUN::NutationInObliquity($jc);
+        $meanObl = ASTROSUN::MeanObliquityOfTheEcliptic($jm);
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($meanObl, $nutObl);
+        return ASTROSUN::GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat);
+    }
+
+    public static function d($julianDay){
+        $jc = ASTROGEN::JulianCentury($julianDay);
+        $jm = ASTROGEN::JulianMillennium($jc);
+
+        $HeliocentricLongitude = ASTROSUN::HeliocentricLongitudeDEG($jm);
+        $earthRadVec = ASTROSUN::EarthRadiusVector($jm);
+        $HeliocentricLatitude = ASTROSUN::HeliocentricLatitude($jm);
+        $meanObl = ASTROSUN::MeanObliquityOfTheEcliptic($jm);
+        $geoCentLong = ASTROSUN::GeocentricLongitude($HeliocentricLongitude);
+        $nutObl = ASTROSUN::NutationInObliquity($jc);
+        $nutLong = ASTROSUN::NutationInLongitude($jc);
+        $abCorr = ASTROSUN::AberrationCorrection($earthRadVec);
+        $geoCentLat = ASTROSUN::GeocentricLatitude($HeliocentricLatitude);
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($meanObl, $nutObl);
+        $appSunLong = ASTROSUN::ApparentSunLongitude($geoCentLong, $nutLong, $abCorr);
+        return ASTROSUN::GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong);
+    }
+
+    //
     /**
      * Summary of HeliocentricLongitudeRAD
      * @param mixed $julianMillenium 
@@ -206,7 +275,7 @@ class ASTROSUN{
     public static function ApparentSunLongitude($geoCentLong, $nutLong, $abCorr){
         return $geoCentLong + $nutLong + $abCorr;
     }
-    
+
     public static function ApparentSiderealTimeAtGreenwich($julianDate, $julianCentury, $nutationLong, $trueOblEcl){
         $v0 = 280.46061837 + 360.98564736629 * ($julianDate - 2451545) + 0.000387933 * pow($julianCentury, 2) - pow($julianCentury, 3) / 38710000;
         $mst = ASTROMISC::LimitTo360($v0);
@@ -1113,7 +1182,6 @@ class ASTROSUN{
         );
         return $r4;
     }
-    
     
     public static function PeriodicTermsForTheNutation()
     {
