@@ -107,13 +107,17 @@ class ASTROSUN{
         $JM_ZERO_TT = ASTROGEN::JulianMillennium($JC_ZERO_TT);
 
         $v = ASTROSUN::v($JD_ZERO_UT);
+        $a = array();
+        for($i = -1; $i <= 1; $i++){
+            $a[$i] = ASTROSUN::a($JD_ZERO_TT + $i);
+        }
         $am1 = ASTROSUN::a($JD_ZERO_TT - 1);
         $a0 = ASTROSUN::a($JD_ZERO_TT);
         $ap1 = ASTROSUN::a($JD_ZERO_TT + 1);
         $dm1 = ASTROSUN::d($JD_ZERO_TT - 1);
         $d0 = ASTROSUN::d($JD_ZERO_TT);
         $dp1 = ASTROSUN::d($JD_ZERO_TT + 1);
-
+        IPS_LogMessage("-", $am1 . " - " . $a[-1]);
         $m0 = ($a0 - $long - $v) / 360;
 
         $H0 = rad2deg(
@@ -393,7 +397,7 @@ class ASTROSUN{
             asin(
                 sin(deg2rad($geoCentLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($appSunLong)),
             )
-        );//TODO Genauigkeit
+        );
     }
     
     public static function LocalHourAngle($appSidTimeGreenwich, $longitude , $geoSunRAsc){
@@ -464,7 +468,6 @@ class ASTROSUN{
     public static function EqOfTime($julianMillennium, $geoSunRAsc, $nutLong, $trueOblEcl){
         $m = 280.4664567 + 360007.6982779 * $julianMillennium + 0.03032028 * pow($julianMillennium, 2) + pow($julianMillennium, 3) / 49931 - pow($julianMillennium, 4) / 15300 - pow($julianMillennium, 5) / 2000000;
         $m = ASTROMISC::LimitTo360($m);
-        IPS_LogMessage("-", $m);
 
         $E = $m - 0.0057183 - $geoSunRAsc + $nutLong * cos(deg2rad($trueOblEcl));
         $E *= 4;
