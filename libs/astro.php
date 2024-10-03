@@ -91,11 +91,13 @@ class ASTROSUN{
     const AU = 149597870700;
 
     //
-    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long){
+    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long, $id){
         $timestamp_zero_ut = mktime(0, 0, 0, $month, $day, $year);
         $JD_ZERO_UT = ASTROGEN::JulianDay($timestamp_zero_ut);
         $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
         $JM_ZERO_UT = ASTROGEN::JulianMillennium($JC_ZERO_UT);
+
+        $id->SendDebug("-", $JD_ZERO_UT . " - " . $JC_ZERO_UT . " - " . $JM_ZERO_UT,0);
 
         $JD_ZERO_TT = ASTROGEN::JulianDay($timestamp_zero_ut + $deltaT);
         $JC_ZERO_TT = ASTROGEN::JulianDay($JD_ZERO_TT);

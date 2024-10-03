@@ -220,7 +220,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadAttributeFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
         
 
-        $this->SendDebug("SR", ASTROSUN::Sunrise(2003, 10, 17, 67, 39.742476, -105.1786),0);
+        $this->SendDebug("SR", ASTROSUN::Sunrise(2003, 10, 17, 67, 39.742476, -105.1786, $this),0);
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
