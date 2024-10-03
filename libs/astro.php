@@ -102,13 +102,13 @@ class ASTROSUN{
         $timestamp_zero_ut = mktime(0, 0, 0, $month, $day, $year);
         IPS_LogMessage("timestamp", $timestamp_zero_ut);
 
-        $JD_ZERO_UT = ASTROGEN::JulianDay($timestamp_zero_ut);
+        $JD_ZERO_UT = ASTROGEN::JulianDayFromTimestamp($timestamp_zero_ut);
         $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
         $JM_ZERO_UT = ASTROGEN::JulianMillennium($JC_ZERO_UT);
 
         IPS_LogMessage("time_out", $JD_ZERO_UT . " - " . $JC_ZERO_UT . " - " . $JM_ZERO_UT);
 
-        $JD_ZERO_TT = ASTROGEN::JulianDay($timestamp_zero_ut + $deltaT);
+        $JD_ZERO_TT = ASTROGEN::JulianDayFromTimestamp($timestamp_zero_ut + $deltaT);
         $JC_ZERO_TT = ASTROGEN::JulianDay($JD_ZERO_TT);
         $JM_ZERO_TT = ASTROGEN::JulianMillennium($JC_ZERO_TT);
 
