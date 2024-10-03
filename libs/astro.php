@@ -174,6 +174,14 @@ class ASTROSUN{
         if(abs($H0s) > 180){
             $H02 - $H0s / abs($H0s) * 360;
         }
+        $H1s = $H1s / abs($H1s) * ASTROMISC::LimitToInterval(abs($H1s), 360);
+        if (abs($H1s) > 180) {
+            $H1s - $H1s / abs($H1s) * 360;
+        }
+        $H2s = $H2s / abs($H2s) * ASTROMISC::LimitToInterval(abs($H2s), 360);
+        if (abs($H2s) > 180) {
+            $H2s - $H2s / abs($H2s) * 360;
+        }
 
         return $H0s . " - " . $H1s . " - " . $H2s;
     }
