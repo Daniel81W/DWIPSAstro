@@ -262,7 +262,8 @@ class ASTROSUN{
         }
         return $lsr;
     }
-    public static function v($julianDay){
+    
+    private static function v($julianDay){
         $jc = ASTROGEN::JulianCentury($julianDay);
         $jm = ASTROGEN::JulianMillennium($jc);
         $nutLong = ASTROSUN::NutationInLongitude($jc);
