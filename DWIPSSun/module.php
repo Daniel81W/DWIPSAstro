@@ -379,12 +379,12 @@ class DWIPSSun extends IPSModule
 
 
         //$shadowlen = 1 / tan(deg2rad($sunelevation));
-        if ($shadowlen > 0) {
+        /*if ($shadowlen > 0) {
             $this->SetValue("shadowLength", $shadowlen);
         } else {
 
             $this->SetValue("shadowLength", 0);
-        }
+        }*/
         //$this->SetValue("solarirradiancespace", $solarirradiancespace);
         //$this->SetValue("solarirradiancerectangular", $solarirradiancespace * 0.75);
         //$this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
