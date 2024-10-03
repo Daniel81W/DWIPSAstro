@@ -299,32 +299,40 @@ class DWIPSSun extends IPSModule
         if($sr > $now){
             $nsr = $sr;
             
-            for ($i = 0; $i < 200; $i++) {
+            for ($i = 0; $i < 366; $i++) {
                 $t = $now - $i * 86400;
                 $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
                 if($sr>0){
                     $lsr = $sr;
-                    $i = 200;
+                    $i = 400;
                 }
             }
         }elseif($sr > 0){
             $lsr = $sr;
 
-            for ($i = 0; $i < 200; $i++) {
+            for ($i = 0; $i < 366; $i++) {
                 $t = $now + $i * 86400;
                 $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
                 if ($sr > 0) {
                     $nsr = $sr;
-                    $i = 200;
+                    $i = 400;
                 }
             }
         }elseif(is_nan($sr)){
-            for ($i = 0; $i < 200; $i++) {
+            for ($i = 0; $i < 366; $i++) {
                 $t = $now - $i * 86400;
                 $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
                 if (!is_nan($sr)) {
                     $lsr = $sr;
-                    $i = 200;
+                    $i = 400;
+                }
+            }
+            for ($i = 0; $i < 366; $i++) {
+                $t = $now + $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+                if (!is_nan($sr)) {
+                    $nsr = $sr;
+                    $i = 400;
                 }
             }
         }
