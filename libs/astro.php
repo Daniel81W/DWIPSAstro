@@ -196,9 +196,9 @@ class ASTROSUN{
         $S = $m[2] + ($hh[2] - ($angleOfSun)) / (360 * cos(deg2rad($deltasi[2])) * cos(deg2rad($lat)) * sin(deg2rad($Hs[2])));
 
         $values = array(
-            "R" => gmmktime(0, 0, 0) + floor($R * 24 * 60 * 60),
-            "T" => gmmktime(0, 0, 0) + floor($t * 24 * 60 * 60),
-            "S" => gmmktime(0, 0, 0) + floor($S * 24 * 60 * 60)
+            "R" => $timestamp_zero_ut + floor($R * 24 * 60 * 60),
+            "T" => $timestamp_zero_ut + floor($t * 24 * 60 * 60),
+            "S" => $timestamp_zero_ut + floor($S * 24 * 60 * 60)
             );
 
         return $values;
