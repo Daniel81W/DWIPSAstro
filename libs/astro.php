@@ -184,7 +184,7 @@ class ASTROSUN{
 
             $Hs[$i] = $Hs[$i] / abs($Hs[$i]) * ASTROMISC::LimitToInterval(abs($Hs[$i]), 360);
             if (abs($Hs[$i]) > 180) {
-                $Hs[$i] = $Hs[$i] - $H0$Hs[$i]s / abs($Hs[$i]) * 360;
+                $Hs[$i] = $Hs[$i] - $Hs[$i]s / abs($Hs[$i]) * 360;
             }
         }
         /*
