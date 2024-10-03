@@ -776,40 +776,6 @@ class ASTROSUN{
         return 8 * ASTROSUN::HourAngleAtElevation(-0.833, $latitude, $julianCentury);
     }
 
-    public static function Season(float $julianCentury, float $latitude) : int{
-        $declination = ASTROSUN::Declination($julianCentury);
-        $declinationBef = ASTROSUN::Declination($julianCentury - 0.00000002);
-        if($declination>=0){
-            if($declination > $declinationBef){
-                if($latitude > 0){
-                    return 1;
-                }else{
-                    return 3;
-                }
-            }else{
-                if($latitude > 0){
-                    return 2;
-                }else{
-                    return 4;
-                }
-            }
-        }else{
-            if($declination > $declinationBef){
-                if($latitude > 0){
-                    return 4;
-                }else{
-                    return 2;
-                }
-            }else{
-                if($latitude > 0){
-                    return 3;
-                }else{
-                    return 1;
-                }
-            }
-        }
-    }
-
 
     private static function L0Arr(){
         $l0 = array(
