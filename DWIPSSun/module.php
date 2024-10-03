@@ -91,7 +91,7 @@ class DWIPSSun extends IPSModule
         $p++; //"Astronomie.Radiant_Power", 40);
 
 
-        $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 4, "", 30, true);
+        $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 3, "", 30, true);
 
 
         $this->RegisterPropertyFloat("Latitude", 50.0);
