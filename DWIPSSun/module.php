@@ -72,33 +72,24 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("insideCivilTwilight", $this->Translate("insideCivilTwilight"), 0, "", $p, true);
         $p++;
-        $this->MaintainVariable("durationOfSunrise", $this->Translate("durationOfSunrise"), 2, "", $p, false);
         $this->MaintainVariable("durationOfSunrise", $this->Translate("durationOfSunrise"), 2, "", $p, true);
         $p++;
-        $this->MaintainVariable("sundistance", $this->Translate("sundistance"), 1, "", $p, false);
         $this->MaintainVariable("sundistance", $this->Translate("sundistance"), 1, "", $p, true);
         $p++;
-        $this->MaintainVariable("season", $this->Translate("season"), 1, "DWIPS." . $this->Translate("season"), $p, false);
-        $this->MaintainVariable("season", $this->Translate("season"), 1, "DWIPS." . $this->Translate("season"), $p, true);
+        $this->MaintainVariable("season", $this->Translate("season"), 4, "DWIPS." . $this->Translate("season"), $p, true);
         $p++;
-        $this->MaintainVariable("shadowLength", $this->Translate("shadowlength"), 2, "", $p, false);
         $this->MaintainVariable("shadowLength", $this->Translate("shadowlength"), 2, "", $p, true);
         $p++;
-        $this->MaintainVariable("solarirradiancespace", $this->Translate("solarirradiancespace"), 2, "", $p, false);
         $this->MaintainVariable("solarirradiancespace", $this->Translate("solarirradiancespace"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 26);
-        $this->MaintainVariable("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), 2, "", $p, false);
         $this->MaintainVariable("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 27);
-        $this->MaintainVariable("solarirradianceground", $this->Translate("solarirradianceground"), 2, "", $p, false);
         $this->MaintainVariable("solarirradianceground", $this->Translate("solarirradianceground"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 28);
-        $this->MaintainVariable("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), 2, "", $p, false);
         $this->MaintainVariable("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 40);
 
 
-        $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 4, "", 30, false);
         $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 4, "", 30, true);
 
 
