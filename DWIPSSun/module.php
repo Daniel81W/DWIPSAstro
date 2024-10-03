@@ -41,6 +41,7 @@ class DWIPSSun extends IPSModule
         $this->MaintainVariable("nextstartciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, true);
         $this->MaintainVariable("startciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, false);
         $p++;
+        $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, true);
         $p++;
         $this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", $p);
