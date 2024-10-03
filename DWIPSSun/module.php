@@ -303,8 +303,8 @@ class DWIPSSun extends IPSModule
         $sundistance = ASTROSUN::SunRadVector($jc) * 149597870.7;
         $solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 
-        $this->SetValue("juliandate", $jd);
-        $this->SetValue("juliancentury", $jc);
+        //$this->SetValue("juliandate", $jd);
+        //$this->SetValue("juliancentury", $jc);
 
         $solarnoon = mktime(0, 0, ASTROSUN::SolarNoon($timezone, $longitude, $jc) * 24 * 60 * 60);
         if ($solarnoon < time()) {
@@ -317,7 +317,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sunelevationmin", -90 + $latitude + ASTROSUN::Declination($jc));
         $this->SetValue("sunelevationmax", 90 - $latitude + ASTROSUN::Declination($jc));
         $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
-        $this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
+        //$this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
         $this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
         $sundura = ($sunset - $sunrise) / 60.0 / 60.0;
         $this->SetValue("sunlightduration", $sundura);
