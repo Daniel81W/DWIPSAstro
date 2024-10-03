@@ -119,7 +119,7 @@ class DWIPSSun extends IPSModule
         $p++; //"Astronomie.Radiant_Power", 40);
 
 
-        $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 3, "", 30, true);
+        $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 3, "", $p, true);
 
 
         $this->RegisterPropertyFloat("Latitude", 50.0);
@@ -164,6 +164,7 @@ class DWIPSSun extends IPSModule
         $this->RegisterAttributeFloat("topoZenAngle", 0);
         $this->RegisterAttributeFloat("topoAziAngle", 0);
         $this->RegisterAttributeFloat("eqOfTime", 0);
+        $this->RegisterAttributeFloat("elevationOfTheSun", 0);
 
 
 
@@ -286,7 +287,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("topoZenAngle", ASTROSUN::TopocentricZenithAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
         $this->WriteAttributeFloat("topoAziAngle", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
         $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadAttributeFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
-   
+        $this->WriteAttributeFloat("elevationOfTheSun", ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
@@ -359,7 +360,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sundirection", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
 
 
-        $this->SetValue("sunelevation", ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
+        $this->SetValue("sunelevation", );
         $this->SetValue("sundeclination", ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("sunelevationmin", -90 + $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("sunelevationmax", 90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
@@ -368,7 +369,8 @@ class DWIPSSun extends IPSModule
 
         $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
         $this->SetValue("season", ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
-            
+        $this->SetValue("shadowLength", ASTROSUN::ShadwoLength($this->ReadAttributeFloat("elevationOfTheSun")));
+        
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 
 

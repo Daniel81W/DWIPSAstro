@@ -567,6 +567,15 @@ class ASTROSUN{
         }
     }
 
+    public static function ShadwoLength($sunelevation){
+        $shadowlen = 1 / tan(deg2rad($sunelevation));
+        if ($shadowlen > 0) {
+            return $shadowlen;
+        } else {
+
+            return 0;
+        }
+    }
 
     // Hilfsfunktionen
     private static function X($i, $julianCentury){
