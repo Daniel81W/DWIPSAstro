@@ -96,7 +96,7 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("sunelevationmax", $this->Translate("sunelevationmax"), 2, "~WindDirection.F", $p, true);
         $p++;
-        $this->MaintainVariable("day", $this->Translate("day"), 0, "", $p, true);
+        $this->MaintainVariable("day", $this->Translate("day"), 0, "~DayNight.KNX", $p, true);
         $p++;
         $this->MaintainVariable("insideCivilTwilight", $this->Translate("insideCivilTwilight"), 0, "", $p, true);
         $p++;
@@ -364,16 +364,11 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sunelevationmin", -90 + $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("sunelevationmax", 90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("day", -0.8333 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
+        $this->SetValue("insideCivilTwilight", -6 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
 
         $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
 
 
-
-        //$solarZenith = ASTROSUN::SolarZenith($jc, $localTime, $latitude, $longitude, $timezone);
-
-
-     
-        //$sunelevation = ASTROSUN::SolarElevation($jc, $localTime, $latitude, $longitude, $timezone);
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 
 
@@ -395,18 +390,6 @@ class DWIPSSun extends IPSModule
         //$this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
         //$this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * (cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) * sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39))));
         //$this->SetValue("durationOfSunrise", ASTROSUN::DurationOfSunrise($latitude, $longitude, $jc));
-        /*
-        $ts = time();
-        if ($sunrisetoday <= $ts and $ts <= $sunsettoday) {
-            $this->SetValue("day", true);
-        } else {
-            $this->SetValue("day", false);
-        }
-        if ($beginCivilTwilighttoday <= $ts and $ts <= $endCivilTwilightToday) {
-            $this->SetValue("insideCivilTwilight", true);
-        } else {
-            $this->SetValue("insideCivilTwilight", false);
-        }*/
 
         $this->SetValue("moonphase", ASTROMOON::PhaseStr());
     }
