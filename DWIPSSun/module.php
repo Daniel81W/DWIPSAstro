@@ -38,31 +38,19 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("nextstartciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("laststopciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("laststopciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("nextstopciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("nextstopciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("laststopnauticaltwilight", $this->Translate("stopnauticaltwilight"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("laststopnauticaltwilight", $this->Translate("stopnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("nextstopnauticaltwilight", $this->Translate("stopnauticaltwilight"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("nextstopnauticaltwilight", $this->Translate("stopnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("laststopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("laststopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("nextstopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("nextstopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
-        /*$this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", $p);
-        $p++;
-        $this->RegisterVariableInteger("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), "~UnixTimestamp", $p);
-        $p++;
-        $this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", $p);*/
         $p++;
         $this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", $p);
         $p++;
@@ -326,8 +314,14 @@ class DWIPSSun extends IPSModule
         $this->SetValue("nextstartnauticaltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12, "R"));
         $this->SetValue("laststartastronomicaltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "R"));
         $this->SetValue("nextstartastronomicaltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "R"));
-       
-        
+        $this->SetValue("laststopciviltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6, "R"));
+        $this->SetValue("nextstopciviltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6, "R"));
+        $this->SetValue("laststopnauticaltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12, "R"));
+        $this->SetValue("nextstopnauticaltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12, "R"));
+        $this->SetValue("laststopastronomicaltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "R"));
+        $this->SetValue("nextstopastronomicaltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "R"));
+
+
         $sundura = (ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"] - ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]) / 60.0 / 60.0;
         //$this->SetValue("sunlightduration", $sundura);
         //$this->SetValue("sunlightdurationstr", date('H:i:s', ($sunset - $sunrise - intval(date('Z', $sunset - $sunrise)))));
