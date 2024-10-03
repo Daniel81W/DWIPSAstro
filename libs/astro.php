@@ -121,10 +121,15 @@ class ASTROSUN{
                 (sin(deg2rad(-0.8333)) - sin(deg2rad($lat)) * sin(deg2rad($d0))) / (cos(deg2rad($lat)) * cos(deg2rad($d0)))
             )
         );
-        $H0 = ASTROMISC::LimitTo180($H0);
+        $H0 = ASTROMISC::LimitToInterval($H0, 180);
 
         $m1 = $m0 - $H0 / 360;
-        return $m0 . " - " . $H0 . " - " . $m1;
+        $m2 = $m0 + $H0 / 360;
+
+        $m0 = ASTROMISC::LimitToInterval($m0, 1);
+        $m1 = ASTROMISC::LimitToInterval($m1, 1);
+        $m2 = ASTROMISC::LimitToInterval($m2, 1);
+        return $m0 . " - " . $H0 . " - " . $m1 . " - " . $m2;
     }
 
     public static function v($julianDay){
@@ -1645,6 +1650,15 @@ class ASTROMISC{
             return 180 * ($angle / 180 - floor($angle / 180));
         } else {
             return 180 + 180 * ($angle / 180 - ceil($angle / 180));
+        }
+    }
+
+    public static function LimitToInterval($numToLimit, $limit)
+    {
+        if ($numToLimit >= 0) {
+            return $limit * ($numToLimit / $limit - floor($numToLimit / $limit));
+        } else {
+            return $limit + $limit * ($numToLimit / $limit - ceil($numToLimit / $limit));
         }
     }
 }
