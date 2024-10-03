@@ -95,7 +95,7 @@ class ASTROSUN{
     const AU = 149597870700;
 
     //
-    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long, $id){
+    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long){
         $timestamp_zero_ut = mktime(0, 0, 0, $month, $day, $year);
 
         $JD_ZERO_UT = ASTROGEN::JulianDayFromTimestamp($timestamp_zero_ut);
