@@ -116,6 +116,7 @@ class ASTROSUN{
         for($i = -1; $i <= 1; $i++){
             $a[$i] = ASTROSUN::a($JD_ZERO_TT + $i);
             $d[$i] = ASTROSUN::d($JD_ZERO_TT + $i);
+            IPS_LogMessage("SR", $d[$i]);
         }
 
         $m[0] = ($a[0] - $long - $vu) / 360;
@@ -273,7 +274,7 @@ class ASTROSUN{
         return ASTROSUN::ApparentSiderealTimeAtGreenwich($julianDay, $jc, $nutLong, $trueOblEcl);
     }
 
-    public static function a($julianDay){
+    private static function a($julianDay){
         $jc = ASTROGEN::JulianCentury($julianDay);
         $jm = ASTROGEN::JulianMillennium($jc);
         
@@ -291,7 +292,7 @@ class ASTROSUN{
         return ASTROSUN::GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat);
     }
 
-    public static function d($julianDay){
+    private static function d($julianDay){
         $jc = ASTROGEN::JulianCentury($julianDay);
         $jm = ASTROGEN::JulianMillennium($jc);
 
@@ -527,8 +528,12 @@ class ASTROSUN{
         //TODO LIMIT Eq to 20 min
     }
 
+    public static function DurationOfSunlight(){
+        
+    }
+
     // Hilfsfunktionen
-    public static function X($i, $julianCentury){
+    private static function X($i, $julianCentury){
         switch ($i){
             case 0:
                 return ASTROSUN::MeanElongationOfTheMoon($julianCentury);
@@ -726,6 +731,12 @@ class ASTROSUN{
         return $sum;
     }
     
+
+
+
+
+
+
     /**
      * 
      */
@@ -1049,7 +1060,7 @@ class ASTROSUN{
         return ASTROSUN::TimeForElevation(0.833, $latitude, $longitude, 1, $julianCentury, true) - ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, 1, $julianCentury, true);
     }
 
-    public static function L0Arr(){
+    private static function L0Arr(){
         $l0 = array(
             array(175347046, 0, 0),
             array(3341656, 4.6692568, 6283.07585),
@@ -1119,7 +1130,7 @@ class ASTROSUN{
         return $l0;
     }
 
-    public static function L1Arr()
+    private static function L1Arr()
     {
         $l1 = array(
             array(628331966747, 0, 0),
@@ -1160,7 +1171,7 @@ class ASTROSUN{
         return $l1;
     }
 
-    public static function L2Arr()
+    private static function L2Arr()
     {
         $l2 = array(
             array(52919, 0, 0),
@@ -1187,7 +1198,7 @@ class ASTROSUN{
         return $l2;
     }
 
-    public static function L3Arr()
+    private static function L3Arr()
     {
         $l3 = array(
             array(289, 5.844, 6283.076),
@@ -1201,7 +1212,7 @@ class ASTROSUN{
         return $l3;
     }
 
-    public static function L4Arr()
+    private static function L4Arr()
     {
         $l4 = array(
             array(114, 3.142, 0),
@@ -1211,7 +1222,7 @@ class ASTROSUN{
         return $l4;
     }
 
-    public static function L5Arr()
+    private static function L5Arr()
     {
         $l5 = array(
             array(1, 3.14, 0),
@@ -1219,7 +1230,7 @@ class ASTROSUN{
         return $l5;
     }
 
-    public static function B0Arr()
+    private static function B0Arr()
     {
         $b0 = array(
             array(280, 3.199, 84334.662),
@@ -1231,7 +1242,7 @@ class ASTROSUN{
         return $b0;
     }
 
-    public static function B1Arr()
+    private static function B1Arr()
     {
         $b1 = array(
             array(9, 3.9, 5507.55),
@@ -1240,7 +1251,7 @@ class ASTROSUN{
         return $b1;
     }
 
-    public static function R0Arr()
+    private static function R0Arr()
     {
         $r0 = array(
             array(100013989, 0, 0),
@@ -1287,7 +1298,7 @@ class ASTROSUN{
         return $r0;
     }
 
-    public static function R1Arr()
+    private static function R1Arr()
     {
         $r1 = array(
             array(103019, 1.10749, 6283.07585),
@@ -1304,7 +1315,7 @@ class ASTROSUN{
         return $r1;
     }
 
-    public static function R2Arr()
+    private static function R2Arr()
     {
         $r2 = array(
             array(4359, 5.7846, 6283.0758),
@@ -1317,7 +1328,7 @@ class ASTROSUN{
         return $r2;
     }
 
-    public static function R3Arr()
+    private static function R3Arr()
     {
         $r3 = array(
             array(145, 4.273, 6283.076),
@@ -1326,15 +1337,15 @@ class ASTROSUN{
         return $r3;
     }
 
-    public static function R4Arr()
+    private static function R4Arr()
     {
         $r4 = array(
             array(4, 2.56, 6283.08)
         );
         return $r4;
     }
-    
-    public static function PeriodicTermsForTheNutation()
+
+    private static function PeriodicTermsForTheNutation()
     {
         $pt = array(
             array( 'y' => array(0, 0, 0, 0, 1),
