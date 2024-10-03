@@ -18,8 +18,6 @@ class DWIPSSun extends IPSModule
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 4, $this->Translate("winter"), "", -1);
         }
 
-        $jdid = $this->RegisterVariableFloat("juliandate", $this->Translate("juliandate"), "", 1);
-        $this->RegisterVariableFloat("juliancentury", $this->Translate("juliancentury"), "", 2);
         $this->RegisterVariableInteger("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), "~UnixTimestamp", 3);
         $this->RegisterVariableInteger("startnauticaltwilight", $this->Translate("startnauticaltwilight"), "~UnixTimestamp", 4);
         $this->RegisterVariableInteger("startciviltwilight", $this->Translate("startciviltwilight"), "~UnixTimestamp", 5);
@@ -38,7 +36,6 @@ class DWIPSSun extends IPSModule
         $this->RegisterVariableFloat("sunelevationmax", $this->Translate("sunelevationmax"), "", 17);
         $this->RegisterVariableFloat("sundeclination", $this->Translate("sundeclination"), "", 18);
         $this->RegisterVariableInteger("sundistance", $this->Translate("sundistance"), "", 19);
-        $this->RegisterVariableFloat("equationOfTime", $this->Translate("equationOfTime"), "", 20);
         $this->RegisterVariableFloat("durationOfSunrise", $this->Translate("durationOfSunrise"), "", 21);
         $this->RegisterVariableInteger("season", $this->Translate("season"), "DWIPS." . $this->Translate("season"), 22);
         $this->RegisterVariableBoolean("day", $this->Translate("day"), "", 23);
