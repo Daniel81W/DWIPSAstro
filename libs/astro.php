@@ -845,9 +845,7 @@ class ASTROSUN{
         return fmod( $localTime * 1440 + ASTROSUN::EquationOfTime($julianCentury) + 4 * $long - 60 * $timezone , 1440);
     }
 
-    /**
-     * 
-     */
+    
     public static function HourAngle(float $julianCentury, float $localTime, float $long, int $timezone){
         $trueSolarTime = ASTROSUN::TrueSolarTime($localTime, $julianCentury, $long, $timezone);
         if ($trueSolarTime / 4 < 0){
@@ -857,9 +855,7 @@ class ASTROSUN{
         }
     }
 
-    /**
-     * 
-     */
+    
     public static function SolarZenith(float $julianCentury, float $localTime, float $lat, float $long, float $timezone){
         $declination = ASTROSUN::Declination( $julianCentury);
         $hourAngle = ASTROSUN::HourAngle( $localTime,  $julianCentury,  $long,  $timezone);
@@ -868,16 +864,12 @@ class ASTROSUN{
         );
     }
 
-    /**
-     * 
-     */
+    
     public static function SolarElevation(float $julianCentury, float $localTime, float $lat, float $long, float $timezone){
         return 90 - ASTROSUN::SolarZenith($julianCentury, $localTime, $lat, $long, $timezone);
     }
 
-    /**
-     * 
-     */
+    
     public static function SolarAzimut(float $julianCentury, float $localTime, float $latitude, float $longitude, int $timezone){
         $declination = ASTROSUN::Declination($julianCentury);
         $hourAngle = ASTROSUN::HourAngle($localTime, $julianCentury, $longitude, $timezone);
