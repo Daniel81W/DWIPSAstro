@@ -93,6 +93,8 @@ class ASTROSUN{
     //
     public static function Sunrise($year, $month, $day, $deltaT, $lat, $long, $id){
         $timestamp_zero_ut = mktime(0, 0, 0, $month, $day, $year);
+        IPS_LogMessage("-", $month . " - " . $day . " - " . $year);
+
         $JD_ZERO_UT = ASTROGEN::JulianDay($timestamp_zero_ut);
         $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
         $JM_ZERO_UT = ASTROGEN::JulianMillennium($JC_ZERO_UT);
