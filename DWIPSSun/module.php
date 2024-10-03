@@ -82,8 +82,6 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("sunlightduration", $this->Translate("sunlightduration"), 1, "", $p, true);
         $p++;
-        $this->MaintainVariable("sunlightdurationstr", $this->Translate("sunlightduration"), 3, "", $p, true);
-        $p++;
         $this->MaintainVariable("sunazimut", $this->Translate("sunazimut"), 2, "~WindDirection.F", $p, true);
         $p++;
         $this->MaintainVariable("sundirection", $this->Translate("sundirection"), 2, "DWIPS." . $this->Translate("compass_rose"), $p, true);
@@ -331,8 +329,6 @@ class DWIPSSun extends IPSModule
 
         $now = time();
 
- 
-
         $this->SetValue("solarnoon", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
         $this->SetValue("lastsunrise", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
         $this->SetValue("nextsunrise", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
@@ -354,8 +350,7 @@ class DWIPSSun extends IPSModule
         $tForOffset = new DateTimeImmutable();
         $sundura = ASTROSUN::SunlightDuration($this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"));//(ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"] - ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]) / 60.0 / 60.0;
         $this->SetValue("sunlightduration", ASTROSUN::SunlightDuration($this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude")) - (new DateTimeImmutable())->setTimestamp(0)->getOffset());// $tForOffset->setTimestamp(0)->getOffset());
-        //$this->SetValue("sunlightdurationstr", date('H:i:s', ($sunset - $sunrise - intval(date('Z', $sunset - $sunrise)))));
-
+        
         $this->SetValue("sunazimut", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
         $this->SetValue("sundirection", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
 
@@ -381,6 +376,8 @@ class DWIPSSun extends IPSModule
         $this->SetValue("moonphase", ASTROMOON::PhaseStr());
     }
 
-
+    public function SurfacesIncidenceAngle($orientation, $slope){
+        return ASTROSUN::IncidenceAngleOfSurface($orientation, $slope, $this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10);
+    }
 }
 ?>
