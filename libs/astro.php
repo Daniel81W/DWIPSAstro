@@ -106,78 +106,88 @@ class ASTROSUN{
         $JC_ZERO_TT = ASTROGEN::JulianDay($JD_ZERO_TT);
         $JM_ZERO_TT = ASTROGEN::JulianMillennium($JC_ZERO_TT);
 
-        $v = ASTROSUN::v($JD_ZERO_UT);
+        $vu = ASTROSUN::v($JD_ZERO_UT);
         $a = array();
+        $d = array();
+        $m = array();
+        $v = array();
+        $n = array();
+
         for($i = -1; $i <= 1; $i++){
             $a[$i] = ASTROSUN::a($JD_ZERO_TT + $i);
+            $d[$i] = ASTROSUN::d($JD_ZERO_TT + $i);
         }
+
         $am1 = ASTROSUN::a($JD_ZERO_TT - 1);
         $a0 = ASTROSUN::a($JD_ZERO_TT);
         $ap1 = ASTROSUN::a($JD_ZERO_TT + 1);
         $dm1 = ASTROSUN::d($JD_ZERO_TT - 1);
         $d0 = ASTROSUN::d($JD_ZERO_TT);
         $dp1 = ASTROSUN::d($JD_ZERO_TT + 1);
-        IPS_LogMessage("-", $ap1 . " - " . $a[1]);
-        $m0 = ($a0 - $long - $v) / 360;
+
+        $m[0] = ($a[0] - $long - $vu) / 360;
 
         $H0 = rad2deg(
             acos(
-                (sin(deg2rad($angleOfSun)) - sin(deg2rad($lat)) * sin(deg2rad($d0))) / (cos(deg2rad($lat)) * cos(deg2rad($d0)))
+                (sin(deg2rad($angleOfSun)) - sin(deg2rad($lat)) * sin(deg2rad($d[0]))) / (cos(deg2rad($lat)) * cos(deg2rad($d[0])))
             )
         );
         $H0 = ASTROMISC::LimitToInterval($H0, 180);
 
-        $m1 = $m0 - $H0 / 360;
-        $m2 = $m0 + $H0 / 360;
+        $m[1] = $m[0] - $H0 / 360;
+        $m[2] = $m[0] + $H0 / 360;
 
-        $m0 = ASTROMISC::LimitToInterval($m0, 1);
-        $m1 = ASTROMISC::LimitToInterval($m1, 1);
-        $m2 = ASTROMISC::LimitToInterval($m2, 1);
+        $m[0] = ASTROMISC::LimitToInterval($m[0], 1);
+        $m[1] = ASTROMISC::LimitToInterval($m[1], 1);
+        $m[2] = ASTROMISC::LimitToInterval($m[2], 1);
 
-        $v0 = $v + 360.985647 * $m0;
-        $v1 = $v + 360.985647 * $m1;
-        $v2 = $v + 360.985647 * $m2;
+        for ($i = -1; $i <= 1; $i++) {
+            $v[$i] = $vu + 360.985647 * $m[$i];
+        }
 
-        $n0 = $m0 + $deltaT / 86400;
-        $n1 = $m1 + $deltaT / 86400;
-        $n2 = $m2 + $deltaT / 86400;
+        for ($i = -1; $i <= 1; $i++) {
+            $n[$i] = $m[$i] + $deltaT / 86400;
+        }
 
-        $aa = $a0 - $am1;
+        $aa = $a[0] - $a[-1];
         if ($aa > 2 ) {
             $aa = ASTROMISC::LimitToInterval($aa, 1);
         }
-        $bb = $ap1 - $a0;
+        $bb = $a[1] - $a[0];
         if ($bb > 2) {
             $bb = ASTROMISC::LimitToInterval($bb, 1);
         }
         $cc = $bb - $aa;
 
-        $a0s = $a0 + $n0 * ($aa + $bb + $cc * $n0) / 2;
-        $a1s = $a0 + $n1 * ($aa + $bb + $cc * $n1) / 2;
-        $a2s = $a0 + $n2 * ($aa + $bb + $cc * $n2) / 2;
+        $alphasi = array();
+        for ($i = -1; $i <= 1; $i++) {
+            $alphasi[$i] = $a[0] + $n[$i] * ($aa + $bb + $cc * $n[$i]) / 2;
+        }
 
-        $as = $d0 - $dm1;
+        $as = $d[0] - $d[-1];
         if ($as > 2) {
             $as = ASTROMISC::LimitToInterval($as, 1);
         }
-        $bs = $dp1 - $d0;
+        $bs = $d[1] - $d[0];
         if ($bs > 2) {
             $bs = ASTROMISC::LimitToInterval($bs, 1);
         }
         $cs = $bs - $as;
-
-        $d0s = $d0 + $n0 * ($as + $bs + $cs * $n0) / 2;
-        $d1s = $d0 + $n1 * ($as + $bs + $cs * $n1) / 2;
-        $d2s = $d0 + $n2 * ($as + $bs + $cs * $n2) / 2;
-
-        $H0s = $v0 + $long - $a0s;
-        $H1s = $v1 + $long - $a1s;
-        $H2s = $v2 + $long - $a2s;
-
-        $H0s = $H0s / abs($H0s) * ASTROMISC::LimitToInterval(abs($H0s) ,360);
-        if(abs($H0s) > 180){
-            $H0s = $H0s - $H0s / abs($H0s) * 360;
+        $deltasi = array();
+        for ($i = -1; $i <= 1; $i++) {
+            $deltasi[$i] = $d0 + $n[$i] * ($as + $bs + $cs * $n[$i]) / 2;
         }
+
+        $Hs = array();
+        for ($i = -1; $i <= 1; $i++) {
+            $Hs[$i] = $v[$i] + $long - $alphasi[$i];
+
+            $Hs[$i] = $Hs[$i] / abs($Hs[$i]) * ASTROMISC::LimitToInterval(abs($Hs[$i]), 360);
+            if (abs($Hs[$i]) > 180) {
+                $Hs[$i] = $Hs[$i] - $H0$Hs[$i]s / abs($Hs[$i]) * 360;
+            }
+        }
+        /*
         $H1s = $H1s / abs($H1s) * ASTROMISC::LimitToInterval(abs($H1s), 360);
         if (abs($H1s) > 180) {
             $H1s= $H1s - $H1s / abs($H1s) * 360;
@@ -185,8 +195,17 @@ class ASTROSUN{
         $H2s = $H2s / abs($H2s) * ASTROMISC::LimitToInterval(abs($H2s), 360);
         if (abs($H2s) > 180) {
             $H2s = $H2s - $H2s / abs($H2s) * 360;
-        }
+        }*/
 
+        $hh = array();
+        for ($i = -1; $i <= 1; $i++) {
+            $hh[$i] = rad2deg(asin(
+                sin(deg2rad($lat)) * sin(deg2rad($deltasi[$i])) +
+                cos(deg2rad($lat)) * cos(deg2rad($deltasi[$i])) * cos(deg2rad($Hs[$i]))
+                )
+            );
+        }
+            /*
         $hh0 = rad2deg(asin(
                 sin(deg2rad($lat)) * sin(deg2rad($d0s)) +
                 cos(deg2rad($lat)) * cos(deg2rad($d0s)) * cos(deg2rad($H0s))
@@ -202,13 +221,13 @@ class ASTROSUN{
                 sin(deg2rad($lat)) * sin(deg2rad($d2s)) +
                 cos(deg2rad($lat)) * cos(deg2rad($d2s)) * cos(deg2rad($H2s))
             )
-        );
+        );*/
 
-        $t = $m0 - $H0s / 360;
+        $t = $m[0] - $Hs[0] / 360;
 
-        $R = $m1 + ($hh1 - ($angleOfSun)) / (360 * cos(deg2rad($d1s)) * cos(deg2rad($lat)) * sin(deg2rad($H1s)));
-        $S = $m2 + ($hh2 - ($angleOfSun)) / (360 * cos(deg2rad($d2s)) * cos(deg2rad($lat)) * sin(deg2rad($H2s)));
-        //SetValueInteger(55397, $t * 24 * 60 * 60);
+        $R = $m[1] + ($hh[1] - ($angleOfSun)) / (360 * cos(deg2rad($deltasi[1])) * cos(deg2rad($lat)) * sin(deg2rad($Hs[1])));
+        $S = $m[2] + ($hh[2] - ($angleOfSun)) / (360 * cos(deg2rad($deltasi[2])) * cos(deg2rad($lat)) * sin(deg2rad($Hs[2])));
+
         return gmmktime(0, 0, 0) + floor($t * 24 * 60 * 60) . " - " . date('H:i:s P I', gmmktime(0,0,0)+floor($t * 24 * 60 * 60)) . " - " . $R*24 . " - " . date('H:i:s P I', gmmktime(0,0,0)+floor($R * 24 * 60 * 60)) . " - " . $S*24 . " - " . date( 'H:i:s',gmmktime(0,0,0)+floor($S*24*60*60));
     }
 
