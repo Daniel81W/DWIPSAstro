@@ -232,7 +232,7 @@ class ASTROSUN{
         }
     }
 
-    public static function lastEl($timestamp, $deltaT, $lat, $long, $angleOfSun)
+    public static function lastEl($timestamp, $deltaT, $lat, $long, $angleOfSun, $elem)
     {
         $sr = -1;
         $lsr = -1;
