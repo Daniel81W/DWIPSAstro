@@ -383,13 +383,11 @@ class DWIPSSun extends IPSModule
 
 
 
-        $this->SetValue("sunazimut", $solarAzimut);
         //$this->SetValue("sundeclination", ASTROSUN::Declination($jc));
         $this->SetValue("sunelevation", $sunelevation);
         $this->SetValue("sunelevationmin", -90 + $latitude + ASTROSUN::Declination($jc));
         $this->SetValue("sunelevationmax", 90 - $latitude + ASTROSUN::Declination($jc));
 
-        $this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
         $this->SetValue("season", ASTROSUN::Season($jc, $latitude));
 
 
