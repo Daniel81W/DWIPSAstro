@@ -95,7 +95,7 @@ class ASTROSUN{
     const AU = 149597870700;
 
     //
-    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long){
+    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
         $timestamp_zero_ut = gmmktime(0, 0, 0, $month, $day, $year);
 
         $JD_ZERO_UT = ASTROGEN::JulianDayFromTimestamp($timestamp_zero_ut);
@@ -118,7 +118,7 @@ class ASTROSUN{
 
         $H0 = rad2deg(
             acos(
-                (sin(deg2rad(-0.8333)) - sin(deg2rad($lat)) * sin(deg2rad($d0))) / (cos(deg2rad($lat)) * cos(deg2rad($d0)))
+                (sin(deg2rad($angleOfSun)) - sin(deg2rad($lat)) * sin(deg2rad($d0))) / (cos(deg2rad($lat)) * cos(deg2rad($d0)))
             )
         );
         $H0 = ASTROMISC::LimitToInterval($H0, 180);
@@ -202,8 +202,8 @@ class ASTROSUN{
 
         $t = $m0 - $H0s / 360;
 
-        $R = $m1 + ($hh1 - (-0.8333)) / (360 * cos(deg2rad($d1s)) * cos(deg2rad($lat)) * sin(deg2rad($H1s)));
-        $S = $m2 + ($hh2 - (-0.8333)) / (360 * cos(deg2rad($d2s)) * cos(deg2rad($lat)) * sin(deg2rad($H2s)));
+        $R = $m1 + ($hh1 - ($angleOfSun)) / (360 * cos(deg2rad($d1s)) * cos(deg2rad($lat)) * sin(deg2rad($H1s)));
+        $S = $m2 + ($hh2 - ($angleOfSun-0.8333)) / (360 * cos(deg2rad($d2s)) * cos(deg2rad($lat)) * sin(deg2rad($H2s)));
         //SetValueInteger(55397, $t * 24 * 60 * 60);
         return gmmktime(0, 0, 0) + floor($t * 24 * 60 * 60) . " - " . date('H:i:s P I', gmmktime(0,0,0)+floor($t * 24 * 60 * 60)) . " - " . $R*24 . " - " . date('H:i:s P I', gmmktime(0,0,0)+floor($R * 24 * 60 * 60)) . " - " . $S*24 . " - " . date( 'H:i:s',gmmktime(0,0,0)+floor($S*24*60*60));
     }
