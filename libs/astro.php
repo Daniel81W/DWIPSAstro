@@ -204,6 +204,65 @@ class ASTROSUN{
         return $values;
     }
 
+    public static function nextEl($timestamp, $deltaT, $lat, $long, $angleOfSun, $elem){
+        $sr = -1;
+        $nsr = -1;
+        $sr = ASTROSUN::Sunrise(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
+
+        if ($sr > $timestamp) {
+            $nsr = $sr;
+        } elseif ($sr > 0) {
+            for ($i = 1; $i < 366; $i++) {
+                $t = $timestamp + $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
+                if ($sr > 0) {
+                    $nsr = $sr;
+                    $i = 400;
+                }
+            }
+        } elseif (is_nan($sr)) {
+            for ($i = 1; $i < 366; $i++) {
+                $t = $timestamp + $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
+                if (!is_nan($sr)) {
+                    $nsr = $sr;
+                    $i = 400;
+                }
+            }
+        }
+    }
+
+    public static function lastEl($timestamp, $deltaT, $lat, $long, $angleOfSun)
+    {
+        $sr = -1;
+        $lsr = -1;
+        $sr = ASTROSUN::Sunrise(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
+
+        if ($sr > $timestamp) {
+            for ($i = 1; $i < 366; $i++) {
+                $t = $timestamp - $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
+
+                if ($sr > 0) {
+                    $lsr = $sr;
+                    $i = 400;
+                }
+            }
+        } elseif ($sr > 0) {
+            $lsr = $sr;
+        } elseif (is_nan($sr)) {
+            for ($i = 1; $i < 366; $i++) {
+                $t = $timestamp - $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
+
+                $this->SendDebug("SR " . $i, $sr, 0);
+                if (!is_nan($sr)) {
+                    $lsr = $sr;
+                    $i = 400;
+                }
+            }
+        }
+    }
     public static function v($julianDay){
         $jc = ASTROGEN::JulianCentury($julianDay);
         $jm = ASTROGEN::JulianMillennium($jc);

@@ -289,13 +289,11 @@ class DWIPSSun extends IPSModule
 
         $now = time();
 
-        $sr = 0;
-        $lsr = 0;
-        $nsr = 0;
-        $ss = 0;
+        $sr = -1;
+        $lsr = -1;
+        $nsr = -1;
         $sr = ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
 
-        $this->SendDebug("SR", $sr, 0);
         if($sr > $now){
             $nsr = $sr;
             
@@ -340,9 +338,58 @@ class DWIPSSun extends IPSModule
             }
         }
 
+        $ss = -1;
+        $lss = -1;
+        $nss = -1;
+        $ss = ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"];
+
+        if ($sr > $now) {
+            $nsr = $sr;
+
+            for ($i = 1; $i < 366; $i++) {
+                $t = $now - $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+
+                if ($sr > 0) {
+                    $lsr = $sr;
+                    $i = 400;
+                }
+            }
+        } elseif ($sr > 0) {
+            $lsr = $sr;
+
+            for ($i = 1; $i < 366; $i++) {
+                $t = $now + $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+                if ($sr > 0) {
+                    $nsr = $sr;
+                    $i = 400;
+                }
+            }
+        } elseif (is_nan($sr)) {
+            for ($i = 1; $i < 366; $i++) {
+                $t = $now - $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+
+                $this->SendDebug("SR " . $i, $sr, 0);
+                if (!is_nan($sr)) {
+                    $lsr = $sr;
+                    $i = 400;
+                }
+            }
+            for ($i = 1; $i < 366; $i++) {
+                $t = $now + $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+                if (!is_nan($sr)) {
+                    $nsr = $sr;
+                    $i = 400;
+                }
+            }
+        }
+
         $this->SetValue("solarnoon", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
         $this->SetValue("lastsunrise", $lsr);
-        $this->SetValue("lastsunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
+        $this->SetValue("lastsunset", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));//ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
         $this->SetValue("nextsunrise", $nsr);
         $this->SetValue("nextsunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
         //$this->SetValue("lastsunrise", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]);
