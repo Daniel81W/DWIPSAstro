@@ -312,7 +312,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
         $this->SetValue("season", ASTROSUN::Season($jc, $latitude));
 
-
+/*
         try {
             $beginNauticalTwilight = mktime(0, 0, ASTROSUN::TimeForElevation(-12, $latitude, $longitude, $timezone, $jc, true) * 24 * 60 * 60);
             if ($beginNauticalTwilight < time()) {
@@ -344,7 +344,7 @@ class DWIPSSun extends IPSModule
             }
             $this->SetValue("stopastronomicaltwilight", $endAstronomicalTwilight);
         } catch (Exception $e) {
-        }
+        }*/
         $shadowlen = 1 / tan(deg2rad($sunelevation));
         if ($shadowlen > 0) {
             $this->SetValue("shadowLength", $shadowlen);
