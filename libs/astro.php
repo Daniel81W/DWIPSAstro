@@ -183,7 +183,25 @@ class ASTROSUN{
             $H2s = $H2s - $H2s / abs($H2s) * 360;
         }
 
-        return $H0s . " - " . $H1s . " - " . $H2s;
+        $hh0 = rad2deg(asin(
+                sin(deg2rad($lat)) * sin(deg2rad($d0s)) +
+                cos(deg2rad($lat)) * cos(deg2rad($d0s)) * cos(deg2rad($H0s))
+            ));
+        $hh1 = rad2deg(
+            asin(
+                sin(deg2rad($lat)) * sin(deg2rad($d1s)) +
+                cos(deg2rad($lat)) * cos(deg2rad($d1s)) * cos(deg2rad($H1s))
+            )
+        );
+        $hh2 = rad2deg(
+            asin(
+                sin(deg2rad($lat)) * sin(deg2rad($d2s)) +
+                cos(deg2rad($lat)) * cos(deg2rad($d2s)) * cos(deg2rad($H2s))
+            )
+        );
+
+        $t = $m0 - $H0s / 360;
+        return $hh0 . " - " . $hh1 . " - " . $hh2 . " - " . $t;
     }
 
     public static function v($julianDay){
