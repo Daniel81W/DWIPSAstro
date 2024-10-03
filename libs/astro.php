@@ -205,7 +205,7 @@ class ASTROSUN{
         $R = $m1 + ($hh1 - (-0.8333)) / (360 * cos(deg2rad($d1s)) * cos(deg2rad($lat)) * sin(deg2rad($H1s)));
         $S = $m2 + ($hh2 - (-0.8333)) / (360 * cos(deg2rad($d2s)) * cos(deg2rad($lat)) * sin(deg2rad($H2s)));
         //SetValueInteger(55397, $t * 24 * 60 * 60);
-        return $t*24 . " - " . date('H:i:s P I', mktime(0,0,0)+$t * 24 * 60 * 60) . " - " . $R*24 . " - " . date('H:i:s', $R * 24 * 60 * 60) . " - " . $S*24 . " - " . date( 'H:i:s',$S*24*60*60);
+        return mktime(0, 0, 0) + $t * 24 * 60 * 60 . " - " . date('H:i:s P I', mktime(0,0,0)+$t * 24 * 60 * 60) . " - " . $R*24 . " - " . date('H:i:s', $R * 24 * 60 * 60) . " - " . $S*24 . " - " . date( 'H:i:s',$S*24*60*60);
     }
 
     public static function v($julianDay){
