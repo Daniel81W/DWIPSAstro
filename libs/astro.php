@@ -118,13 +118,6 @@ class ASTROSUN{
             $d[$i] = ASTROSUN::d($JD_ZERO_TT + $i);
         }
 
-        $am1 = ASTROSUN::a($JD_ZERO_TT - 1);
-        $a0 = ASTROSUN::a($JD_ZERO_TT);
-        $ap1 = ASTROSUN::a($JD_ZERO_TT + 1);
-        $dm1 = ASTROSUN::d($JD_ZERO_TT - 1);
-        $d0 = ASTROSUN::d($JD_ZERO_TT);
-        $dp1 = ASTROSUN::d($JD_ZERO_TT + 1);
-
         $m[0] = ($a[0] - $long - $vu) / 360;
 
         $H0 = rad2deg(
@@ -187,15 +180,6 @@ class ASTROSUN{
                 $Hs[$i] = $Hs[$i] - $Hs[$i] / abs($Hs[$i]) * 360;
             }
         }
-        /*
-        $H1s = $H1s / abs($H1s) * ASTROMISC::LimitToInterval(abs($H1s), 360);
-        if (abs($H1s) > 180) {
-            $H1s= $H1s - $H1s / abs($H1s) * 360;
-        }
-        $H2s = $H2s / abs($H2s) * ASTROMISC::LimitToInterval(abs($H2s), 360);
-        if (abs($H2s) > 180) {
-            $H2s = $H2s - $H2s / abs($H2s) * 360;
-        }*/
 
         $hh = array();
         for ($i = 0; $i <= 2; $i++) {
@@ -205,30 +189,19 @@ class ASTROSUN{
                 )
             );
         }
-            /*
-        $hh0 = rad2deg(asin(
-                sin(deg2rad($lat)) * sin(deg2rad($d0s)) +
-                cos(deg2rad($lat)) * cos(deg2rad($d0s)) * cos(deg2rad($H0s))
-            ));
-        $hh1 = rad2deg(
-            asin(
-                sin(deg2rad($lat)) * sin(deg2rad($d1s)) +
-                cos(deg2rad($lat)) * cos(deg2rad($d1s)) * cos(deg2rad($H1s))
-            )
-        );
-        $hh2 = rad2deg(
-            asin(
-                sin(deg2rad($lat)) * sin(deg2rad($d2s)) +
-                cos(deg2rad($lat)) * cos(deg2rad($d2s)) * cos(deg2rad($H2s))
-            )
-        );*/
 
         $t = $m[0] - $Hs[0] / 360;
 
         $R = $m[1] + ($hh[1] - ($angleOfSun)) / (360 * cos(deg2rad($deltasi[1])) * cos(deg2rad($lat)) * sin(deg2rad($Hs[1])));
         $S = $m[2] + ($hh[2] - ($angleOfSun)) / (360 * cos(deg2rad($deltasi[2])) * cos(deg2rad($lat)) * sin(deg2rad($Hs[2])));
 
-        return gmmktime(0, 0, 0) + floor($t * 24 * 60 * 60) . " - " . date('H:i:s P I', gmmktime(0,0,0)+floor($t * 24 * 60 * 60)) . " - " . $R*24 . " - " . date('H:i:s P I', gmmktime(0,0,0)+floor($R * 24 * 60 * 60)) . " - " . $S*24 . " - " . date( 'H:i:s',gmmktime(0,0,0)+floor($S*24*60*60));
+        $values = array(
+            "R" => gmmktime(0, 0, 0) + floor($R * 24 * 60 * 60),
+            "T" => gmmktime(0, 0, 0) + floor($t * 24 * 60 * 60),
+            "S" => gmmktime(0, 0, 0) + floor($S * 24 * 60 * 60)
+            );
+
+        return $values;
     }
 
     public static function v($julianDay){
