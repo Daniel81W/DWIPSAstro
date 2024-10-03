@@ -577,7 +577,7 @@ class ASTROSUN{
         }
     }
     
-    public static function SunlightDuration($deltaT, float $lat, float $long, float $julianCentury)
+    public static function SunlightDuration($deltaT, float $lat, float $long)
     {
         $now = time();
         $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $deltaT, $lat, $long, -0.8333)["R"];
