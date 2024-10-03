@@ -17,34 +17,65 @@ class DWIPSSun extends IPSModule
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 3, $this->Translate("fall"), "", -1);
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 4, $this->Translate("winter"), "", -1);
         }
-
-        $this->RegisterVariableInteger("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), "~UnixTimestamp", 3);
-        $this->RegisterVariableInteger("startnauticaltwilight", $this->Translate("startnauticaltwilight"), "~UnixTimestamp", 4);
-        $this->RegisterVariableInteger("startciviltwilight", $this->Translate("startciviltwilight"), "~UnixTimestamp", 5);
-        $this->RegisterVariableInteger("sunrise", $this->Translate("sunrise"), "~UnixTimestamp", 6);
-        $this->RegisterVariableInteger("solarnoon", $this->Translate("solarnoon"), "~UnixTimestamp", 7);
-        $this->RegisterVariableInteger("sunset", $this->Translate("sunset"), "~UnixTimestamp", 8);
-        $this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", 9);
-        $this->RegisterVariableInteger("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), "~UnixTimestamp", 10);
-        $this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", 11);
-        $this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", 12);
-        $this->RegisterVariableString("sunlightdurationstr", $this->Translate("sunlightduration"), "", 12);
-        $this->RegisterVariableFloat("sunazimut", $this->Translate("sunazimut"), "", 13);
-        $this->RegisterVariableString("sundirection", $this->Translate("sundirection"), "", 14);
-        $this->RegisterVariableFloat("sunelevation", $this->Translate("sunelevation"), "", 15);
-        $this->RegisterVariableFloat("sunelevationmin", $this->Translate("sunelevationmin"), "", 16);
-        $this->RegisterVariableFloat("sunelevationmax", $this->Translate("sunelevationmax"), "", 17);
-        $this->RegisterVariableFloat("sundeclination", $this->Translate("sundeclination"), "", 18);
-        $this->RegisterVariableInteger("sundistance", $this->Translate("sundistance"), "", 19);
-        $this->RegisterVariableFloat("durationOfSunrise", $this->Translate("durationOfSunrise"), "", 21);
-        $this->RegisterVariableInteger("season", $this->Translate("season"), "DWIPS." . $this->Translate("season"), 22);
-        $this->RegisterVariableBoolean("day", $this->Translate("day"), "", 23);
-        $this->RegisterVariableBoolean("insideCivilTwilight", $this->Translate("insideCivilTwilight"), "", 24);
-        $this->RegisterVariableFloat("shadowLength", $this->Translate("shadowlength"), "", 25);
-        $this->RegisterVariableFloat("solarirradiancespace", $this->Translate("solarirradiancespace"), "", 26); //"Astronomie.Radiant_Power", 26);
-        $this->RegisterVariableFloat("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), "", 27); //"Astronomie.Radiant_Power", 27);
-        $this->RegisterVariableFloat("solarirradianceground", $this->Translate("solarirradianceground"), "", 28); //"Astronomie.Radiant_Power", 28);
-        $this->RegisterVariableFloat("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), "", 40); //"Astronomie.Radiant_Power", 40);
+        $p = 1;
+        $this->RegisterVariableInteger("lastsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("nextsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("lastsunset", $this->Translate("sunset"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("nextsunset", $this->Translate("sunset"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("startnauticaltwilight", $this->Translate("startnauticaltwilight"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("startciviltwilight", $this->Translate("startciviltwilight"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("solarnoon", $this->Translate("solarnoon"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", $p);
+        $p++;
+        $this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", $p);
+        $p++;
+        $this->RegisterVariableString("sunlightdurationstr", $this->Translate("sunlightduration"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("sunazimut", $this->Translate("sunazimut"), "", $p);
+        $p++;
+        $this->RegisterVariableString("sundirection", $this->Translate("sundirection"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("sunelevation", $this->Translate("sunelevation"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("sunelevationmin", $this->Translate("sunelevationmin"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("sunelevationmax", $this->Translate("sunelevationmax"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("sundeclination", $this->Translate("sundeclination"), "", $p);
+        $p++;
+        $this->RegisterVariableInteger("sundistance", $this->Translate("sundistance"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("durationOfSunrise", $this->Translate("durationOfSunrise"), "", $p);
+        $p++;
+        $this->RegisterVariableInteger("season", $this->Translate("season"), "DWIPS." . $this->Translate("season"), $p);
+        $p++;
+        $this->RegisterVariableBoolean("day", $this->Translate("day"), "", $p);
+        $p++;
+        $this->RegisterVariableBoolean("insideCivilTwilight", $this->Translate("insideCivilTwilight"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("shadowLength", $this->Translate("shadowlength"), "", $p);
+        $p++;
+        $this->RegisterVariableFloat("solarirradiancespace", $this->Translate("solarirradiancespace"), "", $p);
+        $p++; //"Astronomie.Radiant_Power", 26);
+        $this->RegisterVariableFloat("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), "", $p);
+        $p++; //"Astronomie.Radiant_Power", 27);
+        $this->RegisterVariableFloat("solarirradianceground", $this->Translate("solarirradianceground"), "", $p);
+        $p++; //"Astronomie.Radiant_Power", 28);
+        $this->RegisterVariableFloat("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), "", $p);
+        $p++; //"Astronomie.Radiant_Power", 40);
 
 
         $this->RegisterVariableString("moonphase", $this->Translate("moonphase"), "", 30);
@@ -258,9 +289,42 @@ class DWIPSSun extends IPSModule
 
         $now = time();
 
+        $sr = 0;
+        $lsr = 0;
+        $nsr = 0;
+        $ss = 0;
+        
+        $sr = ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+        if($sr > $now){
+            $nsr = $sr;
+            
+            for ($i = 0; $i < 200; $i++) {
+                $t = $now - $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+                if($sr>0){
+                    $lsr = $sr;
+                    $i = 200;
+                }
+            }
+        }elseif($sr > 0){
+            $lsr = $sr;
+
+            for ($i = 0; $i < 200; $i++) {
+                $t = $now + $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+                if ($sr > 0) {
+                    $nsr = $sr;
+                    $i = 200;
+                }
+            }
+        }
         $this->SetValue("solarnoon", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
-        $this->SetValue("sunrise", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]);
-        $this->SetValue("sunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
+        $this->SetValue("lastsunrise", $lsr);
+        $this->SetValue("lastsunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
+        $this->SetValue("nextsunrise", $nsr);
+        $this->SetValue("nextsunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
+        //$this->SetValue("lastsunrise", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]);
+        //$this->SetValue("lastsunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
         $this->SetValue("startciviltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6)["R"]);
         $this->SetValue("stopciviltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6)["S"]);
         $this->SetValue("startnauticaltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12)["R"]);
@@ -268,7 +332,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("startastronomicaltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18)["R"]);
         $this->SetValue("stopastronomicaltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18)["S"]);
 
-
+        
         $sundura = (ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"] - ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]) / 60.0 / 60.0;
         //$this->SetValue("sunlightduration", $sundura);
         //$this->SetValue("sunlightdurationstr", date('H:i:s', ($sunset - $sunrise - intval(date('Z', $sunset - $sunrise)))));
@@ -356,7 +420,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("solarirradiancerectangular", $solarirradiancespace * 0.75);
         $this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
         $this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * (cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) * sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39))));
-        $this->SetValue("durationOfSunrise", ASTROSUN::DurationOfSunrise($latitude, $longitude, $jc));
+        //$this->SetValue("durationOfSunrise", ASTROSUN::DurationOfSunrise($latitude, $longitude, $jc));
 
         $ts = time();
         if ($sunrisetoday <= $ts and $ts <= $sunsettoday) {
