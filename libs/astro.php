@@ -238,7 +238,8 @@ class ASTROSUN{
         $sr = -1;
         $lsr = -1;
         $sr = ASTROSUN::Sunrise(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
-        IPS_LogMessage("SR_0", $sr . $timestamp);
+        IPS_LogMessage("now", $timestamp);
+        IPS_LogMessage("SR_0", $sr);
         if ($sr > $timestamp) {
             for ($i = 1; $i < 366; $i++) {
                 $t = $timestamp - $i * 86400;
