@@ -115,7 +115,13 @@ class ASTROSUN{
         $dp1 = ASTROSUN::a($JD_ZERO_TT + 1);
 
         $m0 = ($a0 - $long - $v) / 360;
-        return $m0;
+
+        $H0 = rad2deg(
+            acos(
+                (sin(deg2rad(-0.8333)) - sin(deg2rad($lat)) * sin(deg2rad($d0))) / (cos(deg2rad($lat)) * cos(deg2rad($d0)))
+            )
+        );
+        return $m0 . " - " . $H0;
     }
 
     public static function v($julianDay){
