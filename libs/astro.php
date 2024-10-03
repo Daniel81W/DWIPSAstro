@@ -11,7 +11,7 @@ class ASTROGEN{
      * @return float Current Julian Date
      */
     public static function JulianDay():float{
-        $date = new DateTime();
+       $date = new DateTime();
        return ASTROGEN::JulianDayFromTimestamp($date->getTimestamp());
     }
 
@@ -93,7 +93,7 @@ class ASTROSUN{
     //
     public static function Sunrise($year, $month, $day, $deltaT, $lat, $long, $id){
         $timestamp_zero_ut = mktime(0, 0, 0, $month, $day, $year);
-        IPS_LogMessage("-", $month . " - " . $day . " - " . $year);
+        IPS_LogMessage("-", $timestamp_zero_ut);
 
         $JD_ZERO_UT = ASTROGEN::JulianDay($timestamp_zero_ut);
         $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
