@@ -201,7 +201,10 @@ class ASTROSUN{
         );
 
         $t = $m0 - $H0s / 360;
-        return $hh0 . " - " . $hh1 . " - " . $hh2 . " - " . $t;
+
+        $R = $m1 + ($hh1 - (-0.8333)) / (360 * cos(deg2rad($d1s)) * cos(deg2rad($lat)) * sin(deg2rad($H1s)));
+        $S = $m2 + ($hh2 - (-0.8333)) / (360 * cos(deg2rad($d2s)) * cos(deg2rad($lat)) * sin(deg2rad($H2s)));
+        return $t*24 . " - " . $R*24 . " - " . $S*24;
     }
 
     public static function v($julianDay){
