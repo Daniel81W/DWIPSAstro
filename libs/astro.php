@@ -28,6 +28,7 @@ class ASTROGEN{
             $dy = -1;
             $dm = +12;
         }
+        IPS_LogMessage("-", $timestamp);
         $jd = floor(365.25 * (idate('Y', $timestamp) + $dy + 4716)) + 
             floor(30.6001 * (idate('m', $timestamp) + $dm + 1)) + 
             idate('d', $timestamp) + 
