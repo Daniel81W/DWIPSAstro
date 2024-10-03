@@ -576,6 +576,18 @@ class ASTROSUN{
             return 0;
         }
     }
+    
+    public static function SunlightDuration($deltaT, float $lat, float $long, float $julianCentury)
+    {
+        $now = time();
+        $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $deltaT, $lat, $long, -0.8333)["R"];
+        $ss = ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $deltaT, $lat, $long, -0.8333)["S"];
+        if(!is_nan($sr) && !is_nan($ss)){
+            return $ss - $sr;
+        }
+
+        return 0;
+    }
 
     // Hilfsfunktionen
     private static function X($i, $julianCentury){
@@ -775,16 +787,6 @@ class ASTROSUN{
         }
         return $sum;
     }
-    
-
-
-
-
-
-    public static function SunlightDuration(float $latitude, float $julianCentury){
-        return 8 * ASTROSUN::HourAngleAtElevation(-0.833, $latitude, $julianCentury);
-    }
-
 
     private static function L0Arr(){
         $l0 = array(
