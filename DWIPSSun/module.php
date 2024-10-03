@@ -19,6 +19,7 @@ class DWIPSSun extends IPSModule
         }
         $p = 1;
         $this->MaintainVariable("lastsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);//RegisterVariableInteger("lastsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("sunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, false);//RegisterVariableInteger("lastsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
         $p++;
         $this->RegisterVariableInteger("nextsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
         $p++;
