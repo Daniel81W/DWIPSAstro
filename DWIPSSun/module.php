@@ -76,8 +76,8 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("sundistance", $this->Translate("sundistance"), 1, "", $p, true);
         $p++;
-        $this->MaintainVariable("season", $this->Translate("season"), 3, "DWIPS." . $this->Translate("season"), $p, false);
-        $this->MaintainVariable("season", $this->Translate("season"), 3, "DWIPS." . $this->Translate("season"), $p, true);
+        $this->MaintainVariable("season", $this->Translate("season"), 1, "DWIPS." . $this->Translate("season"), $p, false);
+        $this->MaintainVariable("season", $this->Translate("season"), 1, "DWIPS." . $this->Translate("season"), $p, true);
         $p++;
         $this->MaintainVariable("shadowLength", $this->Translate("shadowlength"), 2, "", $p, true);
         $p++;
