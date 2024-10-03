@@ -175,7 +175,6 @@ class ASTROSUN{
         $geoCentLat = ASTROSUN::GeocentricLatitude($HeliocentricLatitude);
         $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($meanObl, $nutObl);
         $appSunLong = ASTROSUN::ApparentSunLongitude($geoCentLong, $nutLong, $abCorr);
-        IPS_LogMessage("-", ASTROSUN::GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong));
         return ASTROSUN::GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong);
     }
 
@@ -314,7 +313,7 @@ class ASTROSUN{
     }
 
     public static function GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong){
-        return -9.316179;rad2deg(
+        return rad2deg(
             asin(
                 sin(deg2rad($geoCentLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($appSunLong)),
             )
