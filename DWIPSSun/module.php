@@ -421,7 +421,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
         $this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * (cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) * sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39))));
         //$this->SetValue("durationOfSunrise", ASTROSUN::DurationOfSunrise($latitude, $longitude, $jc));
-
+        /*
         $ts = time();
         if ($sunrisetoday <= $ts and $ts <= $sunsettoday) {
             $this->SetValue("day", true);
@@ -432,7 +432,7 @@ class DWIPSSun extends IPSModule
             $this->SetValue("insideCivilTwilight", true);
         } else {
             $this->SetValue("insideCivilTwilight", false);
-        }
+        }*/
 
         $this->SetValue("moonphase", ASTROMOON::PhaseStr());
     }
