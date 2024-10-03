@@ -256,7 +256,7 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("topoAziAngle", "value", $this->ReadAttributeFloat("topoAziAngle"));
         $this->UpdateFormField("eqOfTime", "value", $this->ReadAttributeFloat("eqOfTime"));
 
-        $now = $time();
+        $now = time();
 
         $this->SetValue("solarnoon", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
         $this->SetValue("sunrise", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]);
