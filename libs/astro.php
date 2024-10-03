@@ -533,7 +533,7 @@ class ASTROSUN{
 
     public static function Season(float $latitude): int
     {
-        $jd= = ASTROGEN::JulianDay();
+        $jd= ASTROGEN::JulianDay();
         $declination = ASTROSUN::DeclinationOfSun($jd);
         $declinationBef = ASTROSUN::DeclinationOfSun($jd - 60/86400);
         if ($declination >= 0) {
