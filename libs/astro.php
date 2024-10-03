@@ -535,7 +535,7 @@ class ASTROSUN{
     {
         $jd= = ASTROGEN::JulianDay();
         $declination = ASTROSUN::DeclinationOfSun($jd);
-        $declinationBef = ASTROSUN::Declination($jd - 60/86400);
+        $declinationBef = ASTROSUN::DeclinationOfSun($jd - 60/86400);
         if ($declination >= 0) {
             if ($declination > $declinationBef) {
                 if ($latitude > 0) {

@@ -368,7 +368,7 @@ class DWIPSSun extends IPSModule
 
         $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
         $this->SetValue("season", ASTROSUN::Season($this->ReadAttributeFloat("Latitude")));
-
+            
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 
 
