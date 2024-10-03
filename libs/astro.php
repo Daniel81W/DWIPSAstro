@@ -28,7 +28,11 @@ class ASTROGEN{
             $dy = -1;
             $dm = +12;
         }
-        $jd = floor(365.25 * (idate('Y', $timestamp) + $dy + 4716)) + floor(30.6001 * (idate('m', $timestamp) + $dm + 1)) + idate('d', $timestamp) + $timestamp / 86400 - floor($timestamp / 86400) - 1524.5;
+        $jd = floor(365.25 * (idate('Y', $timestamp) + $dy + 4716)) + 
+            floor(30.6001 * (idate('m', $timestamp) + $dm + 1)) + 
+            idate('d', $timestamp) + $timestamp / 86400 - 
+            floor($timestamp / 86400) - 1524.5;
+        IPS_LogMessage("-", $jd);
 
         if ($jd >= 2299160) {
             $jd += (2 - floor(idate('Y', $timestamp) / 100) + floor(floor(idate('Y', $timestamp) / 100) / 4));
@@ -93,7 +97,6 @@ class ASTROSUN{
     //
     public static function Sunrise($year, $month, $day, $deltaT, $lat, $long, $id){
         $timestamp_zero_ut = mktime(0, 0, 0, $month, $day, $year);
-        IPS_LogMessage("-", $timestamp_zero_ut);
 
         $JD_ZERO_UT = ASTROGEN::JulianDay($timestamp_zero_ut);
         $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
