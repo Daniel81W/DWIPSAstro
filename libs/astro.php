@@ -115,8 +115,7 @@ class ASTROSUN{
 
         for($i = -1; $i <= 1; $i++){
             $a[$i] = ASTROSUN::a($JD_ZERO_TT + $i);
-            $d[$i] = ASTROSUN::d($JD_ZERO_TT + $i);
-            IPS_LogMessage("SR", $d[$i]);
+            $d[$i] = ASTROSUN::DeclinationOfSun($JD_ZERO_TT + $i);
         }
 
         $m[0] = ($a[0] - $long - $vu) / 360;
@@ -292,7 +291,7 @@ class ASTROSUN{
         return ASTROSUN::GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat);
     }
 
-    private static function d($julianDay){
+    public static function DeclinationOfSun($julianDay){
         $jc = ASTROGEN::JulianCentury($julianDay);
         $jm = ASTROGEN::JulianMillennium($jc);
 
