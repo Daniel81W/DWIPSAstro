@@ -30,9 +30,10 @@ class ASTROGEN{
         }
         $jd = floor(365.25 * (idate('Y', $timestamp) + $dy + 4716)) + 
             floor(30.6001 * (idate('m', $timestamp) + $dm + 1)) + 
-            idate('d', $timestamp) + $timestamp / 86400 - 
-            floor($timestamp / 86400) - 1524.5;
-        $jt = idate('d', $timestamp) + $timestamp / 86400;
+            idate('d', $timestamp) + 
+            $timestamp / 86400 - floor($timestamp / 86400) - 
+            1524.5;
+        $jt = $timestamp / 86400;
         IPS_LogMessage("-", $jt);
 
         if ($jd >= 2299160) {
