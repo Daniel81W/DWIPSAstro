@@ -41,7 +41,7 @@ class DWIPSSun extends IPSModule
         }
         if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("distance.km"))) {
             IPS_CreateVariableProfile("DWIPS." . $this->Translate("distance.km"), 1);
-            IPS_SetVariableProfileValues("DWIPS." . $this->Translate("distance.km"), null, null, 1);
+            IPS_SetVariableProfileValues("DWIPS." . $this->Translate("distance.km"), 0, 0, 1);
             IPS_SetVariableProfileText("DWIPS." . $this->Translate("distance.km"), "", " km");
         }
 
@@ -102,7 +102,7 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("durationOfSunrise", $this->Translate("durationOfSunrise"), 2, "", $p, true);
         $p++;
-        $this->MaintainVariable("sundistance", $this->Translate("sundistance"), 1, "", $p, true);
+        $this->MaintainVariable("sundistance", $this->Translate("sundistance"), 1, "DWIPS." . $this->Translate("distance.km"), $p, true);
         $p++;
         $this->MaintainVariable("season", $this->Translate("season"), 1, "DWIPS." . $this->Translate("season"), $p, false);
         $this->MaintainVariable("season", $this->Translate("season"), 1, "DWIPS." . $this->Translate("season"), $p, true);
