@@ -170,6 +170,11 @@ class ASTROSUN{
         $H1s = $v1 + $long - $a1s;
         $H2s = $v2 + $long - $a2s;
 
+        $H0s = $H0s / abs($H0s) * ASTROMISC::LimitToInterval(abs($H0s) ,360);
+        if(abs($H0s) > 180){
+            $H02 - $H0s / abs($H0s) * 360;
+        }
+
         return $H0s . " - " . $H1s . " - " . $H2s;
     }
 
