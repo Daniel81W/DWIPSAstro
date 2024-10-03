@@ -27,14 +27,17 @@ class DWIPSSun extends IPSModule
         $this->MaintainVariable("nextsunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, true);
         $p++;
         $this->MaintainVariable("laststartastronomicaltwilight", $this->Translate("startastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $p++;
         $this->MaintainVariable("nextstartastronomicaltwilight", $this->Translate("startastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
         $this->MaintainVariable("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), 1, "~UnixTimestamp", $p, false);
         $p++;
         $this->MaintainVariable("laststartnauticaltwilight", $this->Translate("startnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $p++;
         $this->MaintainVariable("nextstartnauticaltwilight", $this->Translate("startnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
         $this->MaintainVariable("startnauticaltwilight", $this->Translate("startnauticaltwilight"), 1, "~UnixTimestamp", $p, false);
         $p++;
         $this->MaintainVariable("laststartciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, true);
+        $p++;
         $this->MaintainVariable("nextstartciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, true);
         $this->MaintainVariable("startciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, false);
         $p++;
