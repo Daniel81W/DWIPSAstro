@@ -531,6 +531,43 @@ class ASTROSUN{
         return 90 - ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoLocHourAngle, $press, $temp);
     }
 
+    public static function Season(float $latitude): int
+    {
+        $jd= = ASTROGEN::JulianDay();
+        $declination = ASTROSUN::DeclinationOfSun($jd);
+        $declinationBef = ASTROSUN::Declination($jd - 60/86400);
+        if ($declination >= 0) {
+            if ($declination > $declinationBef) {
+                if ($latitude > 0) {
+                    return 1;
+                } else {
+                    return 3;
+                }
+            } else {
+                if ($latitude > 0) {
+                    return 2;
+                } else {
+                    return 4;
+                }
+            }
+        } else {
+            if ($declination > $declinationBef) {
+                if ($latitude > 0) {
+                    return 4;
+                } else {
+                    return 2;
+                }
+            } else {
+                if ($latitude > 0) {
+                    return 3;
+                } else {
+                    return 1;
+                }
+            }
+        }
+    }
+
+
     // Hilfsfunktionen
     private static function X($i, $julianCentury){
         switch ($i){
@@ -773,9 +810,6 @@ class ASTROSUN{
         }
     }
 
-    public static function DurationOfSunrise(float $latitude, float $longitude, float $julianCentury){
-        return ASTROSUN::TimeForElevation(0.833, $latitude, $longitude, 1, $julianCentury, true) - ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, 1, $julianCentury, true);
-    }
 
     private static function L0Arr(){
         $l0 = array(
