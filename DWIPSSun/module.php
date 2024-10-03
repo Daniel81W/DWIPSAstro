@@ -44,11 +44,25 @@ class DWIPSSun extends IPSModule
         $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("laststopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("nextstopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, false);
+        $p++;
+        $this->MaintainVariable("laststopnauticaltwilight", $this->Translate("stopnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("nextstopnauticaltwilight", $this->Translate("stopnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), 1, "~UnixTimestamp", $p, false);
+        $p++;
+        $this->MaintainVariable("laststopciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("nextstopciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("stopciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, false);
+        /*$this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", $p);
         $p++;
         $this->RegisterVariableInteger("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), "~UnixTimestamp", $p);
         $p++;
-        $this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", $p);
+        $this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", $p);*/
         $p++;
         $this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", $p);
         $p++;
