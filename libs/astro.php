@@ -117,7 +117,7 @@ class ASTROSUN{
         $dm1 = ASTROSUN::d($JD_ZERO_TT - 1);
         $d0 = ASTROSUN::d($JD_ZERO_TT);
         $dp1 = ASTROSUN::d($JD_ZERO_TT + 1);
-        IPS_LogMessage("-", $am1 . " - " . $a[-1]);
+        IPS_LogMessage("-", $ap1 . " - " . $a[1]);
         $m0 = ($a0 - $long - $v) / 360;
 
         $H0 = rad2deg(
