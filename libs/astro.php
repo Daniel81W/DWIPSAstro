@@ -121,7 +121,10 @@ class ASTROSUN{
                 (sin(deg2rad(-0.8333)) - sin(deg2rad($lat)) * sin(deg2rad($d0))) / (cos(deg2rad($lat)) * cos(deg2rad($d0)))
             )
         );
-        return $m0 . " - " . $H0;
+        $H0 = ASTROMISC::LimitTo180($H0);
+
+        $m1 = $m0 - $H0 / 360;
+        return $m0 . " - " . $H0 . " - " . $m1;
     }
 
     public static function v($julianDay){
