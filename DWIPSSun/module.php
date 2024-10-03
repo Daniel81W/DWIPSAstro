@@ -318,7 +318,17 @@ class DWIPSSun extends IPSModule
                     $i = 200;
                 }
             }
+        }elseif(is_nan($sr)){
+            for ($i = 0; $i < 200; $i++) {
+                $t = $now - $i * 86400;
+                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
+                if (!is_nan($sr)) {
+                    $lsr = $sr;
+                    $i = 200;
+                }
+            }
         }
+
         $this->SetValue("solarnoon", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
         $this->SetValue("lastsunrise", $lsr);
         $this->SetValue("lastsunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
