@@ -38,6 +38,7 @@ class DWIPSSun extends IPSModule
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 337.5, $this->Translate("NNW"), "", -1);
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 360, $this->Translate("N"), "", -1);
         }
+
         $p = 1;
         $this->MaintainVariable("lastsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);
         $p++;
