@@ -134,7 +134,43 @@ class ASTROSUN{
         $v1 = $v + 360.985647 * $m1;
         $v2 = $v + 360.985647 * $m2;
 
-        return $v0 . " - " . $v1 . " - " . $v2;
+        $n0 = $m0 + $deltaT / 86400;
+        $n1 = $m1 + $deltaT / 86400;
+        $n2 = $m2 + $deltaT / 86400;
+
+        $aa = $a0 - $am1;
+        if ($aa > 2 ) {
+            $aa = ASTROMISC::LimitToInterval($aa, 1);
+        }
+        $bb = $ap1 - $a0;
+        if ($bb > 2) {
+            $bb = ASTROMISC::LimitToInterval($bb, 1);
+        }
+        $cc = $bb - $aa;
+
+        $a0s = $a0 + $n0 * ($aa + $bb + $cc * $n0) / 2;
+        $a1s = $a0 + $n1 * ($aa + $bb + $cc * $n1) / 2;
+        $a1s = $a0 + $n2 * ($aa + $bb + $cc * $n2) / 2;
+
+        $as = $d0 - $dm1;
+        if ($as > 2) {
+            $as = ASTROMISC::LimitToInterval($as, 1);
+        }
+        $bs = $dp1 - $d0;
+        if ($bs > 2) {
+            $bs = ASTROMISC::LimitToInterval($bs, 1);
+        }
+        $cs = $bs - $as;
+
+        $d0s = $d0 + $n0 * ($as + $bs + $cs * $n0) / 2;
+        $d1s = $d0 + $n1 * ($as + $bs + $cs * $n1) / 2;
+        $d1s = $d0 + $n2 * ($as + $bs + $cs * $n2) / 2;
+
+        $H0s = $v0 + $long - $a0s;
+        $H1s = $v1 + $long - $a1s;
+        $H2s = $v2 + $long - $a2s;
+
+        return $H0s . " - " . $H1s . " - " . $H2s;
     }
 
     public static function v($julianDay){
