@@ -109,7 +109,7 @@ class ASTROSUN{
         $d0 = ASTROSUN::a($JD_ZERO_TT);
         $dp1 = ASTROSUN::a($JD_ZERO_TT + 1);
 
-        $m0 = ($a0 - $lat - $v) / 360;
+        $m0 = ($a0 - $long - $v) / 360;
         return $m0;
     }
 

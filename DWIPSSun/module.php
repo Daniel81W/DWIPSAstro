@@ -218,7 +218,8 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("topoZenAngle", ASTROSUN::TopocentricZenithAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 820, 10));
         $this->WriteAttributeFloat("topoAziAngle", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
         $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadAttributeFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
-        $this->SendDebug("SR", mktime(0, 0, 0, 10, 17, 2003), 0);
+        
+
         $this->SendDebug("SR", ASTROSUN::Sunrise(2003, 10, 17, 67, 39.742476, -105.1786),0);
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
