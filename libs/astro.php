@@ -255,7 +255,6 @@ class ASTROSUN{
                 $t = $timestamp - $i * 86400;
                 $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
 
-                $this->SendDebug("SR " . $i, $sr, 0);
                 if (!is_nan($sr)) {
                     $lsr = $sr;
                     $i = 400;
