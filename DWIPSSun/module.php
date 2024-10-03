@@ -18,20 +18,25 @@ class DWIPSSun extends IPSModule
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 4, $this->Translate("winter"), "", -1);
         }
         $p = 1;
-        $this->MaintainVariable("lastsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);//RegisterVariableInteger("lastsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
-        $this->MaintainVariable("sunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, false);//RegisterVariableInteger("lastsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("lastsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->RegisterVariableInteger("nextsunrise", $this->Translate("sunrise"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("nextsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->RegisterVariableInteger("lastsunset", $this->Translate("sunset"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("lastsunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->RegisterVariableInteger("nextsunset", $this->Translate("sunset"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("nextsunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->RegisterVariableInteger("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("laststartastronomicaltwilight", $this->Translate("startastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("nextstartastronomicaltwilight", $this->Translate("startastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), 1, "~UnixTimestamp", $p, false);
         $p++;
-        $this->RegisterVariableInteger("startnauticaltwilight", $this->Translate("startnauticaltwilight"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("laststartnauticaltwilight", $this->Translate("startnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("nextstartnauticaltwilight", $this->Translate("startnauticaltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("startnauticaltwilight", $this->Translate("startnauticaltwilight"), 1, "~UnixTimestamp", $p, false);
         $p++;
-        $this->RegisterVariableInteger("startciviltwilight", $this->Translate("startciviltwilight"), "~UnixTimestamp", $p);
+        $this->MaintainVariable("laststartciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("nextstartciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("startciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, false);
         $p++;
         $this->RegisterVariableInteger("solarnoon", $this->Translate("solarnoon"), "~UnixTimestamp", $p);
         $p++;
@@ -290,115 +295,20 @@ class DWIPSSun extends IPSModule
 
         $now = time();
 
-        $sr = -1;
-        $lsr = -1;
-        $nsr = -1;
-        $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-
-        if($sr > $now){
-            $nsr = $sr;
-            
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now - $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-
-                if($sr>0){
-                    $lsr = $sr;
-                    $i = 400;
-                }
-            }
-        }elseif($sr > 0){
-            $lsr = $sr;
-
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now + $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-                if ($sr > 0) {
-                    $nsr = $sr;
-                    $i = 400;
-                }
-            }
-        }elseif(is_nan($sr)){
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now - $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-
-                if (!is_nan($sr)) {
-                    $lsr = $sr;
-                    $i = 400;
-                }
-            }
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now + $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-                if (!is_nan($sr)) {
-                    $nsr = $sr;
-                    $i = 400;
-                }
-            }
-        }
-
-        $ss = -1;
-        $lss = -1;
-        $nss = -1;
-        $ss = ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"];
-
-        if ($sr > $now) {
-            $nsr = $sr;
-
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now - $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-
-                if ($sr > 0) {
-                    $lsr = $sr;
-                    $i = 400;
-                }
-            }
-        } elseif ($sr > 0) {
-            $lsr = $sr;
-
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now + $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-                if ($sr > 0) {
-                    $nsr = $sr;
-                    $i = 400;
-                }
-            }
-        } elseif (is_nan($sr)) {
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now - $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-
-                $this->SendDebug("SR " . $i, $sr, 0);
-                if (!is_nan($sr)) {
-                    $lsr = $sr;
-                    $i = 400;
-                }
-            }
-            for ($i = 1; $i < 366; $i++) {
-                $t = $now + $i * 86400;
-                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
-                if (!is_nan($sr)) {
-                    $nsr = $sr;
-                    $i = 400;
-                }
-            }
-        }
+ 
 
         $this->SetValue("solarnoon", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
         $this->SetValue("lastsunrise", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
-        $this->SetValue("lastsunset", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));
         $this->SetValue("nextsunrise", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
+        $this->SetValue("lastsunset", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));
         $this->SetValue("nextsunset", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));
-        $this->SetValue("startciviltwilight", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6)["R"]);
-        $this->SetValue("stopciviltwilight", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6)["S"]);
-        $this->SetValue("startnauticaltwilight", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12)["R"]);
-        $this->SetValue("stopnauticaltwilight", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12)["S"]);
-        $this->SetValue("startastronomicaltwilight", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18)["R"]);
-        $this->SetValue("stopastronomicaltwilight", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18)["S"]);
-
+        $this->SetValue("laststartciviltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6, "R"));
+        $this->SetValue("nextstartciviltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6, "R"));
+        $this->SetValue("laststartnauticaltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12, "R"));
+        $this->SetValue("nextstartnauticaltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12, "R"));
+        $this->SetValue("laststartastronomicaltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "R"));
+        $this->SetValue("nextstartastronomicaltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "R"));
+       
         
         $sundura = (ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"] - ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]) / 60.0 / 60.0;
         //$this->SetValue("sunlightduration", $sundura);
