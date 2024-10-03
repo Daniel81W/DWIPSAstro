@@ -35,6 +35,13 @@
             "fall": "Herbst",
             "winter": "Winter",
             "compass_rose": "Kompassrose",
+            "NNE": "NNO",
+            "NE": "NO",
+            "ENE": "ONO",
+            "E": "O",
+            "ESE": "OSO",
+            "SE": "SO",
+            "SSE": "SSO",
 
             "moonphase": "Mondphase"
 
