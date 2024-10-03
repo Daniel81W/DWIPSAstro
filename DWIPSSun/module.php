@@ -295,7 +295,7 @@ class DWIPSSun extends IPSModule
         $ss = 0;
         $sr = ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"];
 
-        $this - SendDebug("SR", $sr, 0);
+        $this->SendDebug("SR", $sr, 0);
         if($sr > $now){
             $nsr = $sr;
             
