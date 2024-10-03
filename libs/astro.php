@@ -141,11 +141,11 @@ class ASTROSUN{
         $m[1] = ASTROMISC::LimitToInterval($m[1], 1);
         $m[2] = ASTROMISC::LimitToInterval($m[2], 1);
 
-        for ($i = -1; $i <= 1; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             $v[$i] = $vu + 360.985647 * $m[$i];
         }
 
-        for ($i = -1; $i <= 1; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             $n[$i] = $m[$i] + $deltaT / 86400;
         }
 
@@ -160,7 +160,7 @@ class ASTROSUN{
         $cc = $bb - $aa;
 
         $alphasi = array();
-        for ($i = -1; $i <= 1; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             $alphasi[$i] = $a[0] + $n[$i] * ($aa + $bb + $cc * $n[$i]) / 2;
         }
 
@@ -174,12 +174,12 @@ class ASTROSUN{
         }
         $cs = $bs - $as;
         $deltasi = array();
-        for ($i = -1; $i <= 1; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             $deltasi[$i] = $d0 + $n[$i] * ($as + $bs + $cs * $n[$i]) / 2;
         }
 
         $Hs = array();
-        for ($i = -1; $i <= 1; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             $Hs[$i] = $v[$i] + $long - $alphasi[$i];
 
             $Hs[$i] = $Hs[$i] / abs($Hs[$i]) * ASTROMISC::LimitToInterval(abs($Hs[$i]), 360);
@@ -198,7 +198,7 @@ class ASTROSUN{
         }*/
 
         $hh = array();
-        for ($i = -1; $i <= 1; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             $hh[$i] = rad2deg(asin(
                 sin(deg2rad($lat)) * sin(deg2rad($deltasi[$i])) +
                 cos(deg2rad($lat)) * cos(deg2rad($deltasi[$i])) * cos(deg2rad($Hs[$i]))
