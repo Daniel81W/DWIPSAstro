@@ -66,9 +66,14 @@ class DWIPSSun extends IPSModule
         $this->MaintainVariable("sunelevation", $this->Translate("sunelevation"), 2, "", $p, false);
         $this->MaintainVariable("sunelevation", $this->Translate("sunelevation"), 2, "", $p, true);
         $p++;
-        $this->RegisterVariableFloat("sunelevationmin", $this->Translate("sunelevationmin"), "", $p);
+        $this->MaintainVariable("sundeclination", $this->Translate("sundeclination"), 2, "", $p, false);
+        $this->MaintainVariable("sundeclination", $this->Translate("sundeclination"), 2, "", $p, true);
         $p++;
-        $this->RegisterVariableFloat("sunelevationmax", $this->Translate("sunelevationmax"), "", $p);
+        $this->MaintainVariable("sunelevationmin", $this->Translate("sunelevationmin"), 2, "", $p, false);
+        $this->MaintainVariable("sunelevationmin", $this->Translate("sunelevationmin"), 2, "", $p, true);
+        $p++;
+        $this->MaintainVariable("sunelevationmax", $this->Translate("sunelevationmax"), 2, "", $p, false);
+        $this->MaintainVariable("sunelevationmax", $this->Translate("sunelevationmax"), 2, "", $p, true);
         $p++;
         $this->RegisterVariableFloat("sundeclination", $this->Translate("sundeclination"), "", $p);
         $p++;
