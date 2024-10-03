@@ -263,8 +263,15 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sunset", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"]);
         $this->SetValue("startciviltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6)["R"]);
         $this->SetValue("stopciviltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6)["S"]);
+        $this->SetValue("startnauticaltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12)["R"]);
+        $this->SetValue("stopnauticaltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12)["S"]);
+        $this->SetValue("startastronomicaltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18)["R"]);
+        $this->SetValue("stopastronomicaltwilight", ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18)["S"]);
 
 
+        $sundura = (ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"] - ASTROSUN::Sunrise(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]) / 60.0 / 60.0;
+        $this->SetValue("sunlightduration", $sundura);
+        $this->SetValue("sunlightdurationstr", date('H:i:s', ($sunset - $sunrise - intval(date('Z', $sunset - $sunrise)))));
         
 
 
@@ -285,38 +292,16 @@ class DWIPSSun extends IPSModule
         $jctomorrow = ASTROGEN::JulianCentury($jdtomorrow);
 
         $solarZenith = ASTROSUN::SolarZenith($jc, $localTime, $latitude, $longitude, $timezone);
-        $sunrise = mktime(0, 0, ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jc, true) * 24 * 60 * 60);
-        $sunrisetoday = $sunrise;
-        if ($sunrise < time()) {
-            $sunrise = mktime(0, 0, (1 + ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jctomorrow, true)) * 24 * 60 * 60);
-        }
-        $sunset = mktime(0, 0, ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jc, false) * 24 * 60 * 60);
-        $sunsettoday = $sunset;
-        if ($sunset < time()) {
-            $sunset = mktime(0, 0, (1 + ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jctomorrow, false)) * 24 * 60 * 60);
-        }
+
         $solarAzimut = ASTROSUN::SolarAzimut($jc, $localTime, $latitude, $longitude, $timezone);
-        $beginCivilTwilight = mktime(0, 0, ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jc, true) * 24 * 60 * 60);
-        $beginCivilTwilighttoday = $beginCivilTwilight;
-        if ($beginCivilTwilight < time()) {
-            $beginCivilTwilight = mktime(0, 0, (1 + ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jctomorrow, true)) * 24 * 60 * 60);
-        }
-        $endCivilTwilight = mktime(0, 0, ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jc, false) * 24 * 60 * 60);
-        $endCivilTwilightToday = $endCivilTwilight;
-        if ($endCivilTwilight < time()) {
-            $endCivilTwilight = mktime(0, 0, (1 + ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jctomorrow, false)) * 24 * 60 * 60);
-        }
+
+     
         $sunelevation = ASTROSUN::SolarElevation($jc, $localTime, $latitude, $longitude, $timezone);
         $sundistance = ASTROSUN::SunRadVector($jc) * 149597870.7;
         $solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 
-        //$this->SetValue("juliandate", $jd);
-        //$this->SetValue("juliancentury", $jc);
 
-        $solarnoon = mktime(0, 0, ASTROSUN::SolarNoon($timezone, $longitude, $jc) * 24 * 60 * 60);
-        if ($solarnoon < time()) {
-            $solarnoon = mktime(0, 0, (1 + ASTROSUN::SolarNoon($timezone, $longitude, $jctomorrow)) * 24 * 60 * 60);
-        }
+
         $this->SetValue("sunazimut", $solarAzimut);
         $this->SetValue("sundeclination", ASTROSUN::Declination($jc));
         $this->SetValue("sunelevation", $sunelevation);
@@ -325,9 +310,6 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
         //$this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
         $this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
-        $sundura = ($sunset - $sunrise) / 60.0 / 60.0;
-        $this->SetValue("sunlightduration", $sundura);
-        $this->SetValue("sunlightdurationstr", date('H:i:s', ($sunset - $sunrise - intval(date('Z', $sunset - $sunrise)))));
         $this->SetValue("season", ASTROSUN::Season($jc, $latitude));
 
 

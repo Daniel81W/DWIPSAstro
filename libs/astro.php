@@ -168,7 +168,7 @@ class ASTROSUN{
         $cs = $bs - $as;
         $deltasi = array();
         for ($i = 0; $i <= 2; $i++) {
-            $deltasi[$i] = $d[0] + $n[$i] * ($as + $bs + $cs * $n[$i]) / 2;
+            $deltasi[$i] = $d[0]S + $n[$i] * ($as + $bs + $cs * $n[$i]) / 2;
         }
 
         $Hs = array();
