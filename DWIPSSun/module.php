@@ -11,11 +11,32 @@ class DWIPSSun extends IPSModule
         
         if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("season"))) {
             IPS_CreateVariableProfile("DWIPS." . $this->Translate("season"), 1);
-            IPS_SetVariableProfileValues("DWIPS." . $this->Translate("season"), 1, 4, 1);
+            IPS_SetVariableProfileValues("DWIPS." . $this->Translate("season"), 1, 4, 0);
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 1, $this->Translate("spring"), "", -1);
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 2, $this->Translate("summer"), "", -1);
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 3, $this->Translate("fall"), "", -1);
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 4, $this->Translate("winter"), "", -1);
+        }
+        if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("compass_rose"))) {
+            IPS_CreateVariableProfile("DWIPS." . $this->Translate("compass_rose"), 2);
+            IPS_SetVariableProfileValues("DWIPS." . $this->Translate("compass_rose"), 0, 360, 0);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 0, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 22.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 45, $this->Translate("NE"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 67.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 90, $this->Translate("E"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 112.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 135, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 157.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 180, $this->Translate("S"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 202.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 225, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 247.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 270, $this->Translate("W"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 292.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 315, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 337.5, $this->Translate("N"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("compass_rose"), 360, $this->Translate("W"), "", -1);
         }
         $p = 1;
         $this->MaintainVariable("lastsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);
