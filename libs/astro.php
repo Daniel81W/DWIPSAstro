@@ -201,8 +201,8 @@ class ASTROSUN{
 
     public static function HeliocentricLatitude($julianMillenium)
     {
-        return (ASTROSUN::B0($julianMillenium)
-            + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)) / pow(10, 8);
+        return rad2deg((ASTROSUN::B0($julianMillenium)
+            + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)) / pow(10, 8));
     }
 
     public static function EarthRadiusVector($julianMillenium)
@@ -499,14 +499,14 @@ class ASTROSUN{
 
     public static function B0($julianMillenium)
     {
-        $l0 = array();
-        $l0Data = ASTROSUN::B0Arr();
-        for ($i = 0; $i < count($l0Data); $i++) {
-            $l0[$i] = $l0Data[$i][0] * cos($l0Data[$i][1] + $l0Data[$i][2] * $julianMillenium);
+        $b0 = array();
+        $b0Data = ASTROSUN::B0Arr();
+        for ($i = 0; $i < count($b0Data); $i++) {
+            $b0[$i] = $b0Data[$i][0] * cos($b0Data[$i][1] + $b0Data[$i][2] * $julianMillenium);
         }
         $sum = 0;
-        for ($i = 0; $i < count($l0); $i++) {
-            $sum += $l0[$i];
+        for ($i = 0; $i < count($b0); $i++) {
+            $sum += $b0[$i];
         }
         return $sum;
     }
