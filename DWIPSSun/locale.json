@@ -42,7 +42,7 @@
             "ESE": "OSO",
             "SE": "SO",
             "SSE": "SSO",
-
+            "distance.km": "Distanz.km",
             "moonphase": "Mondphase"
 
         }
