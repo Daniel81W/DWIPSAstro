@@ -84,17 +84,22 @@ class DWIPSSun extends IPSModule
         $this->MaintainVariable("shadowLength", $this->Translate("shadowlength"), 2, "", $p, false);
         $this->MaintainVariable("shadowLength", $this->Translate("shadowlength"), 2, "", $p, true);
         $p++;
-        $this->RegisterVariableFloat("solarirradiancespace", $this->Translate("solarirradiancespace"), "", $p);
+        $this->MaintainVariable("solarirradiancespace", $this->Translate("solarirradiancespace"), 2, "", $p, false);
+        $this->MaintainVariable("solarirradiancespace", $this->Translate("solarirradiancespace"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 26);
-        $this->RegisterVariableFloat("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), "", $p);
+        $this->MaintainVariable("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), 2, "", $p, false);
+        $this->MaintainVariable("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 27);
-        $this->RegisterVariableFloat("solarirradianceground", $this->Translate("solarirradianceground"), "", $p);
+        $this->MaintainVariable("solarirradianceground", $this->Translate("solarirradianceground"), 2, "", $p, false);
+        $this->MaintainVariable("solarirradianceground", $this->Translate("solarirradianceground"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 28);
-        $this->RegisterVariableFloat("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), "", $p);
+        $this->MaintainVariable("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), 2, "", $p, false);
+        $this->MaintainVariable("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), 2, "", $p, true);
         $p++; //"Astronomie.Radiant_Power", 40);
 
 
-        $this->RegisterVariableString("moonphase", $this->Translate("moonphase"), "", 30);
+        $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 4, "", 30, false);
+        $this->MaintainVariable("moonphase", $this->Translate("moonphase"), 4, "", 30, true);
 
 
         $this->RegisterPropertyFloat("Latitude", 50.0);
