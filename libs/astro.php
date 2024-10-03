@@ -129,7 +129,12 @@ class ASTROSUN{
         $m0 = ASTROMISC::LimitToInterval($m0, 1);
         $m1 = ASTROMISC::LimitToInterval($m1, 1);
         $m2 = ASTROMISC::LimitToInterval($m2, 1);
-        return $m0 . " - " . $H0 . " - " . $m1 . " - " . $m2;
+
+        $v0 = $v + 360.985647 * $m0;
+        $v1 = $v + 360.985647 * $m1;
+        $v2 = $v + 360.985647 * $m2;
+
+        return $v0 . " - " . $v1 . " - " . $v2;
     }
 
     public static function v($julianDay){
