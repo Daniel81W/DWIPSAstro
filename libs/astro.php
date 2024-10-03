@@ -150,7 +150,7 @@ class ASTROSUN{
 
         $a0s = $a0 + $n0 * ($aa + $bb + $cc * $n0) / 2;
         $a1s = $a0 + $n1 * ($aa + $bb + $cc * $n1) / 2;
-        $a1s = $a0 + $n2 * ($aa + $bb + $cc * $n2) / 2;
+        $a2s = $a0 + $n2 * ($aa + $bb + $cc * $n2) / 2;
 
         $as = $d0 - $dm1;
         if ($as > 2) {
