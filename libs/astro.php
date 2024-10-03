@@ -97,7 +97,7 @@ class ASTROSUN{
         $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
         $JM_ZERO_UT = ASTROGEN::JulianMillennium($JC_ZERO_UT);
 
-        $id.SendDebug("-", $JD_ZERO_UT . " - " . $JC_ZERO_UT . " - " . $JM_ZERO_UT,0);
+        IPS_LogMessage("-", $JD_ZERO_UT . " - " . $JC_ZERO_UT . " - " . $JM_ZERO_UT);
 
         $JD_ZERO_TT = ASTROGEN::JulianDay($timestamp_zero_ut + $deltaT);
         $JC_ZERO_TT = ASTROGEN::JulianDay($JD_ZERO_TT);
