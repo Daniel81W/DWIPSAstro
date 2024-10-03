@@ -735,104 +735,61 @@ class ASTROSUN{
 
 
 
-
-    /**
-     * 
-     */
+    /*
     public static function MeanLongitude(float $julianCentury){
         return fmod( (280.46646 + $julianCentury * ( 36000.76983 + $julianCentury * 0.0003032 )) , 360);
     }
 
-    /**
-     * Mittlere Anomalie der Sonne
-     */
     public static function MeanAnomaly(float $julianCentury){
         return 357.52911 + $julianCentury * (35999.05029 - 0.0001537 * $julianCentury);
     }
 
-    /**
-     * 
-     */
     public static function EccentEarthOrbit(float $julianCentury){
         return 0.016708634 - $julianCentury * (0.000042037 + 0.0000001267 * $julianCentury);
     }
     
-    /**
-     * 
-     */
     public static function SunEqOfCtr(float $julianCentury){
         $meanAnom = ASTROSUN::MeanAnomaly($julianCentury);
         return sin( deg2rad($meanAnom) ) * ( 1.914602 - $julianCentury * ( 0.004817 + 0.000014 * $julianCentury ) ) + sin( deg2rad( 2 * $meanAnom ) ) * ( 0.019993 - 0.000101 * $julianCentury ) + sin( deg2rad( 3 * $meanAnom ) ) * 0.000289;
     }
 
-    /**
-     * 
-     */
     public static function EclipticLongitude(float $julianCentury){
         return ASTROSUN::MeanLongitude($julianCentury) + ASTROSUN::SunEqOfCtr( $julianCentury);
     }
 
-    /**
-     * 
-     */
     public static function TrueAnomalySun(float $julianCentury){
         return ASTROSUN::MeanAnomaly($julianCentury) + ASTROSUN::SunEqOfCtr($julianCentury);
     }
 
-    /**
-     * 
-     */
     public static function SunRadVector(float $julianCentury){
         $eeo = ASTROSUN::EccentEarthOrbit($julianCentury);
         return ( 1.000001018 * ( 1 - $eeo * $eeo ) ) / ( 1 + $eeo * cos( deg2rad( ASTROSUN::TrueAnomalySun($julianCentury) ) ) );
     }
 
-    /**
-     * 
-     */
     public static function SunAppLong(float $julianCentury){
         return ASTROSUN::EclipticLongitude($julianCentury) - 0.00569 - 0.00478 * sin( deg2rad( 125.04 - 1934.136 * $julianCentury ) );
     }
 
-    /**
-     * Mittlere Schiefe der Ekliptik (Achsneigung der Erde)
-     * @param float $julianCentury Das Julianische Jahrhundert
-     */
     public static function MeanObliquityOfEcliptic(float $julianCentury):float{
         return 23 + ( 26 + ( ( 21.448 - $julianCentury * ( 46.815 + $julianCentury * ( 0.00059 - $julianCentury * 0.001813 ) ) ) ) / 60 ) / 60;
     }
 
-    /**
-     * 
-     */
     public static function ObliqCorrected(float $julianCentury){
         return ASTROSUN::MeanObliquityOfEcliptic($julianCentury) + 0.00256 * cos( deg2rad( 125.04 - 1934.136 * $julianCentury ) );
     }
 
-    /**
-     * 
-     */
     public static function RA(float $julianCentury){
         return rad2deg( atan2( cos( deg2rad( ASTROSUN::SunAppLong( $julianCentury) ) ) , cos( deg2rad( ASTROSUN::ObliqCorrected($julianCentury) ) ) * sin( deg2rad( ASTROSUN::SunAppLong( $julianCentury) ) ) ) );
     }
 
-    /**
-     * Deklination der Sonne
-     */
     public static function Declination(float $julianCentury){
         return rad2deg( asin( sin( deg2rad( ASTROSUN::ObliqCorrected($julianCentury) ) ) * sin( deg2rad( ASTROSUN::SunAppLong( $julianCentury) ) ) ) );
     }
 
-    /**
-     * 
-     */
     public static function VarY(float $julianCentury){
         return tan( deg2rad( ASTROSUN::ObliqCorrected($julianCentury) / 2 ) ) * tan( deg2rad( ASTROSUN::ObliqCorrected($julianCentury) / 2 ) );
     }
 
-    /**
-     * 
-     */
     public static function EquationOfTime(float $julianCentury){
         return 4 * rad2deg(
             ASTROSUN::VarY( $julianCentury) * sin(
@@ -855,9 +812,6 @@ class ASTROSUN{
         return rad2deg(acos(cos(deg2rad(90 - $sunElevation))/(cos(deg2rad($latitude))*cos(deg2rad(ASTROSUN::Declination($julianCentury))))-tan(deg2rad($latitude))*tan(deg2rad(ASTROSUN::Declination($julianCentury)))));
     }
 
-    /**
-     * 
-     */
     public static function SolarNoon(int $timezone, float $longitude, float $julianCentury){
         if ($longitude >= -180 && $longitude <= 180) {
             return ( 720 - 4 * $longitude - ASTROSUN::EquationOfTime($julianCentury) + $timezone * 60 ) / 1440;
@@ -868,9 +822,7 @@ class ASTROSUN{
         }
     }
         
-    /**
-     * 
-     */
+    
     public static function TimeForElevation(float $sunElevation, float $latitude, float $longitude, float $timezone, float $julianCentury, bool $beforeNoon){
         if(is_nan(ASTROSUN::HourAngleAtElevation($sunElevation, $latitude, $julianCentury) / 360)){
             throw new Exception('Elevation wird zu keiner Zeit erreicht.');
@@ -883,11 +835,12 @@ class ASTROSUN{
             }
         }
     }
-
+    */
     public static function SunlightDuration(float $latitude, float $julianCentury){
         return 8 * ASTROSUN::HourAngleAtElevation(-0.833, $latitude, $julianCentury);
     }
 
+    /*
     public static function TrueSolarTime(float $julianCentury, float $localTime, float $long, int $timezone){
         return fmod( $localTime * 1440 + ASTROSUN::EquationOfTime($julianCentury) + 4 * $long - 60 * $timezone , 1440);
     }
@@ -1020,7 +973,7 @@ class ASTROSUN{
                 return "";
         }
     }
-
+    */
     public static function Season(float $julianCentury, float $latitude) : int{
         $declination = ASTROSUN::Declination($julianCentury);
         $declinationBef = ASTROSUN::Declination($julianCentury - 0.00000002);

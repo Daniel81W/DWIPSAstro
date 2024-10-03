@@ -353,41 +353,29 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sunazimut", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
         $this->SetValue("sundirection", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
 
-        $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
+
+        //$this->SetValue("sunelevation", $sunelevation);
         $this->SetValue("sundeclination", ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
+        $this->SetValue("sunelevationmin", -90 + $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
+        $this->SetValue("sunelevationmax", 90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
 
 
-        $timezone = 1;
-        if (date('I')) {
-            $timezone = 2;
-        }
-        $localTime = intval(date("G")) / 24 + intval(date("i")) / 1440 + intval(date("s") / 86400);
+        $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
 
-        $latitude = $this->ReadPropertyFloat("Latitude");
-        $longitude = $this->ReadPropertyFloat("Longitude");
 
-        $jd = ASTROGEN::JulianDay();
-        $jc = ASTROGEN::JulianCentury($jd);
-        $jm = ASTROGEN::JulianMillennium($jc);
-        $jdtomorrow = $jd + 1;
-        $jctomorrow = ASTROGEN::JulianCentury($jdtomorrow);
 
         $solarZenith = ASTROSUN::SolarZenith($jc, $localTime, $latitude, $longitude, $timezone);
 
 
      
         $sunelevation = ASTROSUN::SolarElevation($jc, $localTime, $latitude, $longitude, $timezone);
-        $sundistance = ASTROSUN::SunRadVector($jc) * 149597870.7;
-        $solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
+        //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 
 
 
         //$this->SetValue("sundeclination", ASTROSUN::Declination($jc));
-        $this->SetValue("sunelevation", $sunelevation);
-        $this->SetValue("sunelevationmin", -90 + $latitude + ASTROSUN::Declination($jc));
-        $this->SetValue("sunelevationmax", 90 - $latitude + ASTROSUN::Declination($jc));
 
-        $this->SetValue("season", ASTROSUN::Season($jc, $latitude));
+        //$this->SetValue("season", ASTROSUN::Season($jc, $latitude));
 
 
         $shadowlen = 1 / tan(deg2rad($sunelevation));
