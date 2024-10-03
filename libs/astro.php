@@ -230,6 +230,7 @@ class ASTROSUN{
                 }
             }
         }
+        return $nsr;
     }
 
     public static function lastEl($timestamp, $deltaT, $lat, $long, $angleOfSun, $elem)
@@ -261,6 +262,7 @@ class ASTROSUN{
                 }
             }
         }
+        return $lsr;
     }
     public static function v($julianDay){
         $jc = ASTROGEN::JulianCentury($julianDay);
