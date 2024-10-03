@@ -360,7 +360,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sundirection", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
 
 
-        $this->SetValue("sunelevation", );
+        $this->SetValue("sunelevation", $this->ReadAttributeFloat("elevationOfTheSun"));
         $this->SetValue("sundeclination", ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("sunelevationmin", -90 + $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("sunelevationmax", 90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
@@ -369,7 +369,7 @@ class DWIPSSun extends IPSModule
 
         $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
         $this->SetValue("season", ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
-        $this->SetValue("shadowLength", ASTROSUN::ShadwoLength($this->ReadAttributeFloat("elevationOfTheSun")));
+        $this->SetValue("shadowLength", ASTROSUN::ShadowLength($this->ReadAttributeFloat("elevationOfTheSun")));
         
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 

@@ -567,7 +567,7 @@ class ASTROSUN{
         }
     }
 
-    public static function ShadwoLength($sunelevation){
+    public static function ShadowLength($sunelevation){
         $shadowlen = 1 / tan(deg2rad($sunelevation));
         if ($shadowlen > 0) {
             return $shadowlen;
