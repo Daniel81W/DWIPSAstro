@@ -364,11 +364,11 @@ class DWIPSSun extends IPSModule
 
 
 
-        $solarZenith = ASTROSUN::SolarZenith($jc, $localTime, $latitude, $longitude, $timezone);
+        //$solarZenith = ASTROSUN::SolarZenith($jc, $localTime, $latitude, $longitude, $timezone);
 
 
      
-        $sunelevation = ASTROSUN::SolarElevation($jc, $localTime, $latitude, $longitude, $timezone);
+        //$sunelevation = ASTROSUN::SolarElevation($jc, $localTime, $latitude, $longitude, $timezone);
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
 
 
@@ -378,7 +378,7 @@ class DWIPSSun extends IPSModule
         //$this->SetValue("season", ASTROSUN::Season($jc, $latitude));
 
 
-        $shadowlen = 1 / tan(deg2rad($sunelevation));
+        //$shadowlen = 1 / tan(deg2rad($sunelevation));
         if ($shadowlen > 0) {
             $this->SetValue("shadowLength", $shadowlen);
         } else {
