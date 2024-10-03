@@ -164,7 +164,7 @@ class ASTROSUN{
 
         $d0s = $d0 + $n0 * ($as + $bs + $cs * $n0) / 2;
         $d1s = $d0 + $n1 * ($as + $bs + $cs * $n1) / 2;
-        $d1s = $d0 + $n2 * ($as + $bs + $cs * $n2) / 2;
+        $d2s = $d0 + $n2 * ($as + $bs + $cs * $n2) / 2;
 
         $H0s = $v0 + $long - $a0s;
         $H1s = $v1 + $long - $a1s;
