@@ -95,7 +95,7 @@ class ASTROSUN{
     const AU = 149597870700;
 
     //
-    public static function Sunrise($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
+    public static function SunriseSunsetTransit($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
         $timestamp_zero_ut = gmmktime(0, 0, 0, $month, $day, $year);
 
         $JD_ZERO_UT = ASTROGEN::JulianDayFromTimestamp($timestamp_zero_ut);
@@ -207,14 +207,14 @@ class ASTROSUN{
     public static function nextEl($timestamp, $deltaT, $lat, $long, $angleOfSun, $elem){
         $sr = -1;
         $nsr = -1;
-        $sr = ASTROSUN::Sunrise(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
+        $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
 
         if ($sr > $timestamp) {
             $nsr = $sr;
         } elseif ($sr > 0) {
             for ($i = 1; $i < 366; $i++) {
                 $t = $timestamp + $i * 86400;
-                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
+                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
                 if ($sr > 0) {
                     $nsr = $sr;
                     $i = 400;
@@ -223,7 +223,7 @@ class ASTROSUN{
         } elseif (is_nan($sr)) {
             for ($i = 1; $i < 366; $i++) {
                 $t = $timestamp + $i * 86400;
-                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
+                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
                 if (!is_nan($sr)) {
                     $nsr = $sr;
                     $i = 400;
@@ -237,14 +237,11 @@ class ASTROSUN{
     {
         $sr = -1;
         $lsr = -1;
-        $sr = ASTROSUN::Sunrise(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
-        IPS_LogMessage("now", $timestamp);
-        IPS_LogMessage("SR_0", $sr);
+        $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
         if ($sr > $timestamp) {
             for ($i = 1; $i < 366; $i++) {
                 $t = $timestamp - $i * 86400;
-                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
-                IPS_LogMessage("SR_".$i, $sr);
+                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
                 if ($sr > 0) {
                     $lsr = $sr;
                     $i = 400;
@@ -255,7 +252,7 @@ class ASTROSUN{
         } elseif (is_nan($sr)) {
             for ($i = 1; $i < 366; $i++) {
                 $t = $timestamp - $i * 86400;
-                $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
+                $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
 
                 if (!is_nan($sr)) {
                     $lsr = $sr;
