@@ -238,12 +238,12 @@ class ASTROSUN{
         $sr = -1;
         $lsr = -1;
         $sr = ASTROSUN::Sunrise(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), $deltaT, $lat, $long, $angleOfSun)[$elem];
-        $IPS_LogMessage("SR_0", $sr);
+        IPS_LogMessage("SR_0", $sr);
         if ($sr > $timestamp) {
             for ($i = 1; $i < 366; $i++) {
                 $t = $timestamp - $i * 86400;
                 $sr = ASTROSUN::Sunrise(idate('Y', $t), idate('m', $t), idate('d', $t), $deltaT, $lat, $long, $angleOfSun)[$elem];
-                $IPS_LogMessage("SR_".$i, $sr);
+                IPS_LogMessage("SR_".$i, $sr);
                 if ($sr > 0) {
                     $lsr = $sr;
                     $i = 400;
