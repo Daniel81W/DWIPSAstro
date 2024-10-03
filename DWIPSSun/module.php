@@ -52,9 +52,11 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("nextstopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", $p);
+        $this->MaintainVariable("sunlightduration", $this->Translate("sunlightduration"), 2, "", $p, false);
+        $this->MaintainVariable("sunlightduration", $this->Translate("sunlightduration"), 2, "", $p, true);
         $p++;
-        $this->RegisterVariableString("sunlightdurationstr", $this->Translate("sunlightduration"), "", $p);
+        $this->MaintainVariable("sunlightdurationstr", $this->Translate("sunlightduration"), 3, "", $p, false);
+        $this->MaintainVariable("sunlightdurationstr", $this->Translate("sunlightduration"), 3, "", $p, true);
         $p++;
         $this->RegisterVariableFloat("sunazimut", $this->Translate("sunazimut"), "", $p);
         $p++;
