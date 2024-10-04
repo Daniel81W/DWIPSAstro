@@ -573,7 +573,7 @@ class ASTROSUN{
         return 0;
     }
 
-    public static function IncidenceAngleOfSurface($orientation, $slope, $lat, $geoSunDec, $topoSunDec, $topoHourAngle, $press, $temp){
+    public static function IncidenceAngleOfSurface(float $orientation, float $slope, $lat, $geoSunDec, $topoSunDec, $topoHourAngle, $press, $temp){
         return rad2deg(
             acos(
                 cos(deg2rad(ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp))) * cos(deg2rad($slope)) + 
@@ -581,6 +581,8 @@ class ASTROSUN{
             )
         );
     }
+    
+    
     // Hilfsfunktionen
     private static function X($i, $julianCentury){
         switch ($i){
@@ -1453,9 +1455,9 @@ class ASTROSUN{
 
 class ASTROMOON
 {
-    public static function MeanLongitude($jce)
+    public static function MeanLongitude($julianCentury)
     {
-        218.3164477 + 481267.88123421 * $jce - 0.0015786 * pow($jce, 2) + pow($jce, 3) / 538841 - pow($jce, 4) / 65194000;
+        218.3164477 + 481267.88123421 * $julianCentury - 0.0015786 * pow($julianCentury, 2) + pow($julianCentury, 3) / 538841 - pow($julianCentury, 4) / 65194000;
     }
 
     public static function GeocentricLongitude()
@@ -1483,7 +1485,9 @@ class ASTROMOON
         return 125.04452 - 1934.136261 * $julianCentury + 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3) / 450000;
     }
 
-
+    public static function ArgumentofLatitude($julianCentury){
+        return 93.2720950 + 483202.0175233 * $julianCentury - 0.0036539 * pow($julianCentury, 2) - pow($julianCentury, 3) / 3526000 + pow($julianCentury, 4) / 863310000;
+    }
 
 
 
@@ -1531,6 +1535,18 @@ class ASTROMOON
             $text = "Halbmond (1. Viertel)";
         }
         return $text;
+    }
+
+    private static function PeriodicTermsForTheNutation()
+    {
+        $pt = array(
+                'd' => 0,
+                'm' => 0,
+                'ms' => 1,
+                'f' => 0,
+                'l' => 6288774,
+                'r' => –20905355
+        );
     }
 }
 
