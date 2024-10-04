@@ -585,15 +585,15 @@ class ASTROSUN{
     private static function X($i, $julianCentury){
         switch ($i){
             case 0:
-                return ASTROSUN::MeanElongationOfTheMoon($julianCentury);
+                return ASTROMOON::MeanElongationOfTheMoon($julianCentury);
             case 1:
                 return ASTROSUN::MeanAnomalyOfTheSun($julianCentury);
             case 2:
-                return ASTROSUN::MeanAnomalyOfTheMoon($julianCentury);
+                return ASTROMOON::MeanAnomalyOfTheMoon($julianCentury);
             case 3:
-                return ASTROSUN::MoonsArgumentOfLatitude($julianCentury);
+                return ASTROMOON::MoonsArgumentOfLatitude($julianCentury);
             case 4:
-                return ASTROSUN::LongitudeOfTheAscendingNodeOfTheMoon($julianCentury);
+                return ASTROMOON::LongitudeOfTheAscendingNodeOfTheMoon($julianCentury);
             default:
                 return 0;
         }
