@@ -355,24 +355,8 @@ class ASTROSUN{
     }
     
     //Nutuation
-    public static function MeanElongationOfTheMoon($julianCentury){
-        return 297.8501921 + 445267.1114034 * $julianCentury - 0.0018819 * pow($julianCentury, 2) + pow($julianCentury, 3)/538841 - pow($julianCentury, 4)/65194000;
-    }
-    
     public static function MeanAnomalyOfTheSun($julianCentury){
-        return 357.52772 + 35999.050340 * $julianCentury - 0.0001603 * pow($julianCentury, 2) - pow($julianCentury, 3)/300000;
-    }
-    
-    public static function MeanAnomalyOfTheMoon($julianCentury){
-        return 134.96298 + 477198.867398 * $julianCentury + 0.0086972 * pow($julianCentury, 2) + pow($julianCentury, 3)/56250;
-    }
-
-    public static function MoonsArgumentOfLatitude($julianCentury){
-        return 93.27191 + 483202.017538 * $julianCentury - 0.0036825 * pow($julianCentury, 2) + pow($julianCentury, 3)/327270;
-    }
-
-    public static function LongitudeOfTheAscendingNodeOfTheMoon($julianCentury){
-        return  125.04452 - 1934.136261 * $julianCentury + 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3)/450000;
+        return 357.5291092 + 35999.0502909 * $julianCentury - 0.0001536 * pow($julianCentury, 2) + pow($julianCentury, 3)/ 24490000;
     }
     
     public static function NutationInLongitude($julianCentury){
@@ -1467,14 +1451,39 @@ class ASTROSUN{
     }
 }
 
-class ASTROMOON{
-     public static function MeanLongitude($jce){
-        218.3164477 + 481267.88123421 * $jce - 0.0015786 * pow($jce,2) + pow($jce,3) / 538841 - pow($jce,4) / 65194000;
-     }
+class ASTROMOON
+{
+    public static function MeanLongitude($jce)
+    {
+        218.3164477 + 481267.88123421 * $jce - 0.0015786 * pow($jce, 2) + pow($jce, 3) / 538841 - pow($jce, 4) / 65194000;
+    }
 
-     public static function GeocentricLongitude(){
-         
-     }
+    public static function GeocentricLongitude()
+    {
+
+    }
+
+    public static function MeanElongationOfTheMoon($julianCentury)
+    {
+        return 297.8501921 + 445267.1114034 * $julianCentury - 0.0018819 * pow($julianCentury, 2) + pow($julianCentury, 3) / 545868 - pow($julianCentury, 4) / 113065000;
+    }
+
+    public static function MeanAnomalyOfTheMoon($julianCentury)
+    {
+        return 134.9633964 + 477198.8675055 * $julianCentury + 0.0087414 * pow($julianCentury, 2) + pow($julianCentury, 3) / 56250 - pow($julianCentury, 4) / 14712000;
+    }
+
+    public static function MoonsArgumentOfLatitude($julianCentury)
+    {
+        return 93.27191 + 483202.017538 * $julianCentury - 0.0036825 * pow($julianCentury, 2) + pow($julianCentury, 3) / 327270;
+    }
+
+    public static function LongitudeOfTheAscendingNodeOfTheMoon($julianCentury)
+    {
+        return 125.04452 - 1934.136261 * $julianCentury + 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3) / 450000;
+    }
+
+
 
 
 
