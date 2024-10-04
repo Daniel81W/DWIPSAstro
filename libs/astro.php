@@ -1554,7 +1554,7 @@ class ASTROMOON
         $i = 0;
         while(false !== ($data = fgetcsv($handle, null, ','))){
             IPS_LogMessage("MOON", var_dump($data));
-            $pt[$i] = array(
+            /*$pt[$i] = array(
                 'd' => $data[0],
                 'm' => $data[1],
                 'ms' => $data[2],,
@@ -1562,7 +1562,7 @@ class ASTROMOON
                 'l' => $data[4],
                 'r' => $data[5]
             );
-            $i++;
+            $i++;*/
         }
         return $pt;
     }
