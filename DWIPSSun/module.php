@@ -370,7 +370,7 @@ class DWIPSSun extends IPSModule
         //$this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
         //$this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * (cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) * sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39))));
 
-        //IPS_LogMessage("Moon", ASTROMOON::PeriodicTermsForTheNutation()[1]['r']);
+        IPS_LogMessage("Moon", ASTROMOON::PeriodicTermsForTheMoon());
     }
 
     public function SurfacesIncidenceAngle($orientation, $slope){
