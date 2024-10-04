@@ -1542,7 +1542,7 @@ class ASTROMOON
         return $text;
     }
 
-    private static function PeriodicTermsForTheMoon()
+    public static function PeriodicTermsForTheMoon()
     {
         $path_to_csv_file = __DIR__ . "/../libs/MoonPeriodicTerms.csv";
         $handle = fopen($path_to_csv_file, 'r');
