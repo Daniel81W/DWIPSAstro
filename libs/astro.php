@@ -569,10 +569,11 @@ class ASTROSUN{
         if(!is_nan($sr) && !is_nan($ss)){
             return $ss - $sr;
         }elseif(-0.8333 < ASTROSUN::ElevationOfTheSun($lat, $geoSunDec, $topoLocHourAngle, 1013, 10)){
-            
+            return ASTROSUN::nextEl($now, $deltaT, $lat, $long, -0.8333, "S") -
+                ASTROSUN::lastEl($now, $deltaT, $lat, $long, -0.8333, "R");
         
         }else{
-            
+            return 0;
         }
 
         return 0;
