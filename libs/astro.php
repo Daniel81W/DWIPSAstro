@@ -590,7 +590,7 @@ class ASTROSUN{
     }
 
     public static function IncidenceAngleOfSurface($orientation, $slope, $lat, $geoSunDec, $topoSunDec, $topoHourAngle, $press, $temp){
-        rad2deg(
+        return rad2deg(
             acos(
                 cos(deg2rad(ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp))) * cos(deg2rad($slope)) + 
                 sin(deg2rad($slope)) * sin(deg2rad(ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp))) * cos(deg2rad( ASTROSUN::TopocentricAzimuthAngle($lat, $topoSunDec, $topoHourAngle) -180 - ($orientation - 180)))
