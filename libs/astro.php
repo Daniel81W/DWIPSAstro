@@ -356,7 +356,7 @@ class ASTROSUN{
     
     //Nutuation
     public static function MeanElongationOfTheMoon($julianCentury){
-        return 297.85036 + 445267.111480 * $julianCentury - 0.0019142 * pow($julianCentury, 2) + pow($julianCentury, 3)/189474;
+        return 297.8501921 + 445267.1114034 * $julianCentury - 0.0018819 * pow($julianCentury, 2) + pow($julianCentury, 3)/538841- pow($julianCentury, 4)/65194000;
     }
     
     public static function MeanAnomalyOfTheSun($julianCentury){
@@ -1468,6 +1468,19 @@ class ASTROSUN{
 }
 
 class ASTROMOON{
+     public static function MeanLongitude($jce){
+        218.3164477 + 481267.88123421 * $jce − 0.0015786 * pow($jce,2) + pow($jce,3) / 538841 - pow($jce,4) / 65194000;
+     }
+
+     public static function GeocentricLongitude(){
+         
+     }
+
+
+
+
+
+
     public static function Phase(){
 
         $syn = 29.530588;

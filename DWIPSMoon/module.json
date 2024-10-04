@@ -1,12 +1,12 @@
 {
-    "id": "{27D40E31-E187-F454-57D6-53C26DE08059}",
-    "name": "DWIPSAstronomy",
+    "id": "{D97010F2-F2F1-3A6C-5C48-4F93E8536FB4}",
+    "name": "DWIPSMoon",
     "type": 0,
     "vendor": "DWIPS",
     "aliases": [],
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],
-    "prefix": "DWIPSASTRO",
+    "prefix": "DWIPSMOON",
     "url": "https://github.com/Daniel81W/DWIPSAstro"
 }
