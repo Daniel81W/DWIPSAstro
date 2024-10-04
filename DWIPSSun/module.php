@@ -284,7 +284,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("topoZenAngle", ASTROSUN::TopocentricZenithAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
         $this->WriteAttributeFloat("topoAziAngle", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
         $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadAttributeFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
-        $this->WriteAttributeFloat("elevationOfTheSun", ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 820, 10));
+        $this->WriteAttributeFloat("elevationOfTheSun", ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
 
         $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
         $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
@@ -370,7 +370,6 @@ class DWIPSSun extends IPSModule
         //$this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
         //$this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * (cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) * sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39))));
 
-        IPS_LogMessage("MOON2", var_dump(ASTROMOON::PeriodicTermsForTheMoon()));
     }
 
     public function SurfacesIncidenceAngle($orientation, $slope){

@@ -1490,11 +1490,39 @@ class ASTROMOON
         return 125.04452 - 1934.136261 * $julianCentury + 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3) / 450000;
     }
 
-    public static function ArgumentofLatitude($julianCentury){
+    public static function ArgumentOfLatitude($julianCentury){
         return 93.2720950 + 483202.0175233 * $julianCentury - 0.0036539 * pow($julianCentury, 2) - pow($julianCentury, 3) / 3526000 + pow($julianCentury, 4) / 863310000;
     }
 
+    public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
+    {
+        $l = array();
+        $lData = ASTROMOON::PeriodicTermsForTheMoon();
+        for ($i = 0; $i < count($lData); $i++) {
+            $l[$i] = $lData[$i][4] * pow(1 - 0.002516 * $julianCentury - 0.0000074 * pow($julianCentury, 2), abs($lData[$i][1])) * sin($lData[$i][0] * $meanElong + $lData[$i][1] * $meanAnomalySun + $lData[$i][2] * $meanAnomalyMoon + $lData[$i][3] * $argOfLat);
+        }
+        
+        $sum = 0;
+        for ($i = 0; $i < count($l); $i++) {
+            $sum += $l[$i];
+        }
+        return $sum;
+    }
 
+    public static function r($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
+    {
+        $l = array();
+        $lData = ASTROMOON::PeriodicTermsForTheMoon();
+        for ($i = 0; $i < count($lData); $i++) {
+            $l[$i] = $lData[$i][5] * pow(1 - 0.002516 * $julianCentury - 0.0000074 * pow($julianCentury, 2), abs($lData[$i][1])) * cos($lData[$i][0] * $meanElong + $lData[$i][1] * $meanAnomalySun + $lData[$i][2] * $meanAnomalyMoon + $lData[$i][3] * $argOfLat);
+        }
+
+        $sum = 0;
+        for ($i = 0; $i < count($l); $i++) {
+            $sum += $l[$i];
+        }
+        return $sum;
+    }
 
 
 
