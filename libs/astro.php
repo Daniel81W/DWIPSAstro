@@ -1553,7 +1553,7 @@ class ASTROMOON
         $pt = array();
         $i = 0;
         while(false !== ($data = fgetcsv($handle, null, ';'))){
-            IPS_LogMessage("MOON2 - " . $i, var_dump($data));
+            IPS_LogMessage("MOON2 - " . $i, var_dump($data[0]));
             /*$pt[$i] = array(
                 'd' => (int)$data[0],
                 'm' => $data[1],
