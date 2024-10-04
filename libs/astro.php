@@ -1551,7 +1551,7 @@ class ASTROMOON
         if(!$handle){
             return false;
         }
-        $pt = array();
+        $pt = array();/*
         $i = 0;
         while(false !== ($data = fgetcsv($handle, null, ';'))){
             //IPS_LogMessage("MOON2 - " . $i, var_dump($data[0]));
@@ -1565,7 +1565,7 @@ class ASTROMOON
             );
             $i++;
         }
-        /*
+        */
         $pt = array(
             array(0,0,1,0,6288774,-20905355),
             array(2,0,-1,0,1274027,-3699111),
@@ -1627,7 +1627,7 @@ class ASTROMOON
             array(1,1,-1,0,299,0),
             array(2,0,3,0,294,0),
             array(2,0,-1,-2,0,8752)
-        );*/
+        );
         return $pt;
     }
 
