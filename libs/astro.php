@@ -578,7 +578,7 @@ class ASTROSUN{
         return 0;
     }
 
-    public static function IncidenceAngleOfSurface(float $orientation, float $slope, $lat, $geoSunDec, $topoSunDec, $topoHourAngle, $press, $temp){
+    public static function IncidenceAngleOfSurface(float $orientation, float $slope, float $lat, float $geoSunDec, float $topoSunDec, float$topoHourAngle, float $press, float $temp):float{
         return rad2deg(
             acos(
                 cos(deg2rad(ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp))) * cos(deg2rad($slope)) + 
@@ -1557,11 +1557,11 @@ class ASTROMOON
             //IPS_LogMessage("MOON2 - " . $i, var_dump($data[0]));
             $pt[$i] = array(
                 'd' => (int)$data[0],
-                'm' => $data[1],
-                'ms' => $data[2],
-                'f' => $data[3],
-                'l' => $data[4],
-                'r' => $data[5]
+                'm' => (int)$data[1],
+                'ms' => (int)$data[2],
+                'f' => (int)$data[3],
+                'l' => (int)$data[4],
+                'r' => (int)$data[5]
             );
             $i++;
         }
