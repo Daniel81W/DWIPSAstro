@@ -1539,15 +1539,28 @@ class ASTROMOON
 
     private static function PeriodicTermsForTheNutation()
     {
-        $pt = array(
-                'd' => 0,
-                'm' => 0,
-                'ms' => 1,
-                'f' => 0,
-                'l' => 6288774,
-                'r' => –20905355
-        );
+        $path_to_csv_file = __DIR__ . "/../libs/MoonPeriodicTerms.csv";
+        $handle = fopen($path_to_csv_file, 'r');
+    
+        if(!$handle){
+            return false;
+        }
+        $pt = array();
+        $i = 0;
+        while(false !== ($data = fgetcsv($handle, null, ','))){
+            $pt[$i] = array(
+                'd' => $data[0],
+                'm' => $data[1],
+                'ms' => $data[2],,
+                'f' => $data[3],
+                'l' => $data[4],
+                'r' => $data[5]
+            );
+        }
+        return $pt;
     }
+
+    
 }
 
 class ASTROMISC{

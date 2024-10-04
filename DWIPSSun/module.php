@@ -1,6 +1,5 @@
 <?php
 
-//include_once ("/var/lib/symcon/modules/DWIPSAstro/libs/astro.php");
 include_once (__DIR__ . "/../libs/astro.php");
 class DWIPSSun extends IPSModule
 {
@@ -189,7 +188,6 @@ class DWIPSSun extends IPSModule
     {
         //load form from file
         $jsonForm = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
-
         
         $jsonForm["actions"][0]["items"][0]["value"] = $this->ReadAttributeFloat("jd");
         $jsonForm["actions"][0]["items"][1]["value"] = $this->ReadAttributeFloat("jc");
@@ -372,7 +370,8 @@ class DWIPSSun extends IPSModule
         //$this->SetValue("solarirradiancerectangular", $solarirradiancespace * 0.75);
         //$this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
         //$this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * (cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) * sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39))));
-        
+
+        IPS_LogMessage("Moon", ASTROMOON::PeriodicTermsForTheNutation()[1]['r']);
     }
 
     public function SurfacesIncidenceAngle($orientation, $slope){
