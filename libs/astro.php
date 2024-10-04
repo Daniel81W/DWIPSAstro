@@ -561,13 +561,18 @@ class ASTROSUN{
         }
     }
     
-    public static function SunlightDuration($deltaT, float $lat, float $long)
+    public static function SunlightDuration($deltaT, float $lat, float $long, $geoSunDec, $topoLocHourAngle)
     {
         $now = time();
         $sr = ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $deltaT, $lat, $long, -0.8333)["R"];
         $ss = ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $deltaT, $lat, $long, -0.8333)["S"];
         if(!is_nan($sr) && !is_nan($ss)){
             return $ss - $sr;
+        }elseif(-0.8333 < ASTROSUN::ElevationOfTheSun($lat, $geoSunDec, $topoLocHourAngle, 1013, 10)){
+            
+        
+        }else{
+            
         }
 
         return 0;

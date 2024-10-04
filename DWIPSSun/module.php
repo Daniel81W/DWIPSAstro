@@ -347,8 +347,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("nextstopastronomicaltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "S"));
 
         $tForOffset = new DateTimeImmutable();
-        $sundura = ASTROSUN::SunlightDuration($this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"));//(ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["S"] - ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["R"]) / 60.0 / 60.0;
-        $this->SetValue("sunlightduration", ASTROSUN::SunlightDuration($this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude")) - (new DateTimeImmutable())->setTimestamp(0)->getOffset());// $tForOffset->setTimestamp(0)->getOffset());
+        $this->SetValue("sunlightduration", ASTROSUN::SunlightDuration($this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")) - (new DateTimeImmutable())->setTimestamp(0)->getOffset());// $tForOffset->setTimestamp(0)->getOffset());
         
         $this->SetValue("sunazimut", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
         $this->SetValue("sundirection", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
@@ -371,7 +370,7 @@ class DWIPSSun extends IPSModule
         //$this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
         //$this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * (cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) * sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39))));
 
-        IPS_LogMessage("Moon", ASTROMOON::PeriodicTermsForTheNutation()[1]['r']);
+        //IPS_LogMessage("Moon", ASTROMOON::PeriodicTermsForTheNutation()[1]['r']);
     }
 
     public function SurfacesIncidenceAngle($orientation, $slope){
