@@ -349,7 +349,7 @@ class ASTROSUN{
         return $sum;*/
     }
 
-    private static function ValuesOfTheEarth(array $term_sum[], int $count, float $jme){
+    private static function ValuesOfTheEarth(array $term_sum, int $count, float $jme){
         /*
         $sum = 0.0;
 
