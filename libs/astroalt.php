@@ -2,7 +2,7 @@
 
 //TODO Mond
 
-class ASTROGEN{
+class altASTROGEN{
 
     /**
      * 
@@ -36,7 +36,7 @@ class ASTROGEN{
     
 }
 
-class ASTROSUN{
+class altASTROSUN{
 
     /**
      * 
@@ -362,7 +362,7 @@ class ASTROSUN{
     }
 }
 
-class ASTROMOON{
+class altASTROMOON{
     public static function Phase(){
 
         $syn = 29.530588;
