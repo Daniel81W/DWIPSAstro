@@ -356,13 +356,13 @@ class ASTROSUN{
         for ($i = 0; $i < $count; $i++)
             $sum += $term_sum[$i] * pow($jme, $i);
 
-        $sum /= Pow(10, 8);
+        $sum /= pow(10, 8);
 
         return $sum;
     }
     
     public static function EarthHeliocentricLongitude($jme){
-        $sum = array();
+        //$sum = array();
     
         //for ($i = 0; $i < ASTROSUN::l_count; $i++){
             //$sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERMS::l_terms[$i], ASTROSUN::l_subcount[$i], $jme);
