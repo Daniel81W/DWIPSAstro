@@ -368,7 +368,7 @@ class ASTROSUN{
             $sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERM::l_terms[$i], ASTROSUN::l_subcount[$i], $jme);
         }
 
-        return ASTROMISC::LimitTo360Deg(rad2deg(ASTROSUN::ValuesOfTheEarth($sum, ASTROSUN::l_count, $jme)));
+        //return ASTROMISC::LimitTo360Deg(rad2deg(ASTROSUN::ValuesOfTheEarth($sum, ASTROSUN::l_count, $jme)));
     }
 
     //
