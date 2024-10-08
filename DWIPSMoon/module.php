@@ -93,7 +93,7 @@ class DWIPSMoon extends IPSModule
      */
     public function Update()
     {
-        $this->WriteAttributeFloat("jd", ASTROGEN::JulianDay());
+        $this->WriteAttributeFloat("jd", ASTROGEN::oldJulianDay());
         $this->WriteAttributeFloat("jc", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jd")));
         $this->WriteAttributeFloat("jm", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jc")));
         $this->WriteAttributeFloat("jde", ASTROGEN::JDE($this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("deltaT")));

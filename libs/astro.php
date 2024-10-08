@@ -10,9 +10,11 @@ class ASTROGEN{
      * Computes the Julian Date for the current time.
      * @return float Current Julian Date
      */
-    public static function JulianDay():float{
-       $date = new DateTime();
-       return ASTROGEN::JulianDayFromTimestamp($date->getTimestamp());
+    public static function oldJulianDay():float{
+       
+        
+        $date = new DateTime();
+        return ASTROGEN::oldJulianDayFromTimestamp($date->getTimestamp());
     }
 
     /**
@@ -20,7 +22,7 @@ class ASTROGEN{
      * @param int $timestamp Timestamp the Julian Date is to compute for
      * @return float Julian Date for the given timestamp
      */
-    public static function JulianDayFromTimestamp(int $timestamp){
+    public static function oldJulianDayFromTimestamp(int $timestamp){
 
         $dy = 0;
         $dm = 0;
@@ -52,9 +54,32 @@ class ASTROGEN{
      * @param int $second
      * @return float
      */
-    public static function JulianDayFromDateTime(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0){
+    public static function oldJulianDayFromDateTime(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0){
        $date = mktime($hour, $minute, $second , $month, $day, $year);
-       return ASTROGEN::JulianDayFromTimestamp($date);
+       return ASTROGEN::oldJulianDayFromTimestamp($date);
+    }
+
+    public static function JulianDay(int $year, int $month, int $day, int $hour = 0, int $minute = 0, float $second = 0.0, float $dut1 = 0.0, float $tz = 0.0)
+    {
+        $day_decimal = $day + ($hour - $tz + ($minute + ($second + $dut1) / 60.0) / 60.0) / 24.0;
+
+        if ($month < 3) {
+            $month += 12;
+            $year--;
+        }
+
+        $julian_day = intval(365.25 * ($year + 4716.0)) + intval(30.6001 * ($month + 1)) + $day_decimal - 1524.5;
+
+        if ($julian_day > 2299160.0) {
+            $a = intval($year / 100);
+            $julian_day += (2 - $a + intval($a / 4));
+        }
+
+        return $julian_day;
+    }
+    
+    public static function JulianDayFromTimestamp(int $timestamp, float $dut1 = 0.0, float $tz = 0.0){
+        return JulianDay(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), idate('H', $timestamp), idate('i', $timestamp), idate('s', $timestamp), $dut1, $tz);
     }
 
     /**
@@ -93,17 +118,24 @@ class ASTROSUN{
      * Astronomical unit (mean distance earth - sun) in m
      */
     const AU = 149597870700;
+    const l_count = 6;
+    const b_count = 2;
+    const r_count = 5;
+    const y_count = 63;
+    const l_subcount = (64,34,20,7,3,1);
+    const b_subcount = (5,2);
+    const r_subcount = (40,10,6,2,1);
 
     //
     public static function SunriseSunsetTransit($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
         $timestamp_zero_ut = gmmktime(0, 0, 0, $month, $day, $year);
 
-        $JD_ZERO_UT = ASTROGEN::JulianDayFromTimestamp($timestamp_zero_ut);
+        $JD_ZERO_UT = ASTROGEN::oldJulianDayFromTimestamp($timestamp_zero_ut);
         $JC_ZERO_UT = ASTROGEN::JulianCentury($JD_ZERO_UT);
         $JM_ZERO_UT = ASTROGEN::JulianMillennium($JC_ZERO_UT);
 
-        $JD_ZERO_TT = ASTROGEN::JulianDayFromTimestamp($timestamp_zero_ut + $deltaT);
-        $JC_ZERO_TT = ASTROGEN::JulianDay($JD_ZERO_TT);
+        $JD_ZERO_TT = ASTROGEN::oldJulianDayFromTimestamp($timestamp_zero_ut + $deltaT);
+        $JC_ZERO_TT = ASTROGEN::oldJulianDay($JD_ZERO_TT);
         $JM_ZERO_TT = ASTROGEN::JulianMillennium($JC_ZERO_TT);
 
         $vu = ASTROSUN::v($JD_ZERO_UT);
@@ -125,14 +157,14 @@ class ASTROSUN{
                 (sin(deg2rad($angleOfSun)) - sin(deg2rad($lat)) * sin(deg2rad($d[0]))) / (cos(deg2rad($lat)) * cos(deg2rad($d[0])))
             )
         );
-        $H0 = ASTROMISC::LimitToInterval($H0, 180);
+        $H0 = ASTROMISC::LimitToDesigDeg($H0, 180);
 
         $m[1] = $m[0] - $H0 / 360;
         $m[2] = $m[0] + $H0 / 360;
 
-        $m[0] = ASTROMISC::LimitToInterval($m[0], 1);
-        $m[1] = ASTROMISC::LimitToInterval($m[1], 1);
-        $m[2] = ASTROMISC::LimitToInterval($m[2], 1);
+        $m[0] = ASTROMISC::LimitToDesigDeg($m[0], 1);
+        $m[1] = ASTROMISC::LimitToDesigDeg($m[1], 1);
+        $m[2] = ASTROMISC::LimitToDesigDeg($m[2], 1);
 
         for ($i = 0; $i <= 2; $i++) {
             $v[$i] = $vu + 360.985647 * $m[$i];
@@ -144,11 +176,11 @@ class ASTROSUN{
 
         $aa = $a[0] - $a[-1];
         if ($aa > 2 ) {
-            $aa = ASTROMISC::LimitToInterval($aa, 1);
+            $aa = ASTROMISC::LimitToDesigDeg($aa, 1);
         }
         $bb = $a[1] - $a[0];
         if ($bb > 2) {
-            $bb = ASTROMISC::LimitToInterval($bb, 1);
+            $bb = ASTROMISC::LimitToDesigDeg($bb, 1);
         }
         $cc = $bb - $aa;
 
@@ -159,11 +191,11 @@ class ASTROSUN{
 
         $as = $d[0] - $d[-1];
         if ($as > 2) {
-            $as = ASTROMISC::LimitToInterval($as, 1);
+            $as = ASTROMISC::LimitToDesigDeg($as, 1);
         }
         $bs = $d[1] - $d[0];
         if ($bs > 2) {
-            $bs = ASTROMISC::LimitToInterval($bs, 1);
+            $bs = ASTROMISC::LimitToDesigDeg($bs, 1);
         }
         $cs = $bs - $as;
         $deltasi = array();
@@ -175,7 +207,7 @@ class ASTROSUN{
         for ($i = 0; $i <= 2; $i++) {
             $Hs[$i] = $v[$i] + $long - $alphasi[$i];
 
-            $Hs[$i] = $Hs[$i] / abs($Hs[$i]) * ASTROMISC::LimitToInterval(abs($Hs[$i]), 360);
+            $Hs[$i] = $Hs[$i] / abs($Hs[$i]) * ASTROMISC::LimitToDesigDeg(abs($Hs[$i]), 360);
             if (abs($Hs[$i]) > 180) {
                 $Hs[$i] = $Hs[$i] - $Hs[$i] / abs($Hs[$i]) * 360;
             }
@@ -307,6 +339,33 @@ class ASTROSUN{
         $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($meanObl, $nutObl);
         $appSunLong = ASTROSUN::ApparentSunLongitude($geoCentLong, $nutLong, $abCorr);
         return ASTROSUN::GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong);
+    }
+
+    private static function SummationOfPeriodicTermsOfTheEarth($terms, int $count, float $jme){
+        $t = ASTRO
+
+        for ($i = 0; $i < $count; $i++)
+            sum += $terms[$i][TERM_A]*cos(terms[i][TERM_B]+terms[i][TERM_C] * $jme);
+
+        return sum;
+    }
+
+    private static function ValuesOfTheEarth(){
+        
+    }
+    
+        public static function EarthHeliocentricLongitude($julianMillenium)
+    {
+        int i;
+    double sum=0;
+
+        for ($i = 0; $i < ASTROSUN::l_count; $i++){
+            $sum += term_sum[i]*pow(jme, i);
+        }
+
+    sum /= 1.0e8;
+        $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
+        return ASTROMISC::LimitTo360Deg($l);
     }
 
     //
@@ -517,7 +576,7 @@ class ASTROSUN{
 
     public static function Season(float $latitude): int
     {
-        $jd= ASTROGEN::JulianDay();
+        $jd= ASTROGEN::oldJulianDay();
         $declination = ASTROSUN::DeclinationOfSun($jd);
         $declinationBef = ASTROSUN::DeclinationOfSun($jd - 60/86400);
         if ($declination >= 0) {
@@ -1663,12 +1722,20 @@ class ASTROMOON
 
 }
 
-class ASTRO_TERMS{
-
+class ASTROTERMS{
+    
     ///////////////////////////////////////////////////
     ///  Earth Periodic Terms
     ///////////////////////////////////////////////////
-    const l_terms = array(
+    static enum EarthPeriodicTerms: int
+    {
+        case TERM_A = 0;
+        case TERM_B = 1;
+        case TERM_C = 2;
+        case TERM_COUNT = 3;
+    }
+
+    static const l_terms = array(
         array(
            array(175347046.0,0,0),
             array(3341656.0,4.6692568,6283.07585),
@@ -2056,11 +2123,12 @@ class ASTROMISC{
 
     public static function LimitTo180Deg($angle)
     {
+        /*
         if ($angle >= 0) {
             return 180 * ($angle / 180 - floor($angle / 180));
         } else {
             return 180 + 180 * ($angle / 180 - ceil($angle / 180));
-        }
+        }*/
 
         $limited = 0.0;
         $angle /= 180.0;
@@ -2071,13 +2139,21 @@ class ASTROMISC{
         return $limited;
     }
 
-    public static function LimitToInterval($numToLimit, $limit)
+    public static function LimitToDesigDeg($angle, $limit)
     {
-        if ($numToLimit >= 0) {
+        /*if ($numToLimit >= 0) {
             return $limit * ($numToLimit / $limit - floor($numToLimit / $limit));
         } else {
             return $limit + $limit * ($numToLimit / $limit - ceil($numToLimit / $limit));
-        }
+        }*/
+
+        $limited = 0.0;
+        $angle /= $limit;
+        $limited = $limit * ($angle - floor($angle));
+        if ($limited < 0)
+            $limited += $limit;
+
+        return $limited;
     }
 }
 

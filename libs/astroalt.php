@@ -7,24 +7,24 @@ class ASTROGEN{
     /**
      * 
      */
-    public static function  JulianDay(){
+    public static function  oldJulianDay(){
         $date = new DateTime();
-       return ASTROGEN::JulianDayFromTimestamp($date->getTimestamp());
+       return ASTROGEN::oldJulianDayFromTimestamp($date->getTimestamp());
     }
 
     /**
      * 
      */
-    public static function JulianDayFromTimestamp(int $timestamp){
+    public static function oldJulianDayFromTimestamp(int $timestamp){
         return ( $timestamp / 86400.0 ) + 2440587.5;
     }
 
     /**
      * 
      */
-    public static function JulianDayFromDateTime(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0){
+    public static function oldJulianDayFromDateTime(int $year, int $month, int $day, int $hour = 0, int $minute = 0, int $second = 0){
        $date = mktime($hour, $minute, $second , $month, $day, $year);
-       return ASTROGEN::JulianDayFromTimestamp($date);
+       return ASTROGEN::oldJulianDayFromTimestamp($date);
     }
 
     /**
