@@ -453,7 +453,7 @@ class ASTROSUN{
         for($i = 0; $i < count($y_terms); $i++){
             $sumterm = 0;
             for($j = 0; $j < 5; $j++){
-                $sumterm += ASTROSUN::X($j, $jce) * $y_terms[$j];
+                $sumterm += ASTROSUN::X($j, $jce) * $y_terms[$i][$j];
             }
             $psi += ($pe_terms[$i][0]+$pe_terms[$i][1]*$jce)*sin($sumterm);
         }
@@ -468,7 +468,7 @@ class ASTROSUN{
         for($i = 0; $i < count($y_terms); $i++){
             $sumterm = 0;
             for($j = 0; $j < 5; $j++){
-                $sumterm += ASTROSUN::X($j, $jce) * $y_terms[$j];
+                $sumterm += ASTROSUN::X($j, $jce) * $y_terms[$i][$j];
             }
             $eps += ($pe_terms[$i][2]+ $pe_terms[$i][3]*$jce)*cos($sumterm);
         }
