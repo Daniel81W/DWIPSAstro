@@ -1568,7 +1568,7 @@ class ASTROMOON
 
     public static function MoonsArgumentOfLatitude(float $jce): float
     {
-        return third_order_polynomial(1.0 / 327270.0, -0.0036825, 483202.017538, 93.27191, $jce);
+        return ASTROMISC::ThirdOrderPolynomial(1.0 / 327270.0, -0.0036825, 483202.017538, 93.27191, $jce);
         //return 93.27191 + 483202.017538 * $jce - 0.0036825 * pow($jce, 2) + pow($jce, 3) / 327270;
     }
 
