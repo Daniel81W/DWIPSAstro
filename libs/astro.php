@@ -1574,7 +1574,7 @@ class ASTROMOON
 
     public static function LongitudeOfTheAscendingNodeOfTheMoon(float $jce):float
     {
-        return third_order_polynomial(1.0 / 450000.0, 0.0020708, -1934.136261, 125.04452, $jce);
+        return ASTROMISC::ThirdOrderPolynomial(1.0 / 450000.0, 0.0020708, -1934.136261, 125.04452, $jce);
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
