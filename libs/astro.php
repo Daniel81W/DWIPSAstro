@@ -476,30 +476,40 @@ class ASTROSUN{
     }
 
     //mean obliquity of the ecliptic
-    public static function MeanObliquityOfTheEcliptic($julianMillenium){
-        $u = $julianMillenium / 10;
+    public static function MeanObliquityOfTheEcliptic(float $jme):float
+    {
+        $u = $jme / 10;
         return 84381.448 - 4680.93 * pow($u, 1) - 1.55 * pow($u, 2) + 1999.25 * pow($u, 3) - 51.38 * pow($u, 4) - 249.67 * pow($u, 5) - 39.05 * pow($u, 6) + 7.12 * pow($u, 7) + 27.87 * pow($u, 8) + 5.79 * pow($u, 9) + 2.45 * pow($u, 10);
     }
 
-    public static function TrueObliquityOfTheEcliptic($meanObl, $nutObl){
+    public static function TrueObliquityOfTheEcliptic(float $meanObl, float $nutObl):float
+    {
         return $meanObl / 3600 + $nutObl;
     }
 
-    public static function AberrationCorrection($earthRadVec){
+    public static function AberrationCorrection(float $earthRadVec):float
+    {
         return -20.4898 / (3600 * $earthRadVec);
     }
 
-    public static function ApparentSunLongitude($geoCentLong, $nutLong, $abCorr){
+    public static function ApparentSunLongitude(float $geoCentLong, float $nutLong, float$abCorr):float
+    {
         return $geoCentLong + $nutLong + $abCorr;
     }
 
-    public static function ApparentSiderealTimeAtGreenwich($julianDate, $julianCentury, $nutationLong, $trueOblEcl){
-        $v0 = 280.46061837 + 360.98564736629 * ($julianDate - 2451545) + 0.000387933 * pow($julianCentury, 2) - pow($julianCentury, 3) / 38710000;
-        $mst = ASTROMISC::LimitTo360Deg($v0);
-        return $mst + $nutationLong * cos(deg2rad($trueOblEcl));
+    public static function MeanSiderealTimeAtGreenwich(float $jd, float $jc):float
+    {
+        $v0 = 280.46061837 + 360.98564736629 * ($jd - 2451545) + 0.000387933 * pow($jc, 2) - pow($jc, 3) / 38710000;
+        return ASTROMISC::LimitTo360Deg($v0);
     }
 
-    public static function GeocentricSunRightAscension($appSunLong, $trueOblEcl, $geoCentLat){
+    public static function ApparentSiderealTimeAtGreenwich(float $jd, float $jc, float $nutationLong, float $trueOblEcl): float
+    {
+        return ASTROSUN::MeanSiderealTimeAtGreenwich($jd, $jc) + $nutationLong * cos(deg2rad($trueOblEcl));
+    }
+
+    public static function GeocentricSunRightAscension(float $appSunLong, float $trueOblEcl, float$geoCentLat):float
+    {
         $a = rad2deg(
             atan2(
                 sin(deg2rad($appSunLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)),
@@ -509,19 +519,22 @@ class ASTROSUN{
         return ASTROMISC::LimitTo360Deg($a);
     }
 
-    public static function GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong){
+    public static function GeocentricSunDeclination(float $geoCentLat, float $trueOblEcl, float $appSunLong): float
+    {
         return rad2deg(
             asin(
-                sin(deg2rad($geoCentLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($appSunLong)),
+                sin(deg2rad($geoCentLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($appSunLong))
             )
         );
     }
 
-    public static function LocalHourAngle($appSidTimeGreenwich, $longitude , $geoSunRAsc){
-        return $appSidTimeGreenwich + $longitude - $geoSunRAsc;
+    public static function LocalHourAngle(float $appSidTimeGreenwich, float $longitude , float $geoSunRAsc): float
+    {
+        return ASTROMISC::LimitTo360Deg($appSidTimeGreenwich + $longitude - $geoSunRAsc);
     }
 
-    public static function DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec){
+    public static function DeltaA(float $earthRadVec, float $lat, float $elev, float $locHourAngle, float $geoSunDec):float 
+    {
         $s = 8.794 / (3600 * $earthRadVec);
 
         $u = atan(0.99664719 * tan(deg2rad($lat)));
@@ -530,17 +543,17 @@ class ASTROSUN{
 
         $y = 0.99664719 * sin($u) + $elev / 6378140 * sin(deg2rad($lat));
 
-        $da = atan2(-1 * $x * sin($s) * sin(deg2rad($locHourAngle)),  cos(deg2rad($geoSunDec)) - $x * sin($s) * cos(deg2rad($locHourAngle)));
+        $da = atan2(-1 * $x * sin(deg2rad($s)) * sin(deg2rad($locHourAngle)),  cos(deg2rad($geoSunDec)) - $x * sin(deg2rad($s)) * cos(deg2rad($locHourAngle)));
 
-        return $da;
+        return rad2deg($da);
     }
 
-    public static function TopocentricSunRightAscension($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc)
+    public static function TopocentricSunRightAscension(float $earthRadVec, float $lat, float $elev, float $locHourAngle, float $geoSunDec, float $geoSunRAsc): float
     {
        return $geoSunRAsc - ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec);
     }
 
-    public static function TopocentricSunDeclination($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc)
+    public static function TopocentricSunDeclination(float $earthRadVec, float $lat, float $elev, float $locHourAngle, float $geoSunDec, float $geoSunRAsc): float
     {
         $s = 8.794 / (3600 * $earthRadVec);
 
@@ -552,13 +565,14 @@ class ASTROSUN{
 
         return rad2deg(
             atan2(
-                (sin(deg2rad($geoSunDec)) - $y * sin($s)) * cos(ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec)),
-                cos(deg2rad($geoSunDec)) -$x * sin($s) * cos($locHourAngle)
+                (sin(deg2rad($geoSunDec)) - $y * sin(deg2rad($s))) * cos(ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec)),
+                cos(deg2rad($geoSunDec)) -$x * sin(deg2rad($s)) * cos(deg2rad($locHourAngle))
             )
         );
     }
 
-    public static function TopocentricLocalHourAngle($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec, $geoSunRAsc){
+    public static function TopocentricLocalHourAngle(float $earthRadVec, float $lat, float $elev, float $locHourAngle, float $geoSunDec, float $geoSunRAsc):float 
+    {
         return $locHourAngle - ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec);
     }
 
