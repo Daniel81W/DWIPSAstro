@@ -118,6 +118,7 @@ class ASTROSUN{
      * Astronomical unit (mean distance earth - sun) in m
      */
     const AU = 149597870700;
+    const sun_radius = 0.26667;
     const l_count = 6;
     const b_count = 2;
     const r_count = 5;
@@ -576,12 +577,35 @@ class ASTROSUN{
         return $locHourAngle - ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec);
     }
 
-    public static function TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp){
-        $e0 = rad2deg(asin( sin(deg2rad($lat)) * sin(deg2rad($geoSunDec)) + cos(deg2rad($lat)) * cos(deg2rad($geoSunDec)) * cos(deg2rad($topoHourAngle))));
+    public static function TopocentricElevationAngle(float $lat, float $geoSunDec, float $topoHourAngle):float{
+        return rad2deg(asin( sin(deg2rad($lat)) * sin(deg2rad($geoSunDec)) + cos(deg2rad($lat)) * cos(deg2rad($geoSunDec)) * cos(deg2rad($topoHourAngle))));
 
-        $de = $press / 1010 * 283 / (273 + $temp) * 1.02 / (60 * tan(deg2rad($e0+ 10.3 / ($e0 +5.11))));
+}
 
-        return 90 - ($e0 + $de);
+    public static function AtmosphericRefractionCorrection(float $lat, float $geoSunDec, float $topoHourAngle, float $press, float $temp, float $atmosRefract): float
+    {
+        $deltaE = 0.0;
+        $e0 = ASTROSUN::TopocentricElevationAngle($lat, $geoSunDec, $topoHourAngle);
+        if ($e0 >= -1 * (ASTROSUN::sun_radius + $atmosRefract)) {
+            $deltaE = ($press / 1010) * (283 / (273 + $temp)) * 1.02 / (60 * tan(deg2rad($e0 + 10.3 / ($e0 + 5.11))));
+        }
+
+        return $deltaE;
+    }
+
+    public static function TopocentricElevationAngleCorrected(float $lat, float $geoSunDec, float $topoHourAngle, float $press, float $temp): float
+    {
+        $e0 =  ASTROSUN::TopocentricElevationAngle($lat, $geoSunDec, $topoHourAngle); 
+        $deltaE = ASTROSUN::AtmosphericRefractionCorrection($lat, $geoSunDec, $topoHourAngle, $press, $temp, 0.5667);
+
+        return $e0 + $deltaE;
+    }
+
+    public static function TopocentricZenithAngle(float $lat, float $geoSunDec, float $topoHourAngle, float $press, float $temp): float
+    {
+        $e =  ASTROSUN::TopocentricElevationAngleCorrected($lat, $geoSunDec, $topoHourAngle, $press, $temp); 
+
+        return 90 - $e;
 
     }
 
