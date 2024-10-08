@@ -1726,13 +1726,13 @@ class ASTROTERMS{
     ///////////////////////////////////////////////////
     ///  Earth Periodic Terms
     ///////////////////////////////////////////////////
-    enum EarthPeriodicTerms: int
+    /*enum EarthPeriodicTerms: int
     {
         case TERM_A = 0;
         case TERM_B = 1;
         case TERM_C = 2;
         case TERM_COUNT = 3;
-    }
+    }*/
 
     const l_terms = array(
         array(
