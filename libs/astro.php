@@ -443,7 +443,7 @@ class ASTROSUN{
     //Nutuation
     public static function MeanAnomalyOfTheSun(float $jce):float
     {
-        return ASTROMISC::ThirdOrderPolynomial(-1.0 / 300000.0, -0.0001603, 35999.05034, 357.52772, $jce);
+        return ASTROMISC::ThirdOrderPolynomial(-1.0 / 24490000.0, -0.0001536, 35999.0502909, 357.52772, $jce);
         //return 357.5291092 + 35999.0502909 * $jce - 0.0001536 * pow($jce, 2) + pow($jce, 3)/ 24490000;
     }
 
@@ -1588,10 +1588,19 @@ class ASTROSUN{
 
 class ASTROMOON
 {
-    public static function MeanLongitude($julianCentury)
+    public static function MeanLongitude(float $jce):float
     {
+        return ASTROMISC::LimitTo360Deg(
+            ASTROMISC::FourthOrderPolynomial(
+                -1.0 / 65194000,
+                1.0 / 538841,
+                -0.0015786,
+                481267.88123421,
+                218.3164477,
+                $jce
+            )
+        );
         
-        218.3164477 + 481267.88123421 * $julianCentury - 0.0015786 * pow($julianCentury, 2) + pow($julianCentury, 3) / 538841 - pow($julianCentury, 4) / 65194000;
     }
 
     public static function GeocentricLongitude()
@@ -1601,19 +1610,29 @@ class ASTROMOON
 
     public static function MeanElongationMoonSun(float $jce):float
     {
-        return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
+        //return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
+        return ASTROMISC::LimitTo360Deg(
+            ASTROMISC::FourthOrderPolynomial(
+                -1.0 / 113065000,
+                1.0 / 545868,
+                -0.0018819,
+                445267.1114034,
+                297.8501921,
+                $jce
+            )
+        );
         //return 297.8501921 + 445267.1114034 * $jce - 0.0018819 * pow($jce, 2) + pow($jce, 3) / 545868 - pow($jce, 4) / 113065000;
     }
 
     public static function MeanAnomalyOfTheMoon(float $jce):float
     {
-        return ASTROMISC::ThirdOrderPolynomial(1.0 / 56250.0, 0.0086972, 477198.867398, 134.96298, $jce);
+        return ASTROMISC::FourthOrderPolynomial(-1.0 / 14712000, 1.0 / 69699.0, 0.0087414, 477198.8675055, 134.9633964, $jce);
         //return 134.9633964 + 477198.8675055 * $julianCentury + 0.0087414 * pow($julianCentury, 2) + pow($julianCentury, 3) / 56250 - pow($julianCentury, 4) / 14712000;
     }
 
     public static function MoonsArgumentOfLatitude(float $jce): float
     {
-        return ASTROMISC::ThirdOrderPolynomial(1.0 / 327270.0, -0.0036825, 483202.017538, 93.27191, $jce);
+        return ASTROMISC::FourthOrderPolynomial(1.0 / 863310000, -1.0 / 3526000.0, -0.0036539, 483202.0175233, 93.2720950, $jce);
         //return 93.27191 + 483202.017538 * $jce - 0.0036825 * pow($jce, 2) + pow($jce, 3) / 327270;
     }
 
@@ -1623,15 +1642,11 @@ class ASTROMOON
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
-    public static function ArgumentOfLatitude(float $jce): float
-    {
-        return 93.2720950 + 483202.0175233 * $jce - 0.0036539 * pow($jce, 2) - pow($jce, 3) / 3526000 + pow($jce, 4) / 863310000;
-    }
 
     public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
     {
         $l = array();
-        $lData = ASTROMOON::PeriodicTermsForTheMoon();
+        $lData = ASTROTERMS::ml_terms;
         for ($i = 0; $i < count($lData); $i++) {
             $l[$i] = $lData[$i][4] * pow(1 - 0.002516 * $julianCentury - 0.0000074 * pow($julianCentury, 2), abs($lData[$i][1])) * sin($lData[$i][0] * $meanElong + $lData[$i][1] * $meanAnomalySun + $lData[$i][2] * $meanAnomalyMoon + $lData[$i][3] * $argOfLat);
         }
@@ -1646,7 +1661,7 @@ class ASTROMOON
     public static function r($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
     {
         $l = array();
-        $lData = ASTROMOON::PeriodicTermsForTheMoon();
+        $lData = ASTROTERMS::ml_terms;
         for ($i = 0; $i < count($lData); $i++) {
             $l[$i] = $lData[$i][5] * pow(1 - 0.002516 * $julianCentury - 0.0000074 * pow($julianCentury, 2), abs($lData[$i][1])) * cos($lData[$i][0] * $meanElong + $lData[$i][1] * $meanAnomalySun + $lData[$i][2] * $meanAnomalyMoon + $lData[$i][3] * $argOfLat);
         }
@@ -1704,95 +1719,7 @@ class ASTROMOON
         return $text;
     }
 
-    public static function PeriodicTermsForTheMoon()
-    {
-
-        $path_to_csv_file = __DIR__ . "/../libs/MoonPeriodicTerms.csv";
-        $handle = fopen($path_to_csv_file, 'r');
-
-        if(!$handle){
-            return false;
-        }
-        $pt = array();/*
-        $i = 0;
-        while(false !== ($data = fgetcsv($handle, null, ';'))){
-            //IPS_LogMessage("MOON2 - " . $i, var_dump($data[0]));
-            $pt[$i] = array(
-                'd' => (int)$data[0],
-                'm' => (int)$data[1],
-                'ms' => (int)$data[2],
-                'f' => (int)$data[3],
-                'l' => (int)$data[4],
-                'r' => (int)$data[5]
-            );
-            $i++;
-        }
-        */
-        $pt = array(
-            array(0,0,1,0,6288774,-20905355),
-            array(2,0,-1,0,1274027,-3699111),
-            array(2,0,0,0,658314,-2955968),
-            array(0,0,2,0,213618,-569925),
-            array(0,1,0,0,-185116,48888),
-            array(0,0,0,2,-114332,-3149),
-            array(2,0,-2,0,58793,246158),
-            array(2,-1,-1,0,57066,-152138),
-            array(2,0,1,0,53322,-170733),
-            array(2,-1,0,0,45758,-204586),
-            array(0,1,-1,0,-40923,-129620),
-            array(1,0,0,0,-34720,108743),
-            array(0,1,1,0,-30383,104755),
-            array(2,0,0,-2,15327,10321),
-            array(0,0,1,2,-12528,0),
-            array(0,0,1,-2,10980,79661),
-            array(4,0,-1,0,10675,-34782),
-            array(0,0,3,0,10034,-23210),
-            array(4,0,-2,0,8548,-21636),
-            array(2,1,-1,0,-7888,24208),
-            array(2,1,0,0,-6766,30824),
-            array(1,0,-1,0,-5163,-8379),
-            array(1,1,0,0,4987,-16675),
-            array(2,-1,1,0,4036,-12831),
-            array(2,0,2,0,3994,-10445),
-            array(4,0,0,0,3861,-11650),
-            array(2,0,-3,0,3665,14403),
-            array(0,1,-2,0,-2689,-7003),
-            array(2,0,-1,2,-2602,0),
-            array(2,-1,-2,0,2390,10056),
-            array(1,0,1,0,-2348,6322),
-            array(2,-2,0,0,2236,-9884),
-            array(0,1,2,0,-2120,5751),
-            array(0,2,0,0,-2069,0),
-            array(2,-2,-1,0,2048,-4950),
-            array(2,0,1,-2,-1773,4130),
-            array(2,0,0,2,-1595,0),
-            array(4,-1,-1,0,1215,-3958),
-            array(0,0,2,2,-1110,0),
-            array(3,0,-1,0,-892,3258),
-            array(2,1,1,0,-810,2616),
-            array(4,-1,-2,0,759,-1897),
-            array(0,2,-1,0,-713,-2117),
-            array(2,2,-1,0,-700,2354),
-            array(2,1,-2,0,691,0),
-            array(2,-1,0,-2,596,0),
-            array(4,0,1,0,549,-1423),
-            array(0,0,4,0,537,-1117),
-            array(4,-1,0,0,520,-1571),
-            array(1,0,-2,0,-487,-1739),
-            array(2,1,0,-2,-399,0),
-            array(0,0,2,-2,-381,-4421),
-            array(1,1,1,0,351,0),
-            array(3,0,-2,0,-340,0),
-            array(4,0,-3,0,330,0),
-            array(2,-1,2,0,327,0),
-            array(0,2,1,0,-323,1165),
-            array(1,1,-1,0,299,0),
-            array(2,0,3,0,294,0),
-            array(2,0,-1,-2,0,8752)
-        );
-        return $pt;
-    }
-
+    
 
 }
 
@@ -2176,6 +2103,136 @@ class ASTROTERMS{
         array(-3, 0, 0, 0),
     );
 
+    ///////////////////////////////////////////////////
+    ///  Moon Periodic Terms
+    ///////////////////////////////////////////////////
+    const ml_terms = array(
+        array(0, 0, 1, 0, 6288774, -20905355),
+        array(2, 0, -1, 0, 1274027, -3699111),
+        array(2, 0, 0, 0, 658314, -2955968),
+        array(0, 0, 2, 0, 213618, -569925),
+        array(0, 1, 0, 0, -185116, 48888),
+        array(0, 0, 0, 2, -114332, -3149),
+        array(2, 0, -2, 0, 58793, 246158),
+        array(2, -1, -1, 0, 57066, -152138),
+        array(2, 0, 1, 0, 53322, -170733),
+        array(2, -1, 0, 0, 45758, -204586),
+        array(0, 1, -1, 0, -40923, -129620),
+        array(1, 0, 0, 0, -34720, 108743),
+        array(0, 1, 1, 0, -30383, 104755),
+        array(2, 0, 0, -2, 15327, 10321),
+        array(0, 0, 1, 2, -12528, 0),
+        array(0, 0, 1, -2, 10980, 79661),
+        array(4, 0, -1, 0, 10675, -34782),
+        array(0, 0, 3, 0, 10034, -23210),
+        array(4, 0, -2, 0, 8548, -21636),
+        array(2, 1, -1, 0, -7888, 24208),
+        array(2, 1, 0, 0, -6766, 30824),
+        array(1, 0, -1, 0, -5163, -8379),
+        array(1, 1, 0, 0, 4987, -16675),
+        array(2, -1, 1, 0, 4036, -12831),
+        array(2, 0, 2, 0, 3994, -10445),
+        array(4, 0, 0, 0, 3861, -11650),
+        array(2, 0, -3, 0, 3665, 14403),
+        array(0, 1, -2, 0, -2689, -7003),
+        array(2, 0, -1, 2, -2602, 0),
+        array(2, -1, -2, 0, 2390, 10056),
+        array(1, 0, 1, 0, -2348, 6322),
+        array(2, -2, 0, 0, 2236, -9884),
+        array(0, 1, 2, 0, -2120, 5751),
+        array(0, 2, 0, 0, -2069, 0),
+        array(2, -2, -1, 0, 2048, -4950),
+        array(2, 0, 1, -2, -1773, 4130),
+        array(2, 0, 0, 2, -1595, 0),
+        array(4, -1, -1, 0, 1215, -3958),
+        array(0, 0, 2, 2, -1110, 0),
+        array(3, 0, -1, 0, -892, 3258),
+        array(2, 1, 1, 0, -810, 2616),
+        array(4, -1, -2, 0, 759, -1897),
+        array(0, 2, -1, 0, -713, -2117),
+        array(2, 2, -1, 0, -700, 2354),
+        array(2, 1, -2, 0, 691, 0),
+        array(2, -1, 0, -2, 596, 0),
+        array(4, 0, 1, 0, 549, -1423),
+        array(0, 0, 4, 0, 537, -1117),
+        array(4, -1, 0, 0, 520, -1571),
+        array(1, 0, -2, 0, -487, -1739),
+        array(2, 1, 0, -2, -399, 0),
+        array(0, 0, 2, -2, -381, -4421),
+        array(1, 1, 1, 0, 351, 0),
+        array(3, 0, -2, 0, -340, 0),
+        array(4, 0, -3, 0, 330, 0),
+        array(2, -1, 2, 0, 327, 0),
+        array(0, 2, 1, 0, -323, 1165),
+        array(1, 1, -1, 0, 299, 0),
+        array(2, 0, 3, 0, 294, 0),
+        array(2, 0, -1, -2, 0, 8752)
+    );
+
+    const mb_terms = array(
+        array(0, 0, 0, 1, 5128122, 0),
+        array(0, 0, 1, 1, 280602, 0),
+        array(0, 0, 1, -1, 277693, 0),
+        array(2, 0, 0, -1, 173237, 0),
+        array(2, 0, -1, 1, 55413, 0),
+        array(2, 0, -1, -1, 46271, 0),
+        array(2, 0, 0, 1, 32573, 0),
+        array(0, 0, 2, 1, 17198, 0),
+        array(2, 0, 1, -1, 9266, 0),
+        array(0, 0, 2, -1, 8822, 0),
+        array(2, -1, 0, -1, 8216, 0),
+        array(2, 0, -2, -1, 4324, 0),
+        array(2, 0, 1, 1, 4200, 0),
+        array(2, 1, 0, -1, -3359, 0),
+        array(2, -1, -1, 1, 2463, 0),
+        array(2, -1, 0, 1, 2211, 0),
+        array(2, -1, -1, -1, 2065, 0),
+        array(0, 1, -1, -1, -1870, 0),
+        array(4, 0, -1, -1, 1828, 0),
+        array(0, 1, 0, 1, -1794, 0),
+        array(0, 0, 0, 3, -1749, 0),
+        array(0, 1, -1, 1, -1565, 0),
+        array(1, 0, 0, 1, -1491, 0),
+        array(0, 1, 1, 1, -1475, 0),
+        array(0, 1, 1, -1, -1410, 0),
+        array(0, 1, 0, -1, -1344, 0),
+        array(1, 0, 0, -1, -1335, 0),
+        array(0, 0, 3, 1, 1107, 0),
+        array(4, 0, 0, -1, 1021, 0),
+        array(4, 0, -1, 1, 833, 0),
+        array(0, 0, 1, -3, 777, 0),
+        array(4, 0, -2, 1, 671, 0),
+        array(2, 0, 0, -3, 607, 0),
+        array(2, 0, 2, -1, 596, 0),
+        array(2, -1, 1, -1, 491, 0),
+        array(2, 0, -2, 1, -451, 0),
+        array(0, 0, 3, -1, 439, 0),
+        array(2, 0, 2, 1, 422, 0),
+        array(2, 0, -3, -1, 421, 0),
+        array(2, 1, -1, 1, -366, 0),
+        array(2, 1, 0, 1, -351, 0),
+        array(4, 0, 0, 1, 331, 0),
+        array(2, -1, 1, 1, 315, 0),
+        array(2, -2, 0, -1, 302, 0),
+        array(0, 0, 1, 3, -283, 0),
+        array(2, 1, 1, -1, -229, 0),
+        array(1, 1, 0, -1, 223, 0),
+        array(1, 1, 0, 1, 223, 0),
+        array(0, 1, -2, -1, -220, 0),
+        array(2, 1, -1, -1, -220, 0),
+        array(1, 0, 1, 1, -185, 0),
+        array(2, -1, -2, -1, 181, 0),
+        array(0, 1, 2, 1, -177, 0),
+        array(4, 0, -2, -1, 176, 0),
+        array(4, -1, -1, -1, 166, 0),
+        array(1, 0, 1, -1, -164, 0),
+        array(4, 0, 1, -1, 132, 0),
+        array(1, 0, -1, -1, -119, 0),
+        array(4, -1, 0, -1, 115, 0),
+        array(2, -2, 0, 1, 107, 0)
+    );
+
+
 }
 
 class ASTROMISC{
@@ -2223,6 +2280,11 @@ class ASTROMISC{
     public static function ThirdOrderPolynomial(float $a, float $b, float $c, float $d, float $x): float
     {
         return (($a * $x + $b) * $x + $c) * $x + $d;
+    }
+
+    public static function FourthOrderPolynomial(float $a, float $b, float $c, float $d, float $e, float $x): float
+    {
+        return ((($a * $x + $b) * $x + $c) * $x + $d) * $x + $e;
     }
 
     public static function LimitTo20Minutes(float $minutes):float
