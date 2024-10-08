@@ -688,7 +688,7 @@ class ASTROSUN{
                 return 0;
         }
     }
-    /*
+    
     public static function L0($julianMillenium){
         $l0 = array();
         $l0Data = ASTROSUN::L0Arr();
@@ -1154,7 +1154,7 @@ class ASTROSUN{
         );
         return $r4;
     }
-    */
+    
     private static function PeriodicTermsForTheNutation()
     {
         $pt = array(
