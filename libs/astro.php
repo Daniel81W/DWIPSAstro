@@ -1610,8 +1610,8 @@ class ASTROMOON
 
     public static function MeanElongationMoonSun(float $jce):float
     {
-        //return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
-        return ASTROMISC::LimitTo360Deg(
+        return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
+        //return ASTROMISC::LimitTo360Deg(
             ASTROMISC::FourthOrderPolynomial(
                 -1.0 / 113065000,
                 1.0 / 545868,
@@ -1626,14 +1626,14 @@ class ASTROMOON
 
     public static function MeanAnomalyOfTheMoon(float $jce):float
     {
-        return ASTROMISC::FourthOrderPolynomial(-1.0 / 14712000, 1.0 / 69699.0, 0.0087414, 477198.8675055, 134.9633964, $jce);
-        //return 134.9633964 + 477198.8675055 * $julianCentury + 0.0087414 * pow($julianCentury, 2) + pow($julianCentury, 3) / 56250 - pow($julianCentury, 4) / 14712000;
+        //return ASTROMISC::FourthOrderPolynomial(-1.0 / 14712000, 1.0 / 69699.0, 0.0087414, 477198.8675055, 134.9633964, $jce);
+        return 134.9633964 + 477198.8675055 * $julianCentury + 0.0087414 * pow($julianCentury, 2) + pow($julianCentury, 3) / 56250 - pow($julianCentury, 4) / 14712000;
     }
 
     public static function MoonsArgumentOfLatitude(float $jce): float
     {
-        return ASTROMISC::FourthOrderPolynomial(1.0 / 863310000, -1.0 / 3526000.0, -0.0036539, 483202.0175233, 93.2720950, $jce);
-        //return 93.27191 + 483202.017538 * $jce - 0.0036825 * pow($jce, 2) + pow($jce, 3) / 327270;
+        //return ASTROMISC::FourthOrderPolynomial(1.0 / 863310000, -1.0 / 3526000.0, -0.0036539, 483202.0175233, 93.2720950, $jce);
+        return 93.27191 + 483202.017538 * $jce - 0.0036825 * pow($jce, 2) + pow($jce, 3) / 327270;
     }
 
     public static function LongitudeOfTheAscendingNodeOfTheMoon(float $jce):float
