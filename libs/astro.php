@@ -122,9 +122,9 @@ class ASTROSUN{
     const b_count = 2;
     const r_count = 5;
     const y_count = 63;
-    const l_subcount = (64,34,20,7,3,1);
-    const b_subcount = (5,2);
-    const r_subcount = (40,10,6,2,1);
+    const l_subcount = array(64,34,20,7,3,1);
+    const b_subcount = array(5,2);
+    const r_subcount = array(40,10,6,2,1);
 
     //
     public static function SunriseSunsetTransit($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
@@ -342,10 +342,9 @@ class ASTROSUN{
     }
 
     private static function SummationOfPeriodicTermsOfTheEarth($terms, int $count, float $jme){
-        $t = ASTRO
-
+        
         for ($i = 0; $i < $count; $i++)
-            sum += $terms[$i][TERM_A]*cos(terms[i][TERM_B]+terms[i][TERM_C] * $jme);
+            sum += $terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_A]*cos($terms[i][ASTROTERMS::EarthPeriodicTerms::TERM_B]+$terms[i][ASTROTERMS::EarthPeriodicTerms::TERM_C] * $jme);
 
         return sum;
     }
@@ -1735,7 +1734,7 @@ class ASTROTERMS{
         case TERM_COUNT = 3;
     }
 
-    static const l_terms = array(
+    const l_terms = array(
         array(
            array(175347046.0,0,0),
             array(3341656.0,4.6692568,6283.07585),
