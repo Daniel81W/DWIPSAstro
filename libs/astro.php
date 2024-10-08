@@ -310,8 +310,8 @@ class ASTROSUN{
         $jm = ASTROGEN::JulianMillennium($jc);
 
         $nutLong = ASTROSUN::NutationInLongitude($jc);
-        $HeliocentricLongitude = ASTROSUN::HeliocentricLongitudeDEG($jm);
-        $HeliocentricLatitude = ASTROSUN::HeliocentricLatitude($jm);
+        $HeliocentricLongitude = ASTROSUN::EarthHeliocentricLongitude($jm);
+        $HeliocentricLatitude = ASTROSUN::EarthHeliocentricLatitude($jm);
         $earthRadVec = ASTROSUN::EarthRadiusVector($jm);
         $geoCentLong = ASTROSUN::GeocentricLongitude($HeliocentricLongitude);
         $geoCentLat = ASTROSUN::GeocentricLatitude($HeliocentricLatitude);
