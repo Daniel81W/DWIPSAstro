@@ -341,7 +341,7 @@ class ASTROSUN{
         return ASTROSUN::GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong);
     }
 
-    private static function SummationOfPeriodicTermsOfTheEarth(int $terms, int $count, float $jme){
+    private static function SummationOfPeriodicTermsOfTheEarth(array $terms, int $count, float $jme){
         $sum = 0.0;
         for($i = 0; $i < $count; $i++){
             $sum += $terms[$i][EarthPeriodicTerms::TERM_A] * cos($terms[$i][EarthPeriodicTerms::TERM_B]+$terms[$i][EarthPeriodicTerms::TERM_C] * $jme);
