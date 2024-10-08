@@ -703,11 +703,12 @@ class ASTROSUN{
         return 0;
     }
 
-    public static function IncidenceAngleOfSurface(float $orientation, float $slope, float $lat, float $geoSunDec, float $topoSunDec, float$topoHourAngle, float $press, float $temp):float{
+    public static function IncidenceAngleOfSurface(float $orientation, float $slope, float $lat, float $geoSunDec, float $topoSunDec, float$topoHourAngle, float $press, float $temp):float
+    {
         return rad2deg(
             acos(
                 cos(deg2rad(ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp))) * cos(deg2rad($slope)) +
-                sin(deg2rad($slope)) * sin(deg2rad(ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp))) * cos(deg2rad( ASTROSUN::TopocentricAzimuthAngle($lat, $topoSunDec, $topoHourAngle) -180 - ($orientation - 180)))
+                sin(deg2rad($slope)) * sin(deg2rad(ASTROSUN::TopocentricZenithAngle($lat, $geoSunDec, $topoHourAngle, $press, $temp))) * cos(deg2rad( ASTROSUN::TopocentricAzimuthAngle($lat, $topoSunDec, $topoHourAngle) - $orientation))
             )
         );
     }
@@ -1196,7 +1197,7 @@ class ASTROSUN{
             array(4, 2.56, 6283.08)
         );
         return $r4;
-    }*/
+    }
     
     private static function PeriodicTermsForTheNutation()
     {
@@ -1582,6 +1583,7 @@ class ASTROSUN{
         );
         return $pt;
     }
+*/
 }
 
 class ASTROMOON
@@ -1621,8 +1623,9 @@ class ASTROMOON
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
-    public static function ArgumentOfLatitude($julianCentury){
-        return 93.2720950 + 483202.0175233 * $julianCentury - 0.0036539 * pow($julianCentury, 2) - pow($julianCentury, 3) / 3526000 + pow($julianCentury, 4) / 863310000;
+    public static function ArgumentOfLatitude(float $jce): float
+    {
+        return 93.2720950 + 483202.0175233 * $jce - 0.0036539 * pow($jce, 2) - pow($jce, 3) / 3526000 + pow($jce, 4) / 863310000;
     }
 
     public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)

@@ -94,6 +94,10 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("sunelevationmax", $this->Translate("sunelevationmax"), 2, "~WindDirection.F", $p, true);
         $p++;
+        $this->MaintainVariable("sunazimutAtNextSunrise", $this->Translate("sunazimut"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("sunazimutAtNextSunset", $this->Translate("sunazimut"), 2, "~WindDirection.F", $p, true);
+        $p++;
         $this->MaintainVariable("day", $this->Translate("day"), 0, "~DayNight.KNX", $p, true);
         $p++;
         $this->MaintainVariable("insideCivilTwilight", $this->Translate("insideCivilTwilight"), 0, "", $p, true);
