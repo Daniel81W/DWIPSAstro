@@ -407,13 +407,20 @@ class ASTROSUN{
             + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)) / pow(10, 8));
     }
 
-    public static function EarthRadiusVector($julianMillenium)
+    public static function EarthRadiusVector($jme)
     {
-        return (ASTROSUN::R0($julianMillenium)
-            + ASTROSUN::R1($julianMillenium) * pow($julianMillenium, 1)
-            + ASTROSUN::R2($julianMillenium) * pow($julianMillenium, 2)
-            + ASTROSUN::R3($julianMillenium) * pow($julianMillenium, 3)
-            + ASTROSUN::R4($julianMillenium) * pow($julianMillenium, 4)) / pow(10, 8);
+        $sum = array();
+        for ($i = 0; $i < ASTROSUN::r_count; $i++) {
+            $sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERMS::r_terms[$i], ASTROSUN::r_subcount[$i], $jme);
+        }
+
+        return rad2deg(ASTROSUN::ValuesOfTheEarth($sum, ASTROSUN::r_count, $jme));
+        /*
+        return (ASTROSUN::R0($jme)
+            + ASTROSUN::R1($jme) * pow($jme, 1)
+            + ASTROSUN::R2($jme) * pow($jme, 2)
+            + ASTROSUN::R3($jme) * pow($jme, 3)
+            + ASTROSUN::R4($jme) * pow($jme, 4)) / pow(10, 8);*/
     }
 
     public static function GeocentricLongitude($HeliocentricLongitude){
