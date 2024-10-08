@@ -341,7 +341,8 @@ class ASTROSUN{
         return ASTROSUN::GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong);
     }
 
-    private static function SummationOfPeriodicTermsOfTheEarth(array $terms, int $count, float $jme){
+    private static function SummationOfPeriodicTermsOfTheEarth(array $terms, int $count, float $jme):float
+    {
         $sum = 0.0;
         for($i = 0; $i < $count; $i++){
             $sum += $terms[$i][0] * cos($terms[$i][1]+$terms[$i][2] * $jme);
@@ -349,7 +350,8 @@ class ASTROSUN{
         return $sum;
     }
 
-    private static function ValuesOfTheEarth(array $term_sum, int $count, float $jme){
+    private static function ValuesOfTheEarth(array $term_sum, int $count, float $jme):float
+    {
         
         $sum = 0.0;
 
@@ -361,7 +363,8 @@ class ASTROSUN{
         return $sum;
     }
     
-    public static function EarthHeliocentricLongitude(float $jme){
+    public static function EarthHeliocentricLongitude(float $jme):float
+    {
         $sum = array();
     
         for ($i = 0; $i < ASTROSUN::l_count; $i++){
@@ -371,7 +374,8 @@ class ASTROSUN{
         return ASTROMISC::LimitTo360Deg(rad2deg(ASTROSUN::ValuesOfTheEarth($sum, ASTROSUN::l_count, $jme)));
     }
 
-    public static function EarthHeliocentricLatitude(float $jme){
+    public static function EarthHeliocentricLatitude(float $jme):float
+    {
         $sum = array();
         for ($i = 0; $i < ASTROSUN::b_count; $i++) {
             $sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERMS::b_terms[$i], ASTROSUN::b_subcount[$i], $jme);
@@ -386,7 +390,7 @@ class ASTROSUN{
      * @param mixed $julianMillenium
      * @return float
      */
-    public static function HeliocentricLongitudeRAD($julianMillenium){
+    /*public static function HeliocentricLongitudeRAD($julianMillenium){
         return (ASTROSUN::L0($julianMillenium)
             + ASTROSUN::L1($julianMillenium) * pow($julianMillenium, 1)
             + ASTROSUN::L2($julianMillenium) * pow($julianMillenium, 2)
@@ -406,8 +410,8 @@ class ASTROSUN{
         return rad2deg((ASTROSUN::B0($julianMillenium)
             + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)) / pow(10, 8));
     }
-
-    public static function EarthRadiusVector($jme)
+    */
+    public static function EarthRadiusVector(float $jme) :float
     {
         $sum = array();
         for ($i = 0; $i < ASTROSUN::r_count; $i++) {
@@ -423,12 +427,14 @@ class ASTROSUN{
             + ASTROSUN::R4($jme) * pow($jme, 4)) / pow(10, 8);*/
     }
 
-    public static function GeocentricLongitude($HeliocentricLongitude){
+    public static function GeocentricLongitude(float $HeliocentricLongitude):float
+    {
         $glong = $HeliocentricLongitude + 180;
         return ASTROMISC::LimitTo360Deg($glong);
     }
 
-    public static function GeocentricLatitude($HeliocentricLatitude){
+    public static function GeocentricLatitude(float $HeliocentricLatitude):float
+    {
         return -1 * $HeliocentricLatitude;
     }
 
@@ -671,7 +677,7 @@ class ASTROSUN{
     private static function X($i, $julianCentury){
         switch ($i){
             case 0:
-                return ASTROMOON::MeanElongationOfTheMoon($julianCentury);
+                return ASTROMOON::MeanElongationMoonSun($julianCentury);
             case 1:
                 return ASTROSUN::MeanAnomalyOfTheSun($julianCentury);
             case 2:
@@ -1541,6 +1547,7 @@ class ASTROMOON
 {
     public static function MeanLongitude($julianCentury)
     {
+        
         218.3164477 + 481267.88123421 * $julianCentury - 0.0015786 * pow($julianCentury, 2) + pow($julianCentury, 3) / 538841 - pow($julianCentury, 4) / 65194000;
     }
 
@@ -1549,9 +1556,10 @@ class ASTROMOON
 
     }
 
-    public static function MeanElongationOfTheMoon($julianCentury)
+    public static function MeanElongationMoonSun($jce)
     {
-        return 297.8501921 + 445267.1114034 * $julianCentury - 0.0018819 * pow($julianCentury, 2) + pow($julianCentury, 3) / 545868 - pow($julianCentury, 4) / 113065000;
+        return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
+        //return 297.8501921 + 445267.1114034 * $jce - 0.0018819 * pow($jce, 2) + pow($jce, 3) / 545868 - pow($jce, 4) / 113065000;
     }
 
     public static function MeanAnomalyOfTheMoon($julianCentury)
@@ -2132,13 +2140,7 @@ class ASTROTERMS{
 
 class ASTROMISC{
 
-    public static function LimitTo360Deg($angle){
-        /*if ($angle >= 0) {
-            return 360 * ($angle / 360 - floor($angle / 360));
-        } else {
-            return 360 + 360 * ($angle / 360 - ceil($angle / 360));
-        }*/
-
+    public static function LimitTo360Deg(float|int $angle):float{
         $limited = 0.0;
         $angle /= 360.0;
         $limited = 360.0 * ($angle - floor($angle));
@@ -2147,15 +2149,8 @@ class ASTROMISC{
         return $limited;
     }
 
-    public static function LimitTo180Deg($angle)
+    public static function LimitTo180Deg(float|int $angle):float
     {
-        /*
-        if ($angle >= 0) {
-            return 180 * ($angle / 180 - floor($angle / 180));
-        } else {
-            return 180 + 180 * ($angle / 180 - ceil($angle / 180));
-        }*/
-
         $limited = 0.0;
         $angle /= 180.0;
         $limited = 180.0 * ($angle - floor($angle));
@@ -2165,14 +2160,8 @@ class ASTROMISC{
         return $limited;
     }
 
-    public static function LimitToDesigDeg($angle, $limit)
+    public static function LimitToDesigDeg(float|int $angle, float|int $limit):float
     {
-        /*if ($numToLimit >= 0) {
-            return $limit * ($numToLimit / $limit - floor($numToLimit / $limit));
-        } else {
-            return $limit + $limit * ($numToLimit / $limit - ceil($numToLimit / $limit));
-        }*/
-
         $limited = 0.0;
         $angle /= $limit;
         $limited = $limit * ($angle - floor($angle));
@@ -2180,6 +2169,11 @@ class ASTROMISC{
             $limited += $limit;
 
         return $limited;
+    }
+
+    public static function ThirdOrderPolynomial(float $a, float $b, float $c, float $d, float $x): float
+    {
+        return (($a * $x + $b) * $x + $c) * $x + $d;
     }
 }
 
