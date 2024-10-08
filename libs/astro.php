@@ -343,10 +343,10 @@ class ASTROSUN{
 
     private static function SummationOfPeriodicTermsOfTheEarth(int $terms, int $count, float $jme){
         
-        for($i = 0; $i < $count; $i++){
+        //for($i = 0; $i < $count; $i++){
             //$sum += $terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_A] * cos($terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_B]+$terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_C] * $jme);
-        }
-        return $sum;
+        //}
+        //return $sum;
     }
 
     private static function ValuesOfTheEarth(){
@@ -1726,7 +1726,7 @@ class ASTROTERMS{
     ///////////////////////////////////////////////////
     ///  Earth Periodic Terms
     ///////////////////////////////////////////////////
-    static enum EarthPeriodicTerms: int
+    enum EarthPeriodicTerms: int
     {
         case TERM_A = 0;
         case TERM_B = 1;
