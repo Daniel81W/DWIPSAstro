@@ -342,15 +342,15 @@ class ASTROSUN{
     }
 
     private static function SummationOfPeriodicTermsOfTheEarth(int $terms, int $count, float $jme){
-       /* $sum = 0.0;
+        $sum = 0.0;
         for($i = 0; $i < $count; $i++){
             $sum += $terms[$i][EarthPeriodicTerms::TERM_A] * cos($terms[$i][EarthPeriodicTerms::TERM_B]+$terms[$i][EarthPeriodicTerms::TERM_C] * $jme);
         }
-        return $sum;*/
+        return $sum;
     }
 
     private static function ValuesOfTheEarth(array $term_sum, int $count, float $jme){
-        /*
+        
         $sum = 0.0;
 
         for ($i = 0; $i < $count; $i++)
@@ -358,7 +358,7 @@ class ASTROSUN{
 
         $sum /= pow(10, 8);
 
-        return $sum;*/
+        return $sum;
     }
     
     public static function EarthHeliocentricLongitude($jme){
