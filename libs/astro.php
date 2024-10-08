@@ -327,9 +327,9 @@ class ASTROSUN{
         $jc = ASTROGEN::JulianCentury($julianDay);
         $jm = ASTROGEN::JulianMillennium($jc);
 
-        $HeliocentricLongitude = ASTROSUN::HeliocentricLongitudeDEG($jm);
+        $HeliocentricLongitude = ASTROSUN::EarthHeliocentricLongitude($jm);
         $earthRadVec = ASTROSUN::EarthRadiusVector($jm);
-        $HeliocentricLatitude = ASTROSUN::HeliocentricLatitude($jm);
+        $HeliocentricLatitude = ASTROSUN::EarthHeliocentricLatitude($jm);
         $meanObl = ASTROSUN::MeanObliquityOfTheEcliptic($jm);
         $geoCentLong = ASTROSUN::GeocentricLongitude($HeliocentricLongitude);
         $nutObl = ASTROSUN::NutationInObliquity($jc);
