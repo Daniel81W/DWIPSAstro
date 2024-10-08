@@ -364,9 +364,9 @@ class ASTROSUN{
     public static function EarthHeliocentricLongitude($jme){
         $sum = array();
     
-        for ($i = 0; $i < ASTROSUN::l_count; $i++){
-            $sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERMS::l_terms[$i], ASTROSUN::l_subcount[$i], $jme);
-        }
+        //for ($i = 0; $i < ASTROSUN::l_count; $i++){
+            //$sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERMS::l_terms[$i], ASTROSUN::l_subcount[$i], $jme);
+        //}
 
         //return ASTROMISC::LimitTo360Deg(rad2deg(ASTROSUN::ValuesOfTheEarth($sum, ASTROSUN::l_count, $jme)));
     }
