@@ -1,7 +1,13 @@
 <?php
 
 //TODO Mond
-
+enum EarthPeriodicTerms: int
+    {
+        case TERM_A = 0;
+        case TERM_B = 1;
+        case TERM_C = 2;
+        case TERM_COUNT = 3;
+    }
 class ASTROGEN{
 
     // Julian Date Functions
