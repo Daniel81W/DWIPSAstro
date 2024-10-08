@@ -439,42 +439,40 @@ class ASTROSUN{
     }
 
     //Nutuation
-    public static function MeanAnomalyOfTheSun($julianCentury){
-        return 357.5291092 + 35999.0502909 * $julianCentury - 0.0001536 * pow($julianCentury, 2) + pow($julianCentury, 3)/ 24490000;
+    public static function MeanAnomalyOfTheSun(float $jce):float
+    {
+        return ASTROMISC::ThirdOrderPolynomial(-1.0 / 300000.0, -0.0001603, 35999.05034, 357.52772, $jce);
+        //return 357.5291092 + 35999.0502909 * $jce - 0.0001536 * pow($jce, 2) + pow($jce, 3)/ 24490000;
     }
 
-    public static function NutationInLongitude($julianCentury){
-        $psi = array();
-        $terms = ASTROSUN::PeriodicTermsForTheNutation();
-        for($i = 0; $i < count($terms); $i++){
+    public static function NutationInLongitude(float $jce):float
+    {
+        $psi = 0.0;
+        $y_terms = ASTROTERMS::y_terms;
+        $pe_terms = ASTROTERMS::pe_terms;
+        for($i = 0; $i < count($y_terms); $i++){
             $sumterm = 0;
             for($j = 0; $j < 5; $j++){
-                $sumterm += ASTROSUN::X($j, $julianCentury) * $terms[$i]['y'][$j];
+                $sumterm += ASTROSUN::X($j, $jce) * $y_terms[$j];
             }
-            $psi[$i] = ($terms[$i]['a']+$terms[$i]['b']*$julianCentury)*sin($sumterm);
+            $psi += ($pe_terms[$i][0]+$pe_terms[$i][1]*$jce)*sin($sumterm);
         }
-        $sum = 0;
-        for($i = 0; $i < count($psi);$i++){
-            $sum += $psi[$i];
-        }
-        return $sum/36000000;
+        return $psi/36000000;
     }
 
-    public static function NutationInObliquity($julianCentury){
-        $eps = array();
-        $terms = ASTROSUN::PeriodicTermsForTheNutation();
-        for($i = 0; $i < count($terms); $i++){
+    public static function NutationInObliquity(float $jce):float
+    {
+        $eps = 0.0;
+        $y_terms = ASTROTERMS::y_terms;
+        $pe_terms = ASTROTERMS::pe_terms;
+        for($i = 0; $i < count($y_terms); $i++){
             $sumterm = 0;
             for($j = 0; $j < 5; $j++){
-                $sumterm += ASTROSUN::X($j, $julianCentury) * $terms[$i]['y'][$j];
+                $sumterm += ASTROSUN::X($j, $jce) * $y_terms[$j];
             }
-            $eps[$i] = ($terms[$i]['c']+$terms[$i]['d']*$julianCentury)*cos($sumterm);
+            $eps += ($pe_terms[$i][2]+ $pe_terms[$i][3]*$jce)*cos($sumterm);
         }
-        $sum = 0;
-        for($i = 0; $i < count($eps);$i++){
-            $sum += $eps[$i];
-        }
-        return $sum/36000000;
+        return $eps/36000000;
     }
 
     //mean obliquity of the ecliptic
@@ -690,7 +688,7 @@ class ASTROSUN{
                 return 0;
         }
     }
-
+    /*
     public static function L0($julianMillenium){
         $l0 = array();
         $l0Data = ASTROSUN::L0Arr();
@@ -1156,7 +1154,7 @@ class ASTROSUN{
         );
         return $r4;
     }
-
+    */
     private static function PeriodicTermsForTheNutation()
     {
         $pt = array(
@@ -1556,25 +1554,28 @@ class ASTROMOON
 
     }
 
-    public static function MeanElongationMoonSun($jce)
+    public static function MeanElongationMoonSun(float $jce):float
     {
         return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
         //return 297.8501921 + 445267.1114034 * $jce - 0.0018819 * pow($jce, 2) + pow($jce, 3) / 545868 - pow($jce, 4) / 113065000;
     }
 
-    public static function MeanAnomalyOfTheMoon($julianCentury)
+    public static function MeanAnomalyOfTheMoon(float $jce):float
     {
-        return 134.9633964 + 477198.8675055 * $julianCentury + 0.0087414 * pow($julianCentury, 2) + pow($julianCentury, 3) / 56250 - pow($julianCentury, 4) / 14712000;
+        return ASTROMISC::ThirdOrderPolynomial(1.0 / 56250.0, 0.0086972, 477198.867398, 134.96298, $jce);
+        //return 134.9633964 + 477198.8675055 * $julianCentury + 0.0087414 * pow($julianCentury, 2) + pow($julianCentury, 3) / 56250 - pow($julianCentury, 4) / 14712000;
     }
 
-    public static function MoonsArgumentOfLatitude($julianCentury)
+    public static function MoonsArgumentOfLatitude(float $jce): float
     {
-        return 93.27191 + 483202.017538 * $julianCentury - 0.0036825 * pow($julianCentury, 2) + pow($julianCentury, 3) / 327270;
+        return third_order_polynomial(1.0 / 327270.0, -0.0036825, 483202.017538, 93.27191, $jce);
+        //return 93.27191 + 483202.017538 * $jce - 0.0036825 * pow($jce, 2) + pow($jce, 3) / 327270;
     }
 
-    public static function LongitudeOfTheAscendingNodeOfTheMoon($julianCentury)
+    public static function LongitudeOfTheAscendingNodeOfTheMoon(float $jce):float
     {
-        return 125.04452 - 1934.136261 * $julianCentury + 0.0020708 * pow($julianCentury, 2) + pow($julianCentury, 3) / 450000;
+        return third_order_polynomial(1.0 / 450000.0, 0.0020708, -1934.136261, 125.04452, $jce);
+        //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
     public static function ArgumentOfLatitude($julianCentury){
@@ -1761,13 +1762,6 @@ class ASTROTERMS{
     ///////////////////////////////////////////////////
     ///  Earth Periodic Terms
     ///////////////////////////////////////////////////
-    /*enum EarthPeriodicTerms: int
-    {
-        case TERM_A = 0;
-        case TERM_B = 1;
-        case TERM_C = 2;
-        case TERM_COUNT = 3;
-    }*/
 
     const l_terms = array(
         array(
