@@ -361,7 +361,7 @@ class ASTROSUN{
         return $sum;
     }
     
-    public static function EarthHeliocentricLongitude($jme){
+    public static function HeliocentricLongitude($jme){
         $sum = array();
     
         for ($i = 0; $i < ASTROSUN::l_count; $i++){
