@@ -122,9 +122,9 @@ class ASTROSUN{
     const b_count = 2;
     const r_count = 5;
     const y_count = 63;
-    const l_subcount = array(64,34,20,7,3,1);
-    const b_subcount = array(5,2);
-    const r_subcount = array(40,10,6,2,1);
+    //const l_subcount = array(64,34,20,7,3,1);
+    //const b_subcount = array(5,2);
+    //const r_subcount = array(40,10,6,2,1);
 
     //
     public static function SunriseSunsetTransit($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
