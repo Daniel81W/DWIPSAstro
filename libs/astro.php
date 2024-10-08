@@ -1,13 +1,7 @@
 <?php
 
 //TODO Mond
-enum EarthPeriodicTerms: int
-    {
-        case TERM_A = 0;
-        case TERM_B = 1;
-        case TERM_C = 2;
-        case TERM_COUNT = 3;
-    }
+
 class ASTROGEN{
 
     // Julian Date Functions
@@ -128,9 +122,9 @@ class ASTROSUN{
     const b_count = 2;
     const r_count = 5;
     const y_count = 63;
-    //const l_subcount = array(64,34,20,7,3,1);
-    //const b_subcount = array(5,2);
-    //const r_subcount = array(40,10,6,2,1);
+    const l_subcount = array(64,34,20,7,3,1);
+    const b_subcount = array(5,2);
+    const r_subcount = array(40,10,6,2,1);
 
     //
     public static function SunriseSunsetTransit($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
@@ -348,29 +342,33 @@ class ASTROSUN{
     }
 
     private static function SummationOfPeriodicTermsOfTheEarth(int $terms, int $count, float $jme){
-        
-        //for($i = 0; $i < $count; $i++){
-            //$sum += $terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_A] * cos($terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_B]+$terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_C] * $jme);
-        //}
-        //return $sum;
+        $sum = 0.0;
+        for($i = 0; $i < $count; $i++){
+            $sum += $terms[$i][EarthPeriodicTerms::TERM_A] * cos($terms[$i][EarthPeriodicTerms::TERM_B]+$terms[$i][EarthPeriodicTerms::TERM_C] * $jme);
+        }
+        return $sum;
     }
 
-    private static function ValuesOfTheEarth(){
+    private static function ValuesOfTheEarth(array $term_sum[], int $count, float $jme){
         
+        $sum = 0.0;
+
+        for ($i = 0; $i < $count; $i++)
+            $sum += $term_sum[$i] * pow($jme, $i);
+
+        $sum /= Pow(10, 8);
+
+        return $sum;
     }
     
-    public static function EarthHeliocentricLongitude($julianMillenium){
-        /*
-        int i;
-        double sum=0;
-
+    public static function EarthHeliocentricLongitude($jme){
+        $sum = array();
+    
         for ($i = 0; $i < ASTROSUN::l_count; $i++){
-            $sum += term_sum[i]*pow(jme, i);
+            $sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERM::l_terms[$i], ASTROSUN::l_subcount[$i], $jme);
         }
 
-        sum /= 1.0e8;
-        $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
-        return ASTROMISC::LimitTo360Deg($l);*/
+        return ASTROMISC::LimitTo360Deg(rad2deg(ASTROSUN::ValuesOfTheEarth($sum, ASTROSUN::l_count, $jme)));
     }
 
     //
@@ -1725,6 +1723,13 @@ class ASTROMOON
     }
 
 
+}
+
+enum EarthPeriodicTerms: int {
+    case TERM_A = 0;
+    case TERM_B = 1;
+    case TERM_C = 2;
+    case TERM_COUNT = 3;
 }
 
 class ASTROTERMS{
