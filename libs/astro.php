@@ -341,30 +341,30 @@ class ASTROSUN{
         return ASTROSUN::GeocentricSunDeclination($geoCentLat, $trueOblEcl, $appSunLong);
     }
 
-    private static function SummationOfPeriodicTermsOfTheEarth($terms, int $count, float $jme){
+    private static function SummationOfPeriodicTermsOfTheEarth(int $terms, int $count, float $jme){
         
-        for ($i = 0; $i < $count; $i++)
-            sum += $terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_A]*cos($terms[i][ASTROTERMS::EarthPeriodicTerms::TERM_B]+$terms[i][ASTROTERMS::EarthPeriodicTerms::TERM_C] * $jme);
-
-        return sum;
+        for($i = 0; $i < $count; $i++){
+            //$sum += $terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_A] * cos($terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_B]+$terms[$i][ASTROTERMS::EarthPeriodicTerms::TERM_C] * $jme);
+        }
+        return $sum;
     }
 
     private static function ValuesOfTheEarth(){
         
     }
     
-        public static function EarthHeliocentricLongitude($julianMillenium)
-    {
+    public static function EarthHeliocentricLongitude($julianMillenium){
+        /*
         int i;
-    double sum=0;
+        double sum=0;
 
         for ($i = 0; $i < ASTROSUN::l_count; $i++){
             $sum += term_sum[i]*pow(jme, i);
         }
 
-    sum /= 1.0e8;
+        sum /= 1.0e8;
         $l = ASTROSUN::HeliocentricLongitudeRAD($julianMillenium)*180/pi();
-        return ASTROMISC::LimitTo360Deg($l);
+        return ASTROMISC::LimitTo360Deg($l);*/
     }
 
     //
