@@ -1642,6 +1642,28 @@ class ASTROMOON
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
+    private static function SummationOfPeriodicTermsOfTheMoon(array $terms, int $count, float $jme): float
+    {
+        $e  = 1.0 - $jce * (0.002516 + $jce * 0.0000074);
+
+	                  $sin_sum=0;	
+                      $cos_sum=0;
+        for ($i = 0; $i < COUNT; $i++)	{
+    		e_mult   = pow(e, fabs(terms[i][TERM_M]));
+	    	trig_arg = deg2rad(terms[i][TERM_D]*d + terms[i][TERM_M]  *m +
+			               terms[i][TERM_F]*f + terms[i][TERM_MPR]*m_prime);
+                           *sin_sum += e_mult * terms[i][TERM_LB] *sin(trig_arg);
+		    if (cos_sum != 0)  *cos_sum += e_mult * terms[i][TERM_R]  *cos(trig_arg);
+	    }      
+
+
+
+        $sum = 0.0;
+        for ($i = 0; $i < $count; $i++) {
+            $sum += $terms[$i][0] * cos($terms[$i][1] + $terms[$i][2] * $jme);
+        }
+        return $sum;
+    }
 
     public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
     {
