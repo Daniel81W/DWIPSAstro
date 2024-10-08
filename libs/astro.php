@@ -128,7 +128,8 @@ class ASTROSUN{
     const r_subcount = array(40,10,6,2,1);
 
     //
-    public static function SunriseSunsetTransit($year, $month, $day, $deltaT, $lat, $long, $angleOfSun){
+    public static function SunriseSunsetTransit(int $year, int $month, int $day, int $deltaT, int $lat, int $long, int $angleOfSun):array
+    {
         $timestamp_zero_ut = gmmktime(0, 0, 0, $month, $day, $year);
 
         $JD_ZERO_UT = ASTROGEN::oldJulianDayFromTimestamp($timestamp_zero_ut);
@@ -153,19 +154,19 @@ class ASTROSUN{
 
         $m[0] = ($a[0] - $long - $vu) / 360;
 
-        $H0 = rad2deg(
-            acos(
-                (sin(deg2rad($angleOfSun)) - sin(deg2rad($lat)) * sin(deg2rad($d[0]))) / (cos(deg2rad($lat)) * cos(deg2rad($d[0])))
-            )
-        );
-        $H0 = ASTROMISC::LimitToDesigDeg($H0, 180);
+        $arg = (sin(deg2rad($angleOfSun)) - sin(deg2rad($lat)) * sin(deg2rad($d[0]))) / (cos(deg2rad($lat)) * cos(deg2rad($d[0])));
+        $H0 = -99999;
+        if (abs($arg) <= 1) {
+            $H0 = ASTROMISC::LimitToDesigDeg(rad2deg(acos($arg)), 180);
+        }
+        
 
         $m[1] = $m[0] - $H0 / 360;
         $m[2] = $m[0] + $H0 / 360;
 
-        $m[0] = ASTROMISC::LimitToDesigDeg($m[0], 1);
-        $m[1] = ASTROMISC::LimitToDesigDeg($m[1], 1);
-        $m[2] = ASTROMISC::LimitToDesigDeg($m[2], 1);
+        $m[0] = ASTROMISC::LimitZeroToOne($m[0]);
+        $m[1] = ASTROMISC::LimitZeroToOne($m[1]);
+        $m[2] = ASTROMISC::LimitZeroToOne($m[2]);
 
         for ($i = 0; $i <= 2; $i++) {
             $v[$i] = $vu + 360.985647 * $m[$i];
@@ -176,12 +177,12 @@ class ASTROSUN{
         }
 
         $aa = $a[0] - $a[-1];
-        if ($aa > 2 ) {
-            $aa = ASTROMISC::LimitToDesigDeg($aa, 1);
+        if (abs($aa) > 2 ) {
+            $aa = ASTROMISC::LimitZeroToOne($aa);
         }
         $bb = $a[1] - $a[0];
-        if ($bb > 2) {
-            $bb = ASTROMISC::LimitToDesigDeg($bb, 1);
+        if (abs($bb) > 2) {
+            $bb = ASTROMISC::LimitZeroToOne($bb);
         }
         $cc = $bb - $aa;
 
@@ -192,11 +193,11 @@ class ASTROSUN{
 
         $as = $d[0] - $d[-1];
         if ($as > 2) {
-            $as = ASTROMISC::LimitToDesigDeg($as, 1);
+            $as = ASTROMISC::LimitZeroToOne($as);
         }
         $bs = $d[1] - $d[0];
         if ($bs > 2) {
-            $bs = ASTROMISC::LimitToDesigDeg($bs, 1);
+            $bs = ASTROMISC::LimitZeroToOne($bs);
         }
         $cs = $bs - $as;
         $deltasi = array();
@@ -609,7 +610,7 @@ class ASTROSUN{
 
     }
 
-    public static function TopocentricAzimuthAngle($lat, $topoSunDec, $topoHourAngle)
+    public static function TopocentricAzimuthAngle(float $lat, float $topoSunDec, float $topoHourAngle): float
     {
         $t = rad2deg(atan2(
             sin(deg2rad($topoHourAngle)),
@@ -620,15 +621,18 @@ class ASTROSUN{
         return ASTROMISC::LimitTo360Deg($t + 180);
     }
 
-    public static function EqOfTime($julianMillennium, $geoSunRAsc, $nutLong, $trueOblEcl){
-        $m = 280.4664567 + 360007.6982779 * $julianMillennium + 0.03032028 * pow($julianMillennium, 2) + pow($julianMillennium, 3) / 49931 - pow($julianMillennium, 4) / 15300 - pow($julianMillennium, 5) / 2000000;
-        $m = ASTROMISC::LimitTo360Deg($m);
+    public static function SunMeanLongitude(float $jme):float
+    {
+        return ASTROMISC::LimitTo360Deg(280.4664567 + $jme*(360007.6982779 + $jme*(0.03032028 +
+                    $jme*(1/49931.0   + $jme*(-1/15300.0     + $jme*(-1/2000000.0))))));
+    }
 
-        $E = $m - 0.0057183 - $geoSunRAsc + $nutLong * cos(deg2rad($trueOblEcl));
-        $E *= 4;
-        if($E)
-        return $E;
-        //TODO LIMIT Eq to 20 min
+    public static function EqOfTime(float $jm, float $geoSunRAsc, float $nutLong, float $trueOblEcl): float
+    {
+        $m = ASTROSUN::SunMeanLongitude($jm);
+
+        $E = 4*($m - 0.0057183 - $geoSunRAsc + $nutLong * cos(deg2rad($trueOblEcl)));
+        return ASTROMISC::LimitTo20Minutes($E);
     }
 
     public static function ElevationOfTheSun($lat, $geoSunDec, $topoLocHourAngle, $press, $temp){
@@ -710,18 +714,19 @@ class ASTROSUN{
 
 
     // Hilfsfunktionen
-    private static function X($i, $julianCentury){
+    private static function X(int $i, float $jce): float
+    {
         switch ($i){
             case 0:
-                return ASTROMOON::MeanElongationMoonSun($julianCentury);
+                return ASTROMOON::MeanElongationMoonSun($jce);
             case 1:
-                return ASTROSUN::MeanAnomalyOfTheSun($julianCentury);
+                return ASTROSUN::MeanAnomalyOfTheSun($jce);
             case 2:
-                return ASTROMOON::MeanAnomalyOfTheMoon($julianCentury);
+                return ASTROMOON::MeanAnomalyOfTheMoon($jce);
             case 3:
-                return ASTROMOON::MoonsArgumentOfLatitude($julianCentury);
+                return ASTROMOON::MoonsArgumentOfLatitude($jce);
             case 4:
-                return ASTROMOON::LongitudeOfTheAscendingNodeOfTheMoon($julianCentury);
+                return ASTROMOON::LongitudeOfTheAscendingNodeOfTheMoon($jce);
             default:
                 return 0;
         }
@@ -2203,9 +2208,31 @@ class ASTROMISC{
         return $limited;
     }
 
+    public static function LimitZeroToOne(float $value):float
+    {
+        $limited = $value - floor($value);
+        if ($limited < 0)
+            $limited += 1.0;
+
+        return $limited;
+    }
+
     public static function ThirdOrderPolynomial(float $a, float $b, float $c, float $d, float $x): float
     {
         return (($a * $x + $b) * $x + $c) * $x + $d;
+    }
+
+    public static function LimitTo20Minutes(float $minutes):float
+    {
+        $limited = $minutes;
+
+        if ($limited < -20.0) {
+            $limited += 1440.0;
+        } elseif ($limited > 20.0) {
+            $limited -= 1440.0;
+        }
+
+    return $limited;
     }
 }
 
