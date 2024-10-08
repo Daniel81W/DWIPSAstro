@@ -1611,7 +1611,7 @@ class ASTROMOON
     public static function MeanElongationMoonSun(float $jce):float
     {
         return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
-        //return ASTROMISC::LimitTo360Deg(
+        /*return ASTROMISC::LimitTo360Deg(
             ASTROMISC::FourthOrderPolynomial(
                 -1.0 / 113065000,
                 1.0 / 545868,
@@ -1620,7 +1620,7 @@ class ASTROMOON
                 297.8501921,
                 $jce
             )
-        );
+        );*/
         //return 297.8501921 + 445267.1114034 * $jce - 0.0018819 * pow($jce, 2) + pow($jce, 3) / 545868 - pow($jce, 4) / 113065000;
     }
 
