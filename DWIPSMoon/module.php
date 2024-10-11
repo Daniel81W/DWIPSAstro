@@ -104,8 +104,8 @@ class DWIPSMoon extends IPSModule
         $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
 
 
-        $l = ASTROMOON::SummationOfPeriodicTermsOfTheMoon($this->ReadAttributeFloat("jce"));
-        IPS_LogMessage("Moon", $l['l']);
+        $l = ASTROMOON::MoonEarthDistance($this->ReadAttributeFloat("jce"));
+        IPS_LogMessage("Moon", $l);
     }
 
 

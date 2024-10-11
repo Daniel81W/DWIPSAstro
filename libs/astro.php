@@ -1642,59 +1642,50 @@ class ASTROMOON
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
-    public static function SummationOfPeriodicTermsOfTheMoon(float $jce)
+    private static function SummationOfPeriodicTermsOfTheMoon(array $terms, float $jce): array
     {
-        $terms = ASTROTERMS::ml_terms;
         $count = count($terms);
-        $e  = 1.0 - $jce * (0.002516 + $jce * 0.0000074);
+        $e = 1.0 - $jce * (0.002516 + $jce * 0.0000074);
         $d = ASTROMOON::MeanElongationMoonSun($jce);
         $m = ASTROSUN::MeanAnomalyOfTheSun($jce);
         $f = ASTROMOON::MoonsArgumentOfLatitude($jce);
         $ms = ASTROMOON::MeanAnomalyOfTheMoon($jce);
 
-	                  $l=0;	
-                      $r=0;
-        for ($i = 0; $i < $count; $i++)	{
-    		$e_mult   = pow($e, abs($terms[$i][1]));
-	    	$trig_arg = deg2rad($terms[$i][0] * $d + $terms[$i][1]  * $m +
-			               $terms[$i][3] * $f + $terms[$i][2] * $ms);
-                           $l += $e_mult * $terms[$i][4] * sin($trig_arg);
-		    $r += $e_mult * $terms[$i][5]  * cos($trig_arg);
-	    }
-        return array('l' => $l, 'r' => $r);
+        $l = 0;
+        $r = 0;
+        for ($i = 0; $i < $count; $i++) {
+            $e_mult = pow($e, abs($terms[$i][1]));
+            $trig_arg = deg2rad($terms[$i][0] * $d + $terms[$i][1] * $m +
+                $terms[$i][3] * $f + $terms[$i][2] * $ms);
+            $l += $e_mult * $terms[$i][4] * sin($trig_arg);
+            $r += $e_mult * $terms[$i][5] * cos($trig_arg);
+        }
+        return array($l, $r);
     }
-    /*
-    public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
+
+
+    public static function MoonLongitudeAndLatitude($jce): array
     {
-        $l = array();
-        $lData = ASTROTERMS::ml_terms;
-        for ($i = 0; $i < count($lData); $i++) {
-            $l[$i] = $lData[$i][4] * pow(1 - 0.002516 * $julianCentury - 0.0000074 * pow($julianCentury, 2), abs($lData[$i][1])) * sin($lData[$i][0] * $meanElong + $lData[$i][1] * $meanAnomalySun + $lData[$i][2] * $meanAnomalyMoon + $lData[$i][3] * $argOfLat);
-        }
+        $a1 = 119.75 + 131.849 * $jce;
+        $a2 = 53.09 + 479264.290 * $jce;
+        $a3 = 313.45 + 481266.484 * $jce;
+        $l_prime = ASTROMOON::MeanLongitude($jce);
+        $f = ASTROMOON::MoonsArgumentOfLatitude($jce);
+        $m_prime = ASTROMOON::MeanAnomalyOfTheMoon($jce);
+        $l = ASTROMOON::SummationOfPeriodicTermsOfTheMoon(ASTROTERMS::ml_terms, $jce)[0];
+        $b = ASTROMOON::SummationOfPeriodicTermsOfTheMoon(ASTROTERMS::mb_terms, $jce)[0];
 
-        $sum = 0;
-        for ($i = 0; $i < count($l); $i++) {
-            $sum += $l[$i];
-        }
-        return $sum;
+        $delta_l = 3958 * sin(deg2rad($a1)) + 318 * sin(deg2rad($a2)) + 1962 * sin(deg2rad($l_prime - $f));
+        $delta_b = -2235 * sin(deg2rad($l_prime)) + 175 * sin(deg2rad($a1 - $f)) + 127 * sin(deg2rad($l_prime - $m_prime))
+            + 382 * sin(deg2rad($a3)) + 175 * sin(deg2rad($a1 + $f)) - 115 * sin(deg2rad($l_prime + $m_prime));
+
+        return array(ASTROMISC::LimitTo360Deg($l_prime + ($l + $delta_l) / 1000000), ASTROMISC::LimitTo360Deg(($b + $delta_b) / 1000000));
     }
 
-    public static function r($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
-    {
-        $l = array();
-        $lData = ASTROTERMS::ml_terms;
-        for ($i = 0; $i < count($lData); $i++) {
-            $l[$i] = $lData[$i][5] * pow(1 - 0.002516 * $julianCentury - 0.0000074 * pow($julianCentury, 2), abs($lData[$i][1])) * cos($lData[$i][0] * $meanElong + $lData[$i][1] * $meanAnomalySun + $lData[$i][2] * $meanAnomalyMoon + $lData[$i][3] * $argOfLat);
-        }
-
-        $sum = 0;
-        for ($i = 0; $i < count($l); $i++) {
-            $sum += $l[$i];
-        }
-        return $sum;
-    }
-    */
-
+    public static function MoonEarthDistance($jce)
+{
+	return 385000.56 + ASTROMOON::SummationOfPeriodicTermsOfTheMoon(ASTROTERMS::ml_terms, $jce)[1];/1000;
+}
 
 
     public static function Phase(){
@@ -1744,12 +1735,6 @@ class ASTROMOON
 
 }
 
-/*enum EarthPeriodicTerms: int {
-    case TERM_A = 0;
-    case TERM_B = 1;
-    case TERM_C = 2;
-    case TERM_COUNT = 3;
-}*/
 
 class ASTROTERMS{
     
