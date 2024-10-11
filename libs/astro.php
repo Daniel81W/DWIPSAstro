@@ -1655,11 +1655,11 @@ class ASTROMOON
 	                  $l=0;	
                       $r=0;
         for ($i = 0; $i < $count; $i++)	{
-    		$e_mult   = pow($e, abs($terms[i][1]));
-	    	$trig_arg = deg2rad($terms[i][0] * $d + $terms[i][1]  * $m +
-			               $terms[i][3] * $f + $terms[i][2] * $ms);
-                           $l += $e_mult * $terms[i][4] * sin($trig_arg);
-		    $r += $e_mult * $terms[i][5]  * cos($trig_arg);
+    		$e_mult   = pow($e, abs($terms[$i][1]));
+	    	$trig_arg = deg2rad($terms[$i][0] * $d + $terms[$i][1]  * $m +
+			               $terms[$i][3] * $f + $terms[$i][2] * $ms);
+                           $l += $e_mult * $terms[$i][4] * sin($trig_arg);
+		    $r += $e_mult * $terms[$i][5]  * cos($trig_arg);
 	    }      
 
     }
