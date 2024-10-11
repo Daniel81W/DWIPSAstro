@@ -84,7 +84,7 @@ class DWIPSMoon extends IPSModule
         parent::ApplyChanges();
         $this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval") * 60 * 1000);
 
-        DWIPSASTRO_Update($this->InstanceID);
+        DWIPSMOON_Update($this->InstanceID);
     }
 
     /**
