@@ -1684,7 +1684,7 @@ class ASTROMOON
 
     public static function MoonEarthDistance($jce)
 {
-	return 385000.56 + ASTROMOON::SummationOfPeriodicTermsOfTheMoon(ASTROTERMS::ml_terms, $jce)[1];/1000;
+	return 385000.56 + ASTROMOON::SummationOfPeriodicTermsOfTheMoon(ASTROTERMS::ml_terms, $jce)[1]/1000;
 }
 
 
