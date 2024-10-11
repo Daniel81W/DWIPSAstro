@@ -1663,7 +1663,7 @@ class ASTROMOON
 	    }      
 
     }
-
+    /*
     public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
     {
         $l = array();
@@ -1693,7 +1693,7 @@ class ASTROMOON
         }
         return $sum;
     }
-
+    */
 
 
 
