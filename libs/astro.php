@@ -1660,8 +1660,8 @@ class ASTROMOON
 			               $terms[$i][3] * $f + $terms[$i][2] * $ms);
                            $l += $e_mult * $terms[$i][4] * sin($trig_arg);
 		    $r += $e_mult * $terms[$i][5]  * cos($trig_arg);
-	    }      
-
+	    }
+        return $l;
     }
     /*
     public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)

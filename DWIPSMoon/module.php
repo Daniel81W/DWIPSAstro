@@ -108,7 +108,7 @@ class DWIPSMoon extends IPSModule
 
         IPS_LogMessage("Moon", $l);
 
-        ASTROMOON::SummationOfPeriodicTermsOfTheMoon($this->ReadAttributeFloat("jce"), $l, $r);
+        $l = ASTROMOON::SummationOfPeriodicTermsOfTheMoon($this->ReadAttributeFloat("jce"), $l, $r);
         IPS_LogMessage("Moon", $l);
     }
 
