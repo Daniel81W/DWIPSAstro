@@ -1642,7 +1642,7 @@ class ASTROMOON
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
-    public static function SummationOfPeriodicTermsOfTheMoon(float $jce, $l, $r)
+    public static function SummationOfPeriodicTermsOfTheMoon(float $jce)
     {
         $terms = ASTROTERMS::ml_terms;
         $count = count($terms);
@@ -1661,7 +1661,7 @@ class ASTROMOON
                            $l += $e_mult * $terms[$i][4] * sin($trig_arg);
 		    $r += $e_mult * $terms[$i][5]  * cos($trig_arg);
 	    }
-        return $l;
+        return array('l' => $l, 'r' => $r);
     }
     /*
     public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)
