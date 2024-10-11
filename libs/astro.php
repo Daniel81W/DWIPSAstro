@@ -1642,27 +1642,26 @@ class ASTROMOON
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
-    private static function SummationOfPeriodicTermsOfTheMoon(array $terms, int $count, float $jme): float
+    private static function SummationOfPeriodicTermsOfTheMoon(float $jce, $l, $r)
     {
+        $terms = ASTROTERMS::ml_terms;
+        $count = count($terms);
         $e  = 1.0 - $jce * (0.002516 + $jce * 0.0000074);
+        $d = ASTROMOON::MeanElongationMoonSun($jce);
+        $m = ASTROSUN::MeanAnomalyOfTheSun($jce);
+        $f = ASTROMOON::MoonsArgumentOfLatitude($jce);
+        $ms = ASTROMOON::MeanAnomalyOfTheMoon($jce);
 
-	                  $sin_sum=0;	
-                      $cos_sum=0;
-        for ($i = 0; $i < COUNT; $i++)	{
-    		e_mult   = pow(e, fabs(terms[i][TERM_M]));
-	    	trig_arg = deg2rad(terms[i][TERM_D]*d + terms[i][TERM_M]  *m +
-			               terms[i][TERM_F]*f + terms[i][TERM_MPR]*m_prime);
-                           *sin_sum += e_mult * terms[i][TERM_LB] *sin(trig_arg);
-		    if (cos_sum != 0)  *cos_sum += e_mult * terms[i][TERM_R]  *cos(trig_arg);
+	                  $l=0;	
+                      $r=0;
+        for ($i = 0; $i < $count; $i++)	{
+    		$e_mult   = pow($e, abs($terms[i][1]));
+	    	$trig_arg = deg2rad($terms[i][0] * $d + $terms[i][1]  * $m +
+			               $terms[i][3] * $f + $terms[i][2] * $ms);
+                           $l += $e_mult * $terms[i][4] * sin($trig_arg);
+		    $r += $e_mult * $terms[i][5]  * cos($trig_arg);
 	    }      
 
-
-
-        $sum = 0.0;
-        for ($i = 0; $i < $count; $i++) {
-            $sum += $terms[$i][0] * cos($terms[$i][1] + $terms[$i][2] * $jme);
-        }
-        return $sum;
     }
 
     public static function l($julianCentury, $meanElong, $meanAnomalySun, $meanAnomalyMoon, $argOfLat)

@@ -99,6 +99,14 @@ class DWIPSMoon extends IPSModule
         $this->WriteAttributeFloat("jde", ASTROGEN::JDE($this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("deltaT")));
         $this->WriteAttributeFloat("jce", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jde")));
         $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
+
+        $l = 0;
+        $r = 0;
+
+        IPS_LogMessage("Moon", $l);
+
+        ASTROMOON::SummationOfPeriodicTermsOfTheMoon($this->ReadAttributeFloat("jce"), $l, $r);
+        IPS_LogMessage("Moon", $l);
     }
 
 
