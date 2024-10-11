@@ -1642,7 +1642,7 @@ class ASTROMOON
         //return 125.04452 - 1934.136261 * $jce + 0.0020708 * pow($jce, 2) + pow($jce, 3) / 450000;
     }
 
-    private static function SummationOfPeriodicTermsOfTheMoon(float $jce, $l, $r)
+    public static function SummationOfPeriodicTermsOfTheMoon(float $jce, $l, $r)
     {
         $terms = ASTROTERMS::ml_terms;
         $count = count($terms);
