@@ -324,7 +324,10 @@
                                 "maximum": 90,
                                 "digits": 6,
                                 "moreDigits ": true,
-                                "width": "200px"
+                                "width": "200px",
+                                "onChange": [
+                                    "DWIPSSUN_ApplyChanges($id);"
+                                ]
                             },
                             {
                                 "type": "NumberSpinner",
