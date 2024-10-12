@@ -547,14 +547,19 @@ class ASTROSUN{
         );
     }
 
-    public static function LocalHourAngle(float $appSidTimeGreenwich, float $longitude , float $geoSunRAsc): float
+    public static function LocalHourAngle(float $jce, float $jd, float $longitude): float
     {
+        $appSidTimeGreenwich = ASTROSUN::ApparentSiderealTimeAtGreenwich($jd);
+        $geoSunRAsc = ASTROSUN::GeocentricSunRightAscension($jce);
         return ASTROMISC::LimitTo360Deg($appSidTimeGreenwich + $longitude - $geoSunRAsc);
     }
 
-    public static function DeltaA(float $earthRadVec, float $lat, float $elev, float $locHourAngle, float $geoSunDec):float 
+    public static function DeltaA(float $jce, float $jd, float $lat, float $long, float $elev):float 
     {
-        $s = 8.794 / (3600 * $earthRadVec);
+        $locHourAngle = ASTROSUN::LocalHourAngle($jd, $long, $jce);
+        $geoSunDec = ASTROSUN::GeocentricSunDeclination($jce);
+
+        $s = 8.794 / (3600 * ASTROSUN::EarthRadiusVector($jce);
 
         $u = atan(0.99664719 * tan(deg2rad($lat)));
 
@@ -567,9 +572,12 @@ class ASTROSUN{
         return rad2deg($da);
     }
 
-    public static function TopocentricSunRightAscension(float $earthRadVec, float $lat, float $elev, float $locHourAngle, float $geoSunDec, float $geoSunRAsc): float
+    public static function TopocentricSunRightAscension(float $jce, float $jd, float $lat, float $long, float $elev): float
     {
-       return $geoSunRAsc - ASTROSUN::DeltaA($earthRadVec, $lat, $elev, $locHourAngle, $geoSunDec);
+        $geoSunRAsc = ASTROSUN::GeocentricSunRightAscension($jce);
+        $locHourAngle = ASTROSUN::LocalHourAngle($jd, $long, $jce);
+        $earthRadVec = ASTROSUN::EarthRadiusVector($jce);
+        return $geoSunRAsc - ASTROSUN::DeltaA($jce, $jd, $lat, $long, $elev);
     }
 
     public static function TopocentricSunDeclination(float $earthRadVec, float $lat, float $elev, float $locHourAngle, float $geoSunDec, float $geoSunRAsc): float
