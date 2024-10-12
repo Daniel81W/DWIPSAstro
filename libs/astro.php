@@ -559,7 +559,7 @@ class ASTROSUN{
         $locHourAngle = ASTROSUN::LocalHourAngle($jd, $long, $jce);
         $geoSunDec = ASTROSUN::GeocentricSunDeclination($jce);
 
-        $s = 8.794 / (3600 * ASTROSUN::EarthRadiusVector($jce);
+        $s = 8.794 / (3600 * ASTROSUN::EarthRadiusVector($jce));
 
         $u = atan(0.99664719 * tan(deg2rad($lat)));
 
