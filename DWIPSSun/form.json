@@ -301,19 +301,19 @@
                                 "type": "ValidationTextBox",
                                 "name": "TestCalcJD",
                                 "caption": "JD",
-                                "width": 250px
+                                "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalcJC",
                                 "caption": "JC",
-                                "width": 250px
+                                "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalcJM",
                                 "caption": "JM",
-                                "width": 250px
+                                "width": "250px"
                             }
                         ]
                     }
