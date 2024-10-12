@@ -515,14 +515,17 @@ class ASTROSUN{
 
     public static function ApparentSiderealTimeAtGreenwich(float $jd): float
     {
-        $jc = altASTROGEN::JulianCentury($jd);
+        $jc = ASTROGEN::JulianCentury($jd);
         $nutationLong = ASTROSUN::NutationInLongitude($jc);
         $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($jc);
         return ASTROSUN::MeanSiderealTimeAtGreenwich($jd) + $nutationLong * cos(deg2rad($trueOblEcl));
     }
 
-    public static function GeocentricSunRightAscension(float $appSunLong, float $trueOblEcl, float$geoCentLat):float
+    public static function GeocentricSunRightAscension(float $jce):float
     {
+        $appSunLong = ASTROSUN::ApparentSunLongitude($jce);
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($jce);
+        float$geoCentLat = ASTROSUN::GeocentricLatitude($jce);
         $a = rad2deg(
             atan2(
                 sin(deg2rad($appSunLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)),
