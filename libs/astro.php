@@ -508,7 +508,7 @@ class ASTROSUN{
 
     public static function MeanSiderealTimeAtGreenwich(float $jd):float
     {
-        $jc = altASTROGEN::JulianCentury($jd);
+        $jc = ASTROGEN::JulianCentury($jd);
         $v0 = 280.46061837 + 360.98564736629 * ($jd - 2451545) + 0.000387933 * pow($jc, 2) - pow($jc, 3) / 38710000;
         return ASTROMISC::LimitTo360Deg($v0);
     }
