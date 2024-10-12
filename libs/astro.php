@@ -228,7 +228,7 @@ class Sun{
     $sum = 0.0;
 
     for ($i = 0; $i < count($termSum); $i++)
-        $sum += $termSum[i] * pow($this->julianDay->get_JME(), $i);
+        $sum += $termSum[$i] * pow($this->julianDay->get_JME(), $i);
 
     $sum /= pow(10, 8);
 
@@ -239,7 +239,7 @@ class Sun{
     {
         $sum = 0.0;
         for ($i = 0; $i < count($terms); $i++) {
-            $sum += $terms[i][0] * cos($terms[i][1] + $terms[i][2] * $this->julianDay->get_JME());
+            $sum += $terms[$i][0] * cos($terms[$i][1] + $terms[$i][2] * $this->julianDay->get_JME());
         }
         return $sum;
     }
