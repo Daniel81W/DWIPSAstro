@@ -296,7 +296,7 @@
                                     "$dtArr['year'] = 2000;",
                                     "IPS_UpdateFormField($id, 'TestCalc_DateTime', 'value', json_encode($dtArr));",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                                    "DWIPSSUN_UpdDateTime($id, $date);"
+                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT);"
                                 ]
                             },
                             {
@@ -306,7 +306,7 @@
                                 "onClick": [
                                     "$dtArr = json_decode($TestCalc_DateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                                    "DWIPSSUN_UpdDateTime($id, $date, $TestCalc_DeltaT);"
+                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT);"
                                 ]
                             }
                         ]

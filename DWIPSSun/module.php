@@ -381,7 +381,7 @@ class DWIPSSun extends IPSModule
        
     }
 
-    public function UpdDateTime($date, $deltaT){
+    public function CalcTestValues($date, $deltaT){
 
         $jd = new JulianDay($deltaT, 0, $date);
         $sun = new Sun($jd);
