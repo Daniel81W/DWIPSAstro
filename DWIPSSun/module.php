@@ -256,28 +256,28 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("jce", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jde")));
         $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
         
-        $this->WriteAttributeFloat("helioCentLong", ASTROSUN::EarthHeliocentricLongitude($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("helioCentLong", ASTROSUN::EarthHeliocentricLongitude($this->ReadAttributeFloat("jce")));
         //$this->WriteAttributeFloat("L0", ASTROSUN::L0($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L1", ASTROSUN::L1($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L2", ASTROSUN::L2($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L3", ASTROSUN::L3($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L4", ASTROSUN::L4($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L5", ASTROSUN::L5($this->ReadAttributeFloat("jme")));
-        $this->WriteAttributeFloat("helioCentLat", ASTROSUN::EarthHeliocentricLatitude($this->ReadAttributeFloat("jme")));
+        $this->WriteAttributeFloat("helioCentLat", ASTROSUN::EarthHeliocentricLatitude($this->ReadAttributeFloat("jce")));
         //$this->WriteAttributeFloat("B0", ASTROSUN::B0($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("B1", ASTROSUN::B1($this->ReadAttributeFloat("jme")));
-        $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jme")));
-        $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("helioCentLong")));
-        $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("helioCentLat")));
+        $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("jce")));
         
         $this->WriteAttributeFloat("nutationLongitude", ASTROSUN::NutationInLongitude($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("nutationObliquity", ASTROSUN::NutationInObliquity($this->ReadAttributeFloat("jce")));
 
         $this->WriteAttributeFloat("meanOblEcl", ASTROSUN::MeanObliquityOfTheEcliptic($this->ReadAttributeFloat("jme")));
-        $this->WriteAttributeFloat("trueOblEcl", ASTROSUN::TrueObliquityOfTheEcliptic($this->ReadAttributeFloat("meanOblEcl"), $this->ReadAttributeFloat("nutationObliquity")));
-        $this->WriteAttributeFloat("aberCorr", ASTROSUN::AberrationCorrection($this->ReadAttributeFloat("earthRadVec")));
-        $this->WriteAttributeFloat("appSunLong", ASTROSUN::ApparentSunLongitude($this->ReadAttributeFloat("geoCentLong"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("aberCorr")));
-        $this->WriteAttributeFloat("appSidTimeGreenwich", ASTROSUN::ApparentSiderealTimeAtGreenwich($this->ReadAttributeFloat("jd"), $this->ReadAttributeFloat("jc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
+        $this->WriteAttributeFloat("trueOblEcl", ASTROSUN::TrueObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("aberCorr", ASTROSUN::AberrationCorrection($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("appSunLong", ASTROSUN::ApparentSunLongitude($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("appSidTimeGreenwich", ASTROSUN::ApparentSiderealTimeAtGreenwich($this->ReadAttributeFloat("jd")));
 
         $this->WriteAttributeFloat("geoSunRAsc", ASTROSUN::GeocentricSunRightAscension($this->ReadAttributeFloat("appSunLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("geoCentLat")));
         $this->WriteAttributeFloat("geoSunDec", ASTROSUN::GeocentricSunDeclination($this->ReadAttributeFloat("geoCentLong"), $this->ReadAttributeFloat("trueOblEcl"), $this->ReadAttributeFloat("appSunLong")));

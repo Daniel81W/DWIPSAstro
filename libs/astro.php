@@ -365,8 +365,9 @@ class ASTROSUN{
         return $sum;
     }
     
-    public static function EarthHeliocentricLongitude(float $jme):float
+    public static function EarthHeliocentricLongitude(float $jce):float
     {
+        $jme = ASTROGEN::JulianMillennium($jce);
         $sum = array();
     
         for ($i = 0; $i < ASTROSUN::l_count; $i++){
@@ -376,8 +377,9 @@ class ASTROSUN{
         return ASTROMISC::LimitTo360Deg(rad2deg(ASTROSUN::ValuesOfTheEarth($sum, ASTROSUN::l_count, $jme)));
     }
 
-    public static function EarthHeliocentricLatitude(float $jme):float
+    public static function EarthHeliocentricLatitude(float $jce):float
     {
+        $jme = ASTROGEN::JulianMillennium($jce);
         $sum = array();
         for ($i = 0; $i < ASTROSUN::b_count; $i++) {
             $sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERMS::b_terms[$i], ASTROSUN::b_subcount[$i], $jme);
@@ -413,8 +415,9 @@ class ASTROSUN{
             + ASTROSUN::B1($julianMillenium) * pow($julianMillenium, 1)) / pow(10, 8));
     }
     */
-    public static function EarthRadiusVector(float $jme) :float
+    public static function EarthRadiusVector(float $jce) :float
     {
+        $jme = ASTROGEN::JulianMillennium($jce);
         $sum = array();
         for ($i = 0; $i < ASTROSUN::r_count; $i++) {
             $sum[$i] = ASTROSUN::SummationOfPeriodicTermsOfTheEarth(ASTROTERMS::r_terms[$i], ASTROSUN::r_subcount[$i], $jme);
@@ -429,15 +432,15 @@ class ASTROSUN{
             + ASTROSUN::R4($jme) * pow($jme, 4)) / pow(10, 8);*/
     }
 
-    public static function GeocentricLongitude(float $HeliocentricLongitude):float
+    public static function GeocentricLongitude(float $jce):float
     {
-        $glong = $HeliocentricLongitude + 180;
+        $glong = ASTROSUN::EarthHeliocentricLongitude($jce) + 180;
         return ASTROMISC::LimitTo360Deg($glong);
     }
 
-    public static function GeocentricLatitude(float $HeliocentricLatitude):float
+    public static function GeocentricLatitude(float $jce):float
     {
-        return -1 * $HeliocentricLatitude;
+        return -1 * ASTROSUN::EarthHeliocentricLatitude($jce);
     }
 
     //Nutuation
@@ -478,36 +481,44 @@ class ASTROSUN{
     }
 
     //mean obliquity of the ecliptic
-    public static function MeanObliquityOfTheEcliptic(float $jme):float
+    public static function MeanObliquityOfTheEcliptic(float $jce):float
     {
+        $jme = ASTROGEN::JulianMillennium($jce);
         $u = $jme / 10;
         return 84381.448 - 4680.93 * pow($u, 1) - 1.55 * pow($u, 2) + 1999.25 * pow($u, 3) - 51.38 * pow($u, 4) - 249.67 * pow($u, 5) - 39.05 * pow($u, 6) + 7.12 * pow($u, 7) + 27.87 * pow($u, 8) + 5.79 * pow($u, 9) + 2.45 * pow($u, 10);
     }
 
-    public static function TrueObliquityOfTheEcliptic(float $meanObl, float $nutObl):float
+    public static function TrueObliquityOfTheEcliptic(float $jce):float
     {
+        $meanObl = ASTROSUN::MeanObliquityOfTheEcliptic($jce);
+        $nutObl = ASTROSUN::NutationInObliquity($jce);
         return $meanObl / 3600 + $nutObl;
     }
 
-    public static function AberrationCorrection(float $earthRadVec):float
+    public static function AberrationCorrection(float $jce):float
     {
-        return -20.4898 / (3600 * $earthRadVec);
+        
+        return -20.4898 / (3600 * ASTROSUN::EarthRadiusVector($jce);
     }
 
-    public static function ApparentSunLongitude(float $geoCentLong, float $nutLong, float$abCorr):float
+    public static function ApparentSunLongitude(float $jce):float
     {
-        return $geoCentLong + $nutLong + $abCorr;
+        return ASTROSUN::GeocentricLongitude($jce) + ASTROSUN::NutationInLongitude($jce)  + ASTROSUN::AberrationCorrection($jce);
     }
 
-    public static function MeanSiderealTimeAtGreenwich(float $jd, float $jc):float
+    public static function MeanSiderealTimeAtGreenwich(float $jd):float
     {
+        $jc = altASTROGEN::JulianCentury($jd);
         $v0 = 280.46061837 + 360.98564736629 * ($jd - 2451545) + 0.000387933 * pow($jc, 2) - pow($jc, 3) / 38710000;
         return ASTROMISC::LimitTo360Deg($v0);
     }
 
-    public static function ApparentSiderealTimeAtGreenwich(float $jd, float $jc, float $nutationLong, float $trueOblEcl): float
+    public static function ApparentSiderealTimeAtGreenwich(float $jd): float
     {
-        return ASTROSUN::MeanSiderealTimeAtGreenwich($jd, $jc) + $nutationLong * cos(deg2rad($trueOblEcl));
+        $jc = altASTROGEN::JulianCentury($jd);
+        $nutationLong = ASTROSUN::NutationInLongitude($jc);
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($jc);
+        return ASTROSUN::MeanSiderealTimeAtGreenwich($jd) + $nutationLong * cos(deg2rad($trueOblEcl));
     }
 
     public static function GeocentricSunRightAscension(float $appSunLong, float $trueOblEcl, float$geoCentLat):float
@@ -1701,22 +1712,28 @@ public static function ApparentMoonLongitude(float $jce)
 	return ASTROMOON::MoonLongitudeAndLatitude($jce)[0] + ASTROSUN::NutationInLongitude($jce);
 }
 
-    public static function GeocentricMoonRightAscension(float $moonLong, float $trueOblEcl, float $jce): float
+    public static function GeocentricMoonRightAscension(float $jce): float
     {
+        $moonLong = ASTROMOON::MoonLongitudeAndLatitude($jce)[0];
+        $moonLat = ASTROMOON::MoonLongitudeAndLatitude($jce)[1];
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($jce);
         $a = rad2deg(
             atan2(
-                sin(deg2rad($moonLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad(ASTROMOON::MoonLongitudeAndLatitude($jce)[1])) * sin(deg2rad($trueOblEcl)),
+                sin(deg2rad($moonLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad($moonLat)) * sin(deg2rad($trueOblEcl)),
                 cos(deg2rad($moonLong))
             )
         );
         return ASTROMISC::LimitTo360Deg($a);
     }
 
-    public static function GeocentricSunDeclination(float $jce, float $trueOblEcl, float $moonLong): float
+    public static function GeocentricSunDeclination(float $jce): float
     {
+        $moonLong = ASTROMOON::MoonLongitudeAndLatitude($jce)[0];
+        $moonLat = ASTROMOON::MoonLongitudeAndLatitude($jce)[1];
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($jce);
         return rad2deg(
             asin(
-                sin(deg2rad(ASTROMOON::MoonLongitudeAndLatitude($jce)[1])) * cos(deg2rad($trueOblEcl)) + cos(deg2rad(ASTROMOON::MoonLongitudeAndLatitude($jce)[1])) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($moonLong))
+                sin(deg2rad($moonLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($moonLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($moonLong))
             )
         );
     }
