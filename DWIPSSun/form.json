@@ -273,6 +273,7 @@
             "caption": "Berechnung für bestimmten Zeitpunkt",
             "popup": {
                 "caption": "Test für bestimmten Zeitpunkt",
+                "width": "80%",
                 "items": [
                     {
                         "type": "RowLayout",
@@ -318,7 +319,7 @@
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Lat",
                                 "caption": "Breite",
-                                "value":  0,
+                                "value": 0,
                                 "minimum": -90,
                                 "maximum": 90,
                                 "digits": 6,
