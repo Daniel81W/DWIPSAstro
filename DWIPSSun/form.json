@@ -300,17 +300,20 @@
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalcJD",
-                                "caption": "JD"
+                                "caption": "JD",
+                                "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalcJC",
-                                "caption": "JC"
+                                "caption": "JC",
+                                "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalcJM",
-                                "caption": "JM"
+                                "caption": "JM",
+                                "width": 250px
                             }
                         ]
                     }
