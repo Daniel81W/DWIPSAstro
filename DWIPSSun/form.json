@@ -322,12 +322,26 @@
                             {
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Lat",
-                                "caption": "Breite"
+                                "caption": "Breite",
+                                "width": "200px"
                             },
                             {
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Long",
-                                "caption": "Länge"
+                                "caption": "Länge",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_Elevation",
+                                "caption": "Höhe",
+                                "width": "150px"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_DeltaT",
+                                "caption": "DeltaT",
+                                "width": "100px"
                             }
                         ]
                     },
