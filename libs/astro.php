@@ -570,6 +570,7 @@ class ASTROSUN{
         $da = atan2(-1 * $x * sin(deg2rad($s)) * sin(deg2rad($locHourAngle)),  cos(deg2rad($geoSunDec)) - $x * sin(deg2rad($s)) * cos(deg2rad($locHourAngle)));
 
         return rad2deg($da);
+
     }
 
     public static function TopocentricSunRightAscension(float $jce, float $jd, float $lat, float $long, float $elev): float
