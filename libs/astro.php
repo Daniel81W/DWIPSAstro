@@ -166,7 +166,7 @@ class JulianDay{
         return $c / 10.0;
     }
 
-    private static function JulianDay(int $year, int $month, int $day, int $hour = 0, int $minute = 0, float $second = 0.0):float
+    private function JulianDay(int $year, int $month, int $day, int $hour = 0, int $minute = 0, float $second = 0.0):float
     {
         $day_decimal = $day + ($hour + ($minute + ($second + $this->dut1) / 60.0) / 60.0) / 24.0;
 
