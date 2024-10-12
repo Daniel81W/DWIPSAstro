@@ -315,11 +315,6 @@
                         "type": "RowLayout",
                         "items": [
                             {
-                                "type": "SelectDateTime",
-                                "name": "TestCalc_DateTime",
-                                "caption": "Zeitpunkt"
-                            },
-                            {
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Lat",
                                 "caption": "Breite",
