@@ -228,7 +228,7 @@ class Sun{
     $sum = 0.0;
 
     for ($i = 0; $i < count($termSum); $i++)
-        $sum += $term_sum[i] * pow($this->julianDay->get_JME(), $i);
+        $sum += $termSum[i] * pow($this->julianDay->get_JME(), $i);
 
     $sum /= pow(10, 8);
 
