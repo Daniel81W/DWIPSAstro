@@ -124,7 +124,7 @@ class JulianDay{
             $date = new DateTime();
             $timestamp = $date->getTimestamp();
         }
-        $this->jd = JulianDay(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), idate('H', $timestamp), idate('i', $timestamp), idate('s', $timestamp));
+        $this->jd = $this->JulianDay(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), idate('H', $timestamp), idate('i', $timestamp), idate('s', $timestamp));
     }
 
     public function get_JD(): float
