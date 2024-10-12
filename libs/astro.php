@@ -113,6 +113,40 @@ class ASTROGEN{
 
 }
 
+class JulianDay{
+    private float $jd;
+    
+    function __construct($timestamp = null)
+    {
+        if(is_null($timestamp)){
+            $date = new DateTime();
+            $timestamp = $date->getTimestamp();
+        }
+    }
+
+    public function get_JD(): float
+    {
+        return $this->jd;
+    }
+}
+
+class Sun{
+
+    /**
+     * Astronomical unit (mean distance earth - sun) in m
+     */
+    const AU = 149597870700;
+    const radius = 0.26667;
+
+    function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+
+
+}
+
 class ASTROSUN{
     /**
      * Astronomical unit (mean distance earth - sun) in m
@@ -1803,6 +1837,15 @@ public static function ApparentMoonLongitude(float $jce)
 
 
 class ASTROTERMS{
+
+
+    const l_count = 6;
+    const b_count = 2;
+    const r_count = 5;
+    const y_count = 63;
+    const l_subcount = array(64, 34, 20, 7, 3, 1);
+    const b_subcount = array(5, 2);
+    const r_subcount = array(40, 10, 6, 2, 1);
     
     ///////////////////////////////////////////////////
     ///  Earth Periodic Terms
@@ -2329,6 +2372,20 @@ class ASTROMISC{
         return $limited;
     }
 
+    public static function LimitTo180DegPM(float|int $angle): float
+    {
+        $limited = 0.0;
+
+        $angle /= 360.0;
+        $limited = 360.0 * ($angle - floor($angle));
+        if ($limited < -180.0) {
+            $limited += 360.0;
+        } else if ($limited > 180.0) {
+            $limited -= 360.0;
+        }
+        return $limited;
+    }
+
     public static function LimitToDesigDeg(float|int $angle, float|int $limit):float
     {
         $limited = 0.0;
@@ -2370,6 +2427,11 @@ class ASTROMISC{
         }
 
     return $limited;
+    }
+
+    public static function DayFracToHr(float $dayFrac)
+    {
+        return 24.0 * ASTROMISC::LimitZeroToOne($dayFrac);
     }
 }
 
