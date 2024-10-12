@@ -251,13 +251,11 @@ class DWIPSSun extends IPSModule
         $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
 
         $this->WriteAttributeFloat("jd", $jd->get_JD());
-        //$this->WriteAttributeFloat("jd", ASTROGEN::oldJulianDay());
         $this->WriteAttributeFloat("jc", $jd->get_JC());
-        //$this->WriteAttributeFloat("jc", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jd")));
-        $this->WriteAttributeFloat("jm", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jc")));
-        $this->WriteAttributeFloat("jde", ASTROGEN::JDE($this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("deltaT")));
-        $this->WriteAttributeFloat("jce", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jde")));
-        $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("jm", $jd->get_JM());
+        $this->WriteAttributeFloat("jde", $jd->get_JDE());
+        $this->WriteAttributeFloat("jce", $jd->get_JCE());
+        $this->WriteAttributeFloat("jme", $jd->get_JME());
         
         $this->WriteAttributeFloat("helioCentLong", ASTROSUN::EarthHeliocentricLongitude($this->ReadAttributeFloat("jce")));
         //$this->WriteAttributeFloat("L0", ASTROSUN::L0($this->ReadAttributeFloat("jme")));
