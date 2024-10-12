@@ -193,7 +193,7 @@ class DWIPSSun extends IPSModule
         parent::ApplyChanges();
         $this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval") * 60 * 1000);
 
-        $this->WriteAttributeFloat("TestCalc_TestCalc_Lat", $TestCalc_Lat);
+        $this->WriteAttributeFloat("TestCalc_TestCalc_Lat",  $TestCalc_Lat);
 
         DWIPSSUN_Update($this->InstanceID);
     }
@@ -246,6 +246,9 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][7]["items"][7]["value"] = $this->ReadAttributeFloat("topoAziAngle");
         $jsonForm["actions"][7]["items"][8]["value"] = $this->ReadAttributeFloat("eqOfTime");
 
+
+        $jsonForm["actions"][8]["popup"]["items"][1]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_Lat");
+
         return json_encode($jsonForm);
     }
 
@@ -256,6 +259,11 @@ class DWIPSSun extends IPSModule
      * DWIPSASTRO_UpdateSunrise($id);
      *
      */
+
+    public function WriteFloatAttribute($att, $val){
+
+        $this->WriteAttributeFloat($att, $val);
+    }
     public function Update()
     {
         $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
