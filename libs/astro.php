@@ -114,7 +114,7 @@ class ASTROGEN{
 }
 
 class JulianDay{
-    private float $jd;
+    private float $jd = 0;
     
     function __construct($timestamp = null)
     {
