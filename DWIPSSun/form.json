@@ -273,6 +273,14 @@
             "caption": "Open Popup",
             "popup": {
                 "caption": "My Element Popup",
+                "buttons": [
+                    {
+                        "caption": "Test",
+                        "onClick": [
+                            "echo $DateTimeForValues;"
+                        ]
+                    }
+                ],
                 "items": [
                     {
                         "type": "SelectDateTime",

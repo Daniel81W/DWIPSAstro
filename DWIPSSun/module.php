@@ -381,6 +381,12 @@ class DWIPSSun extends IPSModule
 
     }
 
+    public function UpdDateTime(){
+
+        //$this->UpdateFormField("DateTimeForValues", "value", );
+    }
+
+
     public function SurfacesIncidenceAngle($orientation, $slope){
         return ASTROSUN::IncidenceAngleOfSurface($orientation, $slope, $this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10);
     }
