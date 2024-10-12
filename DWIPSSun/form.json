@@ -280,7 +280,7 @@
                             "echo $DateTimeForValues;",
                             "$dtArr = json_decode($DateTimeForValues, true);",
                             "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                            "$TestJD = $date;"
+                            "DWIPSSUN_UpdDateTime($id, $date);"
                         ]
                     }
                 ],

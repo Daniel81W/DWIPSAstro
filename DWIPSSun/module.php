@@ -381,9 +381,9 @@ class DWIPSSun extends IPSModule
        
     }
 
-    public function UpdDateTime(){
+    public function UpdDateTime($date){
 
-        //$this->UpdateFormField("DateTimeForValues", "value", );
+        $this->UpdateFormField("TestJD", "value", 3);
     }
 
 
