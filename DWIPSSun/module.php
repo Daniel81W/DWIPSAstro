@@ -171,6 +171,10 @@ class DWIPSSun extends IPSModule
 
 
         $this->RegisterTimer("Update", 60000, "DWIPSSUN_Update($this->InstanceID);");
+
+
+        /////////Testumgebung
+        $this->RegisterPropertyString("TestCalc_DateTime", "");
     }
 
     public function Destroy()
