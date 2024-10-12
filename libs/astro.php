@@ -118,7 +118,7 @@ class JulianDay{
     private float $dut1 = 0;
     private float $deltaT = 0;
     
-    function __construct($deltaT = 0, float $dut1 = 0, int $timestamp = null)
+    function __construct(float $deltaT = 0, float $dut1 = 0, int $timestamp = null)
     {
         if(is_null($timestamp)){
             $date = new DateTime();
@@ -194,13 +194,55 @@ class Sun{
     const AU = 149597870700;
     const radius = 0.26667;
 
-    function __construct($name)
+    private JulianDay $julianDay;
+
+    function __construct(JulianDay $julianday)
     {
-        $this->name = $name;
+        $this->julianDay = $julianday;
     }
 
+    public function EarthHeliocentricLatitude():float
+    {
+        $sum = array();
 
+        for ($i = 0; $i < ASTROTERMS::b_count; $i++)
+            sum[$i] = $this->EarthPeriodicTermSummation(ASTROTERMS::b_terms[$i], ASTROTERMS::b_subcount[$i], $this->julianDay->get_JME());
 
+        return rad2deg($this->EarthValues($sum, ASTROTERMS::b_count, $this->julianDay->get_JME()));
+
+    }
+
+    public function EarthHeliocentricLongitude(): float
+    {
+        $sum = array();
+
+        for ($i = 0; $i < ASTROTERMS::l_count; $i++)
+            $sum[$i] = $this->EarthPeriodicTermSummation(ASTROTERMS::l_terms[$i], ASTROTERMS::l_subcount[$i], $this->julianDay->get_JME());
+
+        return ASTROMISC::LimitTo360Deg(rad2deg($this->EarthValues($sum, ASTROTERMS::l_count, $this->julianDay->get_JME())));
+
+    }
+
+    private function EarthValues(array $termSum):float
+{
+    $sum = 0.0;
+
+    for ($i = 0; $i < count($termSum); $i++)
+        $sum += $term_sum[i] * pow($this->julianDay->get_JME(), $i);
+
+    $sum /= pow(10, 8);
+
+    return $sum;
+}
+
+    private function EarthPeriodicTermSummation(array $terms):float
+    {
+        $sum = 0.0;
+        for ($i = 0; $i < count($terms); $i++) {
+            $sum += $terms[i][0] * cos($terms[i][1] + $terms[i][2] * $this->julianDay->get_JME());
+        }
+        return $sum;
+    }
 }
 
 class ASTROSUN{

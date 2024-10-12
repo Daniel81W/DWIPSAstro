@@ -249,6 +249,7 @@ class DWIPSSun extends IPSModule
     public function Update()
     {
         $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
+        $sun = new Sun($jd);
 
         $this->WriteAttributeFloat("jd", $jd->get_JD());
         $this->WriteAttributeFloat("jc", $jd->get_JC());
@@ -257,17 +258,20 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("jce", $jd->get_JCE());
         $this->WriteAttributeFloat("jme", $jd->get_JME());
         
-        $this->WriteAttributeFloat("helioCentLong", ASTROSUN::EarthHeliocentricLongitude($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("helioCentLong", ASTROSUN::EarthHeliocentricLongitude($jd->get_JCE()));
+
+        $this->WriteAttributeFloat("helioCentLong", $sun->EarthHeliocentricLongitude());
         //$this->WriteAttributeFloat("L0", ASTROSUN::L0($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L1", ASTROSUN::L1($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L2", ASTROSUN::L2($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L3", ASTROSUN::L3($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L4", ASTROSUN::L4($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("L5", ASTROSUN::L5($this->ReadAttributeFloat("jme")));
-        $this->WriteAttributeFloat("helioCentLat", ASTROSUN::EarthHeliocentricLatitude($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("helioCentLat", ASTROSUN::EarthHeliocentricLatitude($jd->get_JCE()));
+        $this->WriteAttributeFloat("helioCentLat", $sun->EarthHeliocentricLatitude());
         //$this->WriteAttributeFloat("B0", ASTROSUN::B0($this->ReadAttributeFloat("jme")));
         //$this->WriteAttributeFloat("B1", ASTROSUN::B1($this->ReadAttributeFloat("jme")));
-        $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("earthRadVec", ASTROSUN::EarthRadiusVector($jd->get_JCE()));
         $this->WriteAttributeFloat("geoCentLong", ASTROSUN::GeocentricLongitude($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("geoCentLat", ASTROSUN::GeocentricLatitude($this->ReadAttributeFloat("jce")));
         
