@@ -175,10 +175,10 @@ class DWIPSSun extends IPSModule
 
         /////////Testumgebung
         $this->RegisterPropertyString("TestCalc_DateTime", "");
-        $this->RegisterAttributeFloat("TestCalc_TestCalc_Lat", 0);
-        $this->RegisterPropertyFloat("TestCalc_TestCalc_Long", 0);
-        $this->RegisterPropertyFloat("TestCalc_TestCalc_Elevation", 0);
-        $this->RegisterPropertyFloat("TestCalc_TestCalc_DeltaT", 0);
+        $this->RegisterAttributeFloat("TestCalc_Lat", 0);
+        $this->RegisterPropertyFloat("TestCalc_Long", 0);
+        $this->RegisterPropertyFloat("TestCalc_Elevation", 0);
+        $this->RegisterPropertyFloat("TestCalc_DeltaT", 0);
     }
 
     public function Destroy()
