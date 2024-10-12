@@ -318,7 +318,9 @@
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Lat",
                                 "caption": "Breite",
-                                "digits ": 5,
+                                "minimum": -90,
+                                "maximum": 90,
+                                "digits ": 6,
                                 "moreDigits ": true,
                                 "width": "200px"
                             },
