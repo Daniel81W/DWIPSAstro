@@ -318,6 +318,7 @@
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Lat",
                                 "caption": "Breite",
+                                "value":  0,
                                 "minimum": -90,
                                 "maximum": 90,
                                 "digits": 6,
@@ -328,18 +329,31 @@
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Long",
                                 "caption": "Länge",
+                                "value": 0,
+                                "minimum": -180,
+                                "maximum": 180,
+                                "digits": 6,
+                                "moreDigits ": true,
                                 "width": "200px"
                             },
                             {
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_Elevation",
                                 "caption": "Höhe",
+                                "value": 0,
+                                "minimum": -200,
+                                "maximum": 8848,
+                                "digits": 2,
+                                "moreDigits ": true,
                                 "width": "150px"
                             },
                             {
                                 "type": "NumberSpinner",
                                 "name": "TestCalc_DeltaT",
                                 "caption": "DeltaT",
+                                "value": 0,
+                                "digits": 2,
+                                "moreDigits ": true,
                                 "width": "100px"
                             }
                         ]
