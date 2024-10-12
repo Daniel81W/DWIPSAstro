@@ -535,8 +535,11 @@ class ASTROSUN{
         return ASTROMISC::LimitTo360Deg($a);
     }
 
-    public static function GeocentricSunDeclination(float $geoCentLat, float $trueOblEcl, float $appSunLong): float
+    public static function GeocentricSunDeclination(float $jce): float
     {
+        $appSunLong = ASTROSUN::ApparentSunLongitude($jce);
+        $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($jce);
+        $geoCentLat = ASTROSUN::GeocentricLatitude($jce);
         return rad2deg(
             asin(
                 sin(deg2rad($geoCentLat)) * cos(deg2rad($trueOblEcl)) + cos(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($appSunLong))
