@@ -175,7 +175,7 @@ class DWIPSSun extends IPSModule
 
         /////////Testumgebung
         $this->RegisterPropertyString("TestCalc_DateTime", "");
-        $this->RegisterPropertyFloat("TestCalc_TestCalc_Lat", 0);
+        $this->RegisterAttributeFloat("TestCalc_TestCalc_Lat", 0);
         $this->RegisterPropertyFloat("TestCalc_TestCalc_Long", 0);
         $this->RegisterPropertyFloat("TestCalc_TestCalc_Elevation", 0);
         $this->RegisterPropertyFloat("TestCalc_TestCalc_DeltaT", 0);
@@ -192,6 +192,8 @@ class DWIPSSun extends IPSModule
         //Never delete this line!
         parent::ApplyChanges();
         $this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval") * 60 * 1000);
+
+        $this->WriteAttributeFloat("TestCalc_TestCalc_Lat", $TestCalc_Lat);
 
         DWIPSSUN_Update($this->InstanceID);
     }
