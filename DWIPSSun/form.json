@@ -305,6 +305,7 @@
                                 "name": "TestCalc_SetDateTimeForValuesButton",
                                 "caption": "Zeitpunkt übernehmen",
                                 "onClick": [
+                                    "DWIPSSUN_ApplyChanges($id);",
                                     "$dtArr = json_decode($TestCalc_DateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
                                     "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT);"
@@ -324,10 +325,7 @@
                                 "maximum": 90,
                                 "digits": 6,
                                 "moreDigits ": true,
-                                "width": "200px",
-                                "onChange": [
-                                    "DWIPSSUN_ApplyChanges($id);"
-                                ]
+                                "width": "200px"
                             },
                             {
                                 "type": "NumberSpinner",
@@ -338,10 +336,7 @@
                                 "maximum": 180,
                                 "digits": 6,
                                 "moreDigits ": true,
-                                "width": "200px",
-                                "onChange": [
-                                    "DWIPSSUN_ApplyChanges($id);"
-                                ]
+                                "width": "200px"
                             },
                             {
                                 "type": "NumberSpinner",
