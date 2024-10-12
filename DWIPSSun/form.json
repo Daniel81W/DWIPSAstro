@@ -275,8 +275,8 @@
                 "caption": "My Element Popup",
                 "items": [
                     {
-                        "type": "SelectVariable",
-                        "name": "VariableTest",
+                        "type": "SelectDateTime",
+                        "name": "DateTimeForValues",
                         "caption": "Some Variable"
                     }
                 ]
