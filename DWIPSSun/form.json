@@ -315,6 +315,26 @@
                         "type": "RowLayout",
                         "items": [
                             {
+                                "type": "SelectDateTime",
+                                "name": "TestCalc_DateTime",
+                                "caption": "Zeitpunkt"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_Lat",
+                                "caption": "Breite"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_Long",
+                                "caption": "Länge"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalcJD",
                                 "caption": "JD",
