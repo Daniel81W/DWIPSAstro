@@ -383,7 +383,12 @@ class DWIPSSun extends IPSModule
 
     public function UpdDateTime($date){
 
-        $this->UpdateFormField("TestJD", "value", $date);
+        $jd = new JulianDay(0, 0, $date);
+        $sun = new Sun($jd);
+
+        $this->UpdateFormField("TestCalcJD", "value", $jd->get_JD());
+        $this->UpdateFormField("TestCalcJC", "value", $jd->get_JC());
+        $this->UpdateFormField("TestCalcJM", "value", $jd->get_JM());
     }
 
 

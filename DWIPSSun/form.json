@@ -270,27 +270,16 @@
         },
         {
             "type": "PopupButton",
-            "caption": "Open Popup",
+            "caption": "Berechnung für bestimmten Zeitpunkt",
             "popup": {
                 "caption": "Test für bestimmten Zeitpunkt",
-                "buttons": [
-                    {
-                        "caption": "Werte berechnen",
-                        "onClick": [
-                            "echo $DateTimeForValues;",
-                            "$dtArr = json_decode($DateTimeForValues, true);",
-                            "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                            "DWIPSSUN_UpdDateTime($id, $date);"
-                        ]
-                    }
-                ],
                 "items": [
                     {
                         "type": "RowLayout",
                         "items": [
                             {
                                 "type": "SelectDateTime",
-                                "name": "DateTimeForValues",
+                                "name": "TestCalcDateTime",
                                 "caption": "Zeitpunkt"
                             },
                             {
@@ -298,8 +287,7 @@
                                 "name": "SetDateTimeForValues",
                                 "caption": "Zeitpunkt übernehmen",
                                 "onClick": [
-                                    "echo $DateTimeForValues;",
-                                    "$dtArr = json_decode($DateTimeForValues, true);",
+                                    "$dtArr = json_decode($TestCalcDateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
                                     "DWIPSSUN_UpdDateTime($id, $date);"
                                 ]
@@ -307,9 +295,24 @@
                         ]
                     },
                     {
-                        "type": "ValidationTextBox",
-                        "name": "TestJD",
-                        "caption": "JD"
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalcJD",
+                                "caption": "JD"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalcJC",
+                                "caption": "JC"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalcJM",
+                                "caption": "JM"
+                            }
+                        ]
                     }
                 ]
             }
