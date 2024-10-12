@@ -272,10 +272,10 @@
             "type": "PopupButton",
             "caption": "Open Popup",
             "popup": {
-                "caption": "My Element Popup",
+                "caption": "Test für bestimmten Zeitpunkt",
                 "buttons": [
                     {
-                        "caption": "Test",
+                        "caption": "Werte berechnen",
                         "onClick": [
                             "echo $DateTimeForValues;",
                             "$dtArr = json_decode($DateTimeForValues, true);",
@@ -286,9 +286,25 @@
                 ],
                 "items": [
                     {
-                        "type": "SelectDateTime",
-                        "name": "DateTimeForValues",
-                        "caption": "Some Variable"
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "SelectDateTime",
+                                "name": "DateTimeForValues",
+                                "caption": "Zeitpunkt"
+                            },
+                            {
+                                "type": "Button",
+                                "name": "SetDateTimeForValues",
+                                "caption": "Zeitpunkt übernehmen",
+                                "onClick": [
+                                    "echo $DateTimeForValues;",
+                                    "$dtArr = json_decode($DateTimeForValues, true);",
+                                    "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
+                                    "DWIPSSUN_UpdDateTime($id, $date);"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "ValidationTextBox",
