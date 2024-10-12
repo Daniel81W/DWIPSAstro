@@ -320,7 +320,7 @@
                                 "caption": "Breite",
                                 "minimum": -90,
                                 "maximum": 90,
-                                "digits ": 6,
+                                "digits": 6,
                                 "moreDigits ": true,
                                 "width": "200px"
                             },
