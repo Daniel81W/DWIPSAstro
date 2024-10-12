@@ -122,6 +122,7 @@ class JulianDay{
             $date = new DateTime();
             $timestamp = $date->getTimestamp();
         }
+        $this->jd = 2;
     }
 
     public function get_JD(): float
