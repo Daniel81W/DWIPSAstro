@@ -206,7 +206,7 @@ class Sun{
         $sum = array();
 
         for ($i = 0; $i < ASTROTERMS::b_count; $i++)
-            sum[$i] = $this->EarthPeriodicTermSummation(ASTROTERMS::b_terms[$i], ASTROTERMS::b_subcount[$i], $this->julianDay->get_JME());
+            $sum[$i] = $this->EarthPeriodicTermSummation(ASTROTERMS::b_terms[$i], ASTROTERMS::b_subcount[$i], $this->julianDay->get_JME());
 
         return rad2deg($this->EarthValues($sum, ASTROTERMS::b_count, $this->julianDay->get_JME()));
 
