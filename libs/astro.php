@@ -498,7 +498,7 @@ class ASTROSUN{
     public static function AberrationCorrection(float $jce):float
     {
         
-        return -20.4898 / (3600 * ASTROSUN::EarthRadiusVector($jce);
+        return -20.4898 / (3600 * ASTROSUN::EarthRadiusVector($jce));
     }
 
     public static function ApparentSunLongitude(float $jce):float
