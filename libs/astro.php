@@ -525,7 +525,7 @@ class ASTROSUN{
     {
         $appSunLong = ASTROSUN::ApparentSunLongitude($jce);
         $trueOblEcl = ASTROSUN::TrueObliquityOfTheEcliptic($jce);
-        float$geoCentLat = ASTROSUN::GeocentricLatitude($jce);
+        $geoCentLat = ASTROSUN::GeocentricLatitude($jce);
         $a = rad2deg(
             atan2(
                 sin(deg2rad($appSunLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad($geoCentLat)) * sin(deg2rad($trueOblEcl)),
