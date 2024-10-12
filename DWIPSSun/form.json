@@ -279,15 +279,32 @@
                         "items": [
                             {
                                 "type": "SelectDateTime",
-                                "name": "TestCalcDateTime",
+                                "name": "TestCalc_DateTime",
                                 "caption": "Zeitpunkt"
                             },
                             {
                                 "type": "Button",
-                                "name": "SetDateTimeForValues",
-                                "caption": "Zeitpunkt übernehmen",
+                                "name": "TestCalc_SetNowButton",
+                                "caption": "jetzt",
                                 "onClick": [
                                     "$dtArr = json_decode($TestCalcDateTime, true);",
+                                    "$dtArr['hour'] = 8;",
+                                    "$dtArr['minute'] = 10;",
+                                    "$dtArr['second'] = 30;",
+                                    "$dtArr['day'] = 10;",
+                                    "$dtArr['month'] = 6;",
+                                    "$dtArr['year'] = 2000;",
+                                    "DWIPSSUN_UpdateFormField($id, 'TestCalc_DateTime', json_encode($dtArr));",
+                                    "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
+                                    "DWIPSSUN_UpdDateTime($id, $date);"
+                                ]
+                            },
+                            {
+                                "type": "Button",
+                                "name": "TestCalc_SetDateTimeForValuesButton",
+                                "caption": "Zeitpunkt übernehmen",
+                                "onClick": [
+                                    "$dtArr = json_decode($TestCalc_DateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
                                     "DWIPSSUN_UpdDateTime($id, $date);"
                                 ]
