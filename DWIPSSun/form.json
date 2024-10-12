@@ -267,6 +267,20 @@
                     "caption": "Equation of tim (E)"
                 }
             ]
+        },
+        {
+            "type": "PopupButton",
+            "caption": "Open Popup",
+            "popup": {
+                "caption": "My Element Popup",
+                "items": [
+                    {
+                        "type": "SelectVariable",
+                        "name": "VariableTest",
+                        "caption": "Some Variable"
+                    }
+                ]
+            }
         }
     ],
     "status": []
