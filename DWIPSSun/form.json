@@ -306,7 +306,7 @@
                                 "onClick": [
                                     "$dtArr = json_decode($TestCalc_DateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                                    "DWIPSSUN_UpdDateTime($id, $date);"
+                                    "DWIPSSUN_UpdDateTime($id, $date, $TestCalc_DeltaT);"
                                 ]
                             }
                         ]
