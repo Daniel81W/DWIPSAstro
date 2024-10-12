@@ -277,7 +277,10 @@
                     {
                         "caption": "Test",
                         "onClick": [
-                            "echo $DateTimeForValues;"
+                            "echo $DateTimeForValues;",
+                            "$dtArr = json_decode($DateTimeForValues, true);",
+                            "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
+                            "$TestJD = $date;"
                         ]
                     }
                 ],
@@ -286,6 +289,11 @@
                         "type": "SelectDateTime",
                         "name": "DateTimeForValues",
                         "caption": "Some Variable"
+                    },
+                    {
+                        "type": "ValidationTextBox",
+                        "name": "TestJD",
+                        "caption": "JD"
                     }
                 ]
             }
