@@ -1607,10 +1607,9 @@ class ASTROMOON
     {
 
     }
-
-    public static function MeanElongationMoonSun(float $jce):float
+    
+    public static function MeanElongationMoon(float $jce):float
     {
-        //return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
         return ASTROMISC::LimitTo360Deg(
             ASTROMISC::FourthOrderPolynomial(
                 -1.0 / 113065000,
@@ -1621,7 +1620,11 @@ class ASTROMOON
                 $jce
             )
         );
-        //return 297.8501921 + 445267.1114034 * $jce - 0.0018819 * pow($jce, 2) + pow($jce, 3) / 545868 - pow($jce, 4) / 113065000;
+    }
+
+    public static function MeanElongationMoonSun(float $jce):float
+    {
+        return ASTROMISC::ThirdOrderPolynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, $jce);
     }
 
     public static function MeanAnomalyOfTheMoon(float $jce):float
@@ -1646,7 +1649,7 @@ class ASTROMOON
     {
         $count = count($terms);
         $e = 1.0 - $jce * (0.002516 + $jce * 0.0000074);
-        $d = ASTROMOON::MeanElongationMoonSun($jce);
+        $d = ASTROMOON::MeanElongationMoon($jce);
         $m = ASTROSUN::MeanAnomalyOfTheSun($jce);
         $f = ASTROMOON::MoonsArgumentOfLatitude($jce);
         $ms = ASTROMOON::MeanAnomalyOfTheMoon($jce);
@@ -1686,6 +1689,37 @@ class ASTROMOON
 {
 	return 385000.56 + ASTROMOON::SummationOfPeriodicTermsOfTheMoon(ASTROTERMS::ml_terms, $jce)[1]/1000;
 }
+
+    
+public static function MoonEquatorialHorizParallax($jce)
+{
+	return rad2deg(asin(6378.14/ASTROMOON::MoonEarthDistance($jce)));
+}
+
+public static function ApparentMoonLongitude(float $jce)
+{
+	return ASTROMOON::MoonLongitudeAndLatitude($jce)[0] + ASTROSUN::NutationInLongitude($jce);
+}
+
+    public static function GeocentricMoonRightAscension(float $moonLong, float $trueOblEcl, float $jce): float
+    {
+        $a = rad2deg(
+            atan2(
+                sin(deg2rad($moonLong)) * cos(deg2rad($trueOblEcl)) - tan(deg2rad(ASTROMOON::MoonLongitudeAndLatitude($jce)[1])) * sin(deg2rad($trueOblEcl)),
+                cos(deg2rad($moonLong))
+            )
+        );
+        return ASTROMISC::LimitTo360Deg($a);
+    }
+
+    public static function GeocentricSunDeclination(float $jce, float $trueOblEcl, float $moonLong): float
+    {
+        return rad2deg(
+            asin(
+                sin(deg2rad(ASTROMOON::MoonLongitudeAndLatitude($jce)[1])) * cos(deg2rad($trueOblEcl)) + cos(deg2rad(ASTROMOON::MoonLongitudeAndLatitude($jce)[1])) * sin(deg2rad($trueOblEcl)) * sin(deg2rad($moonLong))
+            )
+        );
+    }
 
 
     public static function Phase(){
