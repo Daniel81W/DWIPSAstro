@@ -386,9 +386,12 @@ class DWIPSSun extends IPSModule
         $jd = new JulianDay(0, 0, $date);
         $sun = new Sun($jd);
 
-        $this->UpdateFormField("TestCalcJD", "value", $jd->get_JD());
-        $this->UpdateFormField("TestCalcJC", "value", $jd->get_JC());
-        $this->UpdateFormField("TestCalcJM", "value", $jd->get_JM());
+        $this->UpdateFormField("TestCalc_JD", "value", $jd->get_JD());
+        $this->UpdateFormField("TestCalc_JC", "value", $jd->get_JC());
+        $this->UpdateFormField("TestCalc_JM", "value", $jd->get_JM());
+        $this->UpdateFormField("TestCalc_JDE", "value", $jd->get_JDE());
+        $this->UpdateFormField("TestCalc_JCE", "value", $jd->get_JCE());
+        $this->UpdateFormField("TestCalc_JME", "value", $jd->get_JME());
     }
 
 

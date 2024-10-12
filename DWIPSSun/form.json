@@ -349,19 +349,42 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalcJD",
+                                "name": "TestCalc_JD",
                                 "caption": "JD",
                                 "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalcJC",
+                                "name": "TestCalc_JC",
                                 "caption": "JC",
                                 "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalcJM",
+                                "name": "TestCalc_JM",
+                                "caption": "JM",
+                                "width": "250px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JDE",
+                                "caption": "JD",
+                                "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JCE",
+                                "caption": "JC",
+                                "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JME",
                                 "caption": "JM",
                                 "width": "250px"
                             }
