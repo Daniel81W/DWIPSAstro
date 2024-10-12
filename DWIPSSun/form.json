@@ -278,8 +278,7 @@
                         "caption": "Test",
                         "onClick": [
                             "echo $DateTimeForValues;",
-                            "$dtArr = json_decode($DateTimeForValues, true);",
-                            "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);"
+                            "$dtArr = json_decode($DateTimeForValues, true);"
                         ]
                     }
                 ],
