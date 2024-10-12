@@ -277,8 +277,7 @@
                     {
                         "caption": "Test",
                         "onClick": [
-                            "echo $DateTimeForValues;",
-                            "$dtArr = json_decode($DateTimeForValues, true);"
+                            "echo $DateTimeForValues;"
                         ]
                     }
                 ],
