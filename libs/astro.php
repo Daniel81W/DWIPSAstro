@@ -115,19 +115,74 @@ class ASTROGEN{
 
 class JulianDay{
     private float $jd = 0;
+    private float $dut1 = 0;
+    private float $deltaT = 0;
     
-    function __construct($timestamp = null)
+    function __construct($deltaT = 0, float $dut1 = 0, int $timestamp = null)
     {
         if(is_null($timestamp)){
             $date = new DateTime();
             $timestamp = $date->getTimestamp();
         }
-        $this->jd = 2;
+        $this->jd = JulianDay(idate('Y', $timestamp), idate('m', $timestamp), idate('d', $timestamp), idate('H', $timestamp), idate('i', $timestamp), idate('s', $timestamp));
     }
 
     public function get_JD(): float
     {
         return $this->jd;
+    }
+
+    public function get_JC(): float
+    {
+        return $this->DayToCent($this->get_JD());
+    }
+
+    public function get_JM(): float
+    {
+        return $this->CentToMill($this->get_JC());
+    }
+
+    public function get_JDE(): float
+    {
+        return $this->get_JD() + $this->deltaT / 86400.0;
+    }
+
+    public function get_JCE(): float
+    {
+        return $this->DayToCent($this->get_JDE());
+    }
+
+    public function get_JME(): float
+    {
+        return $this->CentToMill($this->get_JCE());
+    }
+
+    private function DayToCent(float $d):float{
+        return ($d - 2451545.0) / 36525.0;
+    }
+
+    private function CentToMill(float $c):float
+    {
+        return $c / 10.0;
+    }
+
+    private static function JulianDay(int $year, int $month, int $day, int $hour = 0, int $minute = 0, float $second = 0.0):float
+    {
+        $day_decimal = $day + ($hour + ($minute + ($second + $this->dut1) / 60.0) / 60.0) / 24.0;
+
+        if ($month < 3) {
+            $month += 12;
+            $year--;
+        }
+
+        $julian_day = intval(365.25 * ($year + 4716.0)) + intval(30.6001 * ($month + 1)) + $day_decimal - 1524.5;
+
+        if ($julian_day > 2299160.0) {
+            $a = intval($year / 100);
+            $julian_day += (2 - $a + intval($a / 4));
+        }
+
+        return $julian_day;
     }
 }
 

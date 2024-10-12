@@ -248,7 +248,7 @@ class DWIPSSun extends IPSModule
      */
     public function Update()
     {
-        $jd = new JulianDay();
+        $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
 
         $this->WriteAttributeFloat("jd", $jd->get_JD());
         //$this->WriteAttributeFloat("jd", ASTROGEN::oldJulianDay());
