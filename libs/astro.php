@@ -205,6 +205,41 @@ class Sun{
     }
 
 
+    public function SunEquatorialHorizontalParallax(): float
+    {
+        return 8.794 / (3600.0 * $this->EarthRadiusVector());
+    }
+
+    public function ObserverHourAngle(float $longitude): float
+    {
+        return ASTROMISC::LimitTo360Deg($this->GreenwichMeanSiderealTime() + $longitude - $this->GeocentricRightAscension());
+    }
+
+    public function GeocentricDeclination(): float
+    {
+        $lamda_rad = deg2rad($this->ApparentSunLongitude());
+        $epsilon_rad = deg2rad($this->EclipticTrueObliquity());
+        $beta_rad = deg2rad($this->GeocentricLatitude());
+
+        return rad2deg(asin(sin($beta_rad) * cos($epsilon_rad) +
+            cos($beta_rad) * sin($epsilon_rad) * sin($lamda_rad)));
+    }
+
+    public function GeocentricRightAscension(): float
+    {
+        $lamda_rad = deg2rad($this->ApparentSunLongitude());
+        $epsilon_rad = deg2rad($this->EclipticTrueObliquity());
+        $beta_rad = deg2rad($this->GeocentricLatitude());
+
+        return ASTROMISC::LimitTo360Deg(rad2deg(atan2(sin($lamda_rad) * cos($epsilon_rad) -
+            tan(deg2rad($beta_rad) * sin($epsilon_rad), cos($lamda_rad)))));
+    }
+
+    public function GreenwichSiderealTime(): float
+    {
+        return $this->GreenwichMeanSiderealTime() + $this->NutationLongitude() * cos(deg2rad($this->EclipticTrueObliquity()));
+    }
+
     public function GreenwichMeanSiderealTime():float
     {
         $jd = $this->julianDay->get_JD();

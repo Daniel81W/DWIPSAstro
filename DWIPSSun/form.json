@@ -524,12 +524,47 @@
                                 "name": "TestCalc_GreenwichMeanSiderealTime",
                                 "caption": "TestCalc_GreenwichMeanSiderealTime",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GreenwichSiderealTime",
+                                "caption": "TestCalc_GreenwichSiderealTime",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentricRightAscension",
+                                "caption": "TestCalc_GeocentricRightAscension",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentricDeclination",
+                                "caption": "TestCalc_GeocentricDeclination",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ObserverHourAngle",
+                                "caption": "TestCalc_ObserverHourAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunEquatorialHorizontalParallax",
+                                "caption": "TestCalc_SunEquatorialHorizontalParallax",
+                                "width": "200px"
                             }
                         ]
                     }
                 ]
             }
-        }
+            }
     ],
     "status": []
 }
