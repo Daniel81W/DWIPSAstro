@@ -212,7 +212,7 @@ class Sun{
 
     public function ObserverHourAngle(float $longitude): float
     {
-        return ASTROMISC::LimitTo360Deg($this->GreenwichMeanSiderealTime() + $longitude - $this->GeocentricRightAscension());
+        return ASTROMISC::LimitTo360Deg($this->GreenwichSiderealTime() + $longitude - $this->GeocentricRightAscension());
     }
 
     public function GeocentricDeclination(): float
