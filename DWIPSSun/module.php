@@ -174,7 +174,7 @@ class DWIPSSun extends IPSModule
 
 
         /////////Testumgebung
-        $this->RegisterPropertyString("TestCalc_DateTime", "");
+        $this->RegisterAttributeString("TestCalc_DateTime", "");
         $this->RegisterAttributeFloat("TestCalc_Lat", 0);
         $this->RegisterAttributeFloat("TestCalc_Long", 0);
         $this->RegisterAttributeFloat("TestCalc_Elevation", 0);
@@ -245,6 +245,7 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][7]["items"][8]["value"] = $this->ReadAttributeFloat("eqOfTime");
 
 
+        $jsonForm["actions"][8]["popup"]["items"][0]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_DateTime");
         $jsonForm["actions"][8]["popup"]["items"][1]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_Lat");
         $jsonForm["actions"][8]["popup"]["items"][1]["items"][1]["value"] = $this->ReadAttributeFloat("TestCalc_Long");
         $jsonForm["actions"][8]["popup"]["items"][1]["items"][2]["value"] = $this->ReadAttributeFloat("TestCalc_Elevation");
@@ -265,6 +266,13 @@ class DWIPSSun extends IPSModule
 
         $this->WriteAttributeFloat($att, $val);
     }
+
+    public function WriteStringAttribute($att, $val)
+    {
+
+        $this->WriteAttributeString($att, $val);
+    }
+
     public function Update()
     {
         $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));

@@ -305,6 +305,7 @@
                                 "name": "TestCalc_SetDateTimeForValuesButton",
                                 "caption": "Zeitpunkt übernehmen",
                                 "onClick": [
+                                    "DWIPSSUN_WriteStringAttribute($id, 'TestCalc_DateTime', $TestCalc_DateTime);",
                                     "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Lat', $TestCalc_Lat);",
                                     "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Long', $TestCalc_Long);",
                                     "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Elevation', $TestCalc_Elevation);",
