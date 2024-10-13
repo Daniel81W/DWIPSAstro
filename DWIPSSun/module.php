@@ -272,7 +272,6 @@ class DWIPSSun extends IPSModule
     {
 
         $this->WriteAttributeString($att, $val);
-        IPS_LogMessage("SUN", $val);
     }
 
     public function Update()
@@ -307,7 +306,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("nutationLongitude", ASTROSUN::NutationInLongitude($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("nutationObliquity", ASTROSUN::NutationInObliquity($this->ReadAttributeFloat("jce")));
 
-        $this->WriteAttributeFloat("meanOblEcl", ASTROSUN::MeanObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
+       /* $this->WriteAttributeFloat("meanOblEcl", ASTROSUN::MeanObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("trueOblEcl", ASTROSUN::TrueObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("aberCorr", ASTROSUN::AberrationCorrection($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("appSunLong", ASTROSUN::ApparentSunLongitude($this->ReadAttributeFloat("jce")));
@@ -363,7 +362,7 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("topoZenAngle", "value", $this->ReadAttributeFloat("topoZenAngle"));
         $this->UpdateFormField("topoAziAngle", "value", $this->ReadAttributeFloat("topoAziAngle"));
         $this->UpdateFormField("eqOfTime", "value", $this->ReadAttributeFloat("eqOfTime"));
-
+        
         $now = time();
 
         $this->SetValue("solarnoon", ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
@@ -401,7 +400,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
         $this->SetValue("season", ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
         $this->SetValue("shadowLength", ASTROSUN::ShadowLength($this->ReadAttributeFloat("elevationOfTheSun")));
-        
+        */
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
         //$this->SetValue("solarirradiancespace", $solarirradiancespace);
         //$this->SetValue("solarirradiancerectangular", $solarirradiancespace * 0.75);
