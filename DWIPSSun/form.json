@@ -494,6 +494,36 @@
                                 "name": "TestCalc_NutationObliquity",
                                 "caption": "TestCalc_NutationObliquity",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EclipticMeanObliquity",
+                                "caption": "TestCalc_EclipticMeanObliquity",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EclipticTrueObliquity",
+                                "caption": "TestCalc_EclipticTrueObliquity",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_AberrationCorrection",
+                                "caption": "TestCalc_AberrationCorrection",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ApparentSunLongitude",
+                                "caption": "TestCalc_ApparentSunLongitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GreenwichMeanSiderealTime",
+                                "caption": "TestCalc_GreenwichMeanSiderealTime",
+                                "width": "200px"
                             }
                         ]
                     }

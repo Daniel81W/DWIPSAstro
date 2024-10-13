@@ -441,6 +441,12 @@ class DWIPSSun extends IPSModule
 
         $this->UpdateFormField("TestCalc_NutationLongitude", "value", $sun->NutationLongitude());
         $this->UpdateFormField("TestCalc_NutationObliquity", "value", $sun->NutationObliquity());
+        $this->UpdateFormField("TestCalc_EclipticMeanObliquity", "value", $sun->EclipticMeanObliquity());
+        $this->UpdateFormField("TestCalc_EclipticTrueObliquity", "value", $sun->EclipticTrueObliquity());
+        $this->UpdateFormField("TestCalc_AberrationCorrection", "value", $sun->AberrationCorrection());
+        $this->UpdateFormField("TestCalc_ApparentSunLongitude", "value", $sun->ApparentSunLongitude());
+        $this->UpdateFormField("TestCalc_GreenwichMeanSiderealTime", "value", $sun->GreenwichMeanSiderealTime());
+
     }
 
 
