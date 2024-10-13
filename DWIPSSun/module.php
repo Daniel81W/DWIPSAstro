@@ -17,6 +17,11 @@ class DWIPSSun extends IPSModule
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 3, $this->Translate("fall"), "", -1);
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 4, $this->Translate("winter"), "", -1);
         }
+        if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("DayNight"))) {
+            IPS_CreateVariableProfile("DWIPS." . $this->Translate("DayNight"), 0);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 0, $this->Translate("day"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 1, $this->Translate("night"), "", -1);
+        }
         if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("compass_rose"))) {
             IPS_CreateVariableProfile("DWIPS." . $this->Translate("compass_rose"), 2);
             IPS_SetVariableProfileDigits("DWIPS." . $this->Translate("compass_rose"), 1);
@@ -98,7 +103,7 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("sunazimutAtNextSunset", $this->Translate("sunazimut"), 2, "~WindDirection.F", $p, true);
         $p++;
-        $this->MaintainVariable("day", $this->Translate("day"), 0, "~DayNight.KNX", $p, true);
+        $this->MaintainVariable("day", $this->Translate("day"), 0, "DWIPS." . $this->Translate("DayNight"), $p, true);
         $p++;
         $this->MaintainVariable("insideCivilTwilight", $this->Translate("insideCivilTwilight"), 0, "", $p, true);
         $p++;
