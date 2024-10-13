@@ -175,7 +175,7 @@ class DWIPSSun extends IPSModule
 
         /////////Testumgebung
 
-        $this->RegisterAttributeString("TestCalc_DateTime", "{'year':2024,'month':7,'day':1,'hour':12,'minute':0,'second':0}");
+        $this->RegisterAttributeString("TestCalc_DateTime", '{"year":2024,"month":7,"day":1,"hour":12,"minute":0,"second":0}');
         $this->RegisterAttributeFloat("TestCalc_Lat", 0);
         $this->RegisterAttributeFloat("TestCalc_Long", 0);
         $this->RegisterAttributeFloat("TestCalc_Elevation", 0);
