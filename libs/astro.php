@@ -280,7 +280,7 @@ class Sun{
 
     public function GeocentricLatitude(): float
     {
-        return -1 * $this->EarthHeliocentricLatitude;
+        return -1 * $this->EarthHeliocentricLatitude();
     }
 
     public function GeocentricLongitude(): float
