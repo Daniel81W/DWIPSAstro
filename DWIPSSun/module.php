@@ -19,8 +19,8 @@ class DWIPSSun extends IPSModule
         }
         if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("DayNight"))) {
             IPS_CreateVariableProfile("DWIPS." . $this->Translate("DayNight"), 0);
-            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 0, $this->Translate("day"), "", -1);
-            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 1, $this->Translate("night"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), false, $this->Translate("day"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), true, $this->Translate("night"), "", -1);
         }
         if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("compass_rose"))) {
             IPS_CreateVariableProfile("DWIPS." . $this->Translate("compass_rose"), 2);

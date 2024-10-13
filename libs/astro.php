@@ -197,12 +197,44 @@ class Sun{
     const radius = 0.26667;
 
     private JulianDay $julianDay;
+ 
 
     function __construct(JulianDay $julianday)
     {
         $this->julianDay = $julianday;
     }
 
+
+    public function GreenwichMeanSiderealTime():float
+    {
+        $jd = $this->julianDay->get_JD();
+        $jc = $this->julianDay->get_JC();
+        return ASTROMISC::LimitTo360Deg(280.46061837 + 360.98564736629 * ($jd - 2451545.0) + $jc * $jc * (0.000387933 - $jc / 38710000.0));
+    }
+
+    public function ApparentSunLongitude():float
+    {
+        return $this->GeocentricLongitude() + $this->NutationLongitude() + $this->AberrationCorrection();
+    }
+
+    public function AberrationCorrection():float
+    {
+        return -20.4898 / (3600.0 * $this->EarthRadiusVector());
+    }
+
+    public function EclipticTrueObliquity():float
+    {
+        return $this->NutationObliquity() + $this->EclipticMeanObliquity() / 3600.0;
+    }
+
+    public function EclipticMeanObliquity():float
+    {
+        $jme = $this->julianDay->get_JME();
+        $u = $jme / 10.0;
+
+        return 84381.448 + $u * (-4680.93 + $u * (-1.55 + $u * (1999.25 + $u * (-51.38 + $u * (-249.67 +
+            $u * (-39.05 + $u * (7.12 + $u * (27.87 + $u * (5.79 + $u * 2.45)))))))));
+    }
 
     public function NutationObliquity(): float
     {
@@ -247,7 +279,7 @@ class Sun{
     {
         $sum = 0;
 
-        for ($j = 0; $j < 5; $j++)
+        for ($j = 0; $j < ASTROTERMS::y_term_count; $j++)
             $sum += $x[$j] * ASTROTERMS::y_terms[$i][$j];
 
         return $sum;
@@ -2044,6 +2076,7 @@ class ASTROTERMS{
     const b_count = 2;
     const r_count = 5;
     const y_count = 63;
+    const y_term_count = 5;
     const l_subcount = array(64, 34, 20, 7, 3, 1);
     const b_subcount = array(5, 2);
     const r_subcount = array(40, 10, 6, 2, 1);
