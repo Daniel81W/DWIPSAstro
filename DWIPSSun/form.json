@@ -273,7 +273,7 @@
             "caption": "Berechnung für bestimmten Zeitpunkt",
             "popup": {
                 "caption": "Test für bestimmten Zeitpunkt",
-                "width": "80%",
+                "width": "90%",
                 "items": [
                     {
                         "type": "RowLayout",
@@ -371,19 +371,19 @@
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JD",
                                 "caption": "JD",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JC",
                                 "caption": "JC",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JM",
                                 "caption": "JM",
-                                "width": "250px"
+                                "width": "200px"
                             }
                         ]
                     },
@@ -394,19 +394,19 @@
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JDE",
                                 "caption": "JDE",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JCE",
                                 "caption": "JCE",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JME",
                                 "caption": "JME",
-                                "width": "250px"
+                                "width": "200px"
                             }
                         ]
                     },
@@ -417,31 +417,31 @@
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_EarthHeliocentLat",
                                 "caption": "TestCalc_EarthHeliocentLat",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_EarthHeliocentLong",
                                 "caption": "TestCalc_EarthHeliocentLat",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_EarthRadiusVector",
                                 "caption": "TestCalc_EarthRadiusVector",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_GeocentLat",
                                 "caption": "TestCalc_GeocentLat",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_GeocentLong",
                                 "caption": "TestCalc_GeocentLong",
-                                "width": "250px"
+                                "width": "200px"
                             }
                         ]
                     },
@@ -452,19 +452,19 @@
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_MeanElongationMoonSun",
                                 "caption": "TestCalc_MeanElongationMoonSun",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_MeanAnomalySun",
                                 "caption": "TestCalc_MeanAnomalySun",
-                                "width": "250px"
+                                "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_MeanAnomalyMoon",
                                 "caption": "TestCalc_MeanAnomalyMoon",
-                                "width": "250px"
+                                "width": "200px"
                             }
                         ]
                     }
