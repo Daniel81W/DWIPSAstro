@@ -312,7 +312,7 @@
                                     "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_DeltaT', $TestCalc_DeltaT);",
                                     "$dtArr = json_decode($TestCalc_DateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT, TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation);"
+                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation);"
                                 ]
                             }
                         ]

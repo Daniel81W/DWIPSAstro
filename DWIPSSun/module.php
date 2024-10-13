@@ -452,7 +452,6 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_GeocentricDeclination", "value", $sun->GeocentricDeclination());
         $this->UpdateFormField("TestCalc_ObserverHourAngle", "value", $sun->ObserverHourAngle($long));
         $this->UpdateFormField("TestCalc_SunEquatorialHorizontalParallax", "value", $sun->SunEquatorialHorizontalParallax());
-        IPS_LogMessage("TEST", $lat);
         $this->UpdateFormField("TestCalc_RightAscensionParallax", "value", $sun->RightAscensionParallax($lat, $long, $elev));
         $this->UpdateFormField("TestCalc_TopocentricDeclination", "value", $sun->TopocentricDeclination($lat, $long, $elev));
         $this->UpdateFormField("TestCalc_TopocentricRightAscension", "value", $sun->TopocentricRightAscension($lat, $long, $elev));
