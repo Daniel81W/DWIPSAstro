@@ -176,9 +176,9 @@ class DWIPSSun extends IPSModule
         /////////Testumgebung
         $this->RegisterPropertyString("TestCalc_DateTime", "");
         $this->RegisterAttributeFloat("TestCalc_Lat", 0);
-        $this->RegisterPropertyFloat("TestCalc_Long", 0);
-        $this->RegisterPropertyFloat("TestCalc_Elevation", 0);
-        $this->RegisterPropertyFloat("TestCalc_DeltaT", 0);
+        $this->RegisterAttributeFloat("TestCalc_Long", 0);
+        $this->RegisterAttributeFloat("TestCalc_Elevation", 0);
+        $this->RegisterAttributeFloat("TestCalc_DeltaT", 0);
     }
 
     public function Destroy()
@@ -192,8 +192,6 @@ class DWIPSSun extends IPSModule
         //Never delete this line!
         parent::ApplyChanges();
         $this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval") * 60 * 1000);
-
-        $this->WriteAttributeFloat("TestCalc_TestCalc_Lat",  $TestCalc_Lat);
 
         DWIPSSUN_Update($this->InstanceID);
     }
@@ -248,6 +246,9 @@ class DWIPSSun extends IPSModule
 
 
         $jsonForm["actions"][8]["popup"]["items"][1]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_Lat");
+        $jsonForm["actions"][8]["popup"]["items"][1]["items"][1]["value"] = $this->ReadAttributeFloat("TestCalc_Long");
+        $jsonForm["actions"][8]["popup"]["items"][1]["items"][2]["value"] = $this->ReadAttributeFloat("TestCalc_Elevation");
+        $jsonForm["actions"][8]["popup"]["items"][1]["items"][3]["value"] = $this->ReadAttributeFloat("TestCalc_DeltaT");
 
         return json_encode($jsonForm);
     }
