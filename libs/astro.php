@@ -232,7 +232,7 @@ class Sun{
         $beta_rad = deg2rad($this->GeocentricLatitude());
 
         return ASTROMISC::LimitTo360Deg(rad2deg(atan2(sin($lamda_rad) * cos($epsilon_rad) -
-            tan(deg2rad($beta_rad) * sin($epsilon_rad), cos($lamda_rad)))));
+            tan($beta_rad) * sin($epsilon_rad), cos($lamda_rad))));
     }
 
     public function GreenwichSiderealTime(): float
