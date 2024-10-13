@@ -245,7 +245,7 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][7]["items"][8]["value"] = $this->ReadAttributeFloat("eqOfTime");
 
 
-        $jsonForm["actions"][8]["popup"]["items"][0]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_DateTime");
+        $jsonForm["actions"][8]["popup"]["items"][0]["items"][0]["value"] = $this->ReadAttributeString("TestCalc_DateTime");
         $jsonForm["actions"][8]["popup"]["items"][1]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_Lat");
         $jsonForm["actions"][8]["popup"]["items"][1]["items"][1]["value"] = $this->ReadAttributeFloat("TestCalc_Long");
         $jsonForm["actions"][8]["popup"]["items"][1]["items"][2]["value"] = $this->ReadAttributeFloat("TestCalc_Elevation");
