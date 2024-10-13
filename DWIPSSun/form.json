@@ -559,6 +559,30 @@
                                 "name": "TestCalc_SunEquatorialHorizontalParallax",
                                 "caption": "TestCalc_SunEquatorialHorizontalParallax",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_RightAscensionParallax",
+                                "caption": "TestCalc_RightAscensionParallax",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricDeclination",
+                                "caption": "TestCalc_TopocentricDeclination",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricRightAscension",
+                                "caption": "TestCalc_TopocentricRightAscension",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricLocalHourAngle",
+                                "caption": "TestCalc_TopocentricLocalHourAngle",
+                                "width": "200px"
                             }
                         ]
                     }

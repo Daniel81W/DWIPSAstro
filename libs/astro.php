@@ -205,6 +205,51 @@ class Sun{
     }
 
 
+    public function TopocentricLocalHourAngle(float $latitude, float $longitude, float $elevation): float
+    {
+        return $this->ObserverHourAngle($longitude) - $this->RightAscensionParallax($latitude, $longitude, $elevation);
+    }
+
+    public function TopocentricRightAscension(float $latitude, float $longitude, float $elevation): float
+    {
+        return $this->GeocentricRightAscension() + $this->RightAscensionParallax($latitude, $longitude, $elevation);
+    }
+
+    public function TopocentricDeclination(float $latitude, float $longitude, float $elevation): float
+    {
+        return $this->RightAscensionParallaxAndTopocentricDec($latitude, $longitude, $elevation)[0];
+    }
+
+    public function RightAscensionParallax(float $latitude, float $longitude, float $elevation):float{
+        return $this->RightAscensionParallaxAndTopocentricDec( $latitude,  $longitude,  $elevation)[1];
+    }
+
+    private function RightAscensionParallaxAndTopocentricDec(float $latitude, float $longitude, float $elevation): array
+    {
+        $delta_alpha_rad = array();
+        $lat_rad = deg2rad($latitude);
+        $xi_rad = deg2rad($this->SunEquatorialHorizontalParallax());
+        $h_rad = deg2rad($this->ObserverHourAngle($longitude));
+        $delta_rad = deg2rad($this->GeocentricDeclination());
+        $u = atan(0.99664719 * tan($lat_rad));
+        $y = 0.99664719 * sin($u) + $elevation * sin($lat_rad) / 6378140.0;
+        $x = cos($u) + $elevation * cos($lat_rad) / 6378140.0;
+
+        $delta_alpha_rad = atan2(
+            -$x * sin($xi_rad) * sin($h_rad),
+            cos($delta_rad) - $x * sin($xi_rad) * cos($h_rad)
+        );
+
+        $delta_prime = rad2deg(
+            atan2(
+                (sin($delta_rad) - $y * sin($xi_rad)) * cos($delta_alpha_rad),
+                cos($delta_rad) - $x * sin($xi_rad) * cos($h_rad)
+            )
+        );
+
+        return array($delta_prime, rad2deg($delta_alpha_rad));
+    }
+
     public function SunEquatorialHorizontalParallax(): float
     {
         return 8.794 / (3600.0 * $this->EarthRadiusVector());
