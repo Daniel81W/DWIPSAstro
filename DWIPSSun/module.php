@@ -272,7 +272,7 @@ class DWIPSSun extends IPSModule
     {
 
         $this->WriteAttributeString($att, $val);
-        $this->LogMessage("SUN", $val);
+        IPS_LogMessage("SUN", $val);
     }
 
     public function Update()
