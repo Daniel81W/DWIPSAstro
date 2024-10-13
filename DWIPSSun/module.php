@@ -414,7 +414,7 @@ class DWIPSSun extends IPSModule
        
     }
 
-    public function CalcTestValues($date, $deltaT){
+    public function CalcTestValues($date, $deltaT, $lat, $long, $elev){
 
         $jd = new JulianDay($deltaT, 0, $date);
         $sun = new Sun($jd);
@@ -450,12 +450,12 @@ class DWIPSSun extends IPSModule
 
         $this->UpdateFormField("TestCalc_GeocentricRightAscension", "value", $sun->GeocentricRightAscension());
         $this->UpdateFormField("TestCalc_GeocentricDeclination", "value", $sun->GeocentricDeclination());
-        $this->UpdateFormField("TestCalc_ObserverHourAngle", "value", $sun->ObserverHourAngle($this->ReadPropertyFloat("Longitude")));
+        $this->UpdateFormField("TestCalc_ObserverHourAngle", "value", $sun->ObserverHourAngle($long));
         $this->UpdateFormField("TestCalc_SunEquatorialHorizontalParallax", "value", $sun->SunEquatorialHorizontalParallax());
-        $this->UpdateFormField("TestCalc_RightAscensionParallax", "value", $sun->RightAscensionParallax($this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation")));
-        $this->UpdateFormField("TestCalc_TopocentricDeclination", "value", $sun->TopocentricDeclination($this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation")));
-        $this->UpdateFormField("TestCalc_TopocentricRightAscension", "value", $sun->TopocentricRightAscension($this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation")));
-        $this->UpdateFormField("TestCalc_TopocentricLocalHourAngle", "value", $sun->TopocentricLocalHourAngle($this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation")));
+        $this->UpdateFormField("TestCalc_RightAscensionParallax", "value", $sun->RightAscensionParallax($lat, $long, $elev));
+        $this->UpdateFormField("TestCalc_TopocentricDeclination", "value", $sun->TopocentricDeclination($lat, $long, $elev));
+        $this->UpdateFormField("TestCalc_TopocentricRightAscension", "value", $sun->TopocentricRightAscension($lat, $long, $elev));
+        $this->UpdateFormField("TestCalc_TopocentricLocalHourAngle", "value", $sun->TopocentricLocalHourAngle($lat, $long, $elev));
 
     }
 

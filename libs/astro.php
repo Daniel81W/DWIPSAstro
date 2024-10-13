@@ -235,10 +235,10 @@ class Sun{
         $y = 0.99664719 * sin($u) + $elevation * sin($lat_rad) / 6378140.0;
         $x = cos($u) + $elevation * cos($lat_rad) / 6378140.0;
 
-        $delta_alpha_rad = atan2(
-            -$x * sin($xi_rad) * sin($h_rad),
+        $delta_alpha = rad2deg(atan2(
+            -1 * $x * sin($xi_rad) * sin($h_rad),
             cos($delta_rad) - $x * sin($xi_rad) * cos($h_rad)
-        );
+        ));
 
         $delta_prime = rad2deg(
             atan2(
@@ -247,7 +247,7 @@ class Sun{
             )
         );
 
-        return array($delta_prime, rad2deg($delta_alpha_rad));
+        return array($delta_prime, $delta_alpha);
     }
 
     public function SunEquatorialHorizontalParallax(): float
