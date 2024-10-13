@@ -465,6 +465,35 @@
                                 "name": "TestCalc_MeanAnomalyMoon",
                                 "caption": "TestCalc_MeanAnomalyMoon",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ArgumentLatitudeMoon",
+                                "caption": "TestCalc_ArgumentLatitudeMoon",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_AscendingLongitudeMoon",
+                                "caption": "TestCalc_AscendingLongitudeMoon",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_NutationLongitude",
+                                "caption": "TestCalc_NutationLongitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_NutationObliquity",
+                                "caption": "TestCalc_NutationObliquity",
+                                "width": "200px"
                             }
                         ]
                     }

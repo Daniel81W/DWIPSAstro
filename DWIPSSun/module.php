@@ -432,6 +432,11 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_MeanElongationMoonSun", "value", $sun->MeanElongationMoonSun());
         $this->UpdateFormField("TestCalc_MeanAnomalySun", "value", $sun->MeanAnomalySun());
         $this->UpdateFormField("TestCalc_MeanAnomalyMoon", "value", $sun->MeanAnomalyMoon());
+        $this->UpdateFormField("TestCalc_ArgumentLatitudeMoon", "value", $sun->ArgumentLatitudeMoon());
+        $this->UpdateFormField("TestCalc_AscendingLongitudeMoon", "value", $sun->AscendingLongitudeMoon());
+
+        $this->UpdateFormField("TestCalc_NutationLongitude", "value", $sun->NutationLongitude());
+        $this->UpdateFormField("TestCalc_NutationObliquity", "value", $sun->NutationObliquity());
     }
 
 
