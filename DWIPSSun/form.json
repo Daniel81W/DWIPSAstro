@@ -393,19 +393,36 @@
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JDE",
-                                "caption": "JD",
+                                "caption": "JDE",
                                 "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JCE",
-                                "caption": "JC",
+                                "caption": "JCE",
                                 "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_JME",
-                                "caption": "JM",
+                                "caption": "JME",
+                                "width": "250px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EarthHeliocentLat",
+                                "caption": "TestCalc_EarthHeliocentLat",
+                                "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EarthHeliocentLong",
+                                "caption": "TestCalc_EarthHeliocentLat",
                                 "width": "250px"
                             }
                         ]

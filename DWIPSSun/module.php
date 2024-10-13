@@ -421,6 +421,10 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_JDE", "value", $jd->get_JDE());
         $this->UpdateFormField("TestCalc_JCE", "value", $jd->get_JCE());
         $this->UpdateFormField("TestCalc_JME", "value", $jd->get_JME());
+
+
+        $this->UpdateFormField("TestCalc_EarthHeliocentLat", "value", $sun->EarthHeliocentricLatitude());
+        $this->UpdateFormField("TestCalc_EarthHeliocentLong", "value", $sun->EarthHeliocentricLongitude());
     }
 
 
