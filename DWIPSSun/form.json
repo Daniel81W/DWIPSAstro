@@ -424,6 +424,12 @@
                                 "name": "TestCalc_EarthHeliocentLong",
                                 "caption": "TestCalc_EarthHeliocentLat",
                                 "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EarthRadiusVector",
+                                "caption": "TestCalc_EarthRadiusVector",
+                                "width": "250px"
                             }
                         ]
                     }

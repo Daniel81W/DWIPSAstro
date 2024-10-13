@@ -203,6 +203,17 @@ class Sun{
         $this->julianDay = $julianday;
     }
 
+    public function EarthRadiusVector(): float
+    {
+        $sum = array();
+
+        for ($i = 0; $i < ASTROTERMS::r_count; $i++)
+            $sum[$i] = $this->EarthPeriodicTermSummation(ASTROTERMS::r_terms[$i], ASTROTERMS::r_subcount[$i], $this->julianDay->get_JME());
+
+        return $this->EarthValues($sum, ASTROTERMS::r_count, $this->julianDay->get_JME());
+
+    }
+
     public function EarthHeliocentricLatitude():float
     {
         $sum = array();
