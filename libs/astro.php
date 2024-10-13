@@ -203,6 +203,96 @@ class Sun{
         $this->julianDay = $julianday;
     }
 
+
+    public function NutationObliquity(): float
+    {
+        $x = $this->xTerms();
+        return $this->NutationLongitudeAndObliquity($x)[1];
+    }
+
+    public function NutationLongitude():float
+    {
+        $x = $this->xTerms();
+        return $this->NutationLongitudeAndObliquity($x)[0];
+    }
+
+    private function NutationLongitudeAndObliquity(array $x): array
+    {
+        $jce = $this->julianDay->get_JCE();
+        $xy_term_sum = 0.0;
+        $sum_psi = 0.0;
+        $sum_epsilon = 0.0;
+
+        for ($i = 0; $i < ASTROTERMS::y_count; $i++) {
+            $xy_term_sum = deg2rad($this->xyTermSummation($i, $x));
+            $sum_psi += (ASTROTERMS::pe_terms[$i][0] + $jce * ASTROTERMS::pe_terms[$i][1]) * sin($xy_term_sum);
+            $sum_epsilon += (ASTROTERMS::pe_terms[$i][2] + $jce * ASTROTERMS::pe_terms[$i][3]) * cos($xy_term_sum);
+        }
+
+        return array($sum_psi / 36000000.0, $sum_epsilon / 36000000.0);
+    }
+
+    private function xTerms():array{
+        $x = array();
+        $x[0] = $this->MeanElongationMoonSun();
+        $x[1] = $this->MeanAnomalySun();
+        $x[2] = $this->MeanAnomalyMoon();
+        $x[3] = $this->ArgumentLatitudeMoon();
+        $x[4] = $this->AscendingLongitudeMoon();
+
+        return $x;
+    }
+
+    private function xyTermSummation(int $i, array $x): float
+    {
+        $sum = 0;
+
+        for ($j = 0; $j < ASTROTERMS::y_count; $j++)
+            $sum += $x[$j] * ASTROTERMS::y_terms[$i][$j];
+
+        return $sum;
+    }
+
+    public function AscendingLongitudeMoon(): float
+    {
+        return ASTROMISC::ThirdOrderPolynomial(1.0 / 450000.0, 0.0020708, -1934.136261, 125.04452, $this->julianDay->get_JCE());
+    }
+
+    public function ArgumentLatitudeMoon(): float
+    {
+        return ASTROMISC::ThirdOrderPolynomial(1.0 / 327270.0, -0.0036825, 483202.017538, 93.27191, $this->julianDay->get_JCE());
+    }
+
+    public function MeanAnomalyMoon(): float
+    {
+        return ASTROMISC::ThirdOrderPolynomial(1.0 / 56250.0, 0.0086972, 477198.867398, 134.96298, $this->julianDay->get_JCE());
+    }
+
+    public function MeanAnomalySun(): float
+    {
+        return ASTROMISC::ThirdOrderPolynomial(-1.0 / 300000.0, -0.0001603, 35999.05034, 357.52772, $this->julianDay->get_JCE());
+    }
+
+    public function MeanElongationMoonSun(): float
+    {
+        return ASTROMISC::ThirdOrderPolynomial(1.0 / 189474.0, -0.0019142, 445267.11148, 297.85036, $this->julianDay->get_JCE());
+    }
+
+    public function GeocentricLatitude(): float
+    {
+        return -1 * $this->EarthHeliocentricLatitude;
+    }
+
+    public function GeocentricLongitude(): float
+    {
+        $theta = $this->EarthHeliocentricLongitude() + 180.0;
+
+        if ($theta >= 360.0) {
+            $theta -= 360.0;
+        }
+        return $theta;
+    }
+
     public function EarthRadiusVector(): float
     {
         $sum = array();

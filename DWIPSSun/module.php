@@ -426,6 +426,8 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_EarthHeliocentLat", "value", $sun->EarthHeliocentricLatitude());
         $this->UpdateFormField("TestCalc_EarthHeliocentLong", "value", $sun->EarthHeliocentricLongitude());
         $this->UpdateFormField("TestCalc_EarthRadiusVector", "value", $sun->EarthRadiusVector());
+        $this->UpdateFormField("TestCalc_GeocentLat", "value", $sun->GeocentricLatitude());
+        $this->UpdateFormField("TestCalc_GeocentLong", "value", $sun->GeocentricLongitude());
     }
 
 

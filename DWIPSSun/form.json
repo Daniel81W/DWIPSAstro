@@ -430,6 +430,41 @@
                                 "name": "TestCalc_EarthRadiusVector",
                                 "caption": "TestCalc_EarthRadiusVector",
                                 "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentLat",
+                                "caption": "TestCalc_GeocentLat",
+                                "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentLong",
+                                "caption": "TestCalc_GeocentLong",
+                                "width": "250px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentLat",
+                                "caption": "TestCalc_GeocentLat",
+                                "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentLong",
+                                "caption": "TestCalc_GeocentLong",
+                                "width": "250px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EarthRadiusVector",
+                                "caption": "TestCalc_EarthRadiusVector",
+                                "width": "250px"
                             }
                         ]
                     }
