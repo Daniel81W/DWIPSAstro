@@ -428,6 +428,10 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_EarthRadiusVector", "value", $sun->EarthRadiusVector());
         $this->UpdateFormField("TestCalc_GeocentLat", "value", $sun->GeocentricLatitude());
         $this->UpdateFormField("TestCalc_GeocentLong", "value", $sun->GeocentricLongitude());
+
+        $this->UpdateFormField("TestCalc_MeanElongationMoonSun", "value", $sun->MeanElongationMoonSun());
+        $this->UpdateFormField("TestCalc_MeanAnomalySun", "value", $sun->MeanAnomalySun());
+        $this->UpdateFormField("TestCalc_MeanAnomalyMoon", "value", $sun->MeanAnomalyMoon());
     }
 
 

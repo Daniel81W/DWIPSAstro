@@ -450,20 +450,20 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GeocentLat",
-                                "caption": "TestCalc_GeocentLat",
+                                "name": "TestCalc_MeanElongationMoonSun",
+                                "caption": "TestCalc_MeanElongationMoonSun",
                                 "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GeocentLong",
-                                "caption": "TestCalc_GeocentLong",
+                                "name": "TestCalc_MeanAnomalySun",
+                                "caption": "TestCalc_MeanAnomalySun",
                                 "width": "250px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_EarthRadiusVector",
-                                "caption": "TestCalc_EarthRadiusVector",
+                                "name": "TestCalc_MeanAnomalyMoon",
+                                "caption": "TestCalc_MeanAnomalyMoon",
                                 "width": "250px"
                             }
                         ]
