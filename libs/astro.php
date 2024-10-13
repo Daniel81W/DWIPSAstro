@@ -247,7 +247,7 @@ class Sun{
     {
         $sum = 0;
 
-        for ($j = 0; $j < ASTROTERMS::y_count; $j++)
+        for ($j = 0; $j < 5; $j++)
             $sum += $x[$j] * ASTROTERMS::y_terms[$i][$j];
 
         return $sum;
