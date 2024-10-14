@@ -535,7 +535,7 @@ class Sun{
                     $delta_prime,
                     $this->latitude,
                     $h_prime,
-                    -6,
+                    -12,
                     1
                 )
             );
@@ -546,7 +546,7 @@ class Sun{
                     $delta_prime,
                     $this->latitude,
                     $h_prime,
-                    -6,
+                    -12,
                     2
                 )
             );
@@ -557,7 +557,7 @@ class Sun{
                     $delta_prime,
                     $this->latitude,
                     $h_prime,
-                    -6,
+                    -18,
                     1
                 )
             );
@@ -568,7 +568,7 @@ class Sun{
                     $delta_prime,
                     $this->latitude,
                     $h_prime,
-                    -6,
+                    -18,
                     2
                 )
             );
