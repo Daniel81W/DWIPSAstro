@@ -611,7 +611,7 @@ class Sun{
     }
 
     public function ShadowLength():float{
-        $shad = 1/tan(deg2rad($this->TopocentricElevationAngleCorrected());
+        $shad = 1/tan(deg2rad($this->TopocentricElevationAngleCorrected()));
         if($shad >0) return $shad;
         else return 0.0;
     }
