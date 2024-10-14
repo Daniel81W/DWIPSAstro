@@ -51,13 +51,13 @@ class DWIPSSun extends IPSModule
         }
 
         $p = 1;
-        $this->MaintainVariable("lastsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("lastsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, false);
+        $this->MaintainVariable("nextsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, false);
+        $this->MaintainVariable("sunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("nextsunrise", $this->Translate("sunrise"), 1, "~UnixTimestamp", $p, true);
-        $p++;
-        $this->MaintainVariable("lastsunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, true);
-        $p++;
-        $this->MaintainVariable("nextsunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, true);
+        $this->MaintainVariable("lastsunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, false);
+        $this->MaintainVariable("nextsunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, false);
+        $this->MaintainVariable("sunset", $this->Translate("sunset"), 1, "~UnixTimestamp", $p, true);
         $p++;
         $this->MaintainVariable("laststartastronomicaltwilight", $this->Translate("startastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
@@ -268,12 +268,12 @@ class DWIPSSun extends IPSModule
      *
      */
 
-    public function WriteFloatAttribute($att, $val){
+    public function WriteFloatAttribute(string $att, float $val){
 
         $this->WriteAttributeFloat($att, $val);
     }
 
-    public function WriteStringAttribute($att, $val)
+    public function WriteStringAttribute(string $att, string $val)
     {
 
         $this->WriteAttributeString($att, $val);
@@ -328,15 +328,7 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("jme", "value", $this->ReadAttributeFloat("jme"));
 
         $this->UpdateFormField("helioCentLong", "value", $this->ReadAttributeFloat("helioCentLong"));
-        $this->UpdateFormField("L0", "value", $this->ReadAttributeFloat("L0"));
-        $this->UpdateFormField("L1", "value", $this->ReadAttributeFloat("L1"));
-        $this->UpdateFormField("L2", "value", $this->ReadAttributeFloat("L2"));
-        $this->UpdateFormField("L3", "value", $this->ReadAttributeFloat("L3"));
-        $this->UpdateFormField("L4", "value", $this->ReadAttributeFloat("L4"));
-        $this->UpdateFormField("L5", "value", $this->ReadAttributeFloat("L5"));
         $this->UpdateFormField("helioCentLat", "value", $this->ReadAttributeFloat("helioCentLat"));
-        $this->UpdateFormField("B0", "value", $this->ReadAttributeFloat("B0"));
-        $this->UpdateFormField("B1", "value", $this->ReadAttributeFloat("B1"));
         $this->UpdateFormField("earthRadVec", "value", $this->ReadAttributeFloat("earthRadVec"));
         $this->UpdateFormField("geoCentLong", "value", $this->ReadAttributeFloat("geoCentLong"));
         $this->UpdateFormField("geoCentLat", "value", $this->ReadAttributeFloat("geoCentLat"));
@@ -363,10 +355,9 @@ class DWIPSSun extends IPSModule
         $now = time();
 
         $this->SetValue("solarnoon", $sunDat['suntransitUNIX']);//ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
-        /*$this->SetValue("lastsunrise", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
-        $this->SetValue("nextsunrise", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
-        $this->SetValue("lastsunset", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));
-        $this->SetValue("nextsunset", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));
+        $this->SetValue("sunrise", $sunDat['sunriseUNIX']);//ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
+        $this->SetValue("sunset", $sunDat['sunsetUNIX']);//ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));
+        /*$this->SetValue("nextsunset", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "S"));
         $this->SetValue("laststartciviltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6, "R"));
         $this->SetValue("nextstartciviltwilight", ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -6, "R"));
         $this->SetValue("laststartnauticaltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -12, "R"));
@@ -406,7 +397,7 @@ class DWIPSSun extends IPSModule
        
     }
 
-    public function CalcTestValues($date, $deltaT, $lat, $long, $elev, $pressure, $temperature){
+    public function CalcTestValues(int $date, float $deltaT, float $lat, float $long, float $elev, float $pressure, float $temperature): void{
 
         $jd = new JulianDay($deltaT, 0, $date);
         $sun = new Sun($deltaT, 0, $date, $lat, $long, $elev, $pressure, $temperature);
