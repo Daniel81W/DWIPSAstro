@@ -267,7 +267,7 @@ class Sun{
     public function ApproxSunTransitTime(): float
     {
         // TODO Right Ascension für JD ZERO
-        return ($this->sunJDZero->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
+        return ($this->sunJDZero->GeocentricRightAscension() - $this->longitude - $this->sunJDZero->GreenwichSiderealTime()) / 360.0;
     }
 
     public function EOT(): float
