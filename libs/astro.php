@@ -226,7 +226,7 @@ class Sun{
     {
         if ($timestamp < 0) {
             $date = new DateTime();
-            $timestamp = time() + (new DateTimeImmutable())->getOffset()*3600;//$date->getTimestamp();
+            $timestamp = time() - (new DateTimeImmutable())->getOffset()*3600;//$date->getTimestamp();
         }
         $this->timestamp = $timestamp;
         $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);
