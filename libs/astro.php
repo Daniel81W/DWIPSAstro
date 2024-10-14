@@ -427,7 +427,6 @@ class Sun{
 
     public function calculate_eot_and_sun_rise_transit_set(array &$spa)
 {
-    //spa_data sun_rts;
     $nu=0.0; 
     $m = 0.0; 
     $h0 = 0.0; 
@@ -475,7 +474,7 @@ class Sun{
 
                 $nu_rts[$i] = $nu + 360.985647 * $m_rts[$i];
 
-                $n = $m_rts[$i];// + $this->deltaT / 86400.0;
+                $n = $m_rts[$i] + $this->deltaT / 86400.0;
                 $alpha_prime[$i] = ASTRO_SUN_FORMULA::rts_alpha_delta_prime($alpha, $n);
                 $delta_prime[$i] = ASTRO_SUN_FORMULA::rts_alpha_delta_prime($delta, $n);
 
