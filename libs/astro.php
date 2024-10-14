@@ -470,7 +470,10 @@ class Sun{
 
         $m_rts[0] = ASTRO_SUN_FORMULA::approx_sun_transit_time($alpha[1], $this->longitude, $nu);
         $h0 = ASTRO_SUN_FORMULA::sun_hour_angle_at_rise_set($this->latitude, $delta[1], $h0_prime);
-        IPS_LogMessage("SUN", $h0);
+        IPS_LogMessage("SUN", $h0_prime);
+        IPS_LogMessage("SUN", $delta[0]);
+        IPS_LogMessage("SUN", $delta[1]);
+        IPS_LogMessage("SUN", $delta[2]);
         if ($h0 >= 0) {
 
             ASTRO_SUN_FORMULA::approx_sun_rise_and_set($m_rts, $h0);
