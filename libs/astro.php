@@ -218,6 +218,15 @@ class Sun{
 
 
 
+    public function SurfaceIncidenceAngle(float $orientation, float $slope)
+    {
+        $zenith_rad = deg2rad($this->TopocentricZenithAngle());
+        $slope_rad = deg2rad($slope);
+
+        return rad2deg(acos(cos($zenith_rad) * cos($slope_rad) +
+            sin($slope_rad) * sin($zenith_rad) * cos(deg2rad($this->TopocentricAzimuthAngleAstro() - $orientation))));
+    }
+
     public function TopocentricAzimuthAngle(): float
     {
         return ASTROMISC::LimitTo360Deg($this->TopocentricAzimuthAngleAstro() + 180.0);

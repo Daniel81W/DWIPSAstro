@@ -613,6 +613,12 @@
                                 "name": "TestCalc_TopocentricAzimuthAngle",
                                 "caption": "TestCalc_TopocentricAzimuthAngle",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SurfaceIncidenceAngle",
+                                "caption": "TestCalc_SurfaceIncidenceAngle",
+                                "width": "200px"
                             }
                         ]
                     }
