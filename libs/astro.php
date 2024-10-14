@@ -475,7 +475,7 @@ class Sun{
 
                 $nu_rts[$i] = $nu + 360.985647 * $m_rts[$i];
 
-                $n = $m_rts[$i] + $this->delta_t / 86400.0;
+                $n = $m_rts[$i] + $this->deltaT / 86400.0;
                 $alpha_prime[$i] = ASTRO_SUN_FORMULA::rts_alpha_delta_prime($alpha, $n);
                 $delta_prime[$i] = ASTRO_SUN_FORMULA::rts_alpha_delta_prime($delta, $n);
 
