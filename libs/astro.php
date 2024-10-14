@@ -483,28 +483,40 @@ class Sun{
         return rad2deg(asin(sin($lat_rad) * sin($delta_prime_rad) +
             cos($lat_rad) * cos($delta_prime_rad) * cos($h_prime_rad)));
     }
-    
+
     public function TopocentricLocalHourAngle(): float
     {
-        return $this->ObserverHourAngle() - $this->RightAscensionParallax();
+        ASTRO_SUN_FORMULA::topocentric_local_hour_angle($this->ObserverHourAngle(), $this->RightAscensionParallax());
+        //return $this->ObserverHourAngle() - $this->RightAscensionParallax();
     }
 
     public function TopocentricRightAscension(): float
     {
-        return $this->GeocentricRightAscension() + $this->RightAscensionParallax();
+        ASTRO_SUN_FORMULA::topocentric_right_ascension($this->GeocentricRightAscension(), $this->RightAscensionParallax());
+        //return $this->GeocentricRightAscension() + $this->RightAscensionParallax();
     }
 
     public function TopocentricDeclination(): float
     {
-        return $this->RightAscensionParallaxAndTopocentricDec()[0];
+        $delta_alpha = 0.0;
+        $delta_prime = 0.0;
+        ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec($this->latitude, $this->elevation, $this->SunEquatorialHorizontalParallax(), $this->ObserverHourAngle(), $this->GeocentricDeclination(), $delta_alpha, $delta_prime);
+        return $delta_prime;
+        //        return $this->RightAscensionParallaxAndTopocentricDec()[0];
     }
 
-    public function RightAscensionParallax():float{
-        return $this->RightAscensionParallaxAndTopocentricDec()[1];
+    public function RightAscensionParallax(): float
+    {
+        $delta_alpha = 0.0;
+        $delta_prime = 0.0;
+        ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec($this->latitude, $this->elevation, $this->SunEquatorialHorizontalParallax(), $this->ObserverHourAngle(), $this->GeocentricDeclination(), $delta_alpha, $delta_prime);
+        return $delta_alpha;
+        //return $this->RightAscensionParallaxAndTopocentricDec()[1];
     }
 
     private function RightAscensionParallaxAndTopocentricDec(): array
     {
+        ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec();
         $delta_alpha_rad = array();
         $lat_rad = deg2rad($this->latitude);
         $xi_rad = deg2rad($this->SunEquatorialHorizontalParallax());
@@ -531,40 +543,27 @@ class Sun{
 
     public function SunEquatorialHorizontalParallax(): float
     {
-        return 8.794 / (3600.0 * $this->EarthRadiusVector());
+        return ASTRO_SUN_FORMULA::sun_equatorial_horizontal_parallax($this->EarthRadiusVector());//8.794 / (3600.0 * $this->EarthRadiusVector());
     }
 
     public function ObserverHourAngle(): float
     {
         return ASTRO_SUN_FORMULA::observer_hour_angle($this->GreenwichSiderealTime(),$this->longitude,$this->GeocentricRightAscension());
-        //return ASTROMISC::LimitTo360Deg($this->GreenwichSiderealTime() + $this->longitude - $this->GeocentricRightAscension());
     }
 
     public function GeocentricDeclination(): float
     {
         return ASTRO_SUN_FORMULA::geocentric_declination($this->GeocentricLatitude(), $this->EclipticTrueObliquity(), $this->ApparentSunLongitude());
-        /*$lamda_rad = deg2rad($this->ApparentSunLongitude());
-        $epsilon_rad = deg2rad($this->EclipticTrueObliquity());
-        $beta_rad = deg2rad($this->GeocentricLatitude());
-
-        return rad2deg(asin(sin($beta_rad) * cos($epsilon_rad) +
-            cos($beta_rad) * sin($epsilon_rad) * sin($lamda_rad)));*/
     }
 
     public function GeocentricRightAscension(): float
     {
         return ASTRO_SUN_FORMULA::geocentric_right_ascension($this->ApparentSunLongitude(),$this->EclipticTrueObliquity(),$this->GeocentricLatitude());
-        /*$lamda_rad = deg2rad($this->ApparentSunLongitude());
-        $epsilon_rad = deg2rad($this->EclipticTrueObliquity());
-        $beta_rad = deg2rad($this->GeocentricLatitude());
-
-        return ASTROMISC::LimitTo360Deg(rad2deg(atan2(sin($lamda_rad) * cos($epsilon_rad) -
-            tan($beta_rad) * sin($epsilon_rad), cos($lamda_rad))));*/
     }
 
     public function GreenwichSiderealTime(): float
     {
-        return ASTRO_SUN_FORMULA::greenwich_sidereal_time($this->GreenwichMeanSiderealTime(),$this->NutationLongitude(),$this->EclipticTrueObliquity());//$this->GreenwichMeanSiderealTime() + $this->NutationLongitude() * cos(deg2rad($this->EclipticTrueObliquity()));
+        return ASTRO_SUN_FORMULA::greenwich_sidereal_time($this->GreenwichMeanSiderealTime(),$this->NutationLongitude(),$this->EclipticTrueObliquity());
     }
 
     public function GreenwichMeanSiderealTime():float
@@ -865,43 +864,48 @@ class ASTRO_SUN_FORMULA{
     {
         return ASTROMISC::LimitTo360Deg($nu + $longitude - $alpha_deg);
     }
+
+    public static function sun_equatorial_horizontal_parallax(float $r): float
+    {
+        return 8.794 / (3600.0 * $r);
+    }
+
+    public static function right_ascension_parallax_and_topocentric_dec(float $latitude, float $elevation, float $xi, float $h, float $delta, float &$delta_alpha, float &$delta_prime): float
+    {
+        $delta_alpha_rad = 0.0;
+        $lat_rad = deg2rad($latitude);
+        $xi_rad = deg2rad($xi);
+        $h_rad = deg2rad($h);
+        $delta_rad = deg2rad($delta);
+        $u = atan(0.99664719 * tan($lat_rad));
+        $y = 0.99664719 * sin($u) + $elevation * sin($lat_rad) / 6378140.0;
+        $x = cos($u) + $elevation * cos($lat_rad) / 6378140.0;
+
+        $delta_alpha_rad = atan2(
+            -$x * sin($xi_rad) * sin($h_rad),
+            cos($delta_rad) - $x * sin($xi_rad) * cos($h_rad)
+        );
+
+        $delta_prime = rad2deg(
+            atan2(
+                (sin($delta_rad) - $y * sin($xi_rad)) * cos($delta_alpha_rad),
+                cos($delta_rad) - $x * sin($xi_rad) * cos($h_rad)
+            )
+        );
+
+        $delta_alpha = rad2deg($delta_alpha_rad);
+    }
+
+    public static function topocentric_right_ascension(float $alpha_deg, float $delta_alpha): float
+    {
+        return $alpha_deg + $delta_alpha;
+    }
+
+    public static function topocentric_local_hour_angle(float $h, float $delta_alpha): float
+    {
+        return $h - $delta_alpha;
+    }
     /*
-    public static function sun_equatorial_horizontal_parallax(double r)
-    {
-        return 8.794 / (3600.0 * r);
-    }
-
-    public static function right_ascension_parallax_and_topocentric_dec(double latitude, double elevation,
-               double xi, double h, double delta, double *delta_alpha, double *delta_prime)
-    {
-        double delta_alpha_rad;
-        double lat_rad   = deg2rad(latitude);
-        double xi_rad    = deg2rad(xi);
-        double h_rad     = deg2rad(h);
-        double delta_rad = deg2rad(delta);
-        double u = atan(0.99664719 * tan(lat_rad));
-        double y = 0.99664719 * sin(u) + elevation*sin(lat_rad)/6378140.0;
-        double x =              cos(u) + elevation*cos(lat_rad)/6378140.0;
-
-        delta_alpha_rad =      atan2(                - x*sin(xi_rad) *sin(h_rad),
-                                      cos(delta_rad) - x*sin(xi_rad) *cos(h_rad));
-
-        *delta_prime = rad2deg(atan2((sin(delta_rad) - y*sin(xi_rad))*cos(delta_alpha_rad),
-                                      cos(delta_rad) - x*sin(xi_rad) *cos(h_rad)));
-
-        *delta_alpha = rad2deg(delta_alpha_rad);
-    }
-
-    public static function topocentric_right_ascension(double alpha_deg, double delta_alpha)
-    {
-        return alpha_deg + delta_alpha;
-    }
-
-    public static function topocentric_local_hour_angle(double h, double delta_alpha)
-    {
-        return h - delta_alpha;
-    }
-
     public static function topocentric_elevation_angle(double latitude, double delta_prime, double h_prime)
     {
         double lat_rad         = deg2rad(latitude);

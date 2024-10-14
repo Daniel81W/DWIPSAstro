@@ -451,12 +451,12 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_GeocentricRightAscension", "value", $sun->GeocentricRightAscension());
         $this->UpdateFormField("TestCalc_GeocentricDeclination", "value", $sun->GeocentricDeclination());
         $this->UpdateFormField("TestCalc_ObserverHourAngle", "value", $sun->ObserverHourAngle());
-        /*$this->UpdateFormField("TestCalc_SunEquatorialHorizontalParallax", "value", $sun->SunEquatorialHorizontalParallax());
+        $this->UpdateFormField("TestCalc_SunEquatorialHorizontalParallax", "value", $sun->SunEquatorialHorizontalParallax());
         $this->UpdateFormField("TestCalc_RightAscensionParallax", "value", $sun->RightAscensionParallax());
         $this->UpdateFormField("TestCalc_TopocentricDeclination", "value", $sun->TopocentricDeclination());
         $this->UpdateFormField("TestCalc_TopocentricRightAscension", "value", $sun->TopocentricRightAscension());
         $this->UpdateFormField("TestCalc_TopocentricLocalHourAngle", "value", $sun->TopocentricLocalHourAngle());
-        $this->UpdateFormField("TestCalc_TopocentricElevationAngle", "value", $sun->TopocentricElevationAngle());
+        /*$this->UpdateFormField("TestCalc_TopocentricElevationAngle", "value", $sun->TopocentricElevationAngle());
         $this->UpdateFormField("TestCalc_AtmosphericRefractionCorrection", "value", $sun->AtmosphericRefractionCorrection());
         $this->UpdateFormField("TestCalc_TopocentricElevationAngleCorrected", "value", $sun->TopocentricElevationAngleCorrected());
         $this->UpdateFormField("TestCalc_TopocentricZenithAngle", "value", $sun->TopocentricZenithAngle());
