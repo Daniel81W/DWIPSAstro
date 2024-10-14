@@ -225,7 +225,7 @@ class Sun{
 
     private function TopocentricAzimuthAngleAstro(): float
     {
-        $h_prime_rad = deg2rad($this->ObserverHourAngle());
+        $h_prime_rad = deg2rad($this->TopocentricLocalHourAngle());
         $lat_rad = deg2rad($this->latitude);
 
         return ASTROMISC::LimitTo360Deg(rad2deg(
