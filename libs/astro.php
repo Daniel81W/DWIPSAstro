@@ -598,7 +598,10 @@ class Sun{
     public function NutationObliquity(): float
     {
         $x = $this->xTerms();
-        return $this->NutationLongitudeAndObliquity($x)[1];
+        $del_psi=0;
+        $del_epsilon = 0;
+        $this->NutationLongitudeAndObliquity($x,&$del_psi,  &$del_epsilon);
+        return $del_epsilon;
     }
 
     public function NutationLongitude():float
@@ -606,12 +609,13 @@ class Sun{
         $x = $this->xTerms();
         $del_psi=0;
         $del_epsilon = 0;
-        return $this->NutationLongitudeAndObliquity($x,&$del_psi,  &$del_epsilon);
+        $this->NutationLongitudeAndObliquity($x,&$del_psi,  &$del_epsilon);
+        return $del_psi;
     }
 
-    private function NutationLongitudeAndObliquity(array $x,float &$del_psi, float &$del_epsilon): array
+    private function NutationLongitudeAndObliquity(array $x,float &$del_psi, float &$del_epsilon)
     {
-        $jce = $this->julianDay->get_JCE();
+        /*$jce = $this->julianDay->get_JCE();
         $xy_term_sum = 0.0;
         $sum_psi = 0.0;
         $sum_epsilon = 0.0;
@@ -622,7 +626,7 @@ class Sun{
             $sum_epsilon += (ASTROTERMS::pe_terms[$i][2] + $jce * ASTROTERMS::pe_terms[$i][3]) * cos($xy_term_sum);
         }
 
-        return array($sum_psi / 36000000.0, $sum_epsilon / 36000000.0);
+        return array($sum_psi / 36000000.0, $sum_epsilon / 36000000.0);*/
 
         return ASTRO_SUN_FORMULA::nutation_longitude_and_obliquity($this->julianDay->get_JCE(), $x, $del_psi, $del_epsilon);
     }
