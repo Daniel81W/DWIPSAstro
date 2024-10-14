@@ -449,6 +449,10 @@ class Sun{
         $ts0 = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp), idate('Y', $this->timestamp));
         $tsP = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp) + 1, idate('Y', $this->timestamp));
 
+        IPS_LogMessage("SUN", $tsM);
+        IPS_LogMessage("SUN", $ts0);
+        IPS_LogMessage("SUN", $tsP);
+
         $sunArr = array(
             new Sun($this->deltaT, 0, $tsM, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
             new Sun($this->deltaT, 0, $ts0, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
