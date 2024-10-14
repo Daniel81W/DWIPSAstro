@@ -468,6 +468,8 @@ class DWIPSSun extends IPSModule
         $sunDat = array();
         $sun->calculate_eot_and_sun_rise_transit_set($sunDat);
         $this->UpdateFormField("TestCalc_ApproxSunTransitTime", "value", $sunDat['suntransit']);
+        $this->UpdateFormField("TestCalc_SunRiseTime", "value", $sunDat['sunrise']);
+        $this->UpdateFormField("TestCalc_SunSetTime", "value", $sunDat['sunset']);
         /*$this->UpdateFormField("TestCalc_ApproxSunTransitTime", "value", $sun->ApproxSunTransitTime());
         IPS_LogMessage("SUN", var_dump($sun->ApproxSunRiseAndSet()));
         IPS_LogMessage("SUN", $sun->SunHourAngleAtRiseSet());*/

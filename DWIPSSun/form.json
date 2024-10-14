@@ -637,6 +637,18 @@
                                 "name": "TestCalc_ApproxSunTransitTime",
                                 "caption": "TestCalc_ApproxSunTransitTime",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunRiseTime",
+                                "caption": "TestCalc_SunRiseTime",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunSetTime",
+                                "caption": "TestCalc_SunSetTime",
+                                "width": "200px"
                             }
                         ]
                     }
