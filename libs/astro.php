@@ -606,12 +606,14 @@ class Sun{
             $spa['sunset'] = -9999;
         }
 
-        jahreszeit $jz = new jahreszeit();
-        IPS_LogMessage("Test",var_dump( $jz->saison(2024)));
+        
     }
 
     public function Season() : int
     {
+        $jz = new jahreszeit();
+        IPS_LogMessage("Test",var_dump( $jz->saison(2024)));
+
         $jce = $this->julianDay->get_JCE();
         $latitude = $this->latitude;
         $declination = $this->TopocentricDeclination();
