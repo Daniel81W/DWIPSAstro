@@ -236,6 +236,7 @@ class Sun{
         $this->pressure = $pressure;
         $this->temperature = $temperature;
         $this->deltaT = $deltaT;
+        $this->dut1 = $dut1;
 
         if (!$jd_zero_sun) {
             $timestampZero = mktime(0, 0, 0, idate('m', $timestamp), idate('t', $timestamp), idate('Y', $timestamp));
