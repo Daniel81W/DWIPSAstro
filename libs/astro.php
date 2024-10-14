@@ -687,7 +687,7 @@ class Sun{
             $theta -= 360.0;
         }
         return $theta;*/
-        ASTRO_SUN_FORMULA::geocentric_longitude($this->EarthHeliocentricLongitude());
+        return ASTRO_SUN_FORMULA::geocentric_longitude($this->EarthHeliocentricLongitude());
     }
 
     public function EarthRadiusVector(): float
