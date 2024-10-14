@@ -225,7 +225,7 @@ class Sun{
 
     public function EOT(): float
     {
-        return ASTROMISC::LimitTo20Minutes(4.0 * ($this->SunMeanLongitude() - 0.0057183 - $this->GeocentricRightAscension() + $this->NutLong() * cos(deg2rad($this->TrueObl()))));
+        return ASTROMISC::LimitTo20Minutes(4.0 * ($this->SunMeanLongitude() - 0.0057183 - $this->GeocentricRightAscension() + $this->NutationLongitude() * cos(deg2rad($this->EclipticTrueObliquity()))));
     }
 
     public function SunMeanLongitude(): float
