@@ -813,6 +813,17 @@ class ASTRO_SUN_FORMULA{
         return ASTROMISC::ThirdOrderPolynomial(1.0 / 450000.0, 0.0020708, -1934.136261, 125.04452, $jce);
     }
     
+    public static function xTerms(float $jce):array{
+        $x = array();
+        $x[0] = ASTRO_SUN_FORMULA::mean_elongation_moon_sun($jce);
+        $x[1] = ASTRO_SUN_FORMULA::mean_anomaly_sun($jce);
+        $x[2] = ASTRO_SUN_FORMULA::mean_anomaly_moon($jce);
+        $x[3] = ASTRO_SUN_FORMULA::argument_latitude_moon($jce);
+        $x[4] = ASTRO_SUN_FORMULA::ascending_longitude_moon($jce);
+
+        return $x;
+    }
+
     public static function xy_term_summation(int $i, array $x):float
     {
         $sum=0;
