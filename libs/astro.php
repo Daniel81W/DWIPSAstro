@@ -841,7 +841,7 @@ class ASTRO_SUN_FORMULA{
             $sum_epsilon=0.0;
 
         for ($i = 0; $i < ASTROTERMS::y_count; $i++) {
-            $xy_term_sum  = deg2rad(xy_term_summation($i, $x));
+            $xy_term_sum  = deg2rad(ASTRO_SUN_FORMULA::xy_term_summation($i, $x));
             $sum_psi     += (ASTROTERMS::pe_terms[$i][0] + $jce*ASTROTERMS::pe_terms[$i][1])*sin($xy_term_sum);
             $sum_epsilon += (ASTROTERMS::pe_terms[$i][2] + $jce*ASTROTERMS::pe_terms[$i][3])*cos($xy_term_sum);
             //$sum_psi     += (ASTROTERMS::pe_terms[$i][TERM_PSI_A] + $jce*ASTROTERMS::pe_terms[$i][TERM_PSI_B])*sin($xy_term_sum);
