@@ -591,7 +591,7 @@ class Sun{
             $spa['azimuth'] = $this->TopocentricAzimuthAngle();
             $spa['elevationAngle'] = $this->TopocentricElevationAngleCorrected();
             $spa['declination'] = $this->TopocentricDeclination();
-            $spa['shadow'] = 1/tan(deg2rad($spa['elevationAngle']));
+            $spa['shadow'] = $this->ShadowLength();
             $spa['seasonval'] = $this->SeasonVal();
             $spa['season'] = $this->Season();
 
@@ -610,6 +610,11 @@ class Sun{
         
     }
 
+    public function ShadowLength():float{
+        $shad = 1/tan(deg2rad($this->TopocentricElevationAngleCorrected());
+        if($shad >0) return $shad;
+        else return 0.0;
+    }
 
     public function Season(): array
     {
