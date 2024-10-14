@@ -415,7 +415,8 @@ class Sun{
 
     public function EOT(): float
     {
-        return ASTROMISC::LimitTo20Minutes(4.0 * ($this->SunMeanLongitude() - 0.0057183 - $this->GeocentricRightAscension() + $this->NutationLongitude() * cos(deg2rad($this->EclipticTrueObliquity()))));
+        return ASTRO_SUN_FORMULA::eot($this->SunMeanLongitude(),$this->GeocentricRightAscension(),$this->NutationLongitude(),$this->EclipticTrueObliquity());
+        //return ASTROMISC::LimitTo20Minutes(4.0 * ($this->SunMeanLongitude() - 0.0057183 - $this->GeocentricRightAscension() + $this->NutationLongitude() * cos(deg2rad($this->EclipticTrueObliquity()))));
     }
 
     public function SunMeanLongitude(): float
@@ -924,6 +925,11 @@ class ASTRO_SUN_FORMULA{
     {
         return ASTROMISC::LimitTo360Deg(280.4664567 + $jme*(360007.6982779 + $jme*(0.03032028 +
             $jme*(1/49931.0   + $jme*(-1/15300.0     + $jme*(-1/2000000.0))))));
+    }
+
+    public static function eot(float $m, float $alpha, float $del_psi, float $epsilon)
+    {
+        return ASTROMISC::LimitTo20Minutes(4.0 * ($m - 0.0057183 - $alpha + $del_psi * cos(deg2rad($epsilon))));
     }
 }
 
