@@ -427,7 +427,7 @@ class Sun{
 
     public function SurfaceIncidenceAngle(float $orientation, float $slope):float
     {
-        return ASTRO_SUN_FORMULA::surface_incidence_angle($this->TopocentricAzimuthAngle(),$this->TopocentricAzimuthAngleAstro(),$orientation,$slope);
+        return ASTRO_SUN_FORMULA::surface_incidence_angle($this->TopocentricZenithAngle(),$this->TopocentricAzimuthAngleAstro(),$orientation,$slope);
         /*$zenith_rad = deg2rad($this->TopocentricZenithAngle());
         $slope_rad = deg2rad($slope);
 
