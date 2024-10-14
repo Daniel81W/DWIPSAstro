@@ -486,13 +486,13 @@ class Sun{
 
     public function TopocentricLocalHourAngle(): float
     {
-        ASTRO_SUN_FORMULA::topocentric_local_hour_angle($this->ObserverHourAngle(), $this->RightAscensionParallax());
+        return ASTRO_SUN_FORMULA::topocentric_local_hour_angle($this->ObserverHourAngle(), $this->RightAscensionParallax());
         //return $this->ObserverHourAngle() - $this->RightAscensionParallax();
     }
 
     public function TopocentricRightAscension(): float
     {
-        ASTRO_SUN_FORMULA::topocentric_right_ascension($this->GeocentricRightAscension(), $this->RightAscensionParallax());
+        return ASTRO_SUN_FORMULA::topocentric_right_ascension($this->GeocentricRightAscension(), $this->RightAscensionParallax());
         //return $this->GeocentricRightAscension() + $this->RightAscensionParallax();
     }
 
