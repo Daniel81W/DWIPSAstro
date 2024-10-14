@@ -718,7 +718,8 @@ class Sun{
     }
 
     private function EarthValues(array $termSum):float
-{
+    {
+        /*
     $sum = 0.0;
 
     for ($i = 0; $i < count($termSum); $i++)
@@ -726,8 +727,10 @@ class Sun{
 
     $sum /= pow(10, 8);
 
-    return $sum;
-}
+    return $sum;*/
+
+        return ASTRO_SUN_FORMULA::EarthValues($termsum, count($termSum), $this->julianDay->get_JME());
+    }
 
     private function EarthPeriodicTermSummation(array $terms):float
     {
@@ -745,29 +748,28 @@ class Sun{
 
 class ASTRO_SUN_FORMULA{
 
-    public static function EarthPeriodicTermSummation(array $terms, int $count, float $jme):float
-{
-    $sum=0;
+    public static function EarthPeriodicTermSummation(array $terms, int $count, float $jme): float
+    {
+        $sum = 0;
 
-    for ($i = 0; $i < $count; $i++)
-        $sum += $terms[$i][TERM_ABC::TERM_A->value]*cos($terms[$i][TERM_ABC::TERM_B->value]+$terms[$i][TERM_ABC::TERM_C->value]*$jme);
+        for ($i = 0; $i < $count; $i++)
+            $sum += $terms[$i][TERM_ABC::TERM_A->value] * cos($terms[$i][TERM_ABC::TERM_B->value] + $terms[$i][TERM_ABC::TERM_C->value] * $jme);
 
-    return $sum;
-}
+        return $sum;
+    }
+
+    public static function EarthValues(array &$term_sum, int $count, float $jme)
+    {
+        $sum = 0;
+
+        for ($i = 0; $i < $count; $i++)
+            $sum += $term_sum[$i] * pow($jme, $i);
+
+        $sum /= pow(10, 8);
+
+        return $sum;
+    }
 /*
-public static function earth_values(double term_sum[], int count, double jme)
-{
-    int i;
-    double sum=0;
-
-    for (i = 0; i < count; i++)
-        sum += term_sum[i]*pow(jme, i);
-
-    sum /= 1.0e8;
-
-    return sum;
-}
-
 public static function earth_heliocentric_longitude(double jme)
 {
     double sum[L_COUNT];
