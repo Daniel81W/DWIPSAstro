@@ -517,12 +517,70 @@ class Sun{
                     1
                 )
             );
-            $spa['ssCT'] = 0;
+            $spa['ssCT'] = ASTROMISC::DayFracToHr(
+                ASTRO_SUN_FORMULA::sun_rise_and_set(
+                    $m_rts,
+                    $h_rts,
+                    $delta_prime,
+                    $this->latitude,
+                    $h_prime,
+                    -6,
+                    2
+                )
+            );
+            $spa['srNT'] = ASTROMISC::DayFracToHr(
+                ASTRO_SUN_FORMULA::sun_rise_and_set(
+                    $m_rts,
+                    $h_rts,
+                    $delta_prime,
+                    $this->latitude,
+                    $h_prime,
+                    -6,
+                    1
+                )
+            );
+            $spa['ssNT'] = ASTROMISC::DayFracToHr(
+                ASTRO_SUN_FORMULA::sun_rise_and_set(
+                    $m_rts,
+                    $h_rts,
+                    $delta_prime,
+                    $this->latitude,
+                    $h_prime,
+                    -6,
+                    2
+                )
+            );
+            $spa['srAT'] = ASTROMISC::DayFracToHr(
+                ASTRO_SUN_FORMULA::sun_rise_and_set(
+                    $m_rts,
+                    $h_rts,
+                    $delta_prime,
+                    $this->latitude,
+                    $h_prime,
+                    -6,
+                    1
+                )
+            );
+            $spa['ssAT'] = ASTROMISC::DayFracToHr(
+                ASTRO_SUN_FORMULA::sun_rise_and_set(
+                    $m_rts,
+                    $h_rts,
+                    $delta_prime,
+                    $this->latitude,
+                    $h_prime,
+                    -6,
+                    2
+                )
+            );
             $spa['suntransitUNIX'] = gmmktime(0, 0, $spa['suntransit'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['sunriseUNIX'] = gmmktime(0, 0, $spa['sunrise'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['sunsetUNIX'] = gmmktime(0, 0, $spa['sunset'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['srCTUNIX'] = gmmktime(0, 0, $spa['srCT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['ssCTUNIX'] = gmmktime(0, 0, $spa['ssCT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
+            $spa['srNTUNIX'] = gmmktime(0, 0, $spa['srNT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
+            $spa['ssNTUNIX'] = gmmktime(0, 0, $spa['ssNT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
+            $spa['srATUNIX'] = gmmktime(0, 0, $spa['srAT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
+            $spa['ssATUNIX'] = gmmktime(0, 0, $spa['ssAT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
 
         } else {
             $spa['srha'] = -9999;
