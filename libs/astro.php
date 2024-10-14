@@ -226,7 +226,7 @@ class Sun{
     {
         if ($timestamp < 0) {
             $date = new DateTime();
-            $timestamp = time() - (new DateTimeImmutable())->getOffset();//$date->getTimestamp();
+            $timestamp = time() - (new DateTimeImmutable())->getOffset();
             IPS_LogMessage("T",(new DateTimeImmutable())->getOffset());
         }
         $this->timestamp = $timestamp;
