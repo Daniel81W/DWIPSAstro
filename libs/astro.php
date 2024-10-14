@@ -438,7 +438,7 @@ class Sun{
     $h0_prime = -1*(Sun::radius + Sun::atmosRefract);
 
 	//sun_rts  = $spa;
-    $m        = ASTRO_SUN_FORMULA::sun_mean_longitude($this->julianDay->get_JCE());
+    $m        = ASTRO_SUN_FORMULA::sun_mean_longitude($this->julianDay->get_JME());
     $spa['eot'] = ASTRO_SUN_FORMULA::eot($m, $this->GeocentricRightAscension(), $this->NutationLongitude(),$this->EclipticTrueObliquity());
     $tsM = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp)-1, idate('Y', $this->timestamp));
     $ts0 = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp), idate('Y', $this->timestamp));
