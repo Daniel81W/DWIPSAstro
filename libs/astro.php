@@ -205,16 +205,26 @@ class Sun{
     private float $elevation;
     private float $pressure;
     private float $temperature;
+
+    private Sun $sunJDZero;
  
 
-    function __construct(JulianDay $julianday, float $latitude, float $longitude, float $elevation, float $pressure, float $temperature)
+    function __construct(float $deltaT , float $dut1 , int $timestamp, float $latitude, float $longitude, float $elevation, float $pressure, float $temperature, bool $jd_zero_sun = false)
     {
-        $this->julianDay = $julianday;
+        if($timestamp<0){
+            $date = new DateTime();
+            $timestamp = $date->getTimestamp();
+        }
+        $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);
         $this->latitude = $latitude; 
         $this->longitude = $longitude;
         $this->elevation = $elevation;
         $this->pressure=$pressure;
         $this->temperature=$temperature;
+
+        if (!$jd_zero_sun) {
+            $this->sunJDZero = new Sun(0,0, $timestamp, $latitude, $longitude, $elevation, $pressure, $temperature, true);
+        }
     }
 
 
@@ -240,6 +250,7 @@ class Sun{
         $latitude_rad = deg2rad($this->latitude);
         $delta_zero_rad = deg2rad($this->GeocentricDeclination());// TODO ÄÄndern zu Delto JD ZERO
         $h0_prime_rad = deg2rad(-1 * (Sun::radius + Sun::atmosRefract));
+
         $argument = (sin(deg2rad($h0_prime_rad)) - sin($latitude_rad) * sin($delta_zero_rad)) /
             (cos($latitude_rad) * cos($delta_zero_rad));
 

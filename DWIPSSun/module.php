@@ -282,7 +282,7 @@ class DWIPSSun extends IPSModule
     public function Update()
     {
         $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
-        $sun = new Sun($jd, $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation"),835,10);
+        $sun = new Sun($this->ReadPropertyFloat("deltaT"),0 ,-1, $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation"),835,10);
 
         $this->WriteAttributeFloat("jd", $jd->get_JD());
         $this->WriteAttributeFloat("jc", $jd->get_JC());
@@ -417,7 +417,7 @@ class DWIPSSun extends IPSModule
     public function CalcTestValues($date, $deltaT, $lat, $long, $elev, $pressure, $temperature){
 
         $jd = new JulianDay($deltaT, 0, $date);
-        $sun = new Sun($jd, $lat, $long, $elev, $pressure, $temperature);
+        $sun = new Sun($deltaT, 0, $date, $jd, $lat, $long, $elev, $pressure, $temperature);
 
         $this->UpdateFormField("TestCalc_JD", "value", $jd->get_JD());
         $this->UpdateFormField("TestCalc_JC", "value", $jd->get_JC());
