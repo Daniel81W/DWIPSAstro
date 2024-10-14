@@ -566,35 +566,28 @@ class Sun{
 
     public function GreenwichMeanSiderealTime():float
     {
-        $jd = $this->julianDay->get_JD();
-        $jc = $this->julianDay->get_JC();
-        return ASTROMISC::LimitTo360Deg(280.46061837 + 360.98564736629 * ($jd - 2451545.0) + $jc * $jc * (0.000387933 - $jc / 38710000.0));
+        //$jd = $this->julianDay->get_JD();
+        //$jc = $this->julianDay->get_JC();
+        return ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($this->julianDay->get_JD(),$this->julianDay->get_JC());// ASTROMISC::LimitTo360Deg(280.46061837 + 360.98564736629 * ($jd - 2451545.0) + $jc * $jc * (0.000387933 - $jc / 38710000.0));
     }
 
     public function ApparentSunLongitude():float
     {
-        return $this->GeocentricLongitude() + $this->NutationLongitude() + $this->AberrationCorrection();
+        return ASTRO_SUN_FORMULA::apparent_sun_longitude($this->GeocentricLongitude(),$this->NutationLongitude(),$this->AberrationCorrection());//$this->GeocentricLongitude() + $this->NutationLongitude() + $this->AberrationCorrection();
     }
 
     public function AberrationCorrection():float
     {
-        return -20.4898 / (3600.0 * $this->EarthRadiusVector());
+        return ASTRO_SUN_FORMULA::aberration_correction($this->EarthRadiusVector());//-20.4898 / (3600.0 * $this->EarthRadiusVector());
     }
 
     public function EclipticTrueObliquity():float
     {
-        //return $this->NutationObliquity() + $this->EclipticMeanObliquity() / 3600.0;
         return ASTRO_SUN_FORMULA::ecliptic_true_obliquity($this->NutationObliquity(), $this->EclipticMeanObliquity());
     }
 
     public function EclipticMeanObliquity():float
     {
-        /*$jme = $this->julianDay->get_JME();
-        $u = $jme / 10.0;
-
-        return 84381.448 + $u * (-4680.93 + $u * (-1.55 + $u * (1999.25 + $u * (-51.38 + $u * (-249.67 +
-            $u * (-39.05 + $u * (7.12 + $u * (27.87 + $u * (5.79 + $u * 2.45)))))))));
-        */
         return ASTRO_SUN_FORMULA::ecliptic_mean_obliquity($this->julianDay->get_JME());
     }
 
@@ -618,72 +611,36 @@ class Sun{
 
     private function NutationLongitudeAndObliquity(array $x,float &$del_psi, float &$del_epsilon)
     {
-        /*$jce = $this->julianDay->get_JCE();
-        $xy_term_sum = 0.0;
-        $sum_psi = 0.0;
-        $sum_epsilon = 0.0;
-
-        for ($i = 0; $i < ASTROTERMS::y_count; $i++) {
-            $xy_term_sum = deg2rad($this->xyTermSummation($i, $x));
-            $sum_psi += (ASTROTERMS::pe_terms[$i][0] + $jce * ASTROTERMS::pe_terms[$i][1]) * sin($xy_term_sum);
-            $sum_epsilon += (ASTROTERMS::pe_terms[$i][2] + $jce * ASTROTERMS::pe_terms[$i][3]) * cos($xy_term_sum);
-        }
-
-        return array($sum_psi / 36000000.0, $sum_epsilon / 36000000.0);*/
-
         return ASTRO_SUN_FORMULA::nutation_longitude_and_obliquity($this->julianDay->get_JCE(), $x, $del_psi, $del_epsilon);
     }
 
     private function xTerms():array{
-        /*$x = array();
-        $x[0] = $this->MeanElongationMoonSun();
-        $x[1] = $this->MeanAnomalySun();
-        $x[2] = $this->MeanAnomalyMoon();
-        $x[3] = $this->ArgumentLatitudeMoon();
-        $x[4] = $this->AscendingLongitudeMoon();
-
-        return $x;*/
-
+        
         return ASTRO_SUN_FORMULA::xTerms($this->julianDay->get_JCE());
-    }
-
-    private function xyTermSummation(int $i, array $x): float
-    {
-        $sum = 0;
-
-        for ($j = 0; $j < ASTROTERMS::y_term_count; $j++)
-            $sum += $x[$j] * ASTROTERMS::y_terms[$i][$j];
-
-        return $sum;
     }
 
     public function AscendingLongitudeMoon(): float
     {
-        //return ASTROMISC::ThirdOrderPolynomial(1.0 / 450000.0, 0.0020708, -1934.136261, 125.04452, $this->julianDay->get_JCE());
         return ASTRO_SUN_FORMULA::ascending_longitude_moon($this->julianDay->get_JCE());
     }
 
     public function ArgumentLatitudeMoon(): float
     {
-        //return ASTROMISC::ThirdOrderPolynomial(1.0 / 327270.0, -0.0036825, 483202.017538, 93.27191, $this->julianDay->get_JCE());
         return ASTRO_SUN_FORMULA::argument_latitude_moon($this->julianDay->get_JCE());
     }
 
     public function MeanAnomalyMoon(): float
     {
-        //return ASTROMISC::ThirdOrderPolynomial(1.0 / 56250.0, 0.0086972, 477198.867398, 134.96298, $this->julianDay->get_JCE());
         return ASTRO_SUN_FORMULA::mean_anomaly_moon($this->julianDay->get_JCE());
     }
 
     public function MeanAnomalySun(): float
     {
-        //return ASTROMISC::ThirdOrderPolynomial(-1.0 / 300000.0, -0.0001603, 35999.05034, 357.52772, $this->julianDay->get_JCE());
         return ASTRO_SUN_FORMULA::mean_anomaly_sun($this->julianDay->get_JCE());
     }
 
     public function MeanElongationMoonSun(): float
     {
-        //return ASTROMISC::ThirdOrderPolynomial(1.0 / 189474.0, -0.0019142, 445267.11148, 297.85036, $this->julianDay->get_JCE());
         return ASTRO_SUN_FORMULA::mean_elongation_moon_sun($this->julianDay->get_JCE());
     }
 
@@ -694,12 +651,6 @@ class Sun{
 
     public function GeocentricLongitude(): float
     {
-        /*$theta = $this->EarthHeliocentricLongitude() + 180.0;
-
-        if ($theta >= 360.0) {
-            $theta -= 360.0;
-        }
-        return $theta;*/
         return ASTRO_SUN_FORMULA::geocentric_longitude($this->EarthHeliocentricLongitude());
     }
 
@@ -869,23 +820,23 @@ class ASTRO_SUN_FORMULA{
     {
         return $delta_epsilon + $epsilon0/3600.0;
     }
+    
+    public static function aberration_correction(float $r)
+    {
+        return -20.4898 / (3600.0*$r);
+    }
+
+    public static function apparent_sun_longitude(float $theta, float $delta_psi, float $delta_tau)
+    {
+        return $theta + $delta_psi + $delta_tau;
+    }
+
+    public static function greenwich_mean_sidereal_time (float $jd, float $jc)
+    {
+        return ASTROMISC::LimitTo360Deg(280.46061837 + 360.98564736629 * ($jd - 2451545.0) +
+            $jc* $jc*(0.000387933 - $jc/38710000.0));
+    }
     /*
-    public static function aberration_correction(double r)
-    {
-        return -20.4898 / (3600.0*r);
-    }
-
-    public static function apparent_sun_longitude(double theta, double delta_psi, double delta_tau)
-    {
-        return theta + delta_psi + delta_tau;
-    }
-
-    public static function greenwich_mean_sidereal_time (double jd, double jc)
-    {
-        return limit_degrees(280.46061837 + 360.98564736629 * (jd - 2451545.0) +
-                                           jc*jc*(0.000387933 - jc/38710000.0));
-    }
-
     public static function greenwich_sidereal_time (double nu0, double delta_psi, double epsilon)
     {
         return nu0 + delta_psi*cos(deg2rad(epsilon));
