@@ -343,7 +343,7 @@ class Sun{
     public function SunRiseAndSet(        $m_rts,        $h_rts,        $delta_prime,        $h_prime,        $h0_prime,        $sun    ): float {
         return $m_rts[$sun] + ($h_rts[$sun] - $h0_prime) /
             (360.0 * cos(deg2rad($delta_prime[$sun])) * cos(deg2rad($this->latitude)) * sin(deg2rad($h_prime[$sun])));
-    }
+    }*/
 
 
 
@@ -411,7 +411,7 @@ class Sun{
     {
         // TODO Right Ascension für JD ZERO
         return ($this->sunJDZero->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
-    }*/
+    }
 
     public function EOT(): float
     {
