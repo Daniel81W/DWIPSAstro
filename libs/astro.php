@@ -604,10 +604,12 @@ class Sun{
     public function NutationLongitude():float
     {
         $x = $this->xTerms();
-        return $this->NutationLongitudeAndObliquity($x)[0];
+        $del_psi=0;
+        $del_epsilon = 0;
+        return $this->NutationLongitudeAndObliquity($x,&$del_psi,  &$del_epsilon);
     }
 
-    private function NutationLongitudeAndObliquity(array $x): array
+    private function NutationLongitudeAndObliquity(array $x,float &$del_psi, float &$del_epsilon): array
     {
         $jce = $this->julianDay->get_JCE();
         $xy_term_sum = 0.0;
@@ -621,6 +623,8 @@ class Sun{
         }
 
         return array($sum_psi / 36000000.0, $sum_epsilon / 36000000.0);
+
+        return ASTRO_SUN_FORMULA::nutation_longitude_and_obliquity($this->julianDay->get_JCE(), $x, $del_psi, $del_epsilon);
     }
 
     private function xTerms():array{
@@ -804,34 +808,35 @@ class ASTRO_SUN_FORMULA{
     {
         return ASTROMISC::ThirdOrderPolynomial(1.0 / 450000.0, 0.0020708, -1934.136261, 125.04452, $jce);
     }
-    /*
-    public static function xy_term_summation(int i, double x[TERM_X_COUNT])
+    
+    public static function xy_term_summation(int $i, array $x):float
     {
-        int j;
-        double sum=0;
+        $sum=0;
 
-        for (j = 0; j < TERM_Y_COUNT; j++)
-            sum += x[j]*Y_TERMS[i][j];
+        for ($j = 0; $j < ASTROTERMS::y_term_count; $j++)
+            $sum += x[$j]*ASTROTERMS::y_terms[$i][$j];
 
-        return sum;
+        return $sum;
     }
 
-    public static function nutation_longitude_and_obliquity(double jce, double x[TERM_X_COUNT], double *del_psi,
-                                                                              double *del_epsilon)
+    public static function nutation_longitude_and_obliquity(float $jce, array $x, float &$del_psi, float &$del_epsilon)
     {
-        int i;
-        double xy_term_sum, sum_psi=0, sum_epsilon=0;
+        $xy_term_sum = 0.0; 
+            $sum_psi=0.0; 
+            $sum_epsilon=0.0;
 
-        for (i = 0; i < Y_COUNT; i++) {
-            xy_term_sum  = deg2rad(xy_term_summation(i, x));
-            sum_psi     += (PE_TERMS[i][TERM_PSI_A] + jce*PE_TERMS[i][TERM_PSI_B])*sin(xy_term_sum);
-            sum_epsilon += (PE_TERMS[i][TERM_EPS_C] + jce*PE_TERMS[i][TERM_EPS_D])*cos(xy_term_sum);
+        for ($i = 0; $i < ASTROTERMS::y_count; $i++) {
+            $xy_term_sum  = deg2rad(xy_term_summation($i, $x));
+            $sum_psi     += (ASTROTERMS::pe_terms[$i][0] + $jce*ASTROTERMS::pe_terms[$i][1])*sin($xy_term_sum);
+            $sum_epsilon += (ASTROTERMS::pe_terms[$i][2] + $jce*ASTROTERMS::pe_terms[$i][3])*cos($xy_term_sum);
+            //$sum_psi     += (ASTROTERMS::pe_terms[$i][TERM_PSI_A] + $jce*ASTROTERMS::pe_terms[$i][TERM_PSI_B])*sin($xy_term_sum);
+            //$sum_epsilon += (ASTROTERMS::pe_terms[$i][TERM_EPS_C] + $jce*ASTROTERMS::pe_terms[$i][TERM_EPS_D])*cos($xy_term_sum);
         }
 
-        *del_psi     = sum_psi     / 36000000.0;
-        *del_epsilon = sum_epsilon / 36000000.0;
+        $del_psi     = $sum_psi     / 36000000.0;
+        $del_epsilon = $sum_epsilon / 36000000.0;
     }
-
+    /*
     public static function ecliptic_mean_obliquity(double jme)
     {
         double u = jme/10.0;
