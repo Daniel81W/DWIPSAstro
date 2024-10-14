@@ -583,6 +583,24 @@
                                 "name": "TestCalc_TopocentricLocalHourAngle",
                                 "caption": "TestCalc_TopocentricLocalHourAngle",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricElevationAngle",
+                                "caption": "TestCalc_TopocentricElevationAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_AtmosphericRefractionCorrection",
+                                "caption": "TestCalc_AtmosphericRefractionCorrection",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricElevationAngleCorrected",
+                                "caption": "TestCalc_TopocentricElevationAngleCorrected",
+                                "width": "200px"
                             }
                         ]
                     }

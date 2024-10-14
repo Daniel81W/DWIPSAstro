@@ -195,45 +195,85 @@ class Sun{
      */
     const AU = 149597870700;
     const radius = 0.26667;
+    const atmosRefract = 0.5667;
 
     private JulianDay $julianDay;
+
+    private float $latitude;
+    private float $longitude;
+    private float $elevation;
+    private float $pressure;
+    private float $temperature;
  
 
-    function __construct(JulianDay $julianday)
+    function __construct(JulianDay $julianday, float $latitude, float $longitude, float $elevation, float $pressure, float $temperature)
     {
         $this->julianDay = $julianday;
+        $this->latitude = $latitude; 
+        $this->longitude = $longitude;
+        $this->elevation = $elevation;
+        $this->pressure=$pressure;
+        $this->temperature=$temperature;
     }
 
 
-    public function TopocentricLocalHourAngle(float $latitude, float $longitude, float $elevation): float
+
+    public function TopocentricElevationAngleCorrected(): float
     {
-        return $this->ObserverHourAngle($longitude) - $this->RightAscensionParallax($latitude, $longitude, $elevation);
+        return $this->TopocentricElevationAngle() + $this->AtmosphericRefractionCorrection();
     }
 
-    public function TopocentricRightAscension(float $latitude, float $longitude, float $elevation): float
+    public function AtmosphericRefractionCorrection(): float
     {
-        return $this->GeocentricRightAscension() + $this->RightAscensionParallax($latitude, $longitude, $elevation);
+        $del_e = 0.0;
+        $e0 = $this->TopocentricElevationAngle();
+
+        if ($e0 >= -1 * ($this->radius + $this->atmosRefract)) {
+            $del_e = ($this->pressure / 1010.0) * (283.0 / (273.0 + $this->temperature)) *
+                1.02 / (60.0 * tan(deg2rad($e0 + 10.3 / ($e0 + 5.11))));
+        }
+        return $del_e;
     }
 
-    public function TopocentricDeclination(float $latitude, float $longitude, float $elevation): float
+    public function TopocentricElevationAngle(): float
     {
-        return $this->RightAscensionParallaxAndTopocentricDec($latitude, $longitude, $elevation)[0];
+        $lat_rad = deg2rad($this->latitude);
+        $delta_prime_rad = deg2rad($this->TopocentricDeclination());
+        $h_prime_rad = deg2rad($this->TopocentricLocalHourAngle());
+
+        return rad2deg(asin(sin($lat_rad) * sin($delta_prime_rad) +
+            cos($lat_rad) * cos($delta_prime_rad) * cos($h_prime_rad)));
+    }
+    
+    public function TopocentricLocalHourAngle(): float
+    {
+        return $this->ObserverHourAngle() - $this->RightAscensionParallax();
     }
 
-    public function RightAscensionParallax(float $latitude, float $longitude, float $elevation):float{
-        return $this->RightAscensionParallaxAndTopocentricDec( $latitude,  $longitude,  $elevation)[1];
+    public function TopocentricRightAscension(): float
+    {
+        return $this->GeocentricRightAscension() + $this->RightAscensionParallax();
     }
 
-    private function RightAscensionParallaxAndTopocentricDec(float $latitude, float $longitude, float $elevation): array
+    public function TopocentricDeclination(): float
+    {
+        return $this->RightAscensionParallaxAndTopocentricDec()[0];
+    }
+
+    public function RightAscensionParallax():float{
+        return $this->RightAscensionParallaxAndTopocentricDec()[1];
+    }
+
+    private function RightAscensionParallaxAndTopocentricDec(): array
     {
         $delta_alpha_rad = array();
-        $lat_rad = deg2rad($latitude);
+        $lat_rad = deg2rad($this->latitude);
         $xi_rad = deg2rad($this->SunEquatorialHorizontalParallax());
-        $h_rad = deg2rad($this->ObserverHourAngle($longitude));
+        $h_rad = deg2rad($this->ObserverHourAngle($this->longitude));
         $delta_rad = deg2rad($this->GeocentricDeclination());
         $u = atan(0.99664719 * tan($lat_rad));
-        $y = 0.99664719 * sin($u) + $elevation * sin($lat_rad) / 6378140.0;
-        $x = cos($u) + $elevation * cos($lat_rad) / 6378140.0;
+        $y = 0.99664719 * sin($u) + $this->elevation * sin($lat_rad) / 6378140.0;
+        $x = cos($u) + $this->elevation * cos($lat_rad) / 6378140.0;
 
         $delta_alpha_rad = atan2(
             -1 * $x * sin($xi_rad) * sin($h_rad),
@@ -255,9 +295,9 @@ class Sun{
         return 8.794 / (3600.0 * $this->EarthRadiusVector());
     }
 
-    public function ObserverHourAngle(float $longitude): float
+    public function ObserverHourAngle(): float
     {
-        return ASTROMISC::LimitTo360Deg($this->GreenwichSiderealTime() + $longitude - $this->GeocentricRightAscension());
+        return ASTROMISC::LimitTo360Deg($this->GreenwichSiderealTime() + $this->longitude - $this->GeocentricRightAscension());
     }
 
     public function GeocentricDeclination(): float
