@@ -265,12 +265,12 @@ class Sun{
 
         $nu = $this->sunJDZeroDT->GreenwichSiderealTime();
 
-        /*for (i = 0; i < JD_COUNT; i++) {
+        for (i = 0; i < JD_COUNT; i++) {
             calculate_geocentric_sun_right_ascension_and_declination(&sun_rts);
             alpha[i] = sun_rts.alpha;
             delta[i] = sun_rts.delta;
             sun_rts.jd++;
-        }*/
+        }
         $alpha = array($this->sunJDZeroM->GeocentricRightAscension(), $this->sunJDZero->GeocentricRightAscension(), $this->sunJDZeroP->GeocentricRightAscension());
         $delta = array($this->sunJDZeroM->GeocentricDeclination(), $this->sunJDZero->GeocentricDeclination(), $this->sunJDZeroP->GeocentricDeclination());
 
