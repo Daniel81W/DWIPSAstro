@@ -441,14 +441,14 @@ class Sun{
 	//sun_rts  = $spa;
     $m        = ASTRO_SUN_FORMULA::sun_mean_longitude($this->julianDay->get_JCE());
     $spa['eot'] = ASTRO_SUN_FORMULA::eot($m, $this->GeocentricRightAscension(), $this->NutationLongitude(),$this->EclipticTrueObliquity());
-    $tsM = gmmktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp)-1, idate('Y', $this->timestamp));
-    $ts0 = gmmktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp), idate('Y', $this->timestamp));
-    $tsP = gmmktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp)+1, idate('Y', $this->timestamp));
+    $tsM = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp)-1, idate('Y', $this->timestamp));
+    $ts0 = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp), idate('Y', $this->timestamp));
+    $tsP = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp)+1, idate('Y', $this->timestamp));
     
     $sunArr=array(
-        new Sun($this->deltaT, $this->dut1, $tsM, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
-        new Sun($this->deltaT, $this->dut1, $ts0, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
-        new Sun($this->deltaT, $this->dut1, $tsP, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature)
+        new Sun($this->deltaT, 0, $tsM, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
+        new Sun($this->deltaT, 0, $ts0, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
+        new Sun($this->deltaT, 0, $tsP, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature)
         );
 
    
