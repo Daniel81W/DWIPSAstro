@@ -96,6 +96,12 @@ class DWIPSMoon extends IPSModule
      */
     public function Update()
     {
+        $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
+        $moon = new Moon($this->ReadPropertyFloat("deltaT"), 0, -1, $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation"), 835, 10);
+
+        $moonDat = array();
+        $moon->sampa_calculate($moonDat);
+
         $this->WriteAttributeFloat("jd", ASTROGEN::oldJulianDay());
         $this->WriteAttributeFloat("jc", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jd")));
         $this->WriteAttributeFloat("jm", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jc")));

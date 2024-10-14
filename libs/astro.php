@@ -600,6 +600,7 @@ class Sun{
             $spa['ssATUNIX'] = gmmktime(0, 0, $spa['ssAT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['sunlightduration'] = $spa['sunsetUNIX'] - $spa['sunriseUNIX'] - (new DateTimeImmutable())->setTimestamp(0)->getOffset();
             $spa['azimuth'] = $this->TopocentricAzimuthAngle();
+            $spa['zenith'] = $this->TopocentricZenithAngle();
             $spa['elevationAngle'] = $this->TopocentricElevationAngleCorrected();
             $spa['declination'] = $this->TopocentricDeclination();
             $spa['shadow'] = $this->ShadowLength();
@@ -1232,6 +1233,46 @@ class ASTRO_SUN_FORMULA{
 }
 
 class Moon{
+    private Sun $sun;
+
+    function __construct(float $deltaT, float $dut1, int $timestamp, float $latitude, float $longitude, float $elevation, float $pressure, float $temperature)
+    {
+        if ($timestamp < 0) {
+            $date = new DateTime();
+            $timestamp = time() - (new DateTimeImmutable())->getOffset();
+            IPS_LogMessage("T", (new DateTimeImmutable())->getOffset());
+        }
+        $this->timestamp = $timestamp;
+        $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->elevation = $elevation;
+        $this->pressure = $pressure;
+        $this->temperature = $temperature;
+        $this->deltaT = $deltaT;
+        $this->dut1 = $dut1;
+        $this->sun = new Sun( $deltaT,  $dut1,  $timestamp,  $latitude,  $longitude,  $elevation,  $pressure,  $temperature);
+    }
+
+    public function sampa_calculate(array &$mpa)
+{
+        $spa = array();
+        $this->sun->calculate_eot_and_sun_rise_transit_set($spa);
+
+		$this->mpa_calculate($spa, $mpa);
+
+		$mpa['ems'] = ASTRO_MOON_FORMULA::angular_distance_sun_moon($spa['zenith'], $spa['azimuth'],
+			                                   $mpa['zenith'], $mpa['azimuth']);
+		$mpa['rs']  = ASTRO_MOON_FORMULA::sun_disk_radius($spa['r']);
+		$mpa['rm']  = ASTRO_MOON_FORMULA::moon_disk_radius($mpa['e'], $mpa['pi'], $mpa['cap_delta']);
+        $mpa['a_sul']=0;
+        $mpa['a_sul_pct']=0;
+
+		ASTRO_MOON_FORMULA::sul_area($mpa['ems'], $mpa['rs'], $mpa['rm'], $mpa['a_sul'], $mpa['a_sul_pct']);
+
+		//if (sampa->function == SAMPA_ALL) estimate_irr(sampa);
+
+}
 
     public function mpa_calculate(&$spa, &$mpa)
 {
