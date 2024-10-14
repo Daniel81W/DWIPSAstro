@@ -583,16 +583,19 @@ class Sun{
 
     public function EclipticTrueObliquity():float
     {
-        return $this->NutationObliquity() + $this->EclipticMeanObliquity() / 3600.0;
+        //return $this->NutationObliquity() + $this->EclipticMeanObliquity() / 3600.0;
+        return ASTRO_SUN_FORMULA::ecliptic_true_obliquity($this->NutationObliquity(), $this->EclipticMeanObliquity());
     }
 
     public function EclipticMeanObliquity():float
     {
-        $jme = $this->julianDay->get_JME();
+        /*$jme = $this->julianDay->get_JME();
         $u = $jme / 10.0;
 
         return 84381.448 + $u * (-4680.93 + $u * (-1.55 + $u * (1999.25 + $u * (-51.38 + $u * (-249.67 +
             $u * (-39.05 + $u * (7.12 + $u * (27.87 + $u * (5.79 + $u * 2.45)))))))));
+        */
+        return ASTRO_SUN_FORMULA::ecliptic_mean_obliquity($this->julianDay->get_JME());
     }
 
     public function NutationObliquity(): float
@@ -632,14 +635,16 @@ class Sun{
     }
 
     private function xTerms():array{
-        $x = array();
+        /*$x = array();
         $x[0] = $this->MeanElongationMoonSun();
         $x[1] = $this->MeanAnomalySun();
         $x[2] = $this->MeanAnomalyMoon();
         $x[3] = $this->ArgumentLatitudeMoon();
         $x[4] = $this->AscendingLongitudeMoon();
 
-        return $x;
+        return $x;*/
+
+        return ASTRO_SUN_FORMULA::xTerms($this->julianDay->get_JCE());
     }
 
     private function xyTermSummation(int $i, array $x): float
@@ -851,20 +856,20 @@ class ASTRO_SUN_FORMULA{
         $del_psi     = $sum_psi     / 36000000.0;
         $del_epsilon = $sum_epsilon / 36000000.0;
     }
+    
+    public static function ecliptic_mean_obliquity(float $jme):float
+    {
+        $u = $jme/10.0;
+
+        return 84381.448 + $u*(-4680.93 + $u*(-1.55 + $u*(1999.25 + $u*(-51.38 + $u*(-249.67 +
+                           $u*(  -39.05 + $u*( 7.12 + $u*(  27.87 + $u*(  5.79 + $u*2.45)))))))));
+    }
+
+    public static function ecliptic_true_obliquity(float $delta_epsilon, float $epsilon0):float
+    {
+        return $delta_epsilon + $epsilon0/3600.0;
+    }
     /*
-    public static function ecliptic_mean_obliquity(double jme)
-    {
-        double u = jme/10.0;
-
-        return 84381.448 + u*(-4680.93 + u*(-1.55 + u*(1999.25 + u*(-51.38 + u*(-249.67 +
-                           u*(  -39.05 + u*( 7.12 + u*(  27.87 + u*(  5.79 + u*2.45)))))))));
-    }
-
-    public static function ecliptic_true_obliquity(double delta_epsilon, double epsilon0)
-    {
-        return delta_epsilon + epsilon0/3600.0;
-    }
-
     public static function aberration_correction(double r)
     {
         return -20.4898 / (3600.0*r);
