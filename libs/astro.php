@@ -427,15 +427,23 @@ class Sun{
 
     public function SurfaceIncidenceAngle(float $orientation, float $slope)
     {
-        $zenith_rad = deg2rad($this->TopocentricZenithAngle());
+        ASTRO_SUN_FORMULA::surface_incidence_angle($this->TopocentricAzimuthAngle(),$this->TopocentricAzimuthAngleAstro(),$orientation,$slope);
+        /*$zenith_rad = deg2rad($this->TopocentricZenithAngle());
         $slope_rad = deg2rad($slope);
 
         return rad2deg(acos(cos($zenith_rad) * cos($slope_rad) +
-            sin($slope_rad) * sin($zenith_rad) * cos(deg2rad($this->TopocentricAzimuthAngleAstro() - $orientation))));
+            sin($slope_rad) * sin($zenith_rad) * cos(deg2rad($this->TopocentricAzimuthAngleAstro() - $orientation))));*/
     }
 
     public function TopocentricAzimuthAngle(): float
     {
+        return ASTRO_SUN_FORMULA::topocentric_azimuth_angle(
+            ASTRO_SUN_FORMULA::topocentric_azimuth_angle_astro(
+                $this->TopocentricLocalHourAngle(),
+                $this->latitude,
+                $this->TopocentricDeclination()
+            )
+        );
         return ASTROMISC::LimitTo360Deg($this->TopocentricAzimuthAngleAstro() + 180.0);
     }
 
@@ -455,36 +463,21 @@ class Sun{
     public function TopocentricZenithAngle(): float
     {
         return ASTRO_SUN_FORMULA::topocentric_zenith_angle($this->TopocentricElevationAngleCorrected());
-        //return 90.0 - $this->TopocentricElevationAngleCorrected();
     }
     
     public function TopocentricElevationAngleCorrected(): float
     {
-        return ASTRO_SUN_FORMULA::topocentric_elevation_angle_corrected($this->TopocentricElevationAngle(), $this->AtmosphericRefractionCorrection());//$this->TopocentricElevationAngle() + $this->AtmosphericRefractionCorrection();
+        return ASTRO_SUN_FORMULA::topocentric_elevation_angle_corrected($this->TopocentricElevationAngle(), $this->AtmosphericRefractionCorrection());
     }
 
     public function AtmosphericRefractionCorrection(): float
     {
         return ASTRO_SUN_FORMULA::atmospheric_refraction_correction($this->pressure,$this->temperature,Sun::atmosRefract, $this->TopocentricElevationAngle());
-        /*$del_e = 0.0;
-        $e0 = $this->TopocentricElevationAngle();
-
-        if ($e0 >= -1 * (Sun::radius + Sun::atmosRefract)) {
-            $del_e = ($this->pressure / 1010.0) * (283.0 / (273.0 + $this->temperature)) *
-                1.02 / (60.0 * tan(deg2rad($e0 + 10.3 / ($e0 + 5.11))));
-        }
-        return $del_e;*/
     }
 
     public function TopocentricElevationAngle(): float
     {
         return ASTRO_SUN_FORMULA::topocentric_elevation_angle($this->latitude, $this->TopocentricDeclination(), $this->TopocentricLocalHourAngle());
-        /*$lat_rad = deg2rad($this->latitude);
-        $delta_prime_rad = deg2rad($this->TopocentricDeclination());
-        $h_prime_rad = deg2rad($this->TopocentricLocalHourAngle());
-
-        return rad2deg(asin(sin($lat_rad) * sin($delta_prime_rad) +
-            cos($lat_rad) * cos($delta_prime_rad) * cos($h_prime_rad)));*/
     }
 
     public function TopocentricLocalHourAngle(): float
@@ -937,31 +930,30 @@ class ASTRO_SUN_FORMULA{
     {
         return 90.0 - $e;
     }
+    
+    public static function topocentric_azimuth_angle_astro(float $h_prime, float $latitude, float $delta_prime):float
+    {
+        $h_prime_rad = deg2rad($h_prime);
+        $lat_rad     = deg2rad($latitude);
+
+        return ASTROMISC::LimitTo360Deg(rad2deg(atan2(sin($h_prime_rad),
+                             cos($h_prime_rad)*sin($lat_rad) - tan(deg2rad($delta_prime))*cos($lat_rad))));
+    }
+
+    public static function topocentric_azimuth_angle(float $azimuth_astro):float
+    {
+        return ASTROMISC::LimitTo360Deg($azimuth_astro + 180.0);
+    }
+
+    public static function surface_incidence_angle(float $zenith, float $azimuth_astro, float $azm_rotation,                                                                        float $slope):float
+    {
+        $zenith_rad = deg2rad($zenith);
+        $slope_rad  = deg2rad($slope);
+
+        return rad2deg(acos(cos($zenith_rad)*cos($slope_rad)  +
+                            sin($slope_rad )*sin($zenith_rad) * cos(deg2rad($azimuth_astro - $azm_rotation))));
+    }
     /*
-    public static function topocentric_azimuth_angle_astro(double h_prime, double latitude, double delta_prime)
-    {
-        double h_prime_rad = deg2rad(h_prime);
-        double lat_rad     = deg2rad(latitude);
-
-        return limit_degrees(rad2deg(atan2(sin(h_prime_rad),
-                             cos(h_prime_rad)*sin(lat_rad) - tan(deg2rad(delta_prime))*cos(lat_rad))));
-    }
-
-    public static function topocentric_azimuth_angle(double azimuth_astro)
-    {
-        return limit_degrees(azimuth_astro + 180.0);
-    }
-
-    public static function surface_incidence_angle(double zenith, double azimuth_astro, double azm_rotation,
-                                                                        double slope)
-    {
-        double zenith_rad = deg2rad(zenith);
-        double slope_rad  = deg2rad(slope);
-
-        return rad2deg(acos(cos(zenith_rad)*cos(slope_rad)  +
-                            sin(slope_rad )*sin(zenith_rad) * cos(deg2rad(azimuth_astro - azm_rotation))));
-    }
-
     public static function sun_mean_longitude(double jme)
     {
         return limit_degrees(280.4664567 + jme*(360007.6982779 + jme*(0.03032028 +
