@@ -634,6 +634,18 @@
                             },
                             {
                                 "type": "ValidationTextBox",
+                                "name": "TestCalc_SunRiseHourAngle",
+                                "caption": "TestCalc_SunRiseHourAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunSetHourAngle",
+                                "caption": "TestCalc_SunSetHourAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
                                 "name": "TestCalc_ApproxSunTransitTime",
                                 "caption": "TestCalc_ApproxSunTransitTime",
                                 "width": "200px"
