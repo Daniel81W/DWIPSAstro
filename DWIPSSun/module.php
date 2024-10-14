@@ -371,7 +371,6 @@ class DWIPSSun extends IPSModule
         //$this->SetValue("laststopastronomicaltwilight", ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "S"));
         $this->SetValue("nextstopastronomicaltwilight", $sunDat['ssATUNIX']);//ASTROSUN::nextEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -18, "S"));
         
-        //$tForOffset = new DateTimeImmutable();
         $this->SetValue("sunlightduration", $sunDat['sunlightduration']);//ASTROSUN::SunlightDuration($this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")) - (new DateTimeImmutable())->setTimestamp(0)->getOffset());// $tForOffset->setTimestamp(0)->getOffset());
         
         $this->SetValue("sunazimut", $sun->TopocentricAzimuthAngle());// $sunDat['azimuth']);//ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
@@ -380,15 +379,15 @@ class DWIPSSun extends IPSModule
 
         $this->SetValue("sunelevation", $sunDat['elevationAngle']);//$this->ReadAttributeFloat("elevationOfTheSun"));
         $this->SetValue("sundeclination", $sunDat['declination']);//ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
-        /*$this->SetValue("sunelevationmin", -90 + $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
-        $this->SetValue("sunelevationmax", 90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
-        $this->SetValue("day", -0.8333 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
-        $this->SetValue("insideCivilTwilight", -6 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
+        //$this->SetValue("sunelevationmin", -90 + $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
+        //$this->SetValue("sunelevationmax", 90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
+        //$this->SetValue("day", -0.8333 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
+        //$this->SetValue("insideCivilTwilight", -6 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
 
-        $this->SetValue("sundistance", $this->ReadAttributeFloat("earthRadVec") * ASTROSUN::AU / 1000);
-        $this->SetValue("season", ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
-        $this->SetValue("shadowLength", ASTROSUN::ShadowLength($this->ReadAttributeFloat("elevationOfTheSun")));
-        */
+        $this->SetValue("sundistance", $sun->EarthRadiusVector() * Sun::AU / 1000);
+        //$this->SetValue("season", ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
+        $this->SetValue("shadowLength", $sunDat['shadow']);//ASTROSUN::ShadowLength($this->ReadAttributeFloat("elevationOfTheSun")));
+        
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));
         //$this->SetValue("solarirradiancespace", $solarirradiancespace);
         //$this->SetValue("solarirradiancerectangular", $solarirradiancespace * 0.75);
