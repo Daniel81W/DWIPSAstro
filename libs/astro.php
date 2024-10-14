@@ -456,8 +456,8 @@ class Sun{
 
     for ($i = 0; $i < 3; $i++) {
         $sunArr[$i]->set_DeltaT(0);
-        $alpha[i]=$sunArr[$i]->GeocentricRightAscension();
-        $delta[i] = $sunArr[$i]->GeocentricDeclination();
+        $alpha[$i]=$sunArr[$i]->GeocentricRightAscension();
+        $delta[$i] = $sunArr[$i]->GeocentricDeclination();
         //calculate_geocentric_sun_right_ascension_and_declination(&sun_rts);
         //alpha[i] = sun_rts.alpha;
         //delta[i] = sun_rts.delta;
