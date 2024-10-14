@@ -829,7 +829,7 @@ class ASTRO_SUN_FORMULA{
         $sum=0;
 
         for ($j = 0; $j < ASTROTERMS::y_term_count; $j++)
-            $sum += x[$j]*ASTROTERMS::y_terms[$i][$j];
+            $sum += $x[$j]*ASTROTERMS::y_terms[$i][$j];
 
         return $sum;
     }
