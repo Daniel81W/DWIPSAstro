@@ -359,7 +359,7 @@ class DWIPSSun extends IPSModule
         $this->SetValue("insideCivilTwilight", $sunDat['insideCivilTwilight']);//-6 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
 
         $this->SetValue("sundistance", $sun->EarthRadiusVector() * Sun::AU / 1000);
-        //$this->SetValue("season", ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
+        $this->SetValue("season", $sunDat['season']);//ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
         $this->SetValue("shadowLength", $sunDat['shadow']);//ASTROSUN::ShadowLength($this->ReadAttributeFloat("elevationOfTheSun")));
         
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));

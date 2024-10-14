@@ -592,6 +592,7 @@ class Sun{
             $spa['elevationAngle'] = $this->TopocentricElevationAngleCorrected();
             $spa['declination'] = $this->TopocentricDeclination();
             $spa['shadow'] = 1/tan(deg2rad($spa['elevationAngle']));
+            $spa['season'] = $this->Season();
 
         } else {
             $spa['srha'] = -9999;
@@ -605,6 +606,42 @@ class Sun{
             $spa['sunset'] = -9999;
         }
 
+    }
+
+    public static function Season() : int{
+        $jce = $this->julianDay->get_JCE();
+        $latitude = $this->latitude;
+        $declination = ASTROSUN::Declination($jce);
+        $declinationBef = ASTROSUN::Declination($jce - 0.00000002);
+        if($declination>=0){
+            if($declination > $declinationBef){
+                if($latitude > 0){
+                    return 1;
+                }else{
+                    return 3;
+                }
+            }else{
+                if($latitude > 0){
+                    return 2;
+                }else{
+                    return 4;
+                }
+            }
+        }else{
+            if($declination > $declinationBef){
+                if($latitude > 0){
+                    return 4;
+                }else{
+                    return 2;
+                }
+            }else{
+                if($latitude > 0){
+                    return 3;
+                }else{
+                    return 1;
+                }
+            }
+        }
     }
 
     public function EOT(): float
