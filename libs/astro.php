@@ -426,46 +426,51 @@ class Sun{
 
 
     public function calculate_eot_and_sun_rise_transit_set(array &$spa)
-{
-    $nu=0.0; 
-    $m = 0.0; 
-    $h0 = 0.0; 
-    $n = 0.0;
-    //$alpha[JD_COUNT]=array(); $delta[JD_COUNT]=array();
-    $alpha=array(); $delta=array();
-    $m_rts=array();$nu_rts=array();$h_rts=array();
-    $alpha_prime=array();$delta_prime=array();$h_prime=array();
-    $h0_prime = -1*(Sun::radius + Sun::atmosRefract);
+    {
+        $nu = 0.0;
+        $m = 0.0;
+        $h0 = 0.0;
+        $n = 0.0;
+        //$alpha[JD_COUNT]=array(); $delta[JD_COUNT]=array();
+        $alpha = array();
+        $delta = array();
+        $m_rts = array();
+        $nu_rts = array();
+        $h_rts = array();
+        $alpha_prime = array();
+        $delta_prime = array();
+        $h_prime = array();
+        $h0_prime = -1 * (Sun::radius + Sun::atmosRefract);
 
-	//sun_rts  = $spa;
-    $m        = ASTRO_SUN_FORMULA::sun_mean_longitude($this->julianDay->get_JME());
-    $spa['eot'] = ASTRO_SUN_FORMULA::eot($m, $this->GeocentricRightAscension(), $this->NutationLongitude(),$this->EclipticTrueObliquity());
-    $tsM = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp)-1, idate('Y', $this->timestamp));
-    $ts0 = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp), idate('Y', $this->timestamp));
-    $tsP = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp)+1, idate('Y', $this->timestamp));
-    
-    $sunArr=array(
-        new Sun($this->deltaT, 0, $tsM, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
-        new Sun($this->deltaT, 0, $ts0, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
-        new Sun($this->deltaT, 0, $tsP, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature)
+        //sun_rts  = $spa;
+        $m = ASTRO_SUN_FORMULA::sun_mean_longitude($this->julianDay->get_JME());
+        $spa['eot'] = ASTRO_SUN_FORMULA::eot($m, $this->GeocentricRightAscension(), $this->NutationLongitude(), $this->EclipticTrueObliquity());
+        $tsM = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp) - 1, idate('Y', $this->timestamp));
+        $ts0 = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp), idate('Y', $this->timestamp));
+        $tsP = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp) + 1, idate('Y', $this->timestamp));
+
+        $sunArr = array(
+            new Sun($this->deltaT, 0, $tsM, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
+            new Sun($this->deltaT, 0, $ts0, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
+            new Sun($this->deltaT, 0, $tsP, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature)
         );
 
-   
-    $nu = $sunArr[1]->GreenwichSiderealTime();
 
-    for ($i = 0; $i < 3; $i++) {
-        $sunArr[$i]->set_DeltaT(0);
-        $alpha[$i]=$sunArr[$i]->GeocentricRightAscension();
-        $delta[$i] = $sunArr[$i]->GeocentricDeclination();
-        //calculate_geocentric_sun_right_ascension_and_declination(&sun_rts);
-        //alpha[i] = sun_rts.alpha;
-        //delta[i] = sun_rts.delta;
-        //sun_rts.jd++;
-    }
+        $nu = $sunArr[1]->GreenwichSiderealTime();
 
-    $m_rts[0] = ASTRO_SUN_FORMULA::approx_sun_transit_time($alpha[1], $this->longitude, $nu);
-    $h0 = ASTRO_SUN_FORMULA::sun_hour_angle_at_rise_set($this->latitude, $delta[1], $h0_prime);
+        for ($i = 0; $i < 3; $i++) {
+            $sunArr[$i]->set_DeltaT(0);
+            $alpha[$i] = $sunArr[$i]->GeocentricRightAscension();
+            $delta[$i] = $sunArr[$i]->GeocentricDeclination();
+            //calculate_geocentric_sun_right_ascension_and_declination(&sun_rts);
+            //alpha[i] = sun_rts.alpha;
+            //delta[i] = sun_rts.delta;
+            //sun_rts.jd++;
+        }
 
+        $m_rts[0] = ASTRO_SUN_FORMULA::approx_sun_transit_time($alpha[1], $this->longitude, $nu);
+        $h0 = ASTRO_SUN_FORMULA::sun_hour_angle_at_rise_set($this->latitude, $delta[1], $h0_prime);
+        IPS_LogMessage("SUN", $h0);
         if ($h0 >= 0) {
 
             ASTRO_SUN_FORMULA::approx_sun_rise_and_set($m_rts, $h0);
@@ -524,8 +529,8 @@ class Sun{
 
             $spa['sunset'] = -9999;
         }
-    
-}
+
+    }
 
 
 
