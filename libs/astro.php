@@ -228,7 +228,7 @@ class Sun{
         $del_e = 0.0;
         $e0 = $this->TopocentricElevationAngle();
 
-        if ($e0 >= -1 * ($this->radius + $this->atmosRefract)) {
+        if ($e0 >= -1 * (Sun::radius + Sun::atmosRefract)) {
             $del_e = ($this->pressure / 1010.0) * (283.0 / (273.0 + $this->temperature)) *
                 1.02 / (60.0 * tan(deg2rad($e0 + 10.3 / ($e0 + 5.11))));
         }
