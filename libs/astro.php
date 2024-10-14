@@ -248,7 +248,7 @@ class Sun{
     {
         $h0 = -99999;
         $latitude_rad = deg2rad($this->latitude);
-        $delta_zero_rad = deg2rad($this->GeocentricDeclination());// TODO ÄÄndern zu Delto JD ZERO
+        $delta_zero_rad = deg2rad($this->sunJDZero->GeocentricDeclination());// TODO ÄÄndern zu Delto JD ZERO
         $h0_prime_rad = deg2rad(-1 * (Sun::radius + Sun::atmosRefract));
 
         $argument = (sin(deg2rad($h0_prime_rad)) - sin($latitude_rad) * sin($delta_zero_rad)) /
@@ -264,7 +264,7 @@ class Sun{
     public function ApproxSunTransitTime(): float
     {
         // TODO Right Ascension für JD ZERO
-        return ($this->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
+        return ($this->sunJDZero->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
     }
 
     public function EOT(): float
