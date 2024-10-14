@@ -218,6 +218,29 @@ class Sun{
 
 
 
+    public function TopocentricAzimuthAngle(): float
+    {
+        return ASTROMISC::LimitTo360Deg($this->TopocentricAzimuthAngleAstro() + 180.0);
+    }
+
+    private function TopocentricAzimuthAngleAstro(): float
+    {
+        $h_prime_rad = deg2rad($this->ObserverHourAngle());
+        $lat_rad = deg2rad($this->latitude);
+
+        return ASTROMISC::LimitTo360Deg(rad2deg(
+            atan2(
+                sin($h_prime_rad),
+                cos($h_prime_rad) * sin($lat_rad) - tan(deg2rad($this->TopocentricDeclination())) * cos($lat_rad)
+            )
+        ));
+    }
+
+    public function TopocentricZenithAngle(): float
+    {
+        return 90.0 - $this->TopocentricElevationAngleCorrected();
+    }
+    
     public function TopocentricElevationAngleCorrected(): float
     {
         return $this->TopocentricElevationAngle() + $this->AtmosphericRefractionCorrection();

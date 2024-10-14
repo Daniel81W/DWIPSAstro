@@ -601,6 +601,18 @@
                                 "name": "TestCalc_TopocentricElevationAngleCorrected",
                                 "caption": "TestCalc_TopocentricElevationAngleCorrected",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricZenithAngle",
+                                "caption": "TestCalc_TopocentricZenithAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricAzimuthAngle",
+                                "caption": "TestCalc_TopocentricAzimuthAngle",
+                                "width": "200px"
                             }
                         ]
                     }
