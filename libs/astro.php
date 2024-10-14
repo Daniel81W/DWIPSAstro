@@ -465,7 +465,7 @@ class Sun{
     }
 
     $m_rts[0] = ASTRO_SUN_FORMULA::approx_sun_transit_time($alpha[1], $this->longitude, $nu);
-    $h0 = ASTRO_SUN_FORMULA::sun_hour_angle_at_rise_set($this->latitude, delta[1], $h0_prime);
+    $h0 = ASTRO_SUN_FORMULA::sun_hour_angle_at_rise_set($this->latitude, $delta[1], $h0_prime);
 
         if ($h0 >= 0) {
 
