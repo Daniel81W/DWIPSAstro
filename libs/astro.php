@@ -465,7 +465,7 @@ class Sun{
 
     public function AtmosphericRefractionCorrection(): float
     {
-        return ASTRO_SUN_FORMULA::atmospheric_refraction_correction($this->pressure,$this->temperature,$this->atmosRefract, $this->TopocentricElevationAngle());
+        return ASTRO_SUN_FORMULA::atmospheric_refraction_correction($this->pressure,$this->temperature,Sun::atmosRefract, $this->TopocentricElevationAngle());
         /*$del_e = 0.0;
         $e0 = $this->TopocentricElevationAngle();
 
