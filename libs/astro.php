@@ -223,7 +223,8 @@ class Sun{
         $this->temperature=$temperature;
 
         if (!$jd_zero_sun) {
-            $this->sunJDZero = new Sun(0,0, $timestamp, $latitude, $longitude, $elevation, $pressure, $temperature, true);
+            $timestampZero = mktime(0,0,0,idate('m', $timestamp), idate('t', $timestamp), idate('Y', $timestamp));
+            $this->sunJDZero = new Sun(0,0, $timestampZero, $latitude, $longitude, $elevation, $pressure, $temperature, true);
         }
     }
 
@@ -232,14 +233,16 @@ class Sun{
 
     public function ApproxSunRiseAndSet(): array
     {
-        $h0 = $this->SunHourAngleAtRiseSet();
-        $h0_dfrac = $h0 / 360.0;
+        $h0_dfrac = $this->SunHourAngleAtRiseSet() / 360.0;
         $sunTrans = $this->ApproxSunTransitTime();
 
         $ret = array();
         $ret[0] = ASTROMISC::LimitZeroToOne($sunTrans - $h0_dfrac);
         $ret[2] = ASTROMISC::LimitZeroToOne($sunTrans + $h0_dfrac);
         $ret[1] = ASTROMISC::LimitZeroToOne($sunTrans);
+        $ret[0] = ($sunTrans - $h0_dfrac);
+        $ret[2] = ($sunTrans + $h0_dfrac);
+        $ret[1] = ($sunTrans);
 
         return $ret;
     }
