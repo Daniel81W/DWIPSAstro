@@ -729,7 +729,7 @@ class Sun{
 
     return $sum;*/
 
-        return ASTRO_SUN_FORMULA::EarthValues($termsum, count($termSum), $this->julianDay->get_JME());
+        return ASTRO_SUN_FORMULA::EarthValues($termSum, count($termSum), $this->julianDay->get_JME());
     }
 
     private function EarthPeriodicTermSummation(array $terms):float
@@ -752,9 +752,10 @@ class ASTRO_SUN_FORMULA{
     {
         $sum = 0;
 
-        for ($i = 0; $i < $count; $i++)
-            $sum += $terms[$i][TERM_ABC::TERM_A->value] * cos($terms[$i][TERM_ABC::TERM_B->value] + $terms[$i][TERM_ABC::TERM_C->value] * $jme);
-
+        for ($i = 0; $i < $count; $i++) {
+            //$sum += $terms[$i][TERM_ABC::TERM_A->value] * cos($terms[$i][TERM_ABC::TERM_B->value] + $terms[$i][TERM_ABC::TERM_C->value] * $jme);
+            $sum += $terms[$i][0] * cos($terms[$i][1] + $terms[$i][2] * $jme);
+        }
         return $sum;
     }
 
@@ -3316,10 +3317,10 @@ class ASTROMISC{
     }
 }
 
-enum TERM_ABC:int{
+/*enum TERM_ABC:int{
     case TERM_A = 0;
     case TERM_B = 1;
     case TERM_C = 2;
     case TERM_COUNT = 3;
-}
+}*/
 ?>
