@@ -507,7 +507,7 @@ class Sun{
                 )
             );
 
-            $spa['suntransitUNIX'] = gmmktime(0,0,$spa['suntransit']*60*60,idate('m',$this->timestamp),idate('d',$this->timestamp),idate('Y',$this->timestamp))
+            $spa['suntransitUNIX'] = gmmktime(0, 0, $spa['suntransit'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
 
         } else {
             $spa['srha'] = -9999;
