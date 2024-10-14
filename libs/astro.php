@@ -870,7 +870,7 @@ class ASTRO_SUN_FORMULA{
         return 8.794 / (3600.0 * $r);
     }
 
-    public static function right_ascension_parallax_and_topocentric_dec(float $latitude, float $elevation, float $xi, float $h, float $delta, float &$delta_alpha, float &$delta_prime): float
+    public static function right_ascension_parallax_and_topocentric_dec(float $latitude, float $elevation, float $xi, float $h, float $delta, float &$delta_alpha, float &$delta_prime)
     {
         $delta_alpha_rad = 0.0;
         $lat_rad = deg2rad($latitude);
