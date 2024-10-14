@@ -243,7 +243,7 @@ class Sun{
 
 
 
-
+    /*
     public function CalculateEotAndSunRiseTransitSet(): array
     {
         $h0_prime = -1 * (Sun::radius + Sun::atmosRefract);
@@ -411,7 +411,7 @@ class Sun{
     {
         // TODO Right Ascension für JD ZERO
         return ($this->sunJDZero->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
-    }
+    }*/
 
     public function EOT(): float
     {
