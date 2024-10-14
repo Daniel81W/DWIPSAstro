@@ -1080,7 +1080,7 @@ class ASTRO_SUN_FORMULA{
         $m_rts[SUN_TRANSIT] = ASTROMISC::LimitZeroToOne(m_rts[SUN_TRANSIT]);*/
     }
 
-    public static function rts_alpha_delta_prime(float &$ad, float $n): float
+    public static function rts_alpha_delta_prime(array &$ad, float $n): float
     {
         $a = $ad[1] - $ad[0];
         $b = $ad[2] - $ad[1];
