@@ -433,6 +433,16 @@ class Sun{
         $h_prime = array();
         $h0_prime = -1 * (Sun::radius + Sun::atmosRefract);
 
+        $spa['jce'] = $this->julianDay->get_JCE();
+        $spa['del_psi']=$this->NutationLongitude();
+        $spa['epsilon']=$this->EclipticTrueObliquity();
+        $spa['nu']=$nu;
+        $spa['latitude']=$this->latitude;
+        $spa['longitude']=$this->longitude;
+        $spa['elevation']=$this->elevation;
+        $spa['pressure']=$this->pressure;
+        $spa['temperature']=$this->temperature;
+
         //sun_rts  = $spa;
         $m = ASTRO_SUN_FORMULA::sun_mean_longitude($this->julianDay->get_JME());
         $spa['eot'] = ASTRO_SUN_FORMULA::eot($m, $this->GeocentricRightAscension(), $this->NutationLongitude(), $this->EclipticTrueObliquity());
@@ -477,7 +487,8 @@ class Sun{
 
                 $h_rts[$i] = ASTRO_SUN_FORMULA::rts_sun_altitude($this->latitude, $delta_prime[$i], $h_prime[$i]);
             }
-
+            
+        $spa['nu']=$nu;
             $spa['srha'] = $h_prime[1];
             $spa['ssha'] = $h_prime[2];
             $spa['sta'] = $h_rts[0];
@@ -1220,6 +1231,55 @@ class ASTRO_SUN_FORMULA{
 
 }
 
+class Moon{
+
+    void mpa_calculate(&$spa, &$mpa)
+{
+	$mpa['l_prime'] = ASTRO_MOON_FORMULA::moon_mean_longitude($spa['jce']);
+	$mpa['d']       = ASTRO_MOON_FORMULA::moon_mean_elongation($spa['jce']);
+	$mpa['m']       = ASTRO_MOON_FORMULA::sun_mean_anomaly($spa['jce']);
+	$mpa['m_prime'] = ASTRO_MOON_FORMULA::moon_mean_anomaly($spa['jce']);
+	$mpa['f']       = ASTRO_MOON_FORMULA::moon_latitude_argument($spa['jce']);
+    $mpa['l'] = 0;
+    $mpa['r'] = 0;
+    $mpa['b']=0;
+    $mpa['ü']=0;
+
+	ASTRO_MOON_FORMULA::moon_periodic_term_summation($mpa['d'] , $mpa['m'], $mpa['m_prime'], $mpa['f'], $spa['jce'], ASTROTERMS::ml_terms, $mpa['l'], $mpa['r']);
+	ASTRO_MOON_FORMULA::moon_periodic_term_summation($mpa['d'] , $mpa['m'], $mpa['m_prime'], $mpa['f'], $spa['jce'], ASTROTERMS::mb_terms, $mpa['b'],       $mpa['ü']);
+    
+    $mpa['lamda_prime'] = 0;
+    $mpa['beta']=0;
+	ASTRO_MOON_FORMULA::moon_longitude_and_latitude($spa['jce'], $mpa['l_prime'], $mpa['f'], $mpa['m_prime'], $mpa['l'], $mpa['b'],
+		                                                       $mpa['lamda_prime'], $mpa['beta']);
+
+	$mpa['cap_delta'] = ASTRO_MOON_FORMULA::moon_earth_distance($mpa['r']);
+	$mpa['pi'] = ASTRO_MOON_FORMULA::moon_equatorial_horiz_parallax($mpa['cap_delta']);
+
+	$mpa['lamda']    = ASTRO_MOON_FORMULA::apparent_moon_longitude($mpa['lamda_prime'], $spa['del_psi']);
+
+    $mpa['alpha'] = ASTRO_SUN_FORMULA::geocentric_right_ascension($mpa['lamda'], $spa['epsilon'], $mpa['beta']);
+    $mpa['delta'] = ASTRO_SUN_FORMULA::geocentric_declination($mpa['beta'], $spa['epsilon'], $mpa['lamda']);
+
+	$mpa['h']  = ASTRO_SUN_FORMULA::observer_hour_angle($spa['nu'], $spa['longitude'], $mpa['alpha']);
+
+    $mpa['del_alpha']=0;
+    $mpa['delta_prime']=0;
+    ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec($spa['latitude'], $spa['elevation'], $mpa['pi'],
+                                $mpa['h'], $mpa['delta'], $mpa['del_alpha'], $mpa['delta_prime']);
+    $mpa['alpha_prime'] = ASTRO_SUN_FORMULA::topocentric_right_ascension($mpa['alpha'], $mpa['del_alpha']);
+    $mpa['h_prime']     = ASTRO_SUN_FORMULA::topocentric_local_hour_angle($mpa['h'], $mpa['del_alpha']);
+
+    $mpa['e0']      = ASTRO_SUN_FORMULA::topocentric_elevation_angle($spa['latitude'], $mpa['delta_prime'], $mpa['h_prime']);
+	$mpa['del_e']   = ASTRO_SUN_FORMULA::atmospheric_refraction_correction($spa['pressure'], $spa['temperature'],
+                                                         Sun::atmosRefract, $mpa['e0']);
+    $mpa['e']       = ASTRO_SUN_FORMULA::topocentric_elevation_angle_corrected($mpa['e0'], $mpa['del_e']);
+
+    $mpa['zenith']        = ASTRO_SUN_FORMULA::topocentric_zenith_angle($mpa['e']);
+    $mpa['azimuth_astro'] = ASTRO_SUN_FORMULA::topocentric_azimuth_angle_astro($mpa['h_prime'], $spa['latitude'], $mpa['delta_prime']);
+    $mpa['azimuth']       = ASTRO_SUN_FORMULA::topocentric_azimuth_angle($mpa['azimuth_astro']);
+}
+}
 
 class ASTRO_MOON_FORMULA
 {
