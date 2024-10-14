@@ -606,6 +606,7 @@ class Sun{
             $spa['shadow'] = $this->ShadowLength();
             $spa['seasonval'] = $this->SeasonVal();
             $spa['season'] = $this->Season();
+            $spa['r'] = $this->EarthRadiusVector();
 
         } else {
             $spa['srha'] = -9999;
