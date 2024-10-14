@@ -454,46 +454,47 @@ class Sun{
 
     public function TopocentricZenithAngle(): float
     {
-        return 90.0 - $this->TopocentricElevationAngleCorrected();
+        return ASTRO_SUN_FORMULA::topocentric_zenith_angle($this->TopocentricElevationAngleCorrected());
+        //return 90.0 - $this->TopocentricElevationAngleCorrected();
     }
     
     public function TopocentricElevationAngleCorrected(): float
     {
-        return $this->TopocentricElevationAngle() + $this->AtmosphericRefractionCorrection();
+        return ASTRO_SUN_FORMULA::topocentric_elevation_angle_corrected($this->TopocentricElevationAngle(), $this->AtmosphericRefractionCorrection());//$this->TopocentricElevationAngle() + $this->AtmosphericRefractionCorrection();
     }
 
     public function AtmosphericRefractionCorrection(): float
     {
-        $del_e = 0.0;
+        return ASTRO_SUN_FORMULA::atmospheric_refraction_correction($this->pressure,$this->temperature,$this->atmosRefract, $this->TopocentricElevationAngle());
+        /*$del_e = 0.0;
         $e0 = $this->TopocentricElevationAngle();
 
         if ($e0 >= -1 * (Sun::radius + Sun::atmosRefract)) {
             $del_e = ($this->pressure / 1010.0) * (283.0 / (273.0 + $this->temperature)) *
                 1.02 / (60.0 * tan(deg2rad($e0 + 10.3 / ($e0 + 5.11))));
         }
-        return $del_e;
+        return $del_e;*/
     }
 
     public function TopocentricElevationAngle(): float
     {
-        $lat_rad = deg2rad($this->latitude);
+        return ASTRO_SUN_FORMULA::topocentric_elevation_angle($this->latitude, $this->TopocentricDeclination(), $this->TopocentricLocalHourAngle());
+        /*$lat_rad = deg2rad($this->latitude);
         $delta_prime_rad = deg2rad($this->TopocentricDeclination());
         $h_prime_rad = deg2rad($this->TopocentricLocalHourAngle());
 
         return rad2deg(asin(sin($lat_rad) * sin($delta_prime_rad) +
-            cos($lat_rad) * cos($delta_prime_rad) * cos($h_prime_rad)));
+            cos($lat_rad) * cos($delta_prime_rad) * cos($h_prime_rad)));*/
     }
 
     public function TopocentricLocalHourAngle(): float
     {
         return ASTRO_SUN_FORMULA::topocentric_local_hour_angle($this->ObserverHourAngle(), $this->RightAscensionParallax());
-        //return $this->ObserverHourAngle() - $this->RightAscensionParallax();
     }
 
     public function TopocentricRightAscension(): float
     {
         return ASTRO_SUN_FORMULA::topocentric_right_ascension($this->GeocentricRightAscension(), $this->RightAscensionParallax());
-        //return $this->GeocentricRightAscension() + $this->RightAscensionParallax();
     }
 
     public function TopocentricDeclination(): float
@@ -502,7 +503,6 @@ class Sun{
         $delta_prime = 0.0;
         ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec($this->latitude, $this->elevation, $this->SunEquatorialHorizontalParallax(), $this->ObserverHourAngle(), $this->GeocentricDeclination(), $delta_alpha, $delta_prime);
         return $delta_prime;
-        //        return $this->RightAscensionParallaxAndTopocentricDec()[0];
     }
 
     public function RightAscensionParallax(): float
@@ -511,10 +511,9 @@ class Sun{
         $delta_prime = 0.0;
         ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec($this->latitude, $this->elevation, $this->SunEquatorialHorizontalParallax(), $this->ObserverHourAngle(), $this->GeocentricDeclination(), $delta_alpha, $delta_prime);
         return $delta_alpha;
-        //return $this->RightAscensionParallaxAndTopocentricDec()[1];
     }
 
-    private function RightAscensionParallaxAndTopocentricDec(): array
+    /*private function RightAscensionParallaxAndTopocentricDec(): array
     {
         ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec();
         $delta_alpha_rad = array();
@@ -539,11 +538,11 @@ class Sun{
         );
 
         return array($delta_prime, rad2deg($delta_alpha_rad));
-    }
+    }*/
 
     public function SunEquatorialHorizontalParallax(): float
     {
-        return ASTRO_SUN_FORMULA::sun_equatorial_horizontal_parallax($this->EarthRadiusVector());//8.794 / (3600.0 * $this->EarthRadiusVector());
+        return ASTRO_SUN_FORMULA::sun_equatorial_horizontal_parallax($this->EarthRadiusVector());
     }
 
     public function ObserverHourAngle(): float
@@ -671,6 +670,9 @@ class Sun{
 }
 
 class ASTRO_SUN_FORMULA{
+    
+    const AU = 149597870700;
+    const sun_radius = 0.26667;
 
     public static function earth_periodic_term_summation(array $terms, int $count, float $jme): float
     {
@@ -905,38 +907,37 @@ class ASTRO_SUN_FORMULA{
     {
         return $h - $delta_alpha;
     }
+
+    public static function topocentric_elevation_angle(float $latitude, float $delta_prime, float $h_prime): float
+    {
+        $lat_rad = deg2rad($latitude);
+        $delta_prime_rad = deg2rad($delta_prime);
+
+        return rad2deg(asin(sin($lat_rad) * sin($delta_prime_rad) +
+            cos($lat_rad) * cos($delta_prime_rad) * cos(deg2rad($h_prime))));
+    }
+
+    public static function atmospheric_refraction_correction(float $pressure, float $temperature, float $atmos_refract, float $e0): float
+    {
+        $del_e = 0;
+
+        if ($e0 >= -1 * (ASTRO_SUN_FORMULA::sun_radius + $atmos_refract))
+            $del_e = ($pressure / 1010.0) * (283.0 / (273.0 + $temperature)) *
+                1.02 / (60.0 * tan(deg2rad($e0 + 10.3 / ($e0 + 5.11))));
+
+        return $del_e;
+    }
+
+    public static function topocentric_elevation_angle_corrected(float $e0, float $delta_e): float
+    {
+        return $e0 + $delta_e;
+    }
+
+    public static function topocentric_zenith_angle(float $e): float
+    {
+        return 90.0 - $e;
+    }
     /*
-    public static function topocentric_elevation_angle(double latitude, double delta_prime, double h_prime)
-    {
-        double lat_rad         = deg2rad(latitude);
-        double delta_prime_rad = deg2rad(delta_prime);
-
-        return rad2deg(asin(sin(lat_rad)*sin(delta_prime_rad) +
-                            cos(lat_rad)*cos(delta_prime_rad) * cos(deg2rad(h_prime))));
-    }
-
-    public static function atmospheric_refraction_correction(double pressure, double temperature,
-                                             double atmos_refract, double e0)
-    {
-        double del_e = 0;
-
-        if (e0 >= -1*(SUN_RADIUS + atmos_refract))
-            del_e = (pressure / 1010.0) * (283.0 / (273.0 + temperature)) *
-                     1.02 / (60.0 * tan(deg2rad(e0 + 10.3/(e0 + 5.11))));
-
-        return del_e;
-    }
-
-    public static function topocentric_elevation_angle_corrected(double e0, double delta_e)
-    {
-        return e0 + delta_e;
-    }
-
-    public static function topocentric_zenith_angle(double e)
-    {
-        return 90.0 - e;
-    }
-
     public static function topocentric_azimuth_angle_astro(double h_prime, double latitude, double delta_prime)
     {
         double h_prime_rad = deg2rad(h_prime);
