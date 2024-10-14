@@ -600,7 +600,7 @@ class Sun{
         $x = $this->xTerms();
         $del_psi=0;
         $del_epsilon = 0;
-        $this->NutationLongitudeAndObliquity($x,&$del_psi,  &$del_epsilon);
+        $this->NutationLongitudeAndObliquity($x, $del_psi, $del_epsilon);
         return $del_epsilon;
     }
 
@@ -609,7 +609,7 @@ class Sun{
         $x = $this->xTerms();
         $del_psi=0;
         $del_epsilon = 0;
-        $this->NutationLongitudeAndObliquity($x,&$del_psi,  &$del_epsilon);
+        $this->NutationLongitudeAndObliquity($x,$del_psi,  $del_epsilon);
         return $del_psi;
     }
 
