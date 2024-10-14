@@ -61,7 +61,6 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("beginciviltwilight", $this->Translate("startciviltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, false);
         $this->MaintainVariable("solarnoon", $this->Translate("solarnoon"), 1, "~UnixTimestamp", $p, true);
         $p++;
         $this->MaintainVariable("endciviltwilight", $this->Translate("stopciviltwilight"), 1, "~UnixTimestamp", $p, true);
@@ -70,16 +69,17 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("endastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("sunlightduration", $this->Translate("sunlightduration"), 1, "~UnixTimestampTime", $p, false);
         $this->MaintainVariable("sunlightduration", $this->Translate("sunlightduration"), 1, "~UnixTimestampTime", $p, true);
         $p++;
-        $this->MaintainVariable("sunazimut", $this->Translate("sunazimut"), 2, "~WindDirection.F", $p, false);
         $this->MaintainVariable("sunazimut", $this->Translate("sunazimut"), 2, "~WindDirection.F", $p, true);
         $p++;
+        $this->MaintainVariable("sundirection", $this->Translate("sundirection"), 2, "DWIPS." . $this->Translate("compass_rose"), $p, false);
         $this->MaintainVariable("sundirection", $this->Translate("sundirection"), 2, "DWIPS." . $this->Translate("compass_rose"), $p, true);
         $p++;
+        $this->MaintainVariable("sunelevation", $this->Translate("sunelevation"), 2, "~WindDirection.F", $p, false);
         $this->MaintainVariable("sunelevation", $this->Translate("sunelevation"), 2, "~WindDirection.F", $p, true);
         $p++;
+        $this->MaintainVariable("sundeclination", $this->Translate("sundeclination"), 2, "~WindDirection.F", $p, false);
         $this->MaintainVariable("sundeclination", $this->Translate("sundeclination"), 2, "~WindDirection.F", $p, true);
         $p++;
         $this->MaintainVariable("sunelevationmin", $this->Translate("sunelevationmin"), 2, "~WindDirection.F", $p, true);
