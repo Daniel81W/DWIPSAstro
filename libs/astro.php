@@ -592,7 +592,8 @@ class Sun{
             $spa['elevationAngle'] = $this->TopocentricElevationAngleCorrected();
             $spa['declination'] = $this->TopocentricDeclination();
             $spa['shadow'] = 1/tan(deg2rad($spa['elevationAngle']));
-            $spa['season'] = $this->SeasonVal();
+            $spa['seasonval'] = $this->SeasonVal();
+            $spa['season'] = $this->Season();
 
         } else {
             $spa['srha'] = -9999;

@@ -95,6 +95,15 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("season", $this->Translate("season"), 1, "DWIPS." . $this->Translate("season"), $p, true);
         $p++;
+        $this->MaintainVariable("springbegin", $this->Translate("springbegin"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("summerbegin", $this->Translate("summerbegin"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("fallbegin", $this->Translate("fallbegin"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("winterbegin", $this->Translate("winterbegin"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("shadowLength", $this->Translate("shadowlength"), 2, "", $p, false);
         $this->MaintainVariable("shadowLength", $this->Translate("shadowlength"), 2, "", $p, true);
         $p++;
         $this->MaintainVariable("solarirradiancespace", $this->Translate("solarirradiancespace"), 2, "", $p, true);
@@ -359,7 +368,11 @@ class DWIPSSun extends IPSModule
         $this->SetValue("insideCivilTwilight", $sunDat['insideCivilTwilight']);//-6 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
 
         $this->SetValue("sundistance", $sun->EarthRadiusVector() * Sun::AU / 1000);
-        $this->SetValue("season", $sunDat['season']);//ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
+        $this->SetValue("season", $sunDat['seasonval']);//ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
+        $this->SetValue("springbegin", $sunDat['season']['spring']);//ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
+        $this->SetValue("summerbegin", $sunDat['season']['summer']);//ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
+        $this->SetValue("fallbegin", $sunDat['season']['fall']);//ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
+        $this->SetValue("winterbegin", $sunDat['season']['winter']);//ASTROSUN::Season($this->ReadPropertyFloat("Latitude")));
         $this->SetValue("shadowLength", $sunDat['shadow']);//ASTROSUN::ShadowLength($this->ReadAttributeFloat("elevationOfTheSun")));
         
         //$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000, 2));

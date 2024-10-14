@@ -47,7 +47,11 @@
             "SE": "SO",
             "SSE": "SSO",
             "distance.km": "Distanz.km",
-            "moonphase": "Mondphase"
+            "moonphase": "Mondphase",
+            "springbegin": "Frühlingsanfang",
+            "summerbegin": "Sommeranfang",
+            "fallbegin": "Herbstanfang",
+            "winterbegin": "Winteranfang"
 
         }
     }
