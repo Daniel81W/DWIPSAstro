@@ -218,8 +218,41 @@ class Sun{
     }
 
 
+
+
+    public function ApproxSunRiseAndSet(): array
+    {
+        $h0 = $this->SunHourAngleAtRiseSet();
+        $h0_dfrac = $h0 / 360.0;
+        $sunTrans = ApproxSunTransitTime();
+
+        $ret = array();
+        $ret[0] = ASTROMISC::LimitZeroToOne($sunTrans - $h0_dfrac);
+        $ret[2] = ASTROMISC::LimitZeroToOne($sunTrans + $h0_dfrac);
+        $ret[1] = ASTROMISC::LimitZeroToOne($sunTrans);
+
+        return $ret;
+    }
+
+    public function SunHourAngleAtRiseSet(): float
+    {
+        $h0 = -99999;
+        $latitude_rad = deg2rad($this->latitude);
+        $delta_zero_rad = deg2rad($this->GeocentricDeclination());// TODO ÄÄndern zu Delto JD ZERO
+        $h0_prime_rad = deg2rad(-1 * (Sun::radius + Sun::atmosRefract));
+        $argument = (sin(deg2rad($h0_prime_rad)) - sin($latitude_rad) * sin($delta_zero_rad)) /
+            (cos($latitude_rad) * cos($delta_zero_rad));
+
+        if (abs($argument) <= 1) {
+            $h0 = ASTROMISC::LimitTo180Deg(rad2deg(acos($argument)));
+        }
+
+        return $h0;
+    }
+
     public function ApproxSunTransitTime(): float
     {
+        // TODO Right Ascension für JD ZERO
         return ($this->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
     }
 

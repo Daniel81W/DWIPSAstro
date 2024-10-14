@@ -465,6 +465,8 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_SunMeanLongitude", "value", $sun->SunMeanLongitude());
         $this->UpdateFormField("TestCalc_EOT", "value", $sun->EOT());
         $this->UpdateFormField("TestCalc_ApproxSunTransitTime", "value", $sun->ApproxSunTransitTime());
+        IPS_LogMessage("SUN", var_dump($sun->ApproxSunRiseAndSet()));
+        IPS_LogMessage("SUN", $sun->SunHourAngleAtRiseSet());
 
     }
 
