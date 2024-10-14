@@ -449,6 +449,7 @@ class Sun{
         $ts0 = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp), idate('Y', $this->timestamp));
         $tsP = mktime(0, 0, 0, idate('m', $this->timestamp), idate('t', $this->timestamp) + 1, idate('Y', $this->timestamp));
 
+        IPS_LogMessage("SUN", $this->timestamp);
         IPS_LogMessage("SUN", $tsM);
         IPS_LogMessage("SUN", $ts0);
         IPS_LogMessage("SUN", $tsP);
