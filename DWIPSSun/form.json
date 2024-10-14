@@ -279,6 +279,57 @@
                         "type": "RowLayout",
                         "items": [
                             {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JD",
+                                "caption": "JD",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JC",
+                                "caption": "JC",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JM",
+                                "caption": "JM",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JDE",
+                                "caption": "JDE",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JCE",
+                                "caption": "JCE",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JME",
+                                "caption": "JME",
+                                "width": "200px"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "PopupButton",
+            "caption": "Berechnung für bestimmten Zeitpunkt",
+            "popup": {
+                "caption": "Test für bestimmten Zeitpunkt",
+                "width": "90%",
+                "items": [
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
                                 "type": "SelectDateTime",
                                 "name": "TestCalc_DateTime",
                                 "caption": "Zeitpunkt"
@@ -672,7 +723,7 @@
                     }
                 ]
             }
+        }
+                ],
+                "status": []
             }
-    ],
-    "status": []
-}
