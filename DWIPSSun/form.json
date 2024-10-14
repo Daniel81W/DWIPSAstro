@@ -270,9 +270,9 @@
         },
         {
             "type": "PopupButton",
-            "caption": "Berechnung für bestimmten Zeitpunkt",
+            "caption": "Aktuelle Werte anzeigen",
             "popup": {
-                "caption": "Test für bestimmten Zeitpunkt",
+                "caption": "Aktuelle Werte",
                 "width": "90%",
                 "items": [
                     {
@@ -314,6 +314,28 @@
                                 "caption": "JME",
                                 "width": "200px"
                             }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_helioCentLong",
+                                "caption": "heliocentric longitude (L)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_helioCentLat",
+                                "caption": "heliocentric latitude (B)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_earthRadVec",
+                                "caption": "Earth radius vector (R)"
+                            }
+                                
+                            
                         ]
                     }
                 ]
