@@ -581,6 +581,7 @@ class Sun{
             $spa['ssNTUNIX'] = gmmktime(0, 0, $spa['ssNT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['srATUNIX'] = gmmktime(0, 0, $spa['srAT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['ssATUNIX'] = gmmktime(0, 0, $spa['ssAT'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
+            $spa['sunlightduration'] = $spa['sunsetUNIX'] - $spa['sunriseUNIX'] - (new DateTimeImmutable())->setTimestamp(0)->getOffset();
 
         } else {
             $spa['srha'] = -9999;
