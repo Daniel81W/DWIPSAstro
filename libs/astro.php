@@ -750,7 +750,7 @@ class ASTRO_SUN_FORMULA{
     $sum=0;
 
     for ($i = 0; $i < $count; $i++)
-        $sum += $terms[$i][TERM_ABC::TERM_A]*cos($terms[$i][TERM_ABC::TERM_B]+$terms[$i][TERM_ABC::TERM_C]*$jme);
+        $sum += $terms[$i][TERM_ABC::TERM_A->value]*cos($terms[$i][TERM_ABC::TERM_B->value]+$terms[$i][TERM_ABC::TERM_C->value]*$jme);
 
     return $sum;
 }
