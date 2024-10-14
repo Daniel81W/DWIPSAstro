@@ -506,7 +506,17 @@ class Sun{
                     2
                 )
             );
-            $spa['srCT'] = 0;
+            $spa['srCT'] = ASTROMISC::DayFracToHr(
+                ASTRO_SUN_FORMULA::sun_rise_and_set(
+                    $m_rts,
+                    $h_rts,
+                    $delta_prime,
+                    $this->latitude,
+                    $h_prime,
+                    -6,
+                    1
+                )
+            );
             $spa['ssCT'] = 0;
             $spa['suntransitUNIX'] = gmmktime(0, 0, $spa['suntransit'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['sunriseUNIX'] = gmmktime(0, 0, $spa['sunrise'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
