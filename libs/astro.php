@@ -686,70 +686,38 @@ class Sun{
 
     public function EarthRadiusVector(): float
     {
+        /*
         $sum = array();
 
         for ($i = 0; $i < ASTROTERMS::r_count; $i++)
             $sum[$i] = $this->EarthPeriodicTermSummation(ASTROTERMS::r_terms[$i], ASTROTERMS::r_subcount[$i], $this->julianDay->get_JME());
 
         return $this->EarthValues($sum, ASTROTERMS::r_count, $this->julianDay->get_JME());
-
+        */
+        return ASTRO_SUN_FORMULA::earth_radius_vector($this->julianDay->get_JME());
     }
 
     public function EarthHeliocentricLatitude():float
     {
-        $sum = array();
+        /*$sum = array();
 
         for ($i = 0; $i < ASTROTERMS::b_count; $i++)
             $sum[$i] = $this->EarthPeriodicTermSummation(ASTROTERMS::b_terms[$i], ASTROTERMS::b_subcount[$i], $this->julianDay->get_JME());
 
         return rad2deg($this->EarthValues($sum, ASTROTERMS::b_count, $this->julianDay->get_JME()));
-
+        */
+        return ASTRO_SUN_FORMULA::earth_heliocentric_latitude($this->julianDay->get_JME());
     }
 
     public function EarthHeliocentricLongitude(): float
     {
-        /*$sum = array();
-
-        for ($i = 0; $i < ASTROTERMS::l_count; $i++)
-            $sum[$i] = ASTRO_SUN_FORMULA::EarthPeriodicTermSummation(ASTROTERMS::l_terms[$i], ASTROTERMS::l_subcount[$i], $this->julianDay->get_JME());
-
-        return ASTROMISC::LimitTo360Deg(rad2deg($this->EarthValues($sum, ASTROTERMS::l_count, $this->julianDay->get_JME())));
-        */
-        return ASTRO_SUN_FORMULA::EarthHeliocentricLongitude($this->julianDay->get_JME());
-    }
-
-    private function EarthValues(array $termSum):float
-    {
-        /*
-    $sum = 0.0;
-
-    for ($i = 0; $i < count($termSum); $i++)
-        $sum += $termSum[$i] * pow($this->julianDay->get_JME(), $i);
-
-    $sum /= pow(10, 8);
-
-    return $sum;*/
-
-        return ASTRO_SUN_FORMULA::EarthValues($termSum, count($termSum), $this->julianDay->get_JME());
-    }
-
-    private function EarthPeriodicTermSummation(array $terms):float
-    {
-        /*
-        $sum = 0.0;
-        for ($i = 0; $i < count($terms); $i++) {
-            $sum += $terms[$i][0] * cos($terms[$i][1] + $terms[$i][2] * $this->julianDay->get_JME());
-        }
-        return $sum;
-        */
-
-        return ASTRO_SUN_FORMULA::EarthPeriodicTermSummation($terms,count($terms),$this->julianDay->get_JME());
+        return ASTRO_SUN_FORMULA::earth_heliocentric_longitude($this->julianDay->get_JME());
     }
 }
 
 class ASTRO_SUN_FORMULA{
 
-    public static function EarthPeriodicTermSummation(array $terms, int $count, float $jme): float
+    public static function earth_periodic_term_summation(array $terms, int $count, float $jme): float
     {
         $sum = 0;
 
@@ -760,7 +728,7 @@ class ASTRO_SUN_FORMULA{
         return $sum;
     }
 
-    public static function EarthValues(array $term_sum, int $count, float $jme)
+    public static function earth_values(array $term_sum, int $count, float $jme)
     {
         $sum = 0;
 
@@ -772,41 +740,39 @@ class ASTRO_SUN_FORMULA{
         return $sum;
     }
 
-    public static function EarthHeliocentricLongitude(float $jme)
+    public static function earth_heliocentric_longitude(float $jme)
     {
         $sum = array();
 
         for ($i = 0; $i < ASTROTERMS::l_count; $i++)
-            $sum[$i] = ASTRO_SUN_FORMULA::EarthPeriodicTermSummation(ASTROTERMS::l_terms[$i], ASTROTERMS::l_subcount[$i], $jme);
+            $sum[$i] = ASTRO_SUN_FORMULA::earth_periodic_term_summation(ASTROTERMS::l_terms[$i], ASTROTERMS::l_subcount[$i], $jme);
 
-        return ASTROMISC::LimitTo360Deg(rad2deg(ASTRO_SUN_FORMULA::EarthValues($sum, ASTROTERMS::l_count, $jme)));
+        return ASTROMISC::LimitTo360Deg(rad2deg(ASTRO_SUN_FORMULA::earth_values($sum, ASTROTERMS::l_count, $jme)));
+
+    }
+
+    public static function earth_heliocentric_latitude(float $jme)
+    {
+        $sum = array();
+
+        for ($i = 0; $i < ASTROTERMS::b_count; $i++)
+            $sum[$i] = ASTRO_SUN_FORMULA::earth_periodic_term_summation(ASTROTERMS::b_terms[$i], ASTROTERMS::b_subcount[$i], $jme);
+
+        return rad2deg(ASTRO_SUN_FORMULA::earth_values($sum, ASTROTERMS::b_count, $jme));
+
+    }
+
+    public static function earth_radius_vector(float $jme)
+    {
+        $sum = array();
+
+        for ($i = 0; $i < ASTROTERMS::r_count; $i++)
+            $sum[$i] = ASTRO_SUN_FORMULA::earth_periodic_term_summation(ASTROTERMS::r_terms[$i], ASTROTERMS::r_subcount[$i], $jme);
+
+        return ASTRO_SUN_FORMULA::earth_values($sum, ASTROTERMS::r_count, $jme);
 
     }
 /*
-public static function earth_heliocentric_latitude(double jme)
-{
-    double sum[B_COUNT];
-    int i;
-
-    for (i = 0; i < B_COUNT; i++)
-        sum[i] = earth_periodic_term_summation(B_TERMS[i], b_subcount[i], jme);
-
-    return rad2deg(earth_values(sum, B_COUNT, jme));
-
-}
-
-public static function earth_radius_vector(double jme)
-{
-    double sum[R_COUNT];
-    int i;
-
-    for (i = 0; i < R_COUNT; i++)
-        sum[i] = earth_periodic_term_summation(R_TERMS[i], r_subcount[i], jme);
-
-    return earth_values(sum, R_COUNT, jme);
-
-}
-
 public static function geocentric_longitude(double l)
 {
     double theta = l + 180.0;
