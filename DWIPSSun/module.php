@@ -282,7 +282,7 @@ class DWIPSSun extends IPSModule
     public function Update()
     {
         $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
-        $sun = new Sun($jd);
+        $sun = new Sun($jd, $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation"),835,10);
 
         $this->WriteAttributeFloat("jd", $jd->get_JD());
         $this->WriteAttributeFloat("jc", $jd->get_JC());
