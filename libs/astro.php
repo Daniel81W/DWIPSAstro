@@ -420,19 +420,13 @@ class Sun{
 
     public function SunMeanLongitude(): float
     {
-        $jme = $this->julianDay->get_JME();
-        return ASTROMISC::LimitTo360Deg(280.4664567 + $jme * (360007.6982779 + $jme * (0.03032028 +
-            $jme * (1 / 49931.0 + $jme * (-1 / 15300.0 + $jme * (-1 / 2000000.0))))));
+        return ASTRO_SUN_FORMULA::sun_mean_longitude($this->julianDay->get_JME());
+        //return ASTROMISC::LimitTo360Deg(280.4664567 + $jme * (360007.6982779 + $jme * (0.03032028 +            $jme * (1 / 49931.0 + $jme * (-1 / 15300.0 + $jme * (-1 / 2000000.0))))));
     }
 
     public function SurfaceIncidenceAngle(float $orientation, float $slope):float
     {
         return ASTRO_SUN_FORMULA::surface_incidence_angle($this->TopocentricZenithAngle(),$this->TopocentricAzimuthAngleAstro(),$orientation,$slope);
-        /*$zenith_rad = deg2rad($this->TopocentricZenithAngle());
-        $slope_rad = deg2rad($slope);
-
-        return rad2deg(acos(cos($zenith_rad) * cos($slope_rad) +
-            sin($slope_rad) * sin($zenith_rad) * cos(deg2rad($this->TopocentricAzimuthAngleAstro() - $orientation))));*/
     }
 
     public function TopocentricAzimuthAngle(): float
@@ -444,7 +438,6 @@ class Sun{
                 $this->TopocentricDeclination()
             )
         );
-        return ASTROMISC::LimitTo360Deg($this->TopocentricAzimuthAngleAstro() + 180.0);
     }
 
     private function TopocentricAzimuthAngleAstro(): float
@@ -505,33 +498,6 @@ class Sun{
         ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec($this->latitude, $this->elevation, $this->SunEquatorialHorizontalParallax(), $this->ObserverHourAngle(), $this->GeocentricDeclination(), $delta_alpha, $delta_prime);
         return $delta_alpha;
     }
-
-    /*private function RightAscensionParallaxAndTopocentricDec(): array
-    {
-        ASTRO_SUN_FORMULA::right_ascension_parallax_and_topocentric_dec();
-        $delta_alpha_rad = array();
-        $lat_rad = deg2rad($this->latitude);
-        $xi_rad = deg2rad($this->SunEquatorialHorizontalParallax());
-        $h_rad = deg2rad($this->ObserverHourAngle($this->longitude));
-        $delta_rad = deg2rad($this->GeocentricDeclination());
-        $u = atan(0.99664719 * tan($lat_rad));
-        $y = 0.99664719 * sin($u) + $this->elevation * sin($lat_rad) / 6378140.0;
-        $x = cos($u) + $this->elevation * cos($lat_rad) / 6378140.0;
-
-        $delta_alpha_rad = atan2(
-            -1 * $x * sin($xi_rad) * sin($h_rad),
-            cos($delta_rad) - $x * sin($xi_rad) * cos($h_rad)
-        );
-
-        $delta_prime = rad2deg(
-            atan2(
-                (sin($delta_rad) - $y * sin($xi_rad)) * cos($delta_alpha_rad),
-                cos($delta_rad) - $x * sin($xi_rad) * cos($h_rad)
-            )
-        );
-
-        return array($delta_prime, rad2deg($delta_alpha_rad));
-    }*/
 
     public function SunEquatorialHorizontalParallax(): float
     {
@@ -953,12 +919,12 @@ class ASTRO_SUN_FORMULA{
         return rad2deg(acos(cos($zenith_rad)*cos($slope_rad)  +
                             sin($slope_rad )*sin($zenith_rad) * cos(deg2rad($azimuth_astro - $azm_rotation))));
     }
-    /*
-    public static function sun_mean_longitude(double jme)
+    
+    public static function sun_mean_longitude(float $jme)
     {
-        return limit_degrees(280.4664567 + jme*(360007.6982779 + jme*(0.03032028 +
-                        jme*(1/49931.0   + jme*(-1/15300.0     + jme*(-1/2000000.0))))));
-    }*/
+        return ASTROMISC::LimitTo360Deg(280.4664567 + $jme*(360007.6982779 + $jme*(0.03032028 +
+            $jme*(1/49931.0   + $jme*(-1/15300.0     + $jme*(-1/2000000.0))))));
+    }
 }
 
 class ASTROSUN{
