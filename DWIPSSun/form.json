@@ -646,6 +646,12 @@
                             },
                             {
                                 "type": "ValidationTextBox",
+                                "name": "TestCalc_SunTransitAltitude",
+                                "caption": "TestCalc_SunTransitAltitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
                                 "name": "TestCalc_ApproxSunTransitTime",
                                 "caption": "TestCalc_ApproxSunTransitTime",
                                 "width": "200px"

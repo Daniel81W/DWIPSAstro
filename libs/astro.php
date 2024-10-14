@@ -449,11 +449,6 @@ class Sun{
         $ts0 = mktime(0, 0, 0, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
         $tsP = mktime(0, 0, 0, idate('m', $this->timestamp), idate('d', $this->timestamp) + 1, idate('Y', $this->timestamp));
 
-        IPS_LogMessage("SUN", $this->timestamp);
-        IPS_LogMessage("SUN", $tsM);
-        IPS_LogMessage("SUN", $ts0);
-        IPS_LogMessage("SUN", $tsP);
-
         $sunArr = array(
             new Sun($this->deltaT, 0, $tsM, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
             new Sun($this->deltaT, 0, $ts0, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature),
@@ -475,10 +470,6 @@ class Sun{
 
         $m_rts[0] = ASTRO_SUN_FORMULA::approx_sun_transit_time($alpha[1], $this->longitude, $nu);
         $h0 = ASTRO_SUN_FORMULA::sun_hour_angle_at_rise_set($this->latitude, $delta[1], $h0_prime);
-        IPS_LogMessage("SUN", $h0_prime);
-        IPS_LogMessage("SUN", $delta[0]);
-        IPS_LogMessage("SUN", $delta[1]);
-        IPS_LogMessage("SUN", $delta[2]);
         if ($h0 >= 0) {
 
             ASTRO_SUN_FORMULA::approx_sun_rise_and_set($m_rts, $h0);
