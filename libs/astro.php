@@ -575,6 +575,9 @@ class Sun{
             );
             $spa['sunelevationmin'] = -90 + $this->latitude + $this->TopocentricDeclination();
             $spa['sunelevationmax'] = 90 - $this->latitude + $this->TopocentricDeclination();
+            $spa['day'] = $this->TopocentricElevationAngleCorrected() > $h0_prime;
+            $spa['insideCivilTwilight'] = $this->TopocentricElevationAngleCorrected() > -6;
+
             $spa['suntransitUNIX'] = gmmktime(0, 0, $spa['suntransit'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['sunriseUNIX'] = gmmktime(0, 0, $spa['sunrise'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
             $spa['sunsetUNIX'] = gmmktime(0, 0, $spa['sunset'] * 60 * 60, idate('m', $this->timestamp), idate('d', $this->timestamp), idate('Y', $this->timestamp));
