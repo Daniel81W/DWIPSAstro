@@ -608,7 +608,8 @@ class Sun{
 
     }
 
-    public static function Season() : int{
+    public function Season() : int
+    {
         $jce = $this->julianDay->get_JCE();
         $latitude = $this->latitude;
         $declination = ASTROSUN::Declination($jce);
