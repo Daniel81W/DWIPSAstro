@@ -1221,130 +1221,170 @@ class ASTRO_SUN_FORMULA{
 }
 
 
-class ASTRO_MOON_FORMULA{
+class ASTRO_MOON_FORMULA
+{
     public static function moon_mean_longitude(float $jce)
-{
-	return ASTROMISC::LimitTo360Deg(ASTROMISC::FourthOrderPolynomial(
-		                 -1.0/65194000, 1.0/538841, -0.0015786, 481267.88123421, 218.3164477, $jce));
-}
+    {
+        return ASTROMISC::LimitTo360Deg(
+            ASTROMISC::FourthOrderPolynomial(
+                -1.0 / 65194000,
+                1.0 / 538841,
+                -0.0015786,
+                481267.88123421,
+                218.3164477,
+                $jce
+            )
+        );
+    }
 
-public static function moon_mean_elongation(float $jce)
-{
-	return ASTROMISC::LimitTo360Deg(ASTROMISC::FourthOrderPolynomial(
-		                 -1.0/113065000, 1.0/545868, -0.0018819, 445267.1114034, 297.8501921, $jce));
-}
+    public static function moon_mean_elongation(float $jce)
+    {
+        return ASTROMISC::LimitTo360Deg(
+            ASTROMISC::FourthOrderPolynomial(
+                -1.0 / 113065000,
+                1.0 / 545868,
+                -0.0018819,
+                445267.1114034,
+                297.8501921,
+                $jce
+            )
+        );
+    }
 
-public static function sun_mean_anomaly(float $jce)
-{
-	return ASTROMISC::LimitTo360Deg(ASTROMISC::ThirdOrderPolynomial(
-		                 1.0/24490000, -0.0001536, 35999.0502909, 357.5291092, $jce));
-}
+    public static function sun_mean_anomaly(float $jce)
+    {
+        return ASTROMISC::LimitTo360Deg(
+            ASTROMISC::ThirdOrderPolynomial(
+                1.0 / 24490000,
+                -0.0001536,
+                35999.0502909,
+                357.5291092,
+                $jce
+            )
+        );
+    }
 
-public static function moon_mean_anomaly(float $jce)
-{
-	return ASTROMISC::LimitTo360Deg(ASTROMISC::FourthOrderPolynomial(
-		                 -1.0/14712000, 1.0/69699, 0.0087414, 477198.8675055, 134.9633964, $jce));
-}
+    public static function moon_mean_anomaly(float $jce)
+    {
+        return ASTROMISC::LimitTo360Deg(
+            ASTROMISC::FourthOrderPolynomial(
+                -1.0 / 14712000,
+                1.0 / 69699,
+                0.0087414,
+                477198.8675055,
+                134.9633964,
+                $jce
+            )
+        );
+    }
 
-public static function moon_latitude_argument(float $jce)
-{
-	return ASTROMISC::LimitTo360Deg(ASTROMISC::FourthOrderPolynomial(
-		                 1.0/863310000, -1.0/3526000, -0.0036539, 483202.0175233, 93.2720950, $jce));
-}
+    public static function moon_latitude_argument(float $jce)
+    {
+        return ASTROMISC::LimitTo360Deg(
+            ASTROMISC::FourthOrderPolynomial(
+                1.0 / 863310000,
+                -1.0 / 3526000,
+                -0.0036539,
+                483202.0175233,
+                93.2720950,
+                $jce
+            )
+        );
+    }
 
-public static function moon_periodic_term_summation(float $d, float $m, float $m_prime, float $f, float $jce,
-								  $terms, float &$sin_sum, double &$cos_sum)
-{
-	$e_mult=0.0;
-    $trig_arg=0.0;
-	$e  = 1.0 - $jce*(0.002516 + $jce*0.0000074);
+    public static function moon_periodic_term_summation(float $d, float $m, float $m_prime, float $f, float $jce, $terms, float &$sin_sum, double &$cos_sum)
+    {
+        $e_mult = 0.0;
+        $trig_arg = 0.0;
+        $e = 1.0 - $jce * (0.002516 + $jce * 0.0000074);
 
-	                  $sin_sum=0;
-    for ($i = 0; $i < 60; $i++)
-	{
-		$e_mult   = pow($e, abs($terms[$i][1]));
-		$trig_arg = deg2rad($terms[$i][0]*$d + $terms[$i][1]  *$m +
-			               $terms[$i][3]*$f + $terms[$i][2]*$m_prime);
-                           $sin_sum += $e_mult * $terms[$i][4] *sin($trig_arg);
-		                    $cos_sum += $e_mult * $terms[$i][5]  *cos($trig_arg);
-	}
-}
+        $sin_sum = 0;
+        for ($i = 0; $i < 60; $i++) {
+            $e_mult = pow($e, abs($terms[$i][1]));
+            $trig_arg = deg2rad($terms[$i][0] * $d + $terms[$i][1] * $m +
+                $terms[$i][3] * $f + $terms[$i][2] * $m_prime);
+            $sin_sum += $e_mult * $terms[$i][4] * sin($trig_arg);
+            $cos_sum += $e_mult * $terms[$i][5] * cos($trig_arg);
+        }
+    }
 
-public static function moon_longitude_and_latitude(float $jce, float $l_prime, float $f, float $m_prime, float $l, float $b,
-	                                                                   float &$lamda_prime, float &$beta)
-{
-	$a1 = 119.75 +    131.849*$jce;
-	$a2 =  53.09 + 479264.290*$jce;
-	$a3 = 313.45 + 481266.484*$jce;
-	$delta_l =  3958*sin(deg2rad($a1))      + 318*sin(deg2rad($a2))   + 1962*sin(deg2rad($l_prime-$f));
-	$delta_b = -2235*sin(deg2rad($l_prime)) + 175*sin(deg2rad($a1-$f)) +  127*sin(deg2rad($l_prime-$m_prime))
-		             + 382*sin(deg2rad($a3))      + 175*sin(deg2rad($a1+$f)) -  115*sin(deg2rad($l_prime+$m_prime));
+    public static function moon_longitude_and_latitude(float $jce, float $l_prime, float $f, float $m_prime, float $l, float $b, float &$lamda_prime, float &$beta)
+    {
+        $a1 = 119.75 + 131.849 * $jce;
+        $a2 = 53.09 + 479264.290 * $jce;
+        $a3 = 313.45 + 481266.484 * $jce;
+        $delta_l = 3958 * sin(deg2rad($a1)) + 318 * sin(deg2rad($a2)) + 1962 * sin(deg2rad($l_prime - $f));
+        $delta_b = -2235 * sin(deg2rad($l_prime)) + 175 * sin(deg2rad($a1 - $f)) + 127 * sin(deg2rad($l_prime - $m_prime))
+            + 382 * sin(deg2rad($a3)) + 175 * sin(deg2rad($a1 + $f)) - 115 * sin(deg2rad($l_prime + $m_prime));
 
-	$lamda_prime = ASTROMISC::LimitTo360Deg($l_prime + ($l + $delta_l)/1000000);
-	$beta        = ASTROMISC::LimitTo360Deg(          ($b + $delta_b)/1000000);
-}
+        $lamda_prime = ASTROMISC::LimitTo360Deg($l_prime + ($l + $delta_l) / 1000000);
+        $beta = ASTROMISC::LimitTo360Deg(($b + $delta_b) / 1000000);
+    }
 
-public static function moon_earth_distance(float $r)
-{
-	return 385000.56 + $r/1000;
-}
+    public static function moon_earth_distance(float $r)
+    {
+        return 385000.56 + $r / 1000;
+    }
 
-public static function moon_equatorial_horiz_parallax(float $delta)
-{
-	return rad2deg(asin(6378.14/$delta));
-}
+    public static function moon_equatorial_horiz_parallax(float $delta)
+    {
+        return rad2deg(asin(6378.14 / $delta));
+    }
 
-public static function apparent_moon_longitude(float $lamda_prime, float $del_psi)
-{
-	return $lamda_prime + $del_psi;
-}
+    public static function apparent_moon_longitude(float $lamda_prime, float $del_psi)
+    {
+        return $lamda_prime + $del_psi;
+    }
 
-public static function angular_distance_sun_moon(float $zen_sun, float $azm_sun, float $zen_moon, float $azm_moon)
-{
-	$zs = deg2rad($zen_sun);
-	$zm = deg2rad($zen_moon);
+    public static function angular_distance_sun_moon(float $zen_sun, float $azm_sun, float $zen_moon, float $azm_moon)
+    {
+        $zs = deg2rad($zen_sun);
+        $zm = deg2rad($zen_moon);
 
-	return rad2deg(acos(cos($zs)*cos($zm) + sin($zs)*sin($zm)*cos(deg2rad($azm_sun - $azm_moon))));
-}
+        return rad2deg(acos(cos($zs) * cos($zm) + sin($zs) * sin($zm) * cos(deg2rad($azm_sun - $azm_moon))));
+    }
 
-public static function sun_disk_radius(float $r)
-{
-	return 959.63/(3600.0 * $r);
-}
+    public static function sun_disk_radius(float $r)
+    {
+        return 959.63 / (3600.0 * $r);
+    }
 
-public static function moon_disk_radius(float $e, float $pi, float $cap_delta)
-{
-	return 358473400*(1 + sin(deg2rad($e))*sin(deg2rad($pi)))/(3600.0 * $cap_delta);
-}
+    public static function moon_disk_radius(float $e, float $pi, float $cap_delta)
+    {
+        return 358473400 * (1 + sin(deg2rad($e)) * sin(deg2rad($pi))) / (3600.0 * $cap_delta);
+    }
 
-public static function sul_area(float $ems, float $rs, float $rm, float &$a_sul, float &$a_sul_pct)
-{
-	$ems2 = $ems*$ems;
-	$rs2  = $rs*$rs;
-	$rm2  = $rm*$rm;
-	$snum=0;
-    $ai=0;
-    $m=0;
-    $s=0;
-    $h=0;
+    public static function sul_area(float $ems, float $rs, float $rm, float &$a_sul, float &$a_sul_pct)
+    {
+        $ems2 = $ems * $ems;
+        $rs2 = $rs * $rs;
+        $rm2 = $rm * $rm;
+        $snum = 0;
+        $ai = 0;
+        $m = 0;
+        $s = 0;
+        $h = 0;
 
-	if ($ems < ($rs + $rm))
-	{
-		if ($ems <= abs($rs - $rm))
-			$ai = pi()*$rm2;
-		else {
-			$snum =  $ems2 + $rs2 - $rm2;
-			$m    = ($ems2 - $rs2 + $rm2) / (2*$ems);
-			$s    =              $snum  / (2*$ems);
-			$h    = sqrt(4*$ems2*$rs2 - $snum*$snum) / (2*$ems);
-			$ai   = ($rs2*acos($s/$rs) - $h * $s + $rm2*acos($m/$rm) - $h * $m);
-		}
-	} else $ai = 0;
+        if ($ems < ($rs + $rm)) {
+            if ($ems <= abs($rs - $rm)) {
+                $ai = pi() * $rm2;
+            } else {
+                $snum = $ems2 + $rs2 - $rm2;
+                $m = ($ems2 - $rs2 + $rm2) / (2 * $ems);
+                $s = $snum / (2 * $ems);
+                $h = sqrt(4 * $ems2 * $rs2 - $snum * $snum) / (2 * $ems);
+                $ai = ($rs2 * acos($s / $rs) - $h * $s + $rm2 * acos($m / $rm) - $h * $m);
+            }
+        } else {
+            $ai = 0;
+        }
 
-	$a_sul = pi()*$rs2 - $ai;
-	if ($a_sul < 0) $a_sul = 0;
-	$a_sul_pct = $a_sul * 100.0 / (pi()*$rs2);
-}
+        $a_sul = pi() * $rs2 - $ai;
+        if ($a_sul < 0) {
+            $a_sul = 0;
+        }
+        $a_sul_pct = $a_sul * 100.0 / (pi() * $rs2);
+    }
 }
 
 
