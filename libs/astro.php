@@ -340,14 +340,7 @@ class Sun{
         return $ret;
     }
 
-    public function SunRiseAndSet(
-        $m_rts,
-        $h_rts,
-        $delta_prime,
-        $h_prime,
-        $h0_prime,
-        $sun
-    ): float {
+    public function SunRiseAndSet(        $m_rts,        $h_rts,        $delta_prime,        $h_prime,        $h0_prime,        $sun    ): float {
         return $m_rts[$sun] + ($h_rts[$sun] - $h0_prime) /
             (360.0 * cos(deg2rad($delta_prime[$sun])) * cos(deg2rad($this->latitude)) * sin(deg2rad($h_prime[$sun])));
     }
@@ -738,12 +731,298 @@ class Sun{
 
     private function EarthPeriodicTermSummation(array $terms):float
     {
+        /*
         $sum = 0.0;
         for ($i = 0; $i < count($terms); $i++) {
             $sum += $terms[$i][0] * cos($terms[$i][1] + $terms[$i][2] * $this->julianDay->get_JME());
         }
         return $sum;
+        */
+
+        return ASTRO_SUN_FORMULA::EarthPeriodicTermSummation($terms,count($terms),$this->julianDay->get_JME());
     }
+}
+
+class ASTRO_SUN_FORMULA{
+
+    public static function EarthPeriodicTermSummation(array $terms, int $count, float $jme):float
+{
+    $sum=0;
+
+    for ($i = 0; $i < $count; $i++)
+        $sum += $terms[$i][TERM_ABC::TERM_A]*cos($terms[$i][TERM_ABC::TERM_B]+$terms[$i][TERM_ABC::TERM_C]*$jme);
+
+    return $sum;
+}
+/*
+public static function earth_values(double term_sum[], int count, double jme)
+{
+    int i;
+    double sum=0;
+
+    for (i = 0; i < count; i++)
+        sum += term_sum[i]*pow(jme, i);
+
+    sum /= 1.0e8;
+
+    return sum;
+}
+
+public static function earth_heliocentric_longitude(double jme)
+{
+    double sum[L_COUNT];
+    int i;
+
+    for (i = 0; i < L_COUNT; i++)
+        sum[i] = earth_periodic_term_summation(L_TERMS[i], l_subcount[i], jme);
+
+    return limit_degrees(rad2deg(earth_values(sum, L_COUNT, jme)));
+
+}
+
+public static function earth_heliocentric_latitude(double jme)
+{
+    double sum[B_COUNT];
+    int i;
+
+    for (i = 0; i < B_COUNT; i++)
+        sum[i] = earth_periodic_term_summation(B_TERMS[i], b_subcount[i], jme);
+
+    return rad2deg(earth_values(sum, B_COUNT, jme));
+
+}
+
+public static function earth_radius_vector(double jme)
+{
+    double sum[R_COUNT];
+    int i;
+
+    for (i = 0; i < R_COUNT; i++)
+        sum[i] = earth_periodic_term_summation(R_TERMS[i], r_subcount[i], jme);
+
+    return earth_values(sum, R_COUNT, jme);
+
+}
+
+public static function geocentric_longitude(double l)
+{
+    double theta = l + 180.0;
+
+    if (theta >= 360.0) theta -= 360.0;
+
+    return theta;
+}
+
+public static function geocentric_latitude(double b)
+{
+    return -b;
+}
+
+public static function mean_elongation_moon_sun(double jce)
+{
+    return third_order_polynomial(1.0/189474.0, -0.0019142, 445267.11148, 297.85036, jce);
+}
+
+public static function mean_anomaly_sun(double jce)
+{
+    return third_order_polynomial(-1.0/300000.0, -0.0001603, 35999.05034, 357.52772, jce);
+}
+
+public static function mean_anomaly_moon(double jce)
+{
+    return third_order_polynomial(1.0/56250.0, 0.0086972, 477198.867398, 134.96298, jce);
+}
+
+public static function argument_latitude_moon(double jce)
+{
+    return third_order_polynomial(1.0/327270.0, -0.0036825, 483202.017538, 93.27191, jce);
+}
+
+public static function ascending_longitude_moon(double jce)
+{
+    return third_order_polynomial(1.0/450000.0, 0.0020708, -1934.136261, 125.04452, jce);
+}
+
+public static function xy_term_summation(int i, double x[TERM_X_COUNT])
+{
+    int j;
+    double sum=0;
+
+    for (j = 0; j < TERM_Y_COUNT; j++)
+        sum += x[j]*Y_TERMS[i][j];
+
+    return sum;
+}
+
+public static function nutation_longitude_and_obliquity(double jce, double x[TERM_X_COUNT], double *del_psi,
+                                                                          double *del_epsilon)
+{
+    int i;
+    double xy_term_sum, sum_psi=0, sum_epsilon=0;
+
+    for (i = 0; i < Y_COUNT; i++) {
+        xy_term_sum  = deg2rad(xy_term_summation(i, x));
+        sum_psi     += (PE_TERMS[i][TERM_PSI_A] + jce*PE_TERMS[i][TERM_PSI_B])*sin(xy_term_sum);
+        sum_epsilon += (PE_TERMS[i][TERM_EPS_C] + jce*PE_TERMS[i][TERM_EPS_D])*cos(xy_term_sum);
+    }
+
+    *del_psi     = sum_psi     / 36000000.0;
+    *del_epsilon = sum_epsilon / 36000000.0;
+}
+
+public static function ecliptic_mean_obliquity(double jme)
+{
+    double u = jme/10.0;
+
+    return 84381.448 + u*(-4680.93 + u*(-1.55 + u*(1999.25 + u*(-51.38 + u*(-249.67 +
+                       u*(  -39.05 + u*( 7.12 + u*(  27.87 + u*(  5.79 + u*2.45)))))))));
+}
+
+public static function ecliptic_true_obliquity(double delta_epsilon, double epsilon0)
+{
+    return delta_epsilon + epsilon0/3600.0;
+}
+
+public static function aberration_correction(double r)
+{
+    return -20.4898 / (3600.0*r);
+}
+
+public static function apparent_sun_longitude(double theta, double delta_psi, double delta_tau)
+{
+    return theta + delta_psi + delta_tau;
+}
+
+public static function greenwich_mean_sidereal_time (double jd, double jc)
+{
+    return limit_degrees(280.46061837 + 360.98564736629 * (jd - 2451545.0) +
+                                       jc*jc*(0.000387933 - jc/38710000.0));
+}
+
+public static function greenwich_sidereal_time (double nu0, double delta_psi, double epsilon)
+{
+    return nu0 + delta_psi*cos(deg2rad(epsilon));
+}
+
+public static function geocentric_right_ascension(double lamda, double epsilon, double beta)
+{
+    double lamda_rad   = deg2rad(lamda);
+    double epsilon_rad = deg2rad(epsilon);
+
+    return limit_degrees(rad2deg(atan2(sin(lamda_rad)*cos(epsilon_rad) -
+                                       tan(deg2rad(beta))*sin(epsilon_rad), cos(lamda_rad))));
+}
+
+public static function geocentric_declination(double beta, double epsilon, double lamda)
+{
+    double beta_rad    = deg2rad(beta);
+    double epsilon_rad = deg2rad(epsilon);
+
+    return rad2deg(asin(sin(beta_rad)*cos(epsilon_rad) +
+                        cos(beta_rad)*sin(epsilon_rad)*sin(deg2rad(lamda))));
+}
+
+public static function observer_hour_angle(double nu, double longitude, double alpha_deg)
+{
+    return limit_degrees(nu + longitude - alpha_deg);
+}
+
+public static function sun_equatorial_horizontal_parallax(double r)
+{
+    return 8.794 / (3600.0 * r);
+}
+
+public static function right_ascension_parallax_and_topocentric_dec(double latitude, double elevation,
+	       double xi, double h, double delta, double *delta_alpha, double *delta_prime)
+{
+    double delta_alpha_rad;
+    double lat_rad   = deg2rad(latitude);
+    double xi_rad    = deg2rad(xi);
+    double h_rad     = deg2rad(h);
+    double delta_rad = deg2rad(delta);
+    double u = atan(0.99664719 * tan(lat_rad));
+    double y = 0.99664719 * sin(u) + elevation*sin(lat_rad)/6378140.0;
+    double x =              cos(u) + elevation*cos(lat_rad)/6378140.0;
+
+    delta_alpha_rad =      atan2(                - x*sin(xi_rad) *sin(h_rad),
+                                  cos(delta_rad) - x*sin(xi_rad) *cos(h_rad));
+
+    *delta_prime = rad2deg(atan2((sin(delta_rad) - y*sin(xi_rad))*cos(delta_alpha_rad),
+                                  cos(delta_rad) - x*sin(xi_rad) *cos(h_rad)));
+
+    *delta_alpha = rad2deg(delta_alpha_rad);
+}
+
+public static function topocentric_right_ascension(double alpha_deg, double delta_alpha)
+{
+    return alpha_deg + delta_alpha;
+}
+
+public static function topocentric_local_hour_angle(double h, double delta_alpha)
+{
+    return h - delta_alpha;
+}
+
+public static function topocentric_elevation_angle(double latitude, double delta_prime, double h_prime)
+{
+    double lat_rad         = deg2rad(latitude);
+    double delta_prime_rad = deg2rad(delta_prime);
+
+    return rad2deg(asin(sin(lat_rad)*sin(delta_prime_rad) +
+                        cos(lat_rad)*cos(delta_prime_rad) * cos(deg2rad(h_prime))));
+}
+
+public static function atmospheric_refraction_correction(double pressure, double temperature,
+	                                     double atmos_refract, double e0)
+{
+    double del_e = 0;
+
+    if (e0 >= -1*(SUN_RADIUS + atmos_refract))
+        del_e = (pressure / 1010.0) * (283.0 / (273.0 + temperature)) *
+                 1.02 / (60.0 * tan(deg2rad(e0 + 10.3/(e0 + 5.11))));
+
+    return del_e;
+}
+
+public static function topocentric_elevation_angle_corrected(double e0, double delta_e)
+{
+    return e0 + delta_e;
+}
+
+public static function topocentric_zenith_angle(double e)
+{
+    return 90.0 - e;
+}
+
+public static function topocentric_azimuth_angle_astro(double h_prime, double latitude, double delta_prime)
+{
+    double h_prime_rad = deg2rad(h_prime);
+    double lat_rad     = deg2rad(latitude);
+
+    return limit_degrees(rad2deg(atan2(sin(h_prime_rad),
+                         cos(h_prime_rad)*sin(lat_rad) - tan(deg2rad(delta_prime))*cos(lat_rad))));
+}
+
+public static function topocentric_azimuth_angle(double azimuth_astro)
+{
+    return limit_degrees(azimuth_astro + 180.0);
+}
+
+public static function surface_incidence_angle(double zenith, double azimuth_astro, double azm_rotation,
+	                                                                double slope)
+{
+    double zenith_rad = deg2rad(zenith);
+    double slope_rad  = deg2rad(slope);
+
+    return rad2deg(acos(cos(zenith_rad)*cos(slope_rad)  +
+                        sin(slope_rad )*sin(zenith_rad) * cos(deg2rad(azimuth_astro - azm_rotation))));
+}
+
+public static function sun_mean_longitude(double jme)
+{
+    return limit_degrees(280.4664567 + jme*(360007.6982779 + jme*(0.03032028 +
+                    jme*(1/49931.0   + jme*(-1/15300.0     + jme*(-1/2000000.0))))));
+}*/
 }
 
 class ASTROSUN{
@@ -3035,4 +3314,10 @@ class ASTROMISC{
     }
 }
 
+enum TERM_ABC:int{
+    case TERM_A = 0;
+    case TERM_B = 1;
+    case TERM_C = 2;
+    case TERM_COUNT = 3;
+}
 ?>
