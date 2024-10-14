@@ -585,7 +585,7 @@ class Sun{
             $spa['azimuth'] = $this->TopocentricAzimuthAngle();
             $spa['elevationAngle'] = $this->TopocentricElevationAngleCorrected();
             $spa['declination'] = $this->TopocentricDeclination();
-            $spa['shadow'] = cot(deg2rad($spa['elevationAngle']));
+            $spa['shadow'] = 1/tan(deg2rad($spa['elevationAngle']));
 
         } else {
             $spa['srha'] = -9999;
