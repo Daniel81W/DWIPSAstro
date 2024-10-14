@@ -439,7 +439,7 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_ArgumentLatitudeMoon", "value", $sun->ArgumentLatitudeMoon());
         $this->UpdateFormField("TestCalc_AscendingLongitudeMoon", "value", $sun->AscendingLongitudeMoon());
 
-        $this->UpdateFormField("TestCalc_NutationLongitude", "value", $sun->NutationLongitude());
+        /*$this->UpdateFormField("TestCalc_NutationLongitude", "value", $sun->NutationLongitude());
         $this->UpdateFormField("TestCalc_NutationObliquity", "value", $sun->NutationObliquity());
         $this->UpdateFormField("TestCalc_EclipticMeanObliquity", "value", $sun->EclipticMeanObliquity());
         $this->UpdateFormField("TestCalc_EclipticTrueObliquity", "value", $sun->EclipticTrueObliquity());
@@ -466,7 +466,7 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("TestCalc_EOT", "value", $sun->EOT());
         $this->UpdateFormField("TestCalc_ApproxSunTransitTime", "value", $sun->ApproxSunTransitTime());
         IPS_LogMessage("SUN", var_dump($sun->ApproxSunRiseAndSet()));
-        IPS_LogMessage("SUN", $sun->SunHourAngleAtRiseSet());
+        IPS_LogMessage("SUN", $sun->SunHourAngleAtRiseSet());*/
         //IPS_LogMessage("SUNSTA", $sun->CalculateEotAndSunRiseTransitSet()['sta']);
         //IPS_LogMessage("SUNTRANS", $sun->CalculateEotAndSunRiseTransitSet()['suntransit']);
         //IPS_LogMessage("SUNRISE", $sun->CalculateEotAndSunRiseTransitSet()['sunrise']);
