@@ -758,7 +758,7 @@ class ASTRO_SUN_FORMULA{
         return $sum;
     }
 
-    public static function EarthValues(array &$term_sum, int $count, float $jme)
+    public static function EarthValues(array $term_sum, int $count, float $jme)
     {
         $sum = 0;
 
