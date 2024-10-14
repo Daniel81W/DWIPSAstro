@@ -536,49 +536,50 @@ class Sun{
 
     public function ObserverHourAngle(): float
     {
-        return ASTROMISC::LimitTo360Deg($this->GreenwichSiderealTime() + $this->longitude - $this->GeocentricRightAscension());
+        return ASTRO_SUN_FORMULA::observer_hour_angle($this->GreenwichSiderealTime(),$this->longitude,$this->GeocentricRightAscension());
+        //return ASTROMISC::LimitTo360Deg($this->GreenwichSiderealTime() + $this->longitude - $this->GeocentricRightAscension());
     }
 
     public function GeocentricDeclination(): float
     {
-        $lamda_rad = deg2rad($this->ApparentSunLongitude());
+        return ASTRO_SUN_FORMULA::geocentric_declination($this->GeocentricLatitude(), $this->EclipticTrueObliquity(), $this->ApparentSunLongitude());
+        /*$lamda_rad = deg2rad($this->ApparentSunLongitude());
         $epsilon_rad = deg2rad($this->EclipticTrueObliquity());
         $beta_rad = deg2rad($this->GeocentricLatitude());
 
         return rad2deg(asin(sin($beta_rad) * cos($epsilon_rad) +
-            cos($beta_rad) * sin($epsilon_rad) * sin($lamda_rad)));
+            cos($beta_rad) * sin($epsilon_rad) * sin($lamda_rad)));*/
     }
 
     public function GeocentricRightAscension(): float
     {
-        $lamda_rad = deg2rad($this->ApparentSunLongitude());
+        return ASTRO_SUN_FORMULA::geocentric_right_ascension($this->ApparentSunLongitude(),$this->EclipticTrueObliquity(),$this->GeocentricLatitude());
+        /*$lamda_rad = deg2rad($this->ApparentSunLongitude());
         $epsilon_rad = deg2rad($this->EclipticTrueObliquity());
         $beta_rad = deg2rad($this->GeocentricLatitude());
 
         return ASTROMISC::LimitTo360Deg(rad2deg(atan2(sin($lamda_rad) * cos($epsilon_rad) -
-            tan($beta_rad) * sin($epsilon_rad), cos($lamda_rad))));
+            tan($beta_rad) * sin($epsilon_rad), cos($lamda_rad))));*/
     }
 
     public function GreenwichSiderealTime(): float
     {
-        return $this->GreenwichMeanSiderealTime() + $this->NutationLongitude() * cos(deg2rad($this->EclipticTrueObliquity()));
+        return ASTRO_SUN_FORMULA::greenwich_sidereal_time($this->GreenwichMeanSiderealTime(),$this->NutationLongitude(),$this->EclipticTrueObliquity());//$this->GreenwichMeanSiderealTime() + $this->NutationLongitude() * cos(deg2rad($this->EclipticTrueObliquity()));
     }
 
     public function GreenwichMeanSiderealTime():float
     {
-        //$jd = $this->julianDay->get_JD();
-        //$jc = $this->julianDay->get_JC();
-        return ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($this->julianDay->get_JD(),$this->julianDay->get_JC());// ASTROMISC::LimitTo360Deg(280.46061837 + 360.98564736629 * ($jd - 2451545.0) + $jc * $jc * (0.000387933 - $jc / 38710000.0));
+        return ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($this->julianDay->get_JD(),$this->julianDay->get_JC());
     }
 
     public function ApparentSunLongitude():float
     {
-        return ASTRO_SUN_FORMULA::apparent_sun_longitude($this->GeocentricLongitude(),$this->NutationLongitude(),$this->AberrationCorrection());//$this->GeocentricLongitude() + $this->NutationLongitude() + $this->AberrationCorrection();
+        return ASTRO_SUN_FORMULA::apparent_sun_longitude($this->GeocentricLongitude(),$this->NutationLongitude(),$this->AberrationCorrection());
     }
 
     public function AberrationCorrection():float
     {
-        return ASTRO_SUN_FORMULA::aberration_correction($this->EarthRadiusVector());//-20.4898 / (3600.0 * $this->EarthRadiusVector());
+        return ASTRO_SUN_FORMULA::aberration_correction($this->EarthRadiusVector());
     }
 
     public function EclipticTrueObliquity():float
@@ -821,50 +822,50 @@ class ASTRO_SUN_FORMULA{
         return $delta_epsilon + $epsilon0/3600.0;
     }
     
-    public static function aberration_correction(float $r)
+    public static function aberration_correction(float $r): float
     {
         return -20.4898 / (3600.0*$r);
     }
 
-    public static function apparent_sun_longitude(float $theta, float $delta_psi, float $delta_tau)
+    public static function apparent_sun_longitude(float $theta, float $delta_psi, float $delta_tau): float
     {
         return $theta + $delta_psi + $delta_tau;
     }
 
-    public static function greenwich_mean_sidereal_time (float $jd, float $jc)
+    public static function greenwich_mean_sidereal_time (float $jd, float $jc): float
     {
         return ASTROMISC::LimitTo360Deg(280.46061837 + 360.98564736629 * ($jd - 2451545.0) +
             $jc* $jc*(0.000387933 - $jc/38710000.0));
     }
+    
+    public static function greenwich_sidereal_time (float $nu0, float $delta_psi, float $epsilon): float
+    {
+        return $nu0 + $delta_psi*cos(deg2rad($epsilon));
+    }
+
+    public static function geocentric_right_ascension(float $lamda, float $epsilon, float $beta): float
+    {
+        $lamda_rad   = deg2rad($lamda);
+        $epsilon_rad = deg2rad($epsilon);
+
+        return ASTROMISC::LimitTo360Deg(rad2deg(atan2(sin($lamda_rad)*cos($epsilon_rad) -
+                                           tan(deg2rad($beta))*sin($epsilon_rad), cos($lamda_rad))));
+    }
+
+    public static function geocentric_declination(float $beta, float $epsilon, float $lamda): float
+    {
+        $beta_rad    = deg2rad($beta);
+        $epsilon_rad = deg2rad($epsilon);
+
+        return rad2deg(asin(sin($beta_rad)*cos($epsilon_rad) +
+                            cos($beta_rad)*sin($epsilon_rad)*sin(deg2rad($lamda))));
+    }
+
+    public static function observer_hour_angle(float $nu, float $longitude, float $alpha_deg): float
+    {
+        return ASTROMISC::LimitTo360Deg($nu + $longitude - $alpha_deg);
+    }
     /*
-    public static function greenwich_sidereal_time (double nu0, double delta_psi, double epsilon)
-    {
-        return nu0 + delta_psi*cos(deg2rad(epsilon));
-    }
-
-    public static function geocentric_right_ascension(double lamda, double epsilon, double beta)
-    {
-        double lamda_rad   = deg2rad(lamda);
-        double epsilon_rad = deg2rad(epsilon);
-
-        return limit_degrees(rad2deg(atan2(sin(lamda_rad)*cos(epsilon_rad) -
-                                           tan(deg2rad(beta))*sin(epsilon_rad), cos(lamda_rad))));
-    }
-
-    public static function geocentric_declination(double beta, double epsilon, double lamda)
-    {
-        double beta_rad    = deg2rad(beta);
-        double epsilon_rad = deg2rad(epsilon);
-
-        return rad2deg(asin(sin(beta_rad)*cos(epsilon_rad) +
-                            cos(beta_rad)*sin(epsilon_rad)*sin(deg2rad(lamda))));
-    }
-
-    public static function observer_hour_angle(double nu, double longitude, double alpha_deg)
-    {
-        return limit_degrees(nu + longitude - alpha_deg);
-    }
-
     public static function sun_equatorial_horizontal_parallax(double r)
     {
         return 8.794 / (3600.0 * r);
