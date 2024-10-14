@@ -614,7 +614,7 @@ class Sun{
         $jz = new jahreszeit();
         IPS_LogMessage("Test",var_dump( $jz->saison(2024)));
 
-        $jce = $this->julianDay->get_JCE();
+        /*$jce = $this->julianDay->get_JCE();
         $latitude = $this->latitude;
         $declination = $this->TopocentricDeclination();
         $declinationBef = Declination($jce - 0.00000002);
@@ -646,7 +646,7 @@ class Sun{
                     return 1;
                 }
             }
-        }
+        }*/
     }
 
     public function EOT(): float
