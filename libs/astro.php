@@ -206,30 +206,180 @@ class Sun{
     private float $pressure;
     private float $temperature;
 
+    private $deltaT;
+    
+    private Sun $sunJDZeroDT;
     private Sun $sunJDZero;
- 
+    private Sun $sunJDZeroM;
+    private Sun $sunJDZeroP;
 
-    function __construct(float $deltaT , float $dut1 , int $timestamp, float $latitude, float $longitude, float $elevation, float $pressure, float $temperature, bool $jd_zero_sun = false)
+
+
+
+    function __construct(float $deltaT, float $dut1, int $timestamp, float $latitude, float $longitude, float $elevation, float $pressure, float $temperature, bool $jd_zero_sun = false)
     {
-        if($timestamp<0){
+        if ($timestamp < 0) {
             $date = new DateTime();
             $timestamp = $date->getTimestamp();
         }
         $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);
-        $this->latitude = $latitude; 
+        $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->elevation = $elevation;
-        $this->pressure=$pressure;
-        $this->temperature=$temperature;
+        $this->pressure = $pressure;
+        $this->temperature = $temperature;
+        $this->deltaT = $deltaT;
 
         if (!$jd_zero_sun) {
-            $timestampZero = mktime(0,0,0,idate('m', $timestamp), idate('t', $timestamp), idate('Y', $timestamp));
-            $this->sunJDZero = new Sun(0,0, $timestampZero, $latitude, $longitude, $elevation, $pressure, $temperature, true);
+            $timestampZero = mktime(0, 0, 0, idate('m', $timestamp), idate('t', $timestamp), idate('Y', $timestamp));
+            $timestampZeroM = mktime(0, 0, 0, idate('m', $timestamp), idate('t', $timestamp) - 1, idate('Y', $timestamp));
+            $timestampZeroP = mktime(0, 0, 0, idate('m', $timestamp), idate('t', $timestamp) + 1, idate('Y', $timestamp));
+            $this->sunJDZeroDT = new Sun($deltaT, 0, $timestampZero, $latitude, $longitude, $elevation, $pressure, $temperature, true);
+            $this->sunJDZero = new Sun(0, 0, $timestampZero, $latitude, $longitude, $elevation, $pressure, $temperature, true);
+            $this->sunJDZeroM = new Sun(0, 0, $timestampZeroM, $latitude, $longitude, $elevation, $pressure, $temperature, true);
+            $this->sunJDZeroP = new Sun(0, 0, $timestampZeroP, $latitude, $longitude, $elevation, $pressure, $temperature, true);
         }
     }
 
 
 
+
+    public function CalculateEotAndSunRiseTransitSet(): array
+    {
+        $h0_prime = -1 * (Sun::radius + Sun::atmosRefract);
+
+        $nu = 0;
+        $m = 0;
+        $h0 = 0;
+        $n = 0;
+        $m_rts = array();
+        $nu_rts = array();
+        $h_rts = array();
+        $alpha_prime = array();
+        $delta_prime = array();
+        $h_prime = array();
+
+
+        $m = $this->SunMeanLongitude();
+        $eot = $this->EOT();
+
+        $nu = $this->sunJDZeroDT->GreenwichSiderealTime();
+
+        /*for (i = 0; i < JD_COUNT; i++) {
+            calculate_geocentric_sun_right_ascension_and_declination(&sun_rts);
+            alpha[i] = sun_rts.alpha;
+            delta[i] = sun_rts.delta;
+            sun_rts.jd++;
+        }*/
+        $alpha = array($this->sunJDZeroM->GeocentricRightAscension(), $this->sunJDZero->GeocentricRightAscension(), $this->sunJDZeroP->GeocentricRightAscension());
+        $delta = array($this->sunJDZeroM->GeocentricDeclination(), $this->sunJDZero->GeocentricDeclination(), $this->sunJDZeroP->GeocentricDeclination());
+
+
+        //m_rts[0] = $this->sunJDZero->ApproxSunTransitTime();
+        //$h0 = $this->sunJDZero->SunHourAngleAtRiseSet();
+
+        if ($h0 >= 0) {
+
+            $m_rts = $this->sunJDZero->ApproxSunRiseAndSet();
+
+            for ($i = 0; $i < 3; $i++) {
+
+                $nu_rts[$i] = $nu + 360.985647 * $m_rts[$i];
+
+                $n = $m_rts[$i] + $this->deltaT / 86400.0;
+                $alpha_prime[$i] = $this->RtsAlphaDeltaPrime($alpha, $n);
+                $delta_prime[$i] = $this->RtsAlphaDeltaPrime($delta, $n);
+
+                $h_prime[$i] = ASTROMISC::LimitTo180DegPM($nu_rts[$i] + $this->longitude - $alpha_prime[$i]);
+
+                $h_rts[$i] = $this->RtsSunAltitude($delta_prime[$i], $h_prime[$i]);
+            }
+            $ret = array(
+                'srha' => $h_prime[0],
+                'ssha' => $h_prime[2],
+                'sta' => $h_rts[1],
+
+                'suntransit' => ASTROMISC::DayFracToHr($m_rts[1] - $h_prime[1] / 360.0),
+
+                'sunrise' => ASTROMISC::DayFracToHr(
+                    SunRiseAndSet(
+                        $m_rts,
+                        $h_rts,
+                        $delta_prime,
+                        $h_prime,
+                        $h0_prime,
+                        1
+                    )
+                ),
+
+                'sunset' => ASTROMISC::DayFracToHr(
+                    SunRiseAndSet(
+                        $m_rts,
+                        $h_rts,
+                        $delta_prime,
+                        $h_prime,
+                        $h0_prime,
+                        2
+                    )
+                )
+            );
+
+        } else {
+            $ret = array(
+                'srha' => -99999,
+                'ssha' => -99999,
+                'sta' => -99999,
+
+                'suntransit' => -99999,
+
+                'sunrise' => -99999,
+
+                'sunset' => -99999
+            );
+        }
+        return $ret;
+    }
+
+    public function SunRiseAndSet(
+        $m_rts,
+        $h_rts,
+        $delta_prime,
+        $h_prime,
+        $h0_prime,
+        $sun
+    ): float {
+        return $m_rts[$sun] + ($h_rts[$sun] - $h0_prime) /
+            (360.0 * cos(deg2rad($delta_prime[$sun])) * cos(deg2rad($this->latitude)) * sin(deg2rad($h_prime[$sun])));
+    }
+
+
+
+
+
+    public function RtsAlphaDeltaPrime(array $ad, $n)
+    {
+        $ret = array();
+        $a = $ad[1] - $ad[0];
+        $b = $ad[2] - $ad[1];
+
+        if (abs($a) >= 2.0) {
+            $a = ASTROMISC::LimitZeroToOne($a);
+        }
+        if (abs($b) >= 2.0) {
+            $b = ASTROMISC::LimitZeroToOne($b);
+        }
+
+        return $ad[1] + $n * ($a + $b + ($b - $a) * $n) / 2.0;
+    }
+
+    public function RtsSunAltitude(float $delta_prime, float $h_prime)
+    {
+        $latitude_rad = deg2rad($this->latitude);
+        $delta_prime_rad = deg2rad($delta_prime);
+
+        return rad2deg(asin(sin($latitude_rad) * sin($delta_prime_rad) +
+            cos($latitude_rad) * cos($delta_prime_rad) * cos(deg2rad($h_prime))));
+    }
 
     public function ApproxSunRiseAndSet(): array
     {
@@ -267,7 +417,7 @@ class Sun{
     public function ApproxSunTransitTime(): float
     {
         // TODO Right Ascension für JD ZERO
-        return ($this->sunJDZero->GeocentricRightAscension() - $this->longitude - $this->sunJDZero->GreenwichSiderealTime()) / 360.0;
+        return ($this->sunJDZero->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
     }
 
     public function EOT(): float
