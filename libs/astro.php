@@ -224,7 +224,7 @@ class Sun{
     {
         $h0 = $this->SunHourAngleAtRiseSet();
         $h0_dfrac = $h0 / 360.0;
-        $sunTrans = ApproxSunTransitTime();
+        $sunTrans = $this->ApproxSunTransitTime();
 
         $ret = array();
         $ret[0] = ASTROMISC::LimitZeroToOne($sunTrans - $h0_dfrac);
