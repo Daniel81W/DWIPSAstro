@@ -1233,7 +1233,7 @@ class ASTRO_SUN_FORMULA{
 
 class Moon{
 
-    void mpa_calculate(&$spa, &$mpa)
+    public function mpa_calculate(&$spa, &$mpa)
 {
 	$mpa['l_prime'] = ASTRO_MOON_FORMULA::moon_mean_longitude($spa['jce']);
 	$mpa['d']       = ASTRO_MOON_FORMULA::moon_mean_elongation($spa['jce']);
