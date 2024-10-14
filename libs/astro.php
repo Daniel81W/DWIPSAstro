@@ -1105,7 +1105,7 @@ class ASTRO_SUN_FORMULA{
             cos($latitude_rad) * cos($delta_prime_rad) * cos(deg2rad($h_prime))));
     }
 
-    public static function sun_rise_and_set(float &$m_rts, float &$h_rts, float &$delta_prime, float $latitude, float &$h_prime, float $h0_prime, int $sun): float
+    public static function sun_rise_and_set(array &$m_rts, array &$h_rts, array &$delta_prime, float $latitude, array &$h_prime, float $h0_prime, int $sun): float
     {
         return $m_rts[$sun] + ($h_rts[$sun] - $h0_prime) /
             (360.0 * cos(deg2rad($delta_prime[$sun])) * cos(deg2rad($latitude)) * sin(deg2rad($h_prime[$sun])));
