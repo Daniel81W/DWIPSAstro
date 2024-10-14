@@ -592,7 +592,7 @@ class Sun{
             $spa['elevationAngle'] = $this->TopocentricElevationAngleCorrected();
             $spa['declination'] = $this->TopocentricDeclination();
             $spa['shadow'] = 1/tan(deg2rad($spa['elevationAngle']));
-            $spa['season'] = $this->Season();
+            $spa['season'] = $this->SeasonVal();
 
         } else {
             $spa['srha'] = -9999;
@@ -609,44 +609,27 @@ class Sun{
         
     }
 
-    public function Season() : int
-    {
-        $jz = new jahreszeit();
-        IPS_LogMessage("Test",var_dump( $jz->saison(2024)));
 
-        /*$jce = $this->julianDay->get_JCE();
-        $latitude = $this->latitude;
-        $declination = $this->TopocentricDeclination();
-        $declinationBef = Declination($jce - 0.00000002);
-        if($declination>=0){
-            if($declination > $declinationBef){
-                if($latitude > 0){
-                    return 1;
-                }else{
-                    return 3;
-                }
-            }else{
-                if($latitude > 0){
-                    return 2;
-                }else{
-                    return 4;
-                }
-            }
-        }else{
-            if($declination > $declinationBef){
-                if($latitude > 0){
-                    return 4;
-                }else{
-                    return 2;
-                }
-            }else{
-                if($latitude > 0){
-                    return 3;
-                }else{
-                    return 1;
-                }
-            }
-        }*/
+    public function Season(): array
+    {
+        $jz = new Season();
+        return $jz->saison(2024);
+    }
+
+    public function SeasonVal(): int
+    {
+        $seasonTimes = $this->Season();
+        if ($this->timestamp > $seasonTimes['winter']) {
+            return 4;
+        } elseif ($this->timestamp > $seasonTimes['fall']) {
+            return 3;
+        } elseif ($this->timestamp > $seasonTimes['summer']) {
+            return 2;
+        } elseif ($this->timestamp > $seasonTimes['spring']) {
+            return 1;
+        } else {
+            return 4;
+        }
     }
 
     public function EOT(): float
@@ -2022,7 +2005,7 @@ class ASTROMISC{
     }
 }
 
-class jahreszeit
+class Season
 {
     function datum()
     {
@@ -2047,8 +2030,8 @@ class jahreszeit
         $Z = $this->trunc($Z1);
         $A = $Z;
         $B = $A + 1524;
-        $C = $this->$trunc(($B - 122.1) / 365.25);
-        $D = $this->$trunc(365.25 * $C);
+        $C = $this->trunc(($B - 122.1) / 365.25);
+        $D = $this->trunc(365.25 * $C);
         $E = $this->trunc(($B - $D) / 30.6001);
         $this->TAG = $this->trunc($B - $D - $this->trunc(30.6001 * $E));
         if ($E < 13.5)
@@ -2088,7 +2071,7 @@ class jahreszeit
 
     function affsai($n)
     {
-        $nomsai = array("spring", "summer", "autumn", "winter");
+        $nomsai = array("spring", "summer", "fall", "winter");
         $FDJ = ($this->JJD + 0.5E0) - floor($this->JJD + 0.5E0);
         $HH = floor($FDJ * 24);
         $FDJ -= $HH / 24.0;
