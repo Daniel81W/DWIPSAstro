@@ -1292,7 +1292,7 @@ class ASTRO_MOON_FORMULA
         );
     }
 
-    public static function moon_periodic_term_summation(float $d, float $m, float $m_prime, float $f, float $jce, $terms, float &$sin_sum, double &$cos_sum)
+    public static function moon_periodic_term_summation(float $d, float $m, float $m_prime, float $f, float $jce, $terms, float &$sin_sum, float &$cos_sum)
     {
         $e_mult = 0.0;
         $trig_arg = 0.0;
