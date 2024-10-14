@@ -417,7 +417,7 @@ class DWIPSSun extends IPSModule
     public function CalcTestValues($date, $deltaT, $lat, $long, $elev, $pressure, $temperature){
 
         $jd = new JulianDay($deltaT, 0, $date);
-        $sun = new Sun($deltaT, 0, $date, $jd, $lat, $long, $elev, $pressure, $temperature);
+        $sun = new Sun($deltaT, 0, $date, $lat, $long, $elev, $pressure, $temperature);
 
         $this->UpdateFormField("TestCalc_JD", "value", $jd->get_JD());
         $this->UpdateFormField("TestCalc_JC", "value", $jd->get_JC());
