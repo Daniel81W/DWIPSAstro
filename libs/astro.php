@@ -198,6 +198,7 @@ class Sun{
     const atmosRefract = 0.5667;
 
     private JulianDay $julianDay;
+    private JulianDay $julianDayZero;
 
     private float $latitude;
     private float $longitude;
@@ -217,6 +218,22 @@ class Sun{
     }
 
 
+    public function ApproxSunTransitTime(): float
+    {
+        return ($this->GeocentricRightAscension() - $this->longitude - $this->GreenwichSiderealTime()) / 360.0;
+    }
+
+    public function EOT(): float
+    {
+        return ASTROMISC::LimitTo20Minutes(4.0 * ($this->SunMeanLongitude() - 0.0057183 - $this->GeocentricRightAscension() + $this->NutLong() * cos(deg2rad($this->TrueObl()))));
+    }
+
+    public function SunMeanLongitude(): float
+    {
+        $jme = $this->julianDay->get_JME();
+        return ASTROMISC::LimitTo360Deg(280.4664567 + $jme * (360007.6982779 + $jme * (0.03032028 +
+            $jme * (1 / 49931.0 + $jme * (-1 / 15300.0 + $jme * (-1 / 2000000.0))))));
+    }
 
     public function SurfaceIncidenceAngle(float $orientation, float $slope)
     {

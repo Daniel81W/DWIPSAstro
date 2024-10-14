@@ -619,6 +619,24 @@
                                 "name": "TestCalc_SurfaceIncidenceAngle",
                                 "caption": "TestCalc_SurfaceIncidenceAngle",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunMeanLongitude",
+                                "caption": "TestCalc_SunMeanLongitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EOT",
+                                "caption": "TestCalc_EOT",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ApproxSunTransitTime",
+                                "caption": "TestCalc_ApproxSunTransitTime",
+                                "width": "200px"
                             }
                         ]
                     }
