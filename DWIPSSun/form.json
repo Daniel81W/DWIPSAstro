@@ -152,27 +152,27 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "meanOblEcl",
+                                "name": "Current_meanOblEcl",
                                 "caption": "mean obliquity of the ecliptic (ε0)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "trueOblEcl",
+                                "name": "Current_trueOblEcl",
                                 "caption": "true obliquity of the ecliptic (ε)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "aberCorr",
+                                "name": "Current_aberCorr",
                                 "caption": "aberration correction (Δτ)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "appSunLong",
+                                "name": "Current_appSunLong",
                                 "caption": "apparent sun longitude (λ)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "appSidTimeGreenwich",
+                                "name": "Current_appSidTimeGreenwich",
                                 "caption": "apparent sidereal time at Greenwich (ν)"
                             }
                         ]
@@ -187,42 +187,42 @@
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "geoSunDec",
+                                "name": "Current_geoSunDec",
                                 "caption": "geocentric sun declination (δ)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "locHourAngle",
+                                "name": "Current_locHourAngle",
                                 "caption": "local hour angle (Η)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "topoSunRAsc",
+                                "name": "Current_topoSunRAsc",
                                 "caption": "Topocentric Sun Right Ascension (α')"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "topoSunDec",
+                                "name": "Current_topoSunDec",
                                 "caption": "Topocentric sun declination (δ')"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "topoLocHourAngle",
+                                "name": "Current_topoLocHourAngle",
                                 "caption": "Topocentric local hour angle (Η')"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "topoZenAngle",
+                                "name": "Current_topoZenAngle",
                                 "caption": "Topocentric zenith angle (θ)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "topoAziAngle",
+                                "name": "Current_topoAziAngle",
                                 "caption": "Topocentric azimuth angle (Φ)"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "eqOfTime",
+                                "name": "Current_eqOfTime",
                                 "caption": "Equation of tim (E)"
                             }
                         ]

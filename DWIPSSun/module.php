@@ -194,6 +194,7 @@ class DWIPSSun extends IPSModule
 
     public function GetConfigurationForm()
     {
+        $this->Update();
         //load form from file
         $jsonForm = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
         /*
@@ -277,7 +278,7 @@ class DWIPSSun extends IPSModule
         $sunDat = array();
         $sun->calculate_eot_and_sun_rise_transit_set($sunDat);
 
-        $this->WriteAttributeFloat("jd", $jd->get_JD());
+        /*$this->WriteAttributeFloat("jd", $jd->get_JD());
         $this->WriteAttributeFloat("jc", $jd->get_JC());
         $this->WriteAttributeFloat("jm", $jd->get_JM());
         $this->WriteAttributeFloat("jde", $jd->get_JDE());
@@ -293,7 +294,7 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("nutationLongitude", $sun->NutationLongitude());
         $this->WriteAttributeFloat("nutationObliquity", $sun->NutationObliquity());
 
-       /* $this->WriteAttributeFloat("meanOblEcl", ASTROSUN::MeanObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
+        $this->WriteAttributeFloat("meanOblEcl", ASTROSUN::MeanObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("trueOblEcl", ASTROSUN::TrueObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("aberCorr", ASTROSUN::AberrationCorrection($this->ReadAttributeFloat("jce")));
         $this->WriteAttributeFloat("appSunLong", ASTROSUN::ApparentSunLongitude($this->ReadAttributeFloat("jce")));
@@ -325,24 +326,23 @@ class DWIPSSun extends IPSModule
         
         $this->UpdateFormField("Current_nutationLong", "value", $sun->NutationLongitude());
         $this->UpdateFormField("Current_nutationObl", "value", $sun->NutationObliquity());
-        /*
-        $this->UpdateFormField("meanOblEcl", "value", $this->ReadAttributeFloat("meanOblEcl"));
-        $this->UpdateFormField("trueOblEcl", "value", $this->ReadAttributeFloat("trueOblEcl"));
-        $this->UpdateFormField("aberCorr", "value", $this->ReadAttributeFloat("aberCorr"));
-        $this->UpdateFormField("appSunLong", "value", $this->ReadAttributeFloat("appSunLong"));
-        $this->UpdateFormField("appSidTimeGreenwich", "value", $this->ReadAttributeFloat("appSidTimeGreenwich"));
-
-        $this->UpdateFormField("geoSunRAsc", "value", $this->ReadAttributeFloat("geoSunRAsc"));
-        $this->UpdateFormField("geoSunDec", "value", $this->ReadAttributeFloat("geoSunDec"));
-        $this->UpdateFormField("locHourAngle", "value", $this->ReadAttributeFloat("locHourAngle"));
-        $this->UpdateFormField("topoSunRAsc", "value", $this->ReadAttributeFloat("topoSunRAsc"));
-        $this->UpdateFormField("topoSunDec", "value", $this->ReadAttributeFloat("topoSunDec"));
-        $this->UpdateFormField("topoLocHourAngle", "value", $this->ReadAttributeFloat("topoLocHourAngle"));
-        $this->UpdateFormField("topoZenAngle", "value", $this->ReadAttributeFloat("topoZenAngle"));
-        $this->UpdateFormField("topoAziAngle", "value", $this->ReadAttributeFloat("topoAziAngle"));
-        $this->UpdateFormField("eqOfTime", "value", $this->ReadAttributeFloat("eqOfTime"));
-        */
-        $now = time();
+        
+        $this->UpdateFormField("Current_meanOblEcl", "value", $sun->EclipticMeanObliquity());
+        $this->UpdateFormField("Current_trueOblEcl", "value", $sun->EclipticTrueObliquity());
+        $this->UpdateFormField("Current_aberCorr", "value", $sun->AberrationCorrection());
+        $this->UpdateFormField("Current_appSunLong", "value", $sun->ApparentSunLongitude());
+        $this->UpdateFormField("Current_appSidTimeGreenwich", "value", $sun->GreenwichSiderealTime());
+        
+        $this->UpdateFormField("Current_geoSunRAsc", "value", $sun->GeocentricRightAscension());
+        $this->UpdateFormField("Current_geoSunDec", "value", $sun->GeocentricDeclination());
+        $this->UpdateFormField("Current_locHourAngle", "value", $sun->ObserverHourAngle());
+        $this->UpdateFormField("Current_topoSunRAsc", "value", $sun->TopocentricRightAscension());
+        $this->UpdateFormField("Current_topoSunDec", "value", $sun->TopocentricDeclination());
+        $this->UpdateFormField("Current_topoLocHourAngle", "value", $sun->TopocentricLocalHourAngle());
+        $this->UpdateFormField("Current_topoZenAngle", "value", $sun->TopocentricZenithAngle());
+        $this->UpdateFormField("Current_topoAziAngle", "value", $sun->TopocentricAzimuthAngle());
+        $this->UpdateFormField("Current_eqOfTime", "value", $sun->EOT());
+        
 
         $this->SetValue("solarnoon", $sunDat['suntransitUNIX']);//ASTROSUN::SunriseSunsetTransit(idate('Y', $now), idate('m', $now), idate('d', $now), $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333)["T"]);
         $this->SetValue("sunrise", $sunDat['sunriseUNIX']);//ASTROSUN::lastEl($now, $this->ReadPropertyFloat("deltaT"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), -0.8333, "R"));
