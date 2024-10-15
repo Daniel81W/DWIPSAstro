@@ -53,88 +53,6 @@
         }
     ],
     "actions": [
-        
-        
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "meanOblEcl",
-                    "caption": "mean obliquity of the ecliptic (ε0)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "trueOblEcl",
-                    "caption": "true obliquity of the ecliptic (ε)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "aberCorr",
-                    "caption": "aberration correction (Δτ)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "appSunLong",
-                    "caption": "apparent sun longitude (λ)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "appSidTimeGreenwich",
-                    "caption": "apparent sidereal time at Greenwich (ν)"
-                }
-            ]
-        },
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "geoSunRAsc",
-                    "caption": "Geocentric Sun Right Ascension (α)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "geoSunDec",
-                    "caption": "geocentric sun declination (δ)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "locHourAngle",
-                    "caption": "local hour angle (Η)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "topoSunRAsc",
-                    "caption": "Topocentric Sun Right Ascension (α')"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "topoSunDec",
-                    "caption": "Topocentric sun declination (δ')"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "topoLocHourAngle",
-                    "caption": "Topocentric local hour angle (Η')"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "topoZenAngle",
-                    "caption": "Topocentric zenith angle (θ)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "topoAziAngle",
-                    "caption": "Topocentric azimuth angle (Φ)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "eqOfTime",
-                    "caption": "Equation of tim (E)"
-                }
-            ]
-        },
         {
             "type": "PopupButton",
             "caption": "Aktuelle Werte anzeigen",
@@ -226,6 +144,86 @@
                                 "type": "ValidationTextBox",
                                 "name": "Current_nutuationObl",
                                 "caption": "nutation in obliquity (Δε)"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "meanOblEcl",
+                                "caption": "mean obliquity of the ecliptic (ε0)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "trueOblEcl",
+                                "caption": "true obliquity of the ecliptic (ε)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "aberCorr",
+                                "caption": "aberration correction (Δτ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "appSunLong",
+                                "caption": "apparent sun longitude (λ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "appSidTimeGreenwich",
+                                "caption": "apparent sidereal time at Greenwich (ν)"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "geoSunRAsc",
+                                "caption": "Geocentric Sun Right Ascension (α)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "geoSunDec",
+                                "caption": "geocentric sun declination (δ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "locHourAngle",
+                                "caption": "local hour angle (Η)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "topoSunRAsc",
+                                "caption": "Topocentric Sun Right Ascension (α')"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "topoSunDec",
+                                "caption": "Topocentric sun declination (δ')"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "topoLocHourAngle",
+                                "caption": "Topocentric local hour angle (Η')"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "topoZenAngle",
+                                "caption": "Topocentric zenith angle (θ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "topoAziAngle",
+                                "caption": "Topocentric azimuth angle (Φ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "eqOfTime",
+                                "caption": "Equation of tim (E)"
                             }
                         ]
                     }

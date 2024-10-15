@@ -196,7 +196,7 @@ class DWIPSSun extends IPSModule
     {
         //load form from file
         $jsonForm = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
-        
+        /*
         $jsonForm["actions"][0]["items"][0]["value"] = $this->ReadAttributeFloat("jd");
         $jsonForm["actions"][0]["items"][1]["value"] = $this->ReadAttributeFloat("jc");
         $jsonForm["actions"][0]["items"][2]["value"] = $this->ReadAttributeFloat("jm");
@@ -246,7 +246,7 @@ class DWIPSSun extends IPSModule
         $jsonForm["actions"][9]["popup"]["items"][1]["items"][1]["value"] = $this->ReadAttributeFloat("TestCalc_Long");
         $jsonForm["actions"][9]["popup"]["items"][1]["items"][2]["value"] = $this->ReadAttributeFloat("TestCalc_Elevation");
         $jsonForm["actions"][9]["popup"]["items"][1]["items"][3]["value"] = $this->ReadAttributeFloat("TestCalc_DeltaT");
-
+        */
         return json_encode($jsonForm);
     }
 
