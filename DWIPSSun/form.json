@@ -182,7 +182,7 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "geoSunRAsc",
+                                "name": "Current_geoSunRAsc",
                                 "caption": "Geocentric Sun Right Ascension (α)"
                             },
                             {
