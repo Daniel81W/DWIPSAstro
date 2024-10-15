@@ -138,12 +138,12 @@
                             {
                                 "type": "ValidationTextBox",
                                 "name": "Current_nutuationLong",
-                                "caption": "nutation in longitude (Δψ)"
+                                "caption": "nutuation in longitude (Δψ)"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "Current_nutuationObl",
-                                "caption": "nutation in obliquity (Δε)"
+                                "caption": "nutuation in obliquity (Δε)"
                             }
                         ]
                     },

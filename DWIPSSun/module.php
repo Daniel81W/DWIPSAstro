@@ -126,42 +126,6 @@ class DWIPSSun extends IPSModule
 
         $this->RegisterPropertyInteger("UpdateInterval", 1);
 
-        $this->RegisterAttributeFloat("jd", 0);
-        $this->RegisterAttributeFloat("jc", 0);
-        $this->RegisterAttributeFloat("jm", 0);
-        $this->RegisterAttributeFloat("jde", 0);
-        $this->RegisterAttributeFloat("jce", 0);
-        $this->RegisterAttributeFloat("jme", 0);
-        $this->RegisterAttributeFloat("helioCentLong", 0);
-        $this->RegisterAttributeFloat("L0", 0);
-        $this->RegisterAttributeFloat("L1", 0);
-        $this->RegisterAttributeFloat("L2", 0);
-        $this->RegisterAttributeFloat("L3", 0);
-        $this->RegisterAttributeFloat("L4", 0);
-        $this->RegisterAttributeFloat("L5", 0);
-        $this->RegisterAttributeFloat("helioCentLat", 0);
-        $this->RegisterAttributeFloat("B0", 0);
-        $this->RegisterAttributeFloat("B1", 0);
-        $this->RegisterAttributeFloat("earthRadVec", 0);
-        $this->RegisterAttributeFloat("geoCentLong", 0);
-        $this->RegisterAttributeFloat("geoCentLat", 0);
-        $this->RegisterAttributeFloat("nutationLongitude", 0);
-        $this->RegisterAttributeFloat("nutationObliquity", 0);
-        $this->RegisterAttributeFloat("meanOblEcl", 0);
-        $this->RegisterAttributeFloat("trueOblEcl", 0);
-        $this->RegisterAttributeFloat("aberCorr", 0);
-        $this->RegisterAttributeFloat("appSunLong", 0);
-        $this->RegisterAttributeFloat("appSidTimeGreenwich", 0);
-        $this->RegisterAttributeFloat("geoSunRAsc", 0);
-        $this->RegisterAttributeFloat("geoSunDec", 0);
-        $this->RegisterAttributeFloat("locHourAngle", 0);
-        $this->RegisterAttributeFloat("topoSunRAsc", 0);
-        $this->RegisterAttributeFloat("topoSunDec", 0);
-        $this->RegisterAttributeFloat("topoLocHourAngle", 0);
-        $this->RegisterAttributeFloat("topoZenAngle", 0);
-        $this->RegisterAttributeFloat("topoAziAngle", 0);
-        $this->RegisterAttributeFloat("eqOfTime", 0);
-        $this->RegisterAttributeFloat("elevationOfTheSun", 0);
 
 
 
@@ -278,39 +242,6 @@ class DWIPSSun extends IPSModule
         $sunDat = array();
         $sun->calculate_eot_and_sun_rise_transit_set($sunDat);
 
-        /*$this->WriteAttributeFloat("jd", $jd->get_JD());
-        $this->WriteAttributeFloat("jc", $jd->get_JC());
-        $this->WriteAttributeFloat("jm", $jd->get_JM());
-        $this->WriteAttributeFloat("jde", $jd->get_JDE());
-        $this->WriteAttributeFloat("jce", $jd->get_JCE());
-        $this->WriteAttributeFloat("jme", $jd->get_JME());
-
-        $this->WriteAttributeFloat("helioCentLong", $sun->EarthHeliocentricLongitude());
-        $this->WriteAttributeFloat("helioCentLat", $sun->EarthHeliocentricLatitude());
-        $this->WriteAttributeFloat("earthRadVec", $sun->EarthRadiusVector());
-        $this->WriteAttributeFloat("geoCentLong", $sun->GeocentricLongitude());
-        $this->WriteAttributeFloat("geoCentLat", $sun->GeocentricLatitude());
-        
-        $this->WriteAttributeFloat("nutationLongitude", $sun->NutationLongitude());
-        $this->WriteAttributeFloat("nutationObliquity", $sun->NutationObliquity());
-
-        $this->WriteAttributeFloat("meanOblEcl", ASTROSUN::MeanObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
-        $this->WriteAttributeFloat("trueOblEcl", ASTROSUN::TrueObliquityOfTheEcliptic($this->ReadAttributeFloat("jce")));
-        $this->WriteAttributeFloat("aberCorr", ASTROSUN::AberrationCorrection($this->ReadAttributeFloat("jce")));
-        $this->WriteAttributeFloat("appSunLong", ASTROSUN::ApparentSunLongitude($this->ReadAttributeFloat("jce")));
-        $this->WriteAttributeFloat("appSidTimeGreenwich", ASTROSUN::ApparentSiderealTimeAtGreenwich($this->ReadAttributeFloat("jd")));
-
-        $this->WriteAttributeFloat("geoSunRAsc", ASTROSUN::GeocentricSunRightAscension($this->ReadAttributeFloat("jce")));
-        $this->WriteAttributeFloat("geoSunDec", ASTROSUN::GeocentricSunDeclination($this->ReadAttributeFloat("jce")));
-        $this->WriteAttributeFloat("locHourAngle", ASTROSUN::LocalHourAngle($this->ReadAttributeFloat("jce"), $this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("Longitude")));
-        $this->WriteAttributeFloat("topoSunRAsc", ASTROSUN::TopocentricSunRightAscension($this->ReadAttributeFloat("jce"), $this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation")));
-        $this->WriteAttributeFloat("topoSunDec", ASTROSUN::TopocentricSunDeclination($this->ReadAttributeFloat("earthRadVec"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Elevation"), $this->ReadAttributeFloat("locHourAngle"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("geoSunRAsc")));
-        $this->WriteAttributeFloat("topoLocHourAngle", ASTROSUN::TopocentricLocalHourAngle($this->ReadAttributeFloat("earthRadVec"), $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Elevation"), $this->ReadAttributeFloat("locHourAngle"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("geoSunRAsc")));
-        $this->WriteAttributeFloat("topoZenAngle", ASTROSUN::TopocentricZenithAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
-        $this->WriteAttributeFloat("topoAziAngle", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
-        $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadAttributeFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
-        $this->WriteAttributeFloat("elevationOfTheSun", ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
-        */
         $this->UpdateFormField("Current_JD", "value", $sun->get_JulianDay()->get_JD());
         $this->UpdateFormField("Current_JC", "value", $sun->get_JulianDay()->get_JC());
         $this->UpdateFormField("Current_JM", "value", $sun->get_JulianDay()->get_JM());
@@ -324,8 +255,8 @@ class DWIPSSun extends IPSModule
         $this->UpdateFormField("Current_geoCentLong", "value", $sun->GeocentricLongitude());
         $this->UpdateFormField("Current_geoCentLat", "value", $sun->GeocentricLatitude());
         
-        $this->UpdateFormField("Current_nutationLong", "value", $sun->NutationLongitude());
-        $this->UpdateFormField("Current_nutationObl", "value", $sun->NutationObliquity());
+        $this->UpdateFormField("Current_nutuationLong", "value", $sun->NutationLongitude());
+        $this->UpdateFormField("Current_nutuationObl", "value", $sun->NutationObliquity());
         
         $this->UpdateFormField("Current_meanOblEcl", "value", $sun->EclipticMeanObliquity());
         $this->UpdateFormField("Current_trueOblEcl", "value", $sun->EclipticTrueObliquity());
