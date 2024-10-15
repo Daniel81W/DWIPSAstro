@@ -309,20 +309,20 @@ class DWIPSSun extends IPSModule
         $this->WriteAttributeFloat("topoAziAngle", ASTROSUN::TopocentricAzimuthAngle($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle")));
         $this->WriteAttributeFloat("eqOfTime", ASTROSUN::EqOfTime($this->ReadAttributeFloat("jme"), $this->ReadAttributeFloat("geoSunRAsc"), $this->ReadAttributeFloat("nutationLongitude"), $this->ReadAttributeFloat("trueOblEcl")));
         $this->WriteAttributeFloat("elevationOfTheSun", ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
+        */
+        $this->UpdateFormField("Current_JD", "value", $sun->get_JulianDay()->get_JD());
+        $this->UpdateFormField("Current_JC", "value", $sun->get_JulianDay()->get_JC());
+        $this->UpdateFormField("Current_JM", "value", $sun->get_JulianDay()->get_JM());
+        $this->UpdateFormField("Current_JDE", "value", $sun->get_JulianDay()->get_JDE());
+        $this->UpdateFormField("Current_JCE", "value", $sun->get_JulianDay()->get_JCE());
+        $this->UpdateFormField("Current_JME", "value", $sun->get_JulianDay()->get_JME());
 
-        $this->UpdateFormField("jd", "value", $this->ReadAttributeFloat("jd"));
-        $this->UpdateFormField("jc", "value", $this->ReadAttributeFloat("jc"));
-        $this->UpdateFormField("jm", "value", $this->ReadAttributeFloat("jm"));
-        $this->UpdateFormField("jde", "value", $this->ReadAttributeFloat("jde"));
-        $this->UpdateFormField("jce", "value", $this->ReadAttributeFloat("jce"));
-        $this->UpdateFormField("jme", "value", $this->ReadAttributeFloat("jme"));
-
-        $this->UpdateFormField("helioCentLong", "value", $this->ReadAttributeFloat("helioCentLong"));
-        $this->UpdateFormField("helioCentLat", "value", $this->ReadAttributeFloat("helioCentLat"));
-        $this->UpdateFormField("earthRadVec", "value", $this->ReadAttributeFloat("earthRadVec"));
-        $this->UpdateFormField("geoCentLong", "value", $this->ReadAttributeFloat("geoCentLong"));
-        $this->UpdateFormField("geoCentLat", "value", $this->ReadAttributeFloat("geoCentLat"));
-        
+        $this->UpdateFormField("Current_helioCentLong", "value", $sun->EarthHeliocentricLongitude());
+        $this->UpdateFormField("Current_helioCentLat", "value", $sun->EarthHeliocentricLatitude());
+        $this->UpdateFormField("Current_earthRadVec", "value", $sun->EarthRadiusVector());
+        $this->UpdateFormField("Current_geoCentLong", "value", $sun->GeocentricLongitude);
+        $this->UpdateFormField("Current_geoCentLat", "value", $sun->GeocentricLatitude());
+        /*
         $this->UpdateFormField("nutationLong", "value", $this->ReadAttributeFloat("nutationLongitude"));
         $this->UpdateFormField("nutationObl", "value", $this->ReadAttributeFloat("nutationObliquity"));
 

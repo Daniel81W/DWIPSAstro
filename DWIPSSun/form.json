@@ -333,9 +333,18 @@
                                 "type": "ValidationTextBox",
                                 "name": "Current_earthRadVec",
                                 "caption": "Earth radius vector (R)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_geoCentLong",
+                                "caption": "geocentric longitude (Θ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_geoCentLat",
+                                "caption": "geocentric latitude (β)"
                             }
-                                
-                            
+
                         ]
                     }
                 ]

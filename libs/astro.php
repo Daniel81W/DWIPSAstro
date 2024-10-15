@@ -203,7 +203,6 @@ class Sun{
 
     private float $timestamp;
     private JulianDay $julianDay;
-    private JulianDay $julianDayZero;
 
     private float $latitude;
     private float $longitude;
@@ -238,6 +237,11 @@ class Sun{
         $this->temperature = $temperature;
         $this->deltaT = $deltaT;
         $this->dut1 = $dut1;
+    }
+
+
+    public function get_JulianDay(){ 
+        return $this->julianDay; 
     }
 
     public function set_DeltaT(float $deltaT){
