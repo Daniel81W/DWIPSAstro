@@ -117,7 +117,7 @@ class DWIPSMoon extends IPSModule
     public function LoadSetupFromSun(){
         $guid = "{8FEB8771-2E4C-CB78-EA91-52546AE77A79}";
         $mods = IPS_GetInstanceListByModuleID($guid);
-        if(count($mods1)==1){
+        if(count($mods)==1){
             $sett = IPS_GetInstance($mods[0])->GetSettings();
             print_r($sett);
         }
