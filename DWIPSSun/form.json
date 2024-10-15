@@ -53,141 +53,8 @@
         }
     ],
     "actions": [
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "jd",
-                    "caption": "Julian Date"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "jc",
-                    "caption": "Julian Century"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "jm",
-                    "caption": "Julian Millennium"
-                }
-            ]
-        },
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "jde",
-                    "caption": "Julian Ephemeris Date"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "jce",
-                    "caption": "Julian Ephemeris Century"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "jme",
-                    "caption": "Julian Ephemeris Millennium"
-                }
-            ]
-        },
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "helioCentLong",
-                    "caption": "heliocentric longitude (L)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "L0",
-                    "caption": "L0"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "L1",
-                    "caption": "L1"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "L2",
-                    "caption": "L2"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "L3",
-                    "caption": "L3"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "L4",
-                    "caption": "L4"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "L5",
-                    "caption": "L5"
-                }
-            ]
-        },
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "helioCentLat",
-                    "caption": "heliocentric latitude (B)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "B0",
-                    "caption": "B0"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "B1",
-                    "caption": "B1"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "earthRadVec",
-                    "caption": "Earth radius vector (R)"
-                }
-            ]
-        },
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "geoCentLong",
-                    "caption": "geocentric longitude (Θ)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "geoCentLat",
-                    "caption": "geocentric latitude (β)"
-                }
-            ]
-        },
-        {
-            "type": "RowLayout",
-            "items": [
-                {
-                    "type": "ValidationTextBox",
-                    "name": "nutuationLong",
-                    "caption": "nutation in longitude (Δψ)"
-                },
-                {
-                    "type": "ValidationTextBox",
-                    "name": "nutuationObl",
-                    "caption": "nutation in obliquity (Δε)"
-                }
-            ]
-        },
+        
+        
         {
             "type": "RowLayout",
             "items": [
@@ -345,6 +212,21 @@
                                 "caption": "geocentric latitude (β)"
                             }
 
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_nutuationLong",
+                                "caption": "nutation in longitude (Δψ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_nutuationObl",
+                                "caption": "nutation in obliquity (Δε)"
+                            }
                         ]
                     }
                 ]
