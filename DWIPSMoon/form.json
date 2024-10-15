@@ -28,12 +28,28 @@
         },
         {
             "type": "NumberSpinner",
+            "name": "Elevation",
+            "caption": "Elevation",
+            "digits": 2,
+            "minimum": -200,
+            "maximum": 8848
+        },
+        {
+            "type": "NumberSpinner",
             "name": "UpdateInterval",
             "caption": "UpdateInterval",
             "digits": 0,
             "minimum": 0,
             "maximum": 120,
             "suffix": "Minuten"
+        },
+        {
+            "type": "NumberSpinner",
+            "caption": "delta T",
+            "digits": 2,
+            "moreDigits": true,
+            "name": "deltaT",
+            "value": 69.18
         },
         {
             "type": "Button",

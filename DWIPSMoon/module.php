@@ -120,7 +120,15 @@ class DWIPSMoon extends IPSModule
         if(count($mods)==1){
             $sett = DWIPSSUN_GetSettings($mods[0]);
             print_r($sett);
+
+
+            $this->UpdateFormField("Latitude", "value", $sett["Latitude"]);
+            $this->UpdateFormField("Longitude", "value", $sett["Longitude"]);
+            $this->UpdateFormField("Elevation", "value", $sett["Elevation"]);
+            $this->UpdateFormField("UpdateInterval", "value", $sett["UpdateInterval"]);
+            $this->UpdateFormField("deltaT", "value", $sett["deltaT"]);
         }
+
     }
 
 }

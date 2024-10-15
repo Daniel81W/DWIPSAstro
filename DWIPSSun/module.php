@@ -387,6 +387,7 @@ class DWIPSSun extends IPSModule
         $arr['Latitude'] = $this->ReadPropertyFloat("Latitude");
         $arr['Longitude'] = $this->ReadPropertyFloat("Longitude");
         $arr['Elevation'] = $this->ReadPropertyFloat("Elevation");
+        $arr['UpdateInterval'] = $this->ReadPropertyFloat("UpdateInterval");
         $arr['deltaT'] = $this->ReadPropertyFloat("deltaT");
         return $arr;
     }
