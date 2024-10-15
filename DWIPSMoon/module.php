@@ -59,7 +59,6 @@ class DWIPSMoon extends IPSModule
         $this->RegisterPropertyFloat("Elevation", 1);
         $this->RegisterPropertyFloat("deltaT", 69.184);
 
-        $this->RegisterPropertyInteger("UpdateInterval", 1);
 
         $this->RegisterAttributeFloat("jd", 0);
         $this->RegisterAttributeFloat("jc", 0);
