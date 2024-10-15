@@ -67,6 +67,8 @@ class DWIPSMoon extends IPSModule
         $this->RegisterAttributeFloat("jce", 0);
         $this->RegisterAttributeFloat("jme", 0);
 
+        $this->RegisterPropertyInteger("UpdateInterval", 1);
+
 
         $this->RegisterTimer("Update", 60000, "DWIPSMOON_Update($this->InstanceID);");
     }
