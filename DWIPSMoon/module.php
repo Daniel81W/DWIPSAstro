@@ -118,7 +118,7 @@ class DWIPSMoon extends IPSModule
         $guid = "{8FEB8771-2E4C-CB78-EA91-52546AE77A79}";
         $mods = IPS_GetInstanceListByModuleID($guid);
         if(count($mods)==1){
-            $sett = IPS_GetInstance($mods[0])->GetSettings();
+            $sett = DWIPSSUN_GetSettings($mods[0]);
             print_r($sett);
         }
     }
