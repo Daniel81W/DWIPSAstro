@@ -40,7 +40,7 @@
             "name": "Load",
             "caption": "Aus Sonnendaten laden",
             "onClick": [
-
+                "DWIPSMOON_LoadSetupFromSun($id);"
             ]
         }
     ],

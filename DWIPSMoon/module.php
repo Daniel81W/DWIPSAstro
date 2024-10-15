@@ -114,6 +114,14 @@ class DWIPSMoon extends IPSModule
         $l = ASTROMOON::MoonEarthDistance($this->ReadAttributeFloat("jce"));
     }
 
+    public function LoadSetupFromSun(){
+        $guid = "{8FEB8771-2E4C-CB78-EA91-52546AE77A79}";
+        $mods = IPS_GetInstanceListByModuleID($guid);
+        if(count($mods == 1)){
+            $sett = $mods[0]->GetSettings();
+            print-return($sett);
+        }
+    }
 
 }
 ?>
