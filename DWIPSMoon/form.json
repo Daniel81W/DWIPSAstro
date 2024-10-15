@@ -37,7 +37,7 @@
         },
         {
             "type": "Button",
-            "name": "UpdateInterval",
+            "name": "Load",
             "caption": "Aus Sonnendaten laden",
             "onClick": [
 
