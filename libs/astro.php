@@ -226,7 +226,6 @@ class Sun{
         if ($timestamp < 0) {
             $date = new DateTime();
             $timestamp = time() - (new DateTimeImmutable())->getOffset();
-            IPS_LogMessage("T",(new DateTimeImmutable())->getOffset());
         }
         $this->timestamp = $timestamp;
         $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);
@@ -1245,7 +1244,6 @@ class Moon{
         if ($timestamp < 0) {
             $date = new DateTime();
             $timestamp = time() - (new DateTimeImmutable())->getOffset();
-            IPS_LogMessage("T", (new DateTimeImmutable())->getOffset());
         }
         $this->timestamp = $timestamp;
         $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);

@@ -111,7 +111,6 @@ class DWIPSMoon extends IPSModule
 
 
         $l = ASTROMOON::MoonEarthDistance($this->ReadAttributeFloat("jce"));
-        IPS_LogMessage("Moon", $l);
     }
 
 
