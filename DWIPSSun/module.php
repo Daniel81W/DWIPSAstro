@@ -83,9 +83,11 @@ class DWIPSSun extends IPSModule
         $p++;
         $this->MaintainVariable("sunelevationmax", $this->Translate("sunelevationmax"), 2, "~WindDirection.F", $p, true);
         $p++;
-        $this->MaintainVariable("sunazimutAtSunrise", $this->Translate("sunazimutSunrise"), 2, "~WindDirection.F", $p, true);
+        $this->MaintainVariable("sunazimutAtSunrise", $this->Translate("sunazimutSunrise"), 2, "~WindDirection.F", $p, false);
+        $this->MaintainVariable("sunazimuthAtSunrise", $this->Translate("sunazimutSunrise"), 2, "~WindDirection.F", $p, true);
         $p++;
-        $this->MaintainVariable("sunazimutAtSunset", $this->Translate("sunazimutSunset"), 2, "~WindDirection.F", $p, true);
+        $this->MaintainVariable("sunazimutAtSunset", $this->Translate("sunazimutSunset"), 2, "~WindDirection.F", $p, false);
+        $this->MaintainVariable("sunazimuthAtSunset", $this->Translate("sunazimutSunset"), 2, "~WindDirection.F", $p, true);
         $p++;
         $this->MaintainVariable("day", $this->Translate("day"), 0, "DWIPS." . $this->Translate("DayNight"), $p, true);
         $p++;
@@ -237,7 +239,7 @@ class DWIPSSun extends IPSModule
     public function Update()
     {
         $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
-        $sun = new Sun($this->ReadPropertyFloat("deltaT"),0 ,-1, $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation"),835,10);
+        $sun = new Sun($this->ReadPropertyFloat("deltaT"),0 ,-1, $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation"),1013,10);
 
         $sunDat = array();
         $sun->calculate_eot_and_sun_rise_transit_set($sunDat);
@@ -295,6 +297,9 @@ class DWIPSSun extends IPSModule
         $this->SetValue("sundeclination", $sunDat['declination']);//ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("sunelevationmin", $sunDat['sunelevationmin']);//-90 + $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
         $this->SetValue("sunelevationmax", $sunDat['sunelevationmax']);//90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
+        $this->SetValue("sunazimuthAtSunrise", $sunDat['azimuthAtSunrise']);//90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
+        $this->SetValue("sunazimuthAtSunset", $sunDat['azimuthAtSunset']);//90 - $this->ReadPropertyFloat("Latitude") + ASTROSUN::DeclinationOfSun($this->ReadAttributeFloat("jd")));
+        
         $this->SetValue("day", $sunDat['day']);//-0.8333 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
         $this->SetValue("insideCivilTwilight", $sunDat['insideCivilTwilight']);//-6 < ASTROSUN::ElevationOfTheSun($this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10));
 
@@ -377,7 +382,7 @@ class DWIPSSun extends IPSModule
     }
 
 
-    public function SurfacesIncidenceAngle($orientation, $slope){
+    public function SurfacesIncidenceAngle(float $orientation, float $slope):float{
         return 0;// ASTROSUN::IncidenceAngleOfSurface($orientation, $slope, $this->ReadPropertyFloat("Latitude"), $this->ReadAttributeFloat("geoSunDec"), $this->ReadAttributeFloat("topoSunDec"), $this->ReadAttributeFloat("topoLocHourAngle"), 1013, 10);
     }
 

@@ -466,10 +466,6 @@ class Sun{
             $sunArr[$i]->set_DeltaT(0);
             $alpha[$i] = $sunArr[$i]->GeocentricRightAscension();
             $delta[$i] = $sunArr[$i]->GeocentricDeclination();
-            //calculate_geocentric_sun_right_ascension_and_declination(&sun_rts);
-            //alpha[i] = sun_rts.alpha;
-            //delta[i] = sun_rts.delta;
-            //sun_rts.jd++;
         }
 
         $m_rts[0] = ASTRO_SUN_FORMULA::approx_sun_transit_time($alpha[1], $this->longitude, $nu);
@@ -589,6 +585,7 @@ class Sun{
             );
             $spa['sunelevationmin'] = -90 + $this->latitude + $this->TopocentricDeclination();
             $spa['sunelevationmax'] = 90 - $this->latitude + $this->TopocentricDeclination();
+
             $spa['day'] = $this->TopocentricElevationAngleCorrected() > $h0_prime;
             $spa['insideCivilTwilight'] = $this->TopocentricElevationAngleCorrected() > -6;
 
@@ -604,11 +601,13 @@ class Sun{
             $spa['sunlightduration'] = $spa['sunsetUNIX'] - $spa['sunriseUNIX'] - (new DateTimeImmutable())->setTimestamp(0)->getOffset();
             $spa['azimuth'] = $this->TopocentricAzimuthAngle();
             $spa['zenith'] = $this->TopocentricZenithAngle();
+            $spa['azimuthAtSunrise'] = $this->azimuthAtGivenTime($spa['sunriseUNIX']);
+            $spa['azimuthAtSunset'] = $this->azimuthAtGivenTime($spa['sunsetUNIX']);
             $spa['elevationAngle'] = $this->TopocentricElevationAngleCorrected();
             $spa['declination'] = $this->TopocentricDeclination();
             $spa['shadow'] = $this->ShadowLength();
-            $spa['seasonval'] = $this->SeasonVal();
-            $spa['season'] = $this->Season();
+            $spa['seasonval'] = $this->SeasonVal(idate('Y', $this->timestamp));
+            $spa['season'] = $this->Season(idate('Y', $this->timestamp));
             $spa['r'] = $this->EarthRadiusVector();
 
         } else {
@@ -632,15 +631,15 @@ class Sun{
         else return 0.0;
     }
 
-    public function Season(): array
+    public function Season(int $year): array
     {
         $jz = new Season();
-        return $jz->saison(2024);
+        return $jz->saison($year);
     }
 
-    public function SeasonVal(): int
+    public function SeasonVal(int $year): int
     {
-        $seasonTimes = $this->Season();
+        $seasonTimes = $this->Season($year);
         if ($this->timestamp > $seasonTimes['winter']) {
             return 4;
         } elseif ($this->timestamp > $seasonTimes['fall']) {
@@ -652,6 +651,11 @@ class Sun{
         } else {
             return 4;
         }
+    }
+
+    public function azimuthAtGivenTime($timestamp):float{
+        $sun = new Sun($this->deltaT, 0, $timestamp, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature);
+        return $sun->TopocentricAzimuthAngle();
     }
 
     public function EOT(): float
