@@ -32,7 +32,7 @@ class DWIPSMoon extends IPSModule
         //$p++;
         //$this->MaintainVariable("moonnoon", $this->Translate("moonnoon"), 1, "~UnixTimestamp", $p, true);
         $p++;
-        $this->MaintainVariable("sunlightduration", $this->Translate("sunlightduration"), 1, "~UnixTimestampTime", $p, true);
+        $this->MaintainVariable("moonlightduration", $this->Translate("moonlightduration"), 1, "~UnixTimestampTime", $p, true);
         $p++;
         $this->MaintainVariable("moonazimuth", $this->Translate("moonazimuth"), 2, "~WindDirection.F", $p, true);
         $p++;
@@ -113,6 +113,7 @@ class DWIPSMoon extends IPSModule
         $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
 
 
+        $this->SetValue("moonazimuth", $moonDat['azimuth']);
 
 
         $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
