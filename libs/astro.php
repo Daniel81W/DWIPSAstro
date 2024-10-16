@@ -654,7 +654,7 @@ class Sun{
     }
 
     public function azimuthAtGivenTime($timestamp):float{
-        $sun = new Sun($this->deltaT, 0, $timestamp- 7200, $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature);
+        $sun = new Sun($this->deltaT, 0, $timestamp - (new DateTimeImmutable())->setTimestamp($timestamp)->getOffset(), $this->latitude, $this->longitude, $this->elevation, $this->pressure, $this->temperature);
         return $sun->TopocentricAzimuthAngle();
     }
 
