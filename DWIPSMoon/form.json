@@ -114,7 +114,7 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "Current_DistanceEarthMoon",
+                                "name": "Current_moon_mean_longitude",
                                 "caption": "DistanceEarthMoon"
                             },
                             {

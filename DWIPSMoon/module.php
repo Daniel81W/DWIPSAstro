@@ -19,39 +19,41 @@ class DWIPSMoon extends IPSModule
             IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 4, $this->Translate("winter"), "", -1);
         }
 
-        $jdid = $this->RegisterVariableFloat("juliandate", $this->Translate("juliandate"), "", 1);
-        $this->RegisterVariableFloat("juliancentury", $this->Translate("juliancentury"), "", 2);
-        $this->RegisterVariableInteger("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), "~UnixTimestamp", 3);
-        $this->RegisterVariableInteger("startnauticaltwilight", $this->Translate("startnauticaltwilight"), "~UnixTimestamp", 4);
-        $this->RegisterVariableInteger("startciviltwilight", $this->Translate("startciviltwilight"), "~UnixTimestamp", 5);
-        $this->RegisterVariableInteger("sunrise", $this->Translate("sunrise"), "~UnixTimestamp", 6);
-        $this->RegisterVariableInteger("solarnoon", $this->Translate("solarnoon"), "~UnixTimestamp", 7);
-        $this->RegisterVariableInteger("sunset", $this->Translate("sunset"), "~UnixTimestamp", 8);
-        $this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", 9);
-        $this->RegisterVariableInteger("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), "~UnixTimestamp", 10);
-        $this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", 11);
-        $this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", 12);
-        $this->RegisterVariableString("sunlightdurationstr", $this->Translate("sunlightduration"), "", 12);
-        $this->RegisterVariableFloat("sunazimut", $this->Translate("sunazimut"), "", 13);
-        $this->RegisterVariableString("sundirection", $this->Translate("sundirection"), "", 14);
-        $this->RegisterVariableFloat("sunelevation", $this->Translate("sunelevation"), "", 15);
-        $this->RegisterVariableFloat("sunelevationmin", $this->Translate("sunelevationmin"), "", 16);
-        $this->RegisterVariableFloat("sunelevationmax", $this->Translate("sunelevationmax"), "", 17);
-        $this->RegisterVariableFloat("sundeclination", $this->Translate("sundeclination"), "", 18);
-        $this->RegisterVariableInteger("sundistance", $this->Translate("sundistance"), "", 19);
-        $this->RegisterVariableFloat("equationOfTime", $this->Translate("equationOfTime"), "", 20);
-        $this->RegisterVariableFloat("durationOfSunrise", $this->Translate("durationOfSunrise"), "", 21);
-        $this->RegisterVariableInteger("season", $this->Translate("season"), "DWIPS." . $this->Translate("season"), 22);
-        $this->RegisterVariableBoolean("day", $this->Translate("day"), "", 23);
-        $this->RegisterVariableBoolean("insideCivilTwilight", $this->Translate("insideCivilTwilight"), "", 24);
-        $this->RegisterVariableFloat("shadowLength", $this->Translate("shadowlength"), "", 25);
-        $this->RegisterVariableFloat("solarirradiancespace", $this->Translate("solarirradiancespace"), "", 26); //"Astronomie.Radiant_Power", 26);
-        $this->RegisterVariableFloat("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), "", 27); //"Astronomie.Radiant_Power", 27);
-        $this->RegisterVariableFloat("solarirradianceground", $this->Translate("solarirradianceground"), "", 28); //"Astronomie.Radiant_Power", 28);
-        $this->RegisterVariableFloat("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), "", 40); //"Astronomie.Radiant_Power", 40);
 
+     
 
         $this->RegisterVariableString("moonphase", $this->Translate("moonphase"), "", 30);
+
+
+        $p = 1;
+        $this->MaintainVariable("moonrise", $this->Translate("moonrise"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("moonset", $this->Translate("moonset"), 1, "~UnixTimestamp", $p, true);
+        //$p++;
+        //$this->MaintainVariable("moonnoon", $this->Translate("moonnoon"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("sunlightduration", $this->Translate("sunlightduration"), 1, "~UnixTimestampTime", $p, true);
+        $p++;
+        $this->MaintainVariable("moonazimuth", $this->Translate("moonazimuth"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moondirection", $this->Translate("moondirection"), 2, "DWIPS." . $this->Translate("compass_rose"), $p, true);
+        $p++;
+        $this->MaintainVariable("moonelevation", $this->Translate("moonelevation"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonelevationmin", $this->Translate("moonelevationmin"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonelevationmax", $this->Translate("moonelevationmax"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonazimutAtSunrise", $this->Translate("moonazimutSunrise"), 2, "~WindDirection.F", $p, false);
+        $this->MaintainVariable("moonazimutAtSunrise", $this->Translate("moonazimutSunrise"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonazimutAtSunset", $this->Translate("moonazimutSunset"), 2, "~WindDirection.F", $p, false);
+        $this->MaintainVariable("moonazimutAtSunset", $this->Translate("moonazimutSunset"), 2, "~WindDirection.F", $p, true);
+        //$p++;
+        //$this->MaintainVariable("day", $this->Translate("day"), 0, "DWIPS." . $this->Translate("DayNight"), $p, true);
+        $p++;
+        $this->MaintainVariable("moondistance", $this->Translate("moondistance"), 1, "DWIPS." . $this->Translate("distance.km"), $p, true);
+        $p++;
 
 
         $this->RegisterPropertyFloat("Latitude", 50.0);
@@ -113,7 +115,11 @@ class DWIPSMoon extends IPSModule
 
 
 
-        $this->UpdateFormField("Current_DistanceEarthMoon", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
     }
 
     public function LoadSetupFromSun(){
