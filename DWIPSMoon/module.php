@@ -112,6 +112,9 @@ class DWIPSMoon extends IPSModule
 
 
         $l = ASTROMOON::MoonEarthDistance($this->ReadAttributeFloat("jce"));
+
+
+        $this->UpdateFormField("Current_DistanceEarthMoon", "value", $l);
     }
 
     public function LoadSetupFromSun(){

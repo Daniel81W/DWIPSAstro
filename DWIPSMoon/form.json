@@ -114,8 +114,8 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "Current_helioCentLong",
-                                "caption": "heliocentric longitude (L)"
+                                "name": "Current_DistanceEarthMoon",
+                                "caption": "DistanceEarthMoon"
                             },
                             {
                                 "type": "ValidationTextBox",
