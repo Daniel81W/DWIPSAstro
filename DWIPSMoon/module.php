@@ -111,10 +111,9 @@ class DWIPSMoon extends IPSModule
         $this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
 
 
-        $l = ASTROMOON::MoonEarthDistance($this->ReadAttributeFloat("jce"));
 
 
-        $this->UpdateFormField("Current_DistanceEarthMoon", "value", $l);
+        $this->UpdateFormField("Current_DistanceEarthMoon", "value", $moonDat['l_prime']);
     }
 
     public function LoadSetupFromSun(){
