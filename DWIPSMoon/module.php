@@ -114,6 +114,7 @@ class DWIPSMoon extends IPSModule
 
 
         $this->SetValue("moonazimuth", $moonDat['azimuth']);
+        $this->SetValue("moonelevation", $moonDat['zenith']);
 
 
         $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
