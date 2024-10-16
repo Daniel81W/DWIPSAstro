@@ -60,6 +60,589 @@
             ]
         }
     ],
-    "actions": [],
+    "actions": [
+        {
+            "type": "PopupButton",
+            "caption": "Aktuelle Werte anzeigen",
+            "popup": {
+                "caption": "Aktuelle Werte",
+                "width": "90%",
+                "items": [
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JD",
+                                "caption": "JD",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JC",
+                                "caption": "JC",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JM",
+                                "caption": "JM",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JDE",
+                                "caption": "JDE",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JCE",
+                                "caption": "JCE",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_JME",
+                                "caption": "JME",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_helioCentLong",
+                                "caption": "heliocentric longitude (L)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_helioCentLat",
+                                "caption": "heliocentric latitude (B)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_earthRadVec",
+                                "caption": "Earth radius vector (R)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_geoCentLong",
+                                "caption": "geocentric longitude (Θ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_geoCentLat",
+                                "caption": "geocentric latitude (β)"
+                            }
+
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_nutuationLong",
+                                "caption": "nutuation in longitude (Δψ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_nutuationObl",
+                                "caption": "nutuation in obliquity (Δε)"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_meanOblEcl",
+                                "caption": "mean obliquity of the ecliptic (ε0)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_trueOblEcl",
+                                "caption": "true obliquity of the ecliptic (ε)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_aberCorr",
+                                "caption": "aberration correction (Δτ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_appSunLong",
+                                "caption": "apparent sun longitude (λ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_appSidTimeGreenwich",
+                                "caption": "apparent sidereal time at Greenwich (ν)"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_geoSunRAsc",
+                                "caption": "Geocentric Sun Right Ascension (α)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_geoSunDec",
+                                "caption": "geocentric sun declination (δ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_locHourAngle",
+                                "caption": "local hour angle (Η)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_topoSunRAsc",
+                                "caption": "Topocentric Sun Right Ascension (α')"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_topoSunDec",
+                                "caption": "Topocentric sun declination (δ')"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_topoLocHourAngle",
+                                "caption": "Topocentric local hour angle (Η')"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_topoZenAngle",
+                                "caption": "Topocentric zenith angle (θ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_topoAziAngle",
+                                "caption": "Topocentric azimuth angle (Φ)"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "Current_eqOfTime",
+                                "caption": "Equation of tim (E)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "PopupButton",
+            "caption": "Berechnung für bestimmten Zeitpunkt",
+            "popup": {
+                "caption": "Test für bestimmten Zeitpunkt",
+                "width": "90%",
+                "items": [
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "SelectDateTime",
+                                "name": "TestCalc_DateTime",
+                                "caption": "Zeitpunkt"
+                            },
+                            {
+                                "type": "Button",
+                                "name": "TestCalc_SetNowButton",
+                                "caption": "jetzt",
+                                "onClick": [
+                                    "$dtArr = json_decode($TestCalc_DateTime, true);",
+                                    "$dtArr['hour'] = 8;",
+                                    "$dtArr['minute'] = 10;",
+                                    "$dtArr['second'] = 30;",
+                                    "$dtArr['day'] = 10;",
+                                    "$dtArr['month'] = 6;",
+                                    "$dtArr['year'] = 2000;",
+                                    "IPS_UpdateFormField($id, 'TestCalc_DateTime', 'value', json_encode($dtArr));",
+                                    "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
+                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation, 835, 10);"
+                                ]
+                            },
+                            {
+                                "type": "Button",
+                                "name": "TestCalc_SetDateTimeForValuesButton",
+                                "caption": "Zeitpunkt übernehmen",
+                                "onClick": [
+                                    "DWIPSSUN_WriteStringAttribute($id, 'TestCalc_DateTime', $TestCalc_DateTime);",
+                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Lat', $TestCalc_Lat);",
+                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Long', $TestCalc_Long);",
+                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Elevation', $TestCalc_Elevation);",
+                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_DeltaT', $TestCalc_DeltaT);",
+                                    "$dtArr = json_decode($TestCalc_DateTime, true);",
+                                    "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
+                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation, 835, 10);"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_Lat",
+                                "caption": "Breite",
+                                "value": 0,
+                                "minimum": -90,
+                                "maximum": 90,
+                                "digits": 6,
+                                "moreDigits ": true,
+                                "width": "200px"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_Long",
+                                "caption": "Länge",
+                                "value": 0,
+                                "minimum": -180,
+                                "maximum": 180,
+                                "digits": 6,
+                                "moreDigits ": true,
+                                "width": "200px"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_Elevation",
+                                "caption": "Höhe",
+                                "value": 0,
+                                "minimum": -200,
+                                "maximum": 8848,
+                                "digits": 2,
+                                "moreDigits ": true,
+                                "width": "150px"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "TestCalc_DeltaT",
+                                "caption": "DeltaT",
+                                "value": 0,
+                                "digits": 2,
+                                "moreDigits ": true,
+                                "width": "100px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JD",
+                                "caption": "JD",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JC",
+                                "caption": "JC",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JM",
+                                "caption": "JM",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JDE",
+                                "caption": "JDE",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JCE",
+                                "caption": "JCE",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_JME",
+                                "caption": "JME",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EarthHeliocentLat",
+                                "caption": "TestCalc_EarthHeliocentLat",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EarthHeliocentLong",
+                                "caption": "TestCalc_EarthHeliocentLat",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EarthRadiusVector",
+                                "caption": "TestCalc_EarthRadiusVector",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentLat",
+                                "caption": "TestCalc_GeocentLat",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentLong",
+                                "caption": "TestCalc_GeocentLong",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_MeanElongationMoonSun",
+                                "caption": "TestCalc_MeanElongationMoonSun",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_MeanAnomalySun",
+                                "caption": "TestCalc_MeanAnomalySun",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_MeanAnomalyMoon",
+                                "caption": "TestCalc_MeanAnomalyMoon",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ArgumentLatitudeMoon",
+                                "caption": "TestCalc_ArgumentLatitudeMoon",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_AscendingLongitudeMoon",
+                                "caption": "TestCalc_AscendingLongitudeMoon",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_NutationLongitude",
+                                "caption": "TestCalc_NutationLongitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_NutationObliquity",
+                                "caption": "TestCalc_NutationObliquity",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EclipticMeanObliquity",
+                                "caption": "TestCalc_EclipticMeanObliquity",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EclipticTrueObliquity",
+                                "caption": "TestCalc_EclipticTrueObliquity",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_AberrationCorrection",
+                                "caption": "TestCalc_AberrationCorrection",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ApparentSunLongitude",
+                                "caption": "TestCalc_ApparentSunLongitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GreenwichMeanSiderealTime",
+                                "caption": "TestCalc_GreenwichMeanSiderealTime",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GreenwichSiderealTime",
+                                "caption": "TestCalc_GreenwichSiderealTime",
+                                "width": "200px"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentricRightAscension",
+                                "caption": "TestCalc_GeocentricRightAscension",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_GeocentricDeclination",
+                                "caption": "TestCalc_GeocentricDeclination",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ObserverHourAngle",
+                                "caption": "TestCalc_ObserverHourAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunEquatorialHorizontalParallax",
+                                "caption": "TestCalc_SunEquatorialHorizontalParallax",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_RightAscensionParallax",
+                                "caption": "TestCalc_RightAscensionParallax",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricDeclination",
+                                "caption": "TestCalc_TopocentricDeclination",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricRightAscension",
+                                "caption": "TestCalc_TopocentricRightAscension",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricLocalHourAngle",
+                                "caption": "TestCalc_TopocentricLocalHourAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricElevationAngle",
+                                "caption": "TestCalc_TopocentricElevationAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_AtmosphericRefractionCorrection",
+                                "caption": "TestCalc_AtmosphericRefractionCorrection",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricElevationAngleCorrected",
+                                "caption": "TestCalc_TopocentricElevationAngleCorrected",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricZenithAngle",
+                                "caption": "TestCalc_TopocentricZenithAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_TopocentricAzimuthAngle",
+                                "caption": "TestCalc_TopocentricAzimuthAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SurfaceIncidenceAngle",
+                                "caption": "TestCalc_SurfaceIncidenceAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunMeanLongitude",
+                                "caption": "TestCalc_SunMeanLongitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_EOT",
+                                "caption": "TestCalc_EOT",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunRiseHourAngle",
+                                "caption": "TestCalc_SunRiseHourAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunSetHourAngle",
+                                "caption": "TestCalc_SunSetHourAngle",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunTransitAltitude",
+                                "caption": "TestCalc_SunTransitAltitude",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_ApproxSunTransitTime",
+                                "caption": "TestCalc_ApproxSunTransitTime",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunRiseTime",
+                                "caption": "TestCalc_SunRiseTime",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_SunSetTime",
+                                "caption": "TestCalc_SunSetTime",
+                                "width": "200px"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
     "status": []
 }
