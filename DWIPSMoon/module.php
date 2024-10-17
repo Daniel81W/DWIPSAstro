@@ -124,7 +124,72 @@ class DWIPSMoon extends IPSModule
         $this->UpdateFormField("Current_sun_mean_anomaly", "value", $moonDat['m']);
         $this->UpdateFormField("Current_moon_mean_anomaly", "value", $moonDat['m_prime']);
         $this->UpdateFormField("Current_moon_latitude_argument", "value", $moonDat['f']);
+
+        
     }
+
+    public function CalcTestValues(int $date, float $deltaT, float $lat, float $long, float $elev, float $pressure, float $temperature): void{
+
+        $jd = new JulianDay($deltaT, 0, $date);
+        $sun = new Sun($deltaT, 0, $date, $lat, $long, $elev, $pressure, $temperature);
+
+        $this->UpdateFormField("TestCalc_JD", "value", $jd->get_JD());
+        $this->UpdateFormField("TestCalc_JC", "value", $jd->get_JC());
+        $this->UpdateFormField("TestCalc_JM", "value", $jd->get_JM());
+        $this->UpdateFormField("TestCalc_JDE", "value", $jd->get_JDE());
+        $this->UpdateFormField("TestCalc_JCE", "value", $jd->get_JCE());
+        $this->UpdateFormField("TestCalc_JME", "value", $jd->get_JME());
+
+
+        $this->UpdateFormField("TestCalc_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("TestCalc_moon_mean_elongation", "value", $moonDat['d']);
+        $this->UpdateFormField("TestCalc_sun_mean_anomaly", "value", $moonDat['m']);
+        $this->UpdateFormField("TestCalc_moon_mean_anomaly", "value", $moonDat['m_prime']);
+        $this->UpdateFormField("TestCalc_moon_latitude_argument", "value", $moonDat['f']);
+
+        $this->UpdateFormField("TestCalc_MeanElongationMoonSun", "value", $sun->MeanElongationMoonSun());
+        $this->UpdateFormField("TestCalc_MeanAnomalySun", "value", $sun->MeanAnomalySun());
+        $this->UpdateFormField("TestCalc_MeanAnomalyMoon", "value", $sun->MeanAnomalyMoon());
+        $this->UpdateFormField("TestCalc_ArgumentLatitudeMoon", "value", $sun->ArgumentLatitudeMoon());
+        $this->UpdateFormField("TestCalc_AscendingLongitudeMoon", "value", $sun->AscendingLongitudeMoon());
+
+        $this->UpdateFormField("TestCalc_NutationLongitude", "value", $sun->NutationLongitude());
+        $this->UpdateFormField("TestCalc_NutationObliquity", "value", $sun->NutationObliquity());
+        $this->UpdateFormField("TestCalc_EclipticMeanObliquity", "value", $sun->EclipticMeanObliquity());
+        $this->UpdateFormField("TestCalc_EclipticTrueObliquity", "value", $sun->EclipticTrueObliquity());
+        $this->UpdateFormField("TestCalc_AberrationCorrection", "value", $sun->AberrationCorrection());
+        $this->UpdateFormField("TestCalc_ApparentSunLongitude", "value", $sun->ApparentSunLongitude());
+        $this->UpdateFormField("TestCalc_GreenwichMeanSiderealTime", "value", $sun->GreenwichMeanSiderealTime());
+        $this->UpdateFormField("TestCalc_GreenwichSiderealTime", "value", $sun->GreenwichSiderealTime());
+
+        $this->UpdateFormField("TestCalc_GeocentricRightAscension", "value", $sun->GeocentricRightAscension());
+        $this->UpdateFormField("TestCalc_GeocentricDeclination", "value", $sun->GeocentricDeclination());
+        $this->UpdateFormField("TestCalc_ObserverHourAngle", "value", $sun->ObserverHourAngle());
+        $this->UpdateFormField("TestCalc_SunEquatorialHorizontalParallax", "value", $sun->SunEquatorialHorizontalParallax());
+        $this->UpdateFormField("TestCalc_RightAscensionParallax", "value", $sun->RightAscensionParallax());
+        $this->UpdateFormField("TestCalc_TopocentricDeclination", "value", $sun->TopocentricDeclination());
+        $this->UpdateFormField("TestCalc_TopocentricRightAscension", "value", $sun->TopocentricRightAscension());
+        $this->UpdateFormField("TestCalc_TopocentricLocalHourAngle", "value", $sun->TopocentricLocalHourAngle());
+        $this->UpdateFormField("TestCalc_TopocentricElevationAngle", "value", $sun->TopocentricElevationAngle());
+        $this->UpdateFormField("TestCalc_AtmosphericRefractionCorrection", "value", $sun->AtmosphericRefractionCorrection());
+        $this->UpdateFormField("TestCalc_TopocentricElevationAngleCorrected", "value", $sun->TopocentricElevationAngleCorrected());
+        $this->UpdateFormField("TestCalc_TopocentricZenithAngle", "value", $sun->TopocentricZenithAngle());
+        $this->UpdateFormField("TestCalc_TopocentricAzimuthAngle", "value", $sun->TopocentricAzimuthAngle());
+        $this->UpdateFormField("TestCalc_SurfaceIncidenceAngle", "value", $sun->SurfaceIncidenceAngle(180,0));
+        $this->UpdateFormField("TestCalc_SunMeanLongitude", "value", $sun->SunMeanLongitude());
+
+        $sunDat = array();
+        $sun->calculate_eot_and_sun_rise_transit_set($sunDat);
+        $this->UpdateFormField("TestCalc_EOT", "value", $sunDat['eot']);
+        $this->UpdateFormField("TestCalc_SunRiseHourAngle", "value", $sunDat['srha']);
+        $this->UpdateFormField("TestCalc_SunSetHourAngle", "value", $sunDat['ssha']);
+        $this->UpdateFormField("TestCalc_SunTransitAltitude", "value", $sunDat['sta']);
+        $this->UpdateFormField("TestCalc_ApproxSunTransitTime", "value", $sunDat['suntransit']);
+        $this->UpdateFormField("TestCalc_SunRiseTime", "value", $sunDat['sunrise']);
+        $this->UpdateFormField("TestCalc_SunSetTime", "value", $sunDat['sunset']);
+
+    }
+
 
     public function LoadSetupFromSun(){
         $guid = "{8FEB8771-2E4C-CB78-EA91-52546AE77A79}";

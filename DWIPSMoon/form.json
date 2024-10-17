@@ -385,34 +385,30 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_EarthHeliocentLat",
-                                "caption": "TestCalc_EarthHeliocentLat",
-                                "width": "200px"
+                                "name": "TestCalc_moon_mean_longitude",
+                                "caption": "Current_moon_mean_longitude"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_EarthHeliocentLong",
-                                "caption": "TestCalc_EarthHeliocentLat",
-                                "width": "200px"
+                                "name": "TestCalc_moon_mean_elongation",
+                                "caption": "Current_moon_mean_elongation"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_EarthRadiusVector",
-                                "caption": "TestCalc_EarthRadiusVector",
-                                "width": "200px"
+                                "name": "TestCalc_sun_mean_anomaly",
+                                "caption": "Current_sun_mean_anomaly"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GeocentLat",
-                                "caption": "TestCalc_GeocentLat",
-                                "width": "200px"
+                                "name": "TestCalc_moon_mean_anomaly",
+                                "caption": "Current_moon_mean_anomaly"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GeocentLong",
-                                "caption": "TestCalc_GeocentLong",
-                                "width": "200px"
+                                "name": "TestCalc_moon_latitude_argument",
+                                "caption": "moon_latitude_argument"
                             }
+
                         ]
                     },
                     {
