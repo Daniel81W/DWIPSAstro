@@ -96,6 +96,7 @@ class DWIPSMoon extends IPSModule
 
         DWIPSMOON_Update($this->InstanceID);
     }
+    
     public function GetConfigurationForm()
     {
         $this->Update();
@@ -189,6 +190,10 @@ class DWIPSMoon extends IPSModule
         $this->UpdateFormField("Current_sun_mean_anomaly", "value", $moonDat['m']);
         $this->UpdateFormField("Current_moon_mean_anomaly", "value", $moonDat['m_prime']);
         $this->UpdateFormField("Current_moon_latitude_argument", "value", $moonDat['f']);
+
+        $this->UpdateFormField("Current_l", "value", $moonDat['l']);
+        $this->UpdateFormField("Current_r", "value", $moonDat['r']);
+        $this->UpdateFormField("Current_b", "value", $moonDat['b']);
 
         
     }

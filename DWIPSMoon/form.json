@@ -451,20 +451,20 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_NutationLongitude",
-                                "caption": "TestCalc_NutationLongitude",
+                                "name": "TestCalc_l",
+                                "caption": "TestCalc_l",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_NutationObliquity",
-                                "caption": "TestCalc_NutationObliquity",
+                                "name": "TestCalc_r",
+                                "caption": "TestCalc_r",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_EclipticMeanObliquity",
-                                "caption": "TestCalc_EclipticMeanObliquity",
+                                "name": "TestCalc_b",
+                                "caption": "TestCalc_b",
                                 "width": "200px"
                             },
                             {
