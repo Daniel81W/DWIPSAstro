@@ -120,10 +120,10 @@ class DWIPSMoon extends IPSModule
         $this->UpdateFormField("Current_JCE", "value", $moonDat['spa']['jce']);
 
         $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
-        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
-        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
-        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
-        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("Current_moon_mean_elongation", "value", $moonDat['d']);
+        $this->UpdateFormField("Current_sun_mean_anomaly", "value", $moonDat['m']);
+        $this->UpdateFormField("Current_moon_mean_anomaly", "value", $moonDat['m_prime']);
+        $this->UpdateFormField("Current_moon_latitude_argument", "value", $moonDat['f']);
     }
 
     public function LoadSetupFromSun(){

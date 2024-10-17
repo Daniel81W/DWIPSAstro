@@ -115,27 +115,27 @@
                             {
                                 "type": "ValidationTextBox",
                                 "name": "Current_moon_mean_longitude",
-                                "caption": "DistanceEarthMoon"
+                                "caption": "Current_moon_mean_longitude"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "Current_helioCentLat",
-                                "caption": "heliocentric latitude (B)"
+                                "name": "Current_moon_mean_elongation",
+                                "caption": "Current_moon_mean_elongation"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "Current_earthRadVec",
-                                "caption": "Earth radius vector (R)"
+                                "name": "Current_sun_mean_anomaly",
+                                "caption": "Current_sun_mean_anomaly"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "Current_geoCentLong",
-                                "caption": "geocentric longitude (Θ)"
+                                "name": "Current_moon_mean_anomaly",
+                                "caption": "Current_moon_mean_anomaly"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "Current_geoCentLat",
-                                "caption": "geocentric latitude (β)"
+                                "name": "Current_moon_latitude_argument",
+                                "caption": "moon_latitude_argument"
                             }
 
                         ]
