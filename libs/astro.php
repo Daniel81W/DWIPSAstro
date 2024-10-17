@@ -1592,7 +1592,7 @@ class ASTROMOON
         $count = count($terms);
         $e = 1.0 - $jce * (0.002516 + $jce * 0.0000074);
         $d = ASTROMOON::MeanElongationMoon($jce);
-        $m = 0;//ASTROSUN::MeanAnomalyOfTheSun($jce);
+        $m = ASTROSUN::MeanAnomalyOfTheSun($jce);
         $f = ASTROMOON::MoonsArgumentOfLatitude($jce);
         $ms = ASTROMOON::MeanAnomalyOfTheMoon($jce);
 
