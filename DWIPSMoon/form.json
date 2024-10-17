@@ -435,8 +435,8 @@
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_lambda",
-                                "caption": "TestCalc_lambda",
+                                "name": "TestCalc_lamda",
+                                "caption": "TestCalc_lamda",
                                 "width": "200px"
                             },
                             {
