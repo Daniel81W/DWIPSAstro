@@ -1295,6 +1295,7 @@ class Moon{
 
     public function mpa_calculate(&$spa, &$mpa)
     {
+        $mpa['spa'] = $spa;
         $mpa['l_prime'] = ASTRO_MOON_FORMULA::moon_mean_longitude($spa['jce']);
         $mpa['d'] = ASTRO_MOON_FORMULA::moon_mean_elongation($spa['jce']);
         $mpa['m'] = ASTRO_MOON_FORMULA::sun_mean_anomaly($spa['jce']);
