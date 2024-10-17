@@ -228,7 +228,7 @@ class DWIPSMoon extends IPSModule
 
         $this->UpdateFormField("TestCalc_lamda", "value", $moonDat['lamda']);
         $this->UpdateFormField("TestCalc_beta", "value", $moonDat['beta']);
-        $this->UpdateFormField("TestCalc_delta", "value", $moonDat['delta']);
+        $this->UpdateFormField("TestCalc_delta", "value", $moonDat['cap_delta']);
         $this->UpdateFormField("TestCalc_ArgumentLatitudeMoon", "value", $sun->ArgumentLatitudeMoon());
         $this->UpdateFormField("TestCalc_AscendingLongitudeMoon", "value", $sun->AscendingLongitudeMoon());
 
