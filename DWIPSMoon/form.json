@@ -275,11 +275,11 @@
                                 "name": "TestCalc_SetDateTimeForValuesButton",
                                 "caption": "Zeitpunkt übernehmen",
                                 "onClick": [
-                                    "DWIPSSUN_WriteStringAttribute($id, 'TestCalc_DateTime', $TestCalc_DateTime);",
-                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Lat', $TestCalc_Lat);",
-                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Long', $TestCalc_Long);",
-                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_Elevation', $TestCalc_Elevation);",
-                                    "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_DeltaT', $TestCalc_DeltaT);",
+                                    "DWIPSMOON_WriteStringAttribute($id, 'TestCalc_DateTime', $TestCalc_DateTime);",
+                                    "DWIPSMOON_WriteFloatAttribute($id, 'TestCalc_Lat', $TestCalc_Lat);",
+                                    "DWIPSMOON_WriteFloatAttribute($id, 'TestCalc_Long', $TestCalc_Long);",
+                                    "DWIPSMOON_WriteFloatAttribute($id, 'TestCalc_Elevation', $TestCalc_Elevation);",
+                                    "DWIPSMOON_WriteFloatAttribute($id, 'TestCalc_DeltaT', $TestCalc_DeltaT);",
                                     "$dtArr = json_decode($TestCalc_DateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
                                     "DWIPSMOON_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation, 835, 10);"
