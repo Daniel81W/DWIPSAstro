@@ -267,7 +267,7 @@
                                     "$dtArr['year'] = 2000;",
                                     "IPS_UpdateFormField($id, 'TestCalc_DateTime', 'value', json_encode($dtArr));",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation, 835, 10);"
+                                    "DWIPSMOON_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation, 835, 10);"
                                 ]
                             },
                             {
@@ -282,7 +282,7 @@
                                     "DWIPSSUN_WriteFloatAttribute($id, 'TestCalc_DeltaT', $TestCalc_DeltaT);",
                                     "$dtArr = json_decode($TestCalc_DateTime, true);",
                                     "$date = mktime($dtArr['hour'], $dtArr['minute'], $dtArr['second'], $dtArr['month'], $dtArr['day'], $dtArr['year']);",
-                                    "DWIPSSUN_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation, 835, 10);"
+                                    "DWIPSMOON_CalcTestValues($id, $date,$TestCalc_DeltaT, $TestCalc_Lat, $TestCalc_Long, $TestCalc_Elevation, 835, 10);"
                                 ]
                             }
                         ]
