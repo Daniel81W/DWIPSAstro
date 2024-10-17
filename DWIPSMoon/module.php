@@ -140,6 +140,11 @@ class DWIPSMoon extends IPSModule
         $jd = new JulianDay($deltaT, 0, $date);
         $sun = new Sun($deltaT, 0, $date, $lat, $long, $elev, $pressure, $temperature);
 
+        $moon = new Moon($deltaT, 0, $date, $lat, $long, $elev, $pressure, $temperature);
+
+        $moonDat = array();
+        $moon->sampa_calculate($moonDat);
+
         $this->UpdateFormField("TestCalc_JD", "value", $jd->get_JD());
         $this->UpdateFormField("TestCalc_JC", "value", $jd->get_JC());
         $this->UpdateFormField("TestCalc_JM", "value", $jd->get_JM());
