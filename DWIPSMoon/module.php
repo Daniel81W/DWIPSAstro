@@ -96,6 +96,64 @@ class DWIPSMoon extends IPSModule
 
         DWIPSMOON_Update($this->InstanceID);
     }
+    public function GetConfigurationForm()
+    {
+        $this->Update();
+        //load form from file
+        $jsonForm = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
+        /*
+        $jsonForm["actions"][0]["items"][0]["value"] = $this->ReadAttributeFloat("jd");
+        $jsonForm["actions"][0]["items"][1]["value"] = $this->ReadAttributeFloat("jc");
+        $jsonForm["actions"][0]["items"][2]["value"] = $this->ReadAttributeFloat("jm");
+
+        $jsonForm["actions"][1]["items"][0]["value"] = $this->ReadAttributeFloat("jde");
+        $jsonForm["actions"][1]["items"][1]["value"] = $this->ReadAttributeFloat("jce");
+        $jsonForm["actions"][1]["items"][2]["value"] = $this->ReadAttributeFloat("jme");
+
+        $jsonForm["actions"][2]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLong");
+        $jsonForm["actions"][2]["items"][1]["value"] = $this->ReadAttributeFloat("L0");
+        $jsonForm["actions"][2]["items"][2]["value"] = $this->ReadAttributeFloat("L1");
+        $jsonForm["actions"][2]["items"][3]["value"] = $this->ReadAttributeFloat("L2");
+        $jsonForm["actions"][2]["items"][4]["value"] = $this->ReadAttributeFloat("L3");
+        $jsonForm["actions"][2]["items"][5]["value"] = $this->ReadAttributeFloat("L4");
+        $jsonForm["actions"][2]["items"][6]["value"] = $this->ReadAttributeFloat("L5");
+
+        $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLat");
+        $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("B0");
+        $jsonForm["actions"][3]["items"][2]["value"] = $this->ReadAttributeFloat("B1");
+        $jsonForm["actions"][3]["items"][3]["value"] = $this->ReadAttributeFloat("earthRadVec");
+
+        $jsonForm["actions"][4]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
+        $jsonForm["actions"][4]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
+        
+        $jsonForm["actions"][5]["items"][0]["value"] = $this->ReadAttributeFloat("nutationLongitude");
+        $jsonForm["actions"][5]["items"][1]["value"] = $this->ReadAttributeFloat("nutationObliquity");
+
+        $jsonForm["actions"][6]["items"][0]["value"] = $this->ReadAttributeFloat("meanOblEcl");
+        $jsonForm["actions"][6]["items"][1]["value"] = $this->ReadAttributeFloat("trueOblEcl");
+        $jsonForm["actions"][6]["items"][2]["value"] = $this->ReadAttributeFloat("aberCorr");
+        $jsonForm["actions"][6]["items"][3]["value"] = $this->ReadAttributeFloat("appSunLong");
+        $jsonForm["actions"][6]["items"][4]["value"] = $this->ReadAttributeFloat("appSidTimeGreenwich");
+
+        $jsonForm["actions"][7]["items"][0]["value"] = $this->ReadAttributeFloat("geoSunRAsc");
+        $jsonForm["actions"][7]["items"][1]["value"] = $this->ReadAttributeFloat("geoSunDec");
+        $jsonForm["actions"][7]["items"][2]["value"] = $this->ReadAttributeFloat("locHourAngle");
+        $jsonForm["actions"][7]["items"][3]["value"] = $this->ReadAttributeFloat("topoSunRAsc");
+        $jsonForm["actions"][7]["items"][4]["value"] = $this->ReadAttributeFloat("topoSunDec");
+        $jsonForm["actions"][7]["items"][5]["value"] = $this->ReadAttributeFloat("topoLocHourAngle");
+        $jsonForm["actions"][7]["items"][6]["value"] = $this->ReadAttributeFloat("topoZenAngle");
+        $jsonForm["actions"][7]["items"][7]["value"] = $this->ReadAttributeFloat("topoAziAngle");
+        $jsonForm["actions"][7]["items"][8]["value"] = $this->ReadAttributeFloat("eqOfTime");
+        */
+
+        $jsonForm["actions"][1]["popup"]["items"][0]["items"][0]["value"] = $this->ReadAttributeString("TestCalc_DateTime");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_Lat");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][1]["value"] = $this->ReadAttributeFloat("TestCalc_Long");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][2]["value"] = $this->ReadAttributeFloat("TestCalc_Elevation");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][3]["value"] = $this->ReadAttributeFloat("TestCalc_DeltaT");
+        
+        return json_encode($jsonForm);
+    }
 
     /**
      * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
