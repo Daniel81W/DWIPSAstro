@@ -435,20 +435,20 @@
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_EclipticTrueObliquity",
-                                "caption": "TestCalc_EclipticTrueObliquity",
+                                "name": "TestCalc_lambda",
+                                "caption": "TestCalc_lambda",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_AberrationCorrection",
-                                "caption": "TestCalc_AberrationCorrection",
+                                "name": "TestCalc_beta",
+                                "caption": "TestCalc_beta",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_ApparentSunLongitude",
-                                "caption": "TestCalc_ApparentSunLongitude",
+                                "name": "TestCalc_delta",
+                                "caption": "TestCalc_delta",
                                 "width": "200px"
                             },
                             {
