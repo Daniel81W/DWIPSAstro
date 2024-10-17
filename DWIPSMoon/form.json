@@ -411,41 +411,7 @@
 
                         ]
                     },
-                    {
-                        "type": "RowLayout",
-                        "items": [
-                            {
-                                "type": "ValidationTextBox",
-                                "name": "TestCalc_MeanElongationMoonSun",
-                                "caption": "TestCalc_MeanElongationMoonSun",
-                                "width": "200px"
-                            },
-                            {
-                                "type": "ValidationTextBox",
-                                "name": "TestCalc_MeanAnomalySun",
-                                "caption": "TestCalc_MeanAnomalySun",
-                                "width": "200px"
-                            },
-                            {
-                                "type": "ValidationTextBox",
-                                "name": "TestCalc_MeanAnomalyMoon",
-                                "caption": "TestCalc_MeanAnomalyMoon",
-                                "width": "200px"
-                            },
-                            {
-                                "type": "ValidationTextBox",
-                                "name": "TestCalc_ArgumentLatitudeMoon",
-                                "caption": "TestCalc_ArgumentLatitudeMoon",
-                                "width": "200px"
-                            },
-                            {
-                                "type": "ValidationTextBox",
-                                "name": "TestCalc_AscendingLongitudeMoon",
-                                "caption": "TestCalc_AscendingLongitudeMoon",
-                                "width": "200px"
-                            }
-                        ]
-                    },
+                    
                     {
                         "type": "RowLayout",
                         "items": [

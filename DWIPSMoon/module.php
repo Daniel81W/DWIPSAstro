@@ -222,6 +222,10 @@ class DWIPSMoon extends IPSModule
         $this->UpdateFormField("TestCalc_moon_mean_anomaly", "value", $moonDat['m_prime']);
         $this->UpdateFormField("TestCalc_moon_latitude_argument", "value", $moonDat['f']);
 
+        $this->UpdateFormField("TestCalc_l", "value", $moonDat['l']);
+        $this->UpdateFormField("TestCalc_r", "value", $moonDat['r']);
+        $this->UpdateFormField("TestCalc_b", "value", $moonDat['b']);
+
         $this->UpdateFormField("TestCalc_MeanElongationMoonSun", "value", $sun->MeanElongationMoonSun());
         $this->UpdateFormField("TestCalc_MeanAnomalySun", "value", $sun->MeanAnomalySun());
         $this->UpdateFormField("TestCalc_MeanAnomalyMoon", "value", $sun->MeanAnomalyMoon());
