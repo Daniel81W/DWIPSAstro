@@ -69,6 +69,13 @@ class DWIPSMoon extends IPSModule
         $this->RegisterAttributeFloat("jce", 0);
         $this->RegisterAttributeFloat("jme", 0);
 
+
+        $this->RegisterAttributeString("TestCalc_DateTime", '{"year":2024,"month":7,"day":1,"hour":12,"minute":0,"second":0}');
+        $this->RegisterAttributeFloat("TestCalc_Lat", 0);
+        $this->RegisterAttributeFloat("TestCalc_Long", 0);
+        $this->RegisterAttributeFloat("TestCalc_Elevation", 0);
+        $this->RegisterAttributeFloat("TestCalc_DeltaT", 0);
+
         $this->RegisterPropertyInteger("MoonUpdateInterval", 1);
 
 
@@ -190,6 +197,18 @@ class DWIPSMoon extends IPSModule
 
     }
 
+
+    public function WriteFloatAttribute(string $att, float $val)
+    {
+
+        $this->WriteAttributeFloat($att, $val);
+    }
+
+    public function WriteStringAttribute(string $att, string $val)
+    {
+
+        $this->WriteAttributeString($att, $val);
+    }
 
     public function LoadSetupFromSun(){
         $guid = "{8FEB8771-2E4C-CB78-EA91-52546AE77A79}";
