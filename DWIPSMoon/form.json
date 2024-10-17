@@ -453,14 +453,14 @@
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GreenwichMeanSiderealTime",
-                                "caption": "TestCalc_GreenwichMeanSiderealTime",
+                                "name": "TestCalc_alpha_prime",
+                                "caption": "TestCalc_alpha_prime",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GreenwichSiderealTime",
-                                "caption": "TestCalc_GreenwichSiderealTime",
+                                "name": "TestCalc_delta_prime",
+                                "caption": "TestCalc_delta_prime",
                                 "width": "200px"
                             }
                         ]
