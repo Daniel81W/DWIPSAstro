@@ -212,11 +212,7 @@ class Sun{
 
     private $deltaT;
     private $dut1;
-    
-    private Sun $sunJDZeroDT;
-    private Sun $sunJDZero;
-    private Sun $sunJDZeroM;
-    private Sun $sunJDZeroP;
+
 
 
 
@@ -1241,6 +1237,18 @@ class ASTRO_SUN_FORMULA{
 }
 
 class Moon{
+    private float $timestamp;
+    private JulianDay $julianDay;
+
+    private float $latitude;
+    private float $longitude;
+    private float $elevation;
+    private float $pressure;
+    private float $temperature;
+
+    private $deltaT;
+    private $dut1;
+
     private Sun $sun;
 
     function __construct(float $deltaT, float $dut1, int $timestamp, float $latitude, float $longitude, float $elevation, float $pressure, float $temperature)
