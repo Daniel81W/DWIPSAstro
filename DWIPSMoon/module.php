@@ -180,7 +180,7 @@ class DWIPSMoon extends IPSModule
 
 
         $this->SetValue("moonazimuth", $moonDat['azimuth']);
-        $this->SetValue("moonelevation", $moonDat['zenith']);
+        $this->SetValue("moonelevation", $moonDat['e']);
 
 
         $this->UpdateFormField("Current_JCE", "value", $moonDat['spa']['jce']);
