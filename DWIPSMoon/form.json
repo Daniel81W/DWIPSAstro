@@ -470,14 +470,14 @@
                         "items": [
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GeocentricRightAscension",
-                                "caption": "TestCalc_GeocentricRightAscension",
+                                "name": "TestCalc_topocentric_zenith_angle",
+                                "caption": "TestCalc_topocentric_zenith_angle",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_GeocentricDeclination",
-                                "caption": "TestCalc_GeocentricDeclination",
+                                "name": "TestCalc_topocentric_azimuth_angle",
+                                "caption": "TestCalc_topocentric_azimuth_angle",
                                 "width": "200px"
                             },
                             {
