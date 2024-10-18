@@ -232,8 +232,8 @@ class DWIPSMoon extends IPSModule
         $this->UpdateFormField("TestCalc_alpha_prime", "value", $moonDat['alpha_prime']);
         $this->UpdateFormField("TestCalc_delta_prime", "value", $moonDat['delta_prime']);
 
-        $this->UpdateFormField("TestCalc_topocentric_zenith_angle", "value", $mpa['zenith']);
-        $this->UpdateFormField("TestCalc_topocentric_azimuth_angle", "value", $mpa['azimuth']);
+        $this->UpdateFormField("TestCalc_topocentric_zenith_angle", "value", $moonDat['zenith']);
+        $this->UpdateFormField("TestCalc_topocentric_azimuth_angle", "value", $moonDat['azimuth']);
         $this->UpdateFormField("TestCalc_EclipticMeanObliquity", "value", $sun->EclipticMeanObliquity());
         $this->UpdateFormField("TestCalc_EclipticTrueObliquity", "value", $sun->EclipticTrueObliquity());
         $this->UpdateFormField("TestCalc_AberrationCorrection", "value", $sun->AberrationCorrection());
