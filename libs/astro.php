@@ -1039,7 +1039,9 @@ class ASTRO_SUN_FORMULA{
 
     public static function greenwich_mean_sidereal_time (float $jd, float $jc): float
     {
-        DWIPSMOON_WriteDebugMessage(24651, "jd_!: " . $jd);
+        ^//DWIPSMOON_WriteDebugMessage(24651, "jd_!: " . $jd);
+            $jd=2455034.564583333;
+        $jc = 0.0955390714122713;
         return ASTROMISC::LimitTo360Deg(280.46061837 + 360.98564736629 * ($jd - 2451545.0) +
             $jc* $jc*(0.000387933 - $jc/38710000.0));
     }
