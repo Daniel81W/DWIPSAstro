@@ -456,6 +456,7 @@ class Sun{
         );
 
 
+        $nu0 = $sunArr[1]->GreenwichMeanSiderealTime();
         $nu = $sunArr[1]->GreenwichSiderealTime();
 
         for ($i = 0; $i < 3; $i++) {
@@ -485,7 +486,8 @@ class Sun{
 
                 $h_rts[$i] = ASTRO_SUN_FORMULA::rts_sun_altitude($this->latitude, $delta_prime[$i], $h_prime[$i]);
             }
-            
+
+            $spa['nu0'] = $nu0;
         $spa['nu']=$nu;
             $spa['srha'] = $h_prime[1];
             $spa['ssha'] = $h_prime[2];
