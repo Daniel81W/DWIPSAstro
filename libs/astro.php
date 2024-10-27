@@ -771,8 +771,7 @@ class Sun{
 
     public function GreenwichMeanSiderealTime():float
     {
-        return ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time(2455034.564583333, 0.0955390714122713);
-        //return ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($this->julianDay->get_JD(),$this->julianDay->get_JC());
+        return ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($this->julianDay->get_JD(),$this->julianDay->get_JC());
     }
 
     public function ApparentSunLongitude():float
@@ -1343,7 +1342,10 @@ class Moon{
         DWIPSMOON_WriteDebugMessage(24651, "jc: " . $this->sun->get_JulianDay()->get_JC());
         DWIPSMOON_WriteDebugMessage(24651, "nu0: " . $spa['nu0']);
         DWIPSMOON_WriteDebugMessage(24651, "long: " . $spa['longitude']);
-        $mpa['h'] = ASTRO_SUN_FORMULA::observer_hour_angle($spa['nu'], $spa['longitude'], $mpa['alpha']);
+        
+        $mpa['h'] = ASTRO_SUN_FORMULA::observer_hour_angle(ASTRO_SUN_FORMULA::greenwich_sidereal_time(ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($spa['jd'], $spa['jc']), $spa['del_psi'], $spa['epsilon']), $spa['longitude'], $mpa['alpha']);
+
+        //$mpa['h'] = ASTRO_SUN_FORMULA::observer_hour_angle($spa['nu'], $spa['longitude'], $mpa['alpha']);
 
         $mpa['del_alpha'] = 0;
         $mpa['delta_prime'] = 0;
