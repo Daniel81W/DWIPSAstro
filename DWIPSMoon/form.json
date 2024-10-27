@@ -465,6 +465,12 @@
                             },
                             {
                                 "type": "ValidationTextBox",
+                                "name": "TestCalc_alpha",
+                                "caption": "TestCalc_alpha",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
                                 "name": "TestCalc_delta",
                                 "caption": "TestCalc_delta",
                                 "width": "200px"
