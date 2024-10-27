@@ -432,6 +432,9 @@ class Sun{
         $h_prime = array();
         $h0_prime = -1 * (Sun::radius + Sun::atmosRefract);
 
+        $spa['jd'] = $this->julianDay->get_JD();
+        $spa['jc'] = $this->julianDay->get_JC();
+        $spa['jde'] = $this->julianDay->get_JDE();
         $spa['jce'] = $this->julianDay->get_JCE();
         $spa['del_psi']=$this->NutationLongitude();
         $spa['epsilon']=$this->EclipticTrueObliquity();
