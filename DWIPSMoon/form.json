@@ -510,6 +510,18 @@
                                 "name": "TestCalc_e0",
                                 "caption": "TestCalc_e0",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_zenith",
+                                "caption": "TestCalc_zenith",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_azimuth",
+                                "caption": "TestCalc_azimuth",
+                                "width": "200px"
                             }
                         ]
                     },
