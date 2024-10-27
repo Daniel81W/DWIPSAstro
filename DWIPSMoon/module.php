@@ -273,6 +273,10 @@ class DWIPSMoon extends IPSModule
 
     }
 
+    public function WriteDebugMessage($Message){
+        $this->SendDebug("Moon", $Message, 0);
+    }
+
 
     public function WriteFloatAttribute(string $att, float $val)
     {
