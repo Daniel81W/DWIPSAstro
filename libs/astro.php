@@ -771,6 +771,8 @@ class Sun{
 
     public function GreenwichMeanSiderealTime():float
     {
+        DWIPSMOON_WriteDebugMessage(24651, "jd: " . $this->julianDay->get_JD());
+
         return ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($this->julianDay->get_JD(),$this->julianDay->get_JC());
     }
 
