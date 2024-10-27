@@ -1309,7 +1309,6 @@ class Moon{
         $mpa['b'] = 0;
         $mpa['ü'] = 0;
 
-        DWIPSMOON_WriteDebugMessage(24651, "JCE: " . $spa['jce']);
         ASTRO_MOON_FORMULA::moon_periodic_term_summation($mpa['d'], $mpa['m'], $mpa['m_prime'], $mpa['f'], $spa['jce'], ASTROTERMS::ml_terms, $mpa['l'], $mpa['r']);
         ASTRO_MOON_FORMULA::moon_periodic_term_summation($mpa['d'], $mpa['m'], $mpa['m_prime'], $mpa['f'], $spa['jce'], ASTROTERMS::mb_terms, $mpa['b'], $mpa['ü']);
 
@@ -1369,6 +1368,8 @@ class ASTRO_MOON_FORMULA
 {
     public static function moon_mean_longitude(float $jce)
     {
+
+        DWIPSMOON_WriteDebugMessage(24651, "JCE: " . $jce);
         return ASTROMISC::LimitTo360Deg(
             ASTROMISC::FourthOrderPolynomial(
                 -1.0 / 65194000,
