@@ -1273,7 +1273,6 @@ class Moon{
         $this->deltaT = $deltaT;
         $this->dut1 = $dut1;
         $this->sun = new Sun($deltaT, $dut1, $timestamp, $latitude, $longitude, $elevation, $pressure, $temperature);
-        DWIPSMOON_WriteDebugMessage(24651, "long: " . $longitude);
     }
 
     public function sampa_calculate(array &$mpa)
@@ -1337,6 +1336,8 @@ class Moon{
         $mpa['alpha'] = ASTRO_SUN_FORMULA::geocentric_right_ascension($mpa['lamda'], $spa['epsilon'], $mpa['beta']);
         $mpa['delta'] = ASTRO_SUN_FORMULA::geocentric_declination($mpa['beta'], $spa['epsilon'], $mpa['lamda']);
 
+        DWIPSMOON_WriteDebugMessage(24651, "nu: " . $spa['nu']);
+        DWIPSMOON_WriteDebugMessage(24651, "long: " . $spa['longitude']);
         $mpa['h'] = ASTRO_SUN_FORMULA::observer_hour_angle($spa['nu'], $spa['longitude'], $mpa['alpha']);
 
         $mpa['del_alpha'] = 0;
