@@ -1263,7 +1263,6 @@ class Moon{
             $date = new DateTime();
             $timestamp = time() - (new DateTimeImmutable())->getOffset();
         }
-        DWIPSMOON_WriteDebugMessage(24651, "long: " . $longitude);
         $this->timestamp = $timestamp;
         $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);
         $this->latitude = $latitude;
@@ -1274,6 +1273,7 @@ class Moon{
         $this->deltaT = $deltaT;
         $this->dut1 = $dut1;
         $this->sun = new Sun($deltaT, $dut1, $timestamp, $latitude, $longitude, $elevation, $pressure, $temperature);
+        DWIPSMOON_WriteDebugMessage(24651, "long: " . $longitude);
     }
 
     public function sampa_calculate(array &$mpa)
