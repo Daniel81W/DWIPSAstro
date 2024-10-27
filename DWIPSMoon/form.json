@@ -447,8 +447,8 @@
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_delta",
-                                "caption": "TestCalc_delta",
+                                "name": "TestCalc_cap_delta",
+                                "caption": "TestCalc_cap_delta",
                                 "width": "200px"
                             },
                             {
@@ -461,6 +461,12 @@
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_lamda",
                                 "caption": "TestCalc_lamda",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_delta",
+                                "caption": "TestCalc_delta",
                                 "width": "200px"
                             },
                             {
