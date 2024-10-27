@@ -1341,14 +1341,9 @@ class Moon{
         $mpa['alpha'] = ASTRO_SUN_FORMULA::geocentric_right_ascension($mpa['lamda'], $spa['epsilon'], $mpa['beta']);
         $mpa['delta'] = ASTRO_SUN_FORMULA::geocentric_declination($mpa['beta'], $spa['epsilon'], $mpa['lamda']);
 
-        DWIPSMOON_WriteDebugMessage(24651, "jd: " . $this->sun->get_JulianDay()->get_JD());
-        DWIPSMOON_WriteDebugMessage(24651, "jc: " . $this->sun->get_JulianDay()->get_JC());
-        DWIPSMOON_WriteDebugMessage(24651, "nu0: " . ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($spa['jd'], $spa['jc']));
         DWIPSMOON_WriteDebugMessage(24651, "long: " . $spa['longitude']);
         
         $mpa['h'] = ASTRO_SUN_FORMULA::observer_hour_angle(ASTRO_SUN_FORMULA::greenwich_sidereal_time(ASTRO_SUN_FORMULA::greenwich_mean_sidereal_time($spa['jd'], $spa['jc']), $spa['del_psi'], $spa['epsilon']), $spa['longitude'], $mpa['alpha']);
-
-        //$mpa['h'] = ASTRO_SUN_FORMULA::observer_hour_angle($spa['nu'], $spa['longitude'], $mpa['alpha']);
 
         $mpa['del_alpha'] = 0;
         $mpa['delta_prime'] = 0;

@@ -498,6 +498,18 @@
                                 "name": "TestCalc_delta_prime",
                                 "caption": "TestCalc_delta_prime",
                                 "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_h_prime",
+                                "caption": "TestCalc_h_prime",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_e0",
+                                "caption": "TestCalc_e0",
+                                "width": "200px"
                             }
                         ]
                     },
