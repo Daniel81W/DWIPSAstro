@@ -386,27 +386,27 @@
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_moon_mean_longitude",
-                                "caption": "Current_moon_mean_longitude"
+                                "caption": "Current_moon_mean_longitude (L')'"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_moon_mean_elongation",
-                                "caption": "Current_moon_mean_elongation"
+                                "caption": "Current_moon_mean_elongation (D)"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_sun_mean_anomaly",
-                                "caption": "Current_sun_mean_anomaly"
+                                "caption": "Current_sun_mean_anomaly (M)"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_moon_mean_anomaly",
-                                "caption": "Current_moon_mean_anomaly"
+                                "caption": "Current_moon_mean_anomaly (M')'"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_moon_latitude_argument",
-                                "caption": "moon_latitude_argument"
+                                "caption": "moon_latitude_argument (F)"
                             }
 
                         ]
@@ -418,25 +418,25 @@
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_l",
-                                "caption": "TestCalc_l",
+                                "caption": "TestCalc_l (l)",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_r",
-                                "caption": "TestCalc_r",
+                                "caption": "TestCalc_r (r)",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_b",
-                                "caption": "TestCalc_b",
+                                "caption": "TestCalc_b (b)",
                                 "width": "200px"
                             },
                             {
                                 "type": "ValidationTextBox",
-                                "name": "TestCalc_lamda",
-                                "caption": "TestCalc_lamda",
+                                "name": "TestCalc_lamda_prime",
+                                "caption": "TestCalc_lamda_prime",
                                 "width": "200px"
                             },
                             {
@@ -449,6 +449,24 @@
                                 "type": "ValidationTextBox",
                                 "name": "TestCalc_delta",
                                 "caption": "TestCalc_delta",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_pi",
+                                "caption": "TestCalc_pi",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_lamda",
+                                "caption": "TestCalc_lamda",
+                                "width": "200px"
+                            },
+                            {
+                                "type": "ValidationTextBox",
+                                "name": "TestCalc_del_alpha",
+                                "caption": "TestCalc_del_alpha",
                                 "width": "200px"
                             },
                             {
