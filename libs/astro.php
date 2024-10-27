@@ -1338,6 +1338,7 @@ class Moon{
         $mpa['alpha'] = ASTRO_SUN_FORMULA::geocentric_right_ascension($mpa['lamda'], $spa['epsilon'], $mpa['beta']);
         $mpa['delta'] = ASTRO_SUN_FORMULA::geocentric_declination($mpa['beta'], $spa['epsilon'], $mpa['lamda']);
 
+        DWIPSMOON_WriteDebugMessage(24651, "nu0: " . $spa['nu0']);
         DWIPSMOON_WriteDebugMessage(24651, "nu: " . $spa['nu']);
         DWIPSMOON_WriteDebugMessage(24651, "nutLong: " . $spa['del_psi']);
         DWIPSMOON_WriteDebugMessage(24651, "Obli: " . $spa['epsilon']);
