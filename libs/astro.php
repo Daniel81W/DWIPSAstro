@@ -1066,6 +1066,9 @@ class ASTRO_SUN_FORMULA{
 
     public static function observer_hour_angle(float $nu, float $longitude, float $alpha_deg): float
     {
+        DWIPSMOON_WriteDebugMessage(24651, "nu: " . $nu);
+        DWIPSMOON_WriteDebugMessage(24651, "long: " . $longitude);
+        DWIPSMOON_WriteDebugMessage(24651, "alpha: " . $alpha_deg);
         return ASTROMISC::LimitTo360Deg($nu + $longitude - $alpha_deg);
     }
 
@@ -1369,7 +1372,6 @@ class ASTRO_MOON_FORMULA
     public static function moon_mean_longitude(float $jce)
     {
 
-        DWIPSMOON_WriteDebugMessage(24651, "JCE: " . $jce);
         return ASTROMISC::LimitTo360Deg(
             ASTROMISC::FourthOrderPolynomial(
                 -1.0 / 65194000,
