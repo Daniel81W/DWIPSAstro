@@ -1066,9 +1066,9 @@ class ASTRO_SUN_FORMULA{
 
     public static function observer_hour_angle(float $nu, float $longitude, float $alpha_deg): float
     {
-        DWIPSMOON_WriteDebugMessage(24651, "nu: " . $nu);
-        DWIPSMOON_WriteDebugMessage(24651, "long: " . $longitude);
-        DWIPSMOON_WriteDebugMessage(24651, "alpha: " . $alpha_deg);
+        //DWIPSMOON_WriteDebugMessage(24651, "nu: " . $nu);
+        //DWIPSMOON_WriteDebugMessage(24651, "long: " . $longitude);
+        //DWIPSMOON_WriteDebugMessage(24651, "alpha: " . $alpha_deg);
         return ASTROMISC::LimitTo360Deg($nu + $longitude - $alpha_deg);
     }
 
@@ -1263,6 +1263,7 @@ class Moon{
             $date = new DateTime();
             $timestamp = time() - (new DateTimeImmutable())->getOffset();
         }
+        DWIPSMOON_WriteDebugMessage(24651, "long: " . $longitude);
         $this->timestamp = $timestamp;
         $this->julianDay = new JulianDay($deltaT, $dut1, $timestamp);
         $this->latitude = $latitude;
