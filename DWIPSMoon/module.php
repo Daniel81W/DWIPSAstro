@@ -1,209 +1,317 @@
 <?php
 
-	include_once("/var/lib/symcon/modules/DWIPSAstro/libs/astro.php");
-	class DWIPSMoon extends IPSModule {
+include_once (__DIR__ . "/../libs/astro.php");
 
-		public function Create()
-		{
-			//Never delete this line!
-			parent::Create();
+class DWIPSMoon extends IPSModule
+{
 
-            if(!IPS_VariableProfileExists("DWIPS.".$this->Translate("season"))){
-                IPS_CreateVariableProfile("DWIPS.".$this->Translate("season"), 1);
-                IPS_SetVariableProfileValues("DWIPS.".$this->Translate("season"), 1, 4, 1);
-                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 1, $this->Translate("spring"), "", -1);
-                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 2, $this->Translate("summer"), "", -1);
-                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 3, $this->Translate("fall"), "", -1);
-                IPS_SetVariableProfileAssociation("DWIPS.".$this->Translate("season"), 4, $this->Translate("winter"), "", -1);
-            }
+    public function Create()
+    {
+        //Never delete this line!
+        parent::Create();
 
-            $jdid = $this->RegisterVariableFloat("juliandate",$this->Translate("juliandate"), "", 1);
-			$this->RegisterVariableFloat("juliancentury",$this->Translate("juliancentury"), "", 2);
-			$this->RegisterVariableInteger("startastronomicaltwilight", $this->Translate("startastronomicaltwilight"), "~UnixTimestamp", 3);
-			$this->RegisterVariableInteger("startnauticaltwilight", $this->Translate("startnauticaltwilight"), "~UnixTimestamp", 4);
-			$this->RegisterVariableInteger("startciviltwilight", $this->Translate("startciviltwilight"), "~UnixTimestamp", 5);
-			$this->RegisterVariableInteger("sunrise", $this->Translate("sunrise"), "~UnixTimestamp", 6);
-			$this->RegisterVariableInteger("solarnoon",$this->Translate("solarnoon"), "~UnixTimestamp", 7);
-			$this->RegisterVariableInteger("sunset", $this->Translate("sunset"), "~UnixTimestamp", 8);
-			$this->RegisterVariableInteger("stopciviltwilight", $this->Translate("stopciviltwilight"), "~UnixTimestamp", 9);
-			$this->RegisterVariableInteger("stopnauticaltwilight", $this->Translate("stopnauticaltwilight"), "~UnixTimestamp", 10);
-			$this->RegisterVariableInteger("stopastronomicaltwilight", $this->Translate("stopastronomicaltwilight"), "~UnixTimestamp", 11);
-			$this->RegisterVariableFloat("sunlightduration", $this->Translate("sunlightduration"), "", 12);
-            $this->RegisterVariableString("sunlightdurationstr", $this->Translate("sunlightduration"), "", 12);
-			$this->RegisterVariableFloat("sunazimut", $this->Translate("sunazimut"), "", 13);
-			$this->RegisterVariableString("sundirection", $this->Translate("sundirection"), "", 14);
-			$this->RegisterVariableFloat("sunelevation", $this->Translate("sunelevation"), "", 15);
-			$this->RegisterVariableFloat("sunelevationmin", $this->Translate("sunelevationmin"), "", 16);
-			$this->RegisterVariableFloat("sunelevationmax", $this->Translate("sunelevationmax"), "", 17);
-			$this->RegisterVariableFloat("sundeclination", $this->Translate("sundeclination"), "", 18);
-			$this->RegisterVariableInteger("sundistance", $this->Translate("sundistance"), "", 19);
-			$this->RegisterVariableFloat("equationOfTime", $this->Translate("equationOfTime"), "", 20);
-			$this->RegisterVariableFloat("durationOfSunrise", $this->Translate("durationOfSunrise"), "", 21);
-			$this->RegisterVariableInteger("season", $this->Translate("season"), "DWIPS.".$this->Translate("season"), 22);
-			$this->RegisterVariableBoolean("day", $this->Translate("day"),"", 23);
-			$this->RegisterVariableBoolean("insideCivilTwilight", $this->Translate("insideCivilTwilight"), "", 24);
-			$this->RegisterVariableFloat("shadowLength", $this->Translate("shadowlength"), "", 25);
-			$this->RegisterVariableFloat("solarirradiancespace", $this->Translate("solarirradiancespace"), "", 26); //"Astronomie.Radiant_Power", 26);
-			$this->RegisterVariableFloat("solarirradiancerectangular", $this->Translate("solarirradiancerectangular"), "", 27); //"Astronomie.Radiant_Power", 27);
-			$this->RegisterVariableFloat("solarirradianceground", $this->Translate("solarirradianceground"), "", 28); //"Astronomie.Radiant_Power", 28);
-			$this->RegisterVariableFloat("solarirradiancepvcollector", $this->Translate("solarirradiancepvcollector"), "", 40); //"Astronomie.Radiant_Power", 40);
-			
-			
-			$this->RegisterVariableString("moonphase", $this->Translate("moonphase"), "", 30);
+        if (!IPS_VariableProfileExists("DWIPS." . $this->Translate("season"))) {
+            IPS_CreateVariableProfile("DWIPS." . $this->Translate("season"), 1);
+            IPS_SetVariableProfileValues("DWIPS." . $this->Translate("season"), 1, 4, 1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 1, $this->Translate("spring"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 2, $this->Translate("summer"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 3, $this->Translate("fall"), "", -1);
+            IPS_SetVariableProfileAssociation("DWIPS." . $this->Translate("season"), 4, $this->Translate("winter"), "", -1);
+        }
 
 
-			$this->RegisterPropertyFloat("Latitude", 50.0);
-			$this->RegisterPropertyFloat("Longitude", 9);
+     
 
-			$this->RegisterPropertyInteger("UpdateInterval", 1);
-			$this->RegisterTimer("Update", 60000, "DWIPSASTRO_Update($this->InstanceID);");
-		}
+        $this->RegisterVariableString("moonphase", $this->Translate("moonphase"), "", 30);
 
-		public function Destroy()
-		{
-			//Never delete this line!
-			parent::Destroy();
-		}
 
-		public function ApplyChanges()
-		{
-			//Never delete this line!
-			parent::ApplyChanges();
-			$this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval")*60*1000);
+        $p = 1;
+        $this->MaintainVariable("moonrise", $this->Translate("moonrise"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("moonset", $this->Translate("moonset"), 1, "~UnixTimestamp", $p, true);
+        //$p++;
+        //$this->MaintainVariable("moonnoon", $this->Translate("moonnoon"), 1, "~UnixTimestamp", $p, true);
+        $p++;
+        $this->MaintainVariable("moonlightduration", $this->Translate("moonlightduration"), 1, "~UnixTimestampTime", $p, true);
+        $p++;
+        $this->MaintainVariable("moonazimuth", $this->Translate("moonazimuth"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moondirection", $this->Translate("moondirection"), 2, "DWIPS." . $this->Translate("compass_rose"), $p, true);
+        $p++;
+        $this->MaintainVariable("moonelevation", $this->Translate("moonelevation"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonelevationmin", $this->Translate("moonelevationmin"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonelevationmax", $this->Translate("moonelevationmax"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonazimutAtSunrise", $this->Translate("moonazimutSunrise"), 2, "~WindDirection.F", $p, false);
+        $this->MaintainVariable("moonazimutAtSunrise", $this->Translate("moonazimutSunrise"), 2, "~WindDirection.F", $p, true);
+        $p++;
+        $this->MaintainVariable("moonazimutAtSunset", $this->Translate("moonazimutSunset"), 2, "~WindDirection.F", $p, false);
+        $this->MaintainVariable("moonazimutAtSunset", $this->Translate("moonazimutSunset"), 2, "~WindDirection.F", $p, true);
+        //$p++;
+        //$this->MaintainVariable("day", $this->Translate("day"), 0, "DWIPS." . $this->Translate("DayNight"), $p, true);
+        $p++;
+        $this->MaintainVariable("moondistance", $this->Translate("moondistance"), 1, "DWIPS." . $this->Translate("distance.km"), $p, true);
+        $p++;
 
-			DWIPSMOON_Update($this->InstanceID);
-		}
 
-		/**
-        * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
-        * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
-        *
-        * DWIPSASTRO_UpdateSunrise($id);
-        *
+        $this->RegisterPropertyFloat("Latitude", 50.0);
+        $this->RegisterPropertyFloat("Longitude", 9);
+        $this->RegisterPropertyFloat("Elevation", 1);
+        $this->RegisterPropertyFloat("deltaT", 69.184);
+
+
+        $this->RegisterAttributeFloat("jd", 0);
+        $this->RegisterAttributeFloat("jc", 0);
+        $this->RegisterAttributeFloat("jm", 0);
+        $this->RegisterAttributeFloat("jde", 0);
+        $this->RegisterAttributeFloat("jce", 0);
+        $this->RegisterAttributeFloat("jme", 0);
+
+
+        $this->RegisterAttributeString("TestCalc_DateTime", '{"year":2024,"month":7,"day":1,"hour":12,"minute":0,"second":0}');
+        $this->RegisterAttributeFloat("TestCalc_Lat", 0);
+        $this->RegisterAttributeFloat("TestCalc_Long", 0);
+        $this->RegisterAttributeFloat("TestCalc_Elevation", 0);
+        $this->RegisterAttributeFloat("TestCalc_DeltaT", 0);
+
+        $this->RegisterPropertyInteger("MoonUpdateInterval", 1);
+
+
+        $this->RegisterTimer("Update", 60000, "DWIPSMOON_Update($this->InstanceID);");
+    }
+
+    public function Destroy()
+    {
+        //Never delete this line!
+        parent::Destroy();
+    }
+
+    public function ApplyChanges()
+    {
+        //Never delete this line!
+        parent::ApplyChanges();
+        $this->SetTimerInterval("Update", $this->ReadPropertyInteger("MoonUpdateInterval") * 60 * 1000);
+
+        DWIPSMOON_Update($this->InstanceID);
+    }
+    
+    public function GetConfigurationForm()
+    {
+        $this->Update();
+        //load form from file
+        $jsonForm = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
+        /*
+        $jsonForm["actions"][0]["items"][0]["value"] = $this->ReadAttributeFloat("jd");
+        $jsonForm["actions"][0]["items"][1]["value"] = $this->ReadAttributeFloat("jc");
+        $jsonForm["actions"][0]["items"][2]["value"] = $this->ReadAttributeFloat("jm");
+
+        $jsonForm["actions"][1]["items"][0]["value"] = $this->ReadAttributeFloat("jde");
+        $jsonForm["actions"][1]["items"][1]["value"] = $this->ReadAttributeFloat("jce");
+        $jsonForm["actions"][1]["items"][2]["value"] = $this->ReadAttributeFloat("jme");
+
+        $jsonForm["actions"][2]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLong");
+        $jsonForm["actions"][2]["items"][1]["value"] = $this->ReadAttributeFloat("L0");
+        $jsonForm["actions"][2]["items"][2]["value"] = $this->ReadAttributeFloat("L1");
+        $jsonForm["actions"][2]["items"][3]["value"] = $this->ReadAttributeFloat("L2");
+        $jsonForm["actions"][2]["items"][4]["value"] = $this->ReadAttributeFloat("L3");
+        $jsonForm["actions"][2]["items"][5]["value"] = $this->ReadAttributeFloat("L4");
+        $jsonForm["actions"][2]["items"][6]["value"] = $this->ReadAttributeFloat("L5");
+
+        $jsonForm["actions"][3]["items"][0]["value"] = $this->ReadAttributeFloat("helioCentLat");
+        $jsonForm["actions"][3]["items"][1]["value"] = $this->ReadAttributeFloat("B0");
+        $jsonForm["actions"][3]["items"][2]["value"] = $this->ReadAttributeFloat("B1");
+        $jsonForm["actions"][3]["items"][3]["value"] = $this->ReadAttributeFloat("earthRadVec");
+
+        $jsonForm["actions"][4]["items"][0]["value"] = $this->ReadAttributeFloat("geoCentLong");
+        $jsonForm["actions"][4]["items"][1]["value"] = $this->ReadAttributeFloat("geoCentLat");
+        
+        $jsonForm["actions"][5]["items"][0]["value"] = $this->ReadAttributeFloat("nutationLongitude");
+        $jsonForm["actions"][5]["items"][1]["value"] = $this->ReadAttributeFloat("nutationObliquity");
+
+        $jsonForm["actions"][6]["items"][0]["value"] = $this->ReadAttributeFloat("meanOblEcl");
+        $jsonForm["actions"][6]["items"][1]["value"] = $this->ReadAttributeFloat("trueOblEcl");
+        $jsonForm["actions"][6]["items"][2]["value"] = $this->ReadAttributeFloat("aberCorr");
+        $jsonForm["actions"][6]["items"][3]["value"] = $this->ReadAttributeFloat("appSunLong");
+        $jsonForm["actions"][6]["items"][4]["value"] = $this->ReadAttributeFloat("appSidTimeGreenwich");
+
+        $jsonForm["actions"][7]["items"][0]["value"] = $this->ReadAttributeFloat("geoSunRAsc");
+        $jsonForm["actions"][7]["items"][1]["value"] = $this->ReadAttributeFloat("geoSunDec");
+        $jsonForm["actions"][7]["items"][2]["value"] = $this->ReadAttributeFloat("locHourAngle");
+        $jsonForm["actions"][7]["items"][3]["value"] = $this->ReadAttributeFloat("topoSunRAsc");
+        $jsonForm["actions"][7]["items"][4]["value"] = $this->ReadAttributeFloat("topoSunDec");
+        $jsonForm["actions"][7]["items"][5]["value"] = $this->ReadAttributeFloat("topoLocHourAngle");
+        $jsonForm["actions"][7]["items"][6]["value"] = $this->ReadAttributeFloat("topoZenAngle");
+        $jsonForm["actions"][7]["items"][7]["value"] = $this->ReadAttributeFloat("topoAziAngle");
+        $jsonForm["actions"][7]["items"][8]["value"] = $this->ReadAttributeFloat("eqOfTime");
         */
-		public function Update(){
-			$timezone = 1;
-			if(date('I')){
-				$timezone = 2;
-			}
-			$localTime = intval(date("G"))/24 + intval(date("i"))/1440 + intval(date("s")/86400);
 
-			$latitude = $this->ReadPropertyFloat("Latitude");
-			$longitude = $this->ReadPropertyFloat("Longitude");
+        $jsonForm["actions"][1]["popup"]["items"][0]["items"][0]["value"] = $this->ReadAttributeString("TestCalc_DateTime");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][0]["value"] = $this->ReadAttributeFloat("TestCalc_Lat");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][1]["value"] = $this->ReadAttributeFloat("TestCalc_Long");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][2]["value"] = $this->ReadAttributeFloat("TestCalc_Elevation");
+        $jsonForm["actions"][1]["popup"]["items"][1]["items"][3]["value"] = $this->ReadAttributeFloat("TestCalc_DeltaT");
+        
+        return json_encode($jsonForm);
+    }
 
-			$jd = ASTROGEN::JulianDay();
-			$jc = ASTROGEN::JulianCentury($jd);
-			$jdtomorrow = $jd + 1;
-			$jctomorrow = ASTROGEN::JulianCentury($jdtomorrow);
+    /**
+     * Die folgenden Funktionen stehen automatisch zur Verfügung, wenn das Modul über die "Module Control" eingefügt wurden.
+     * Die Funktionen werden, mit dem selbst eingerichteten Prefix, in PHP und JSON-RPC wiefolgt zur Verfügung gestellt:
+     *
+     * DWIPSASTRO_UpdateSunrise($id);
+     *
+     */
+    public function Update()
+    {
+        $jd = new JulianDay($this->ReadPropertyFloat("deltaT"));
+        $moon = new Moon($this->ReadPropertyFloat("deltaT"), 0, -1, $this->ReadPropertyFloat("Latitude"), $this->ReadPropertyFloat("Longitude"), $this->ReadPropertyFloat("Elevation"), 835, 10);
 
-			$solarZenith = ASTROSUN::SolarZenith($jc, $localTime, $latitude, $longitude, $timezone);
-			$sunrise = mktime(0, 0, ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jc, true) * 24 * 60 * 60);
-			$sunrisetoday = $sunrise;
-			if($sunrise <  time()){
-				$sunrise = mktime(0, 0, (1 + ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jctomorrow, true)) * 24 * 60 * 60);
-			}
-			$sunset = mktime(0,0,ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jc, false)*24*60*60);
-			$sunsettoday = $sunset;
-			if($sunset <  time()){
-				$sunset = mktime(0, 0, (1 + ASTROSUN::TimeForElevation(-0.833, $latitude, $longitude, $timezone, $jctomorrow, false)) * 24 * 60 * 60);
-			}
-			$solarAzimut = ASTROSUN::SolarAzimut($jc, $localTime, $latitude, $longitude, $timezone);
-			$beginCivilTwilight = mktime(0,0,ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jc, true)*24*60*60);
-		$beginCivilTwilighttoday = $beginCivilTwilight;
-			if($beginCivilTwilight < time()){
-				$beginCivilTwilight = mktime(0,0,(1 + ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jctomorrow, true))*24*60*60);
-			}
-			$endCivilTwilight = mktime(0,0,ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jc, false)*24*60*60);
-			$endCivilTwilightToday = $endCivilTwilight;
-			if($endCivilTwilight < time()){
-				$endCivilTwilight = mktime(0,0,(1 + ASTROSUN::TimeForElevation(-6, $latitude, $longitude, $timezone, $jctomorrow, false))*24*60*60);
-			}
-			$sunelevation = ASTROSUN::SolarElevation($jc, $localTime, $latitude, $longitude, $timezone);
-			$sundistance = ASTROSUN::SunRadVector($jc) * 149597870.7;
-			$solarirradiancespace = 3.845 * pow(10, 26) / (4 * pi() * pow($sundistance * 1000 , 2));
+        $moonDat = array();
+        $moon->sampa_calculate($moonDat);
 
-			$this->SetValue("juliandate", $jd);
-			$this->SetValue("juliancentury", $jc);
-
-			$solarnoon = mktime(0, 0, ASTROSUN::SolarNoon($timezone, $longitude, $jc) * 24 * 60 * 60);
-			if($solarnoon < time()){
-				$solarnoon = mktime(0, 0, (1 + ASTROSUN::SolarNoon($timezone, $longitude, $jctomorrow)) * 24 * 60 * 60);
-			}
-			$this->SetValue("solarnoon", $solarnoon);
-			$this->SetValue("sunazimut", $solarAzimut);
-			$this->SetValue("sundeclination", ASTROSUN::Declination($jc));
-			$this->SetValue("sunelevation", $sunelevation);
-			$this->SetValue("sunelevationmin", -90 + $latitude + ASTROSUN::Declination($jc));
-			$this->SetValue("sunelevationmax", 90 - $latitude + ASTROSUN::Declination($jc));
-			$this->SetValue("sundistance", $sundistance);
-			$this->SetValue("equationOfTime", ASTROSUN::EquationOfTime($jc));
-			$this->SetValue("sundirection", ASTROSUN::SolarDirection($solarAzimut));
-            $sundura = ($sunset - $sunrise)/60.0/60.0;
-			$this->SetValue("sunlightduration", $sundura);
-            $this->SetValue("sunlightdurationstr", date('H:i:s',($sunset - $sunrise - intval(date('Z',$sunset - $sunrise)))));
-			$this->SetValue("season", ASTROSUN::Season($jc, $latitude));
+        //$this->WriteAttributeFloat("jd", );
+        //$this->WriteAttributeFloat("jc", ASTROGEN::JulianCentury($this->ReadAttributeFloat("jd")));
+        //$this->WriteAttributeFloat("jm", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jc")));
+        //$this->WriteAttributeFloat("jde", ASTROGEN::JDE($this->ReadAttributeFloat("jd"), $this->ReadPropertyFloat("deltaT")));
+        $this->WriteAttributeFloat("jce", $moonDat['spa']['jce']);
+        //$this->WriteAttributeFloat("jme", ASTROGEN::JulianMillennium($this->ReadAttributeFloat("jce")));
 
 
-				$this->SetValue("sunrise", $sunrise);
-				$this->SetValue("sunset", $sunset);
-				$this->SetValue("startciviltwilight", $beginCivilTwilight);
-				$this->SetValue("stopciviltwilight", $endCivilTwilight);
-			try{
-				$beginNauticalTwilight = mktime(0, 0, ASTROSUN::TimeForElevation(-12, $latitude, $longitude, $timezone, $jc, true) * 24 * 60 * 60);
-				if($beginNauticalTwilight < time()){
-					$beginNauticalTwilight = mktime(0,0,(1 + ASTROSUN::TimeForElevation(-12, $latitude, $longitude, $timezone, $jctomorrow, true))*24*60*60);
-				}
-				$this->SetValue("startnauticaltwilight", $beginNauticalTwilight);
-			}catch (Exception $e){}
-			try{
-				$endNauticalTwilight = mktime(0, 0, ASTROSUN::TimeForElevation(-12, $latitude, $longitude, $timezone, $jc, false) * 24 * 60 * 60);
-				if($endNauticalTwilight < time()){
-					$endNauticalTwilight = mktime(0,0,(1 + ASTROSUN::TimeForElevation(-12, $latitude, $longitude, $timezone, $jctomorrow, false))*24*60*60);
-				}
-				$this->SetValue("stopnauticaltwilight", $endNauticalTwilight);
-			}catch (Exception $e){}
-			try{
-				$beginAstronomicalTwilight = mktime(0, 0, ASTROSUN::TimeForElevation(-18, $latitude, $longitude, $timezone, $jc, true) * 24 * 60 * 60);
-				if($beginAstronomicalTwilight < time()){
-					$beginAstronomicalTwilight = mktime(0,0,(1 + ASTROSUN::TimeForElevation(-18, $latitude, $longitude, $timezone, $jctomorrow, true))*24*60*60);
-				}
-				$this->SetValue("startastronomicaltwilight", $beginAstronomicalTwilight);
-			}catch (Exception $e){}
-			try{
-				$endAstronomicalTwilight = mktime(0, 0, ASTROSUN::TimeForElevation(-18, $latitude, $longitude, $timezone, $jc, false) * 24 * 60 * 60);
-				if($endAstronomicalTwilight < time()){
-					$endAstronomicalTwilight = mktime(0,0,(1 + ASTROSUN::TimeForElevation(-18, $latitude, $longitude, $timezone, $jctomorrow, false))*24*60*60);
-				}
-				$this->SetValue("stopastronomicaltwilight", $endAstronomicalTwilight);
-			}catch (Exception $e){}
-            $shadowlen = 1 / tan(deg2rad($sunelevation));
-            if($shadowlen > 0) {
-                $this->SetValue("shadowLength", $shadowlen);
-            }else{
+        $this->SetValue("moonazimuth", $moonDat['azimuth']);
+        $this->SetValue("moonelevation", $moonDat['e']);
 
-                $this->SetValue("shadowLength", 0);
-            }
-			$this->SetValue("solarirradiancespace", $solarirradiancespace);
-			$this->SetValue("solarirradiancerectangular", $solarirradiancespace * 0.75);
-			$this->SetValue("solarirradianceground", $solarirradiancespace * 0.75 * sin(deg2rad($sunelevation)));
-			$this->SetValue("solarirradiancepvcollector", $solarirradiancespace * 0.75 * ( cos(deg2rad($sunelevation)) * cos(deg2rad($solarAzimut - 183)) *sin(deg2rad(39)) + sin(deg2rad($sunelevation)) * cos(deg2rad(39)) ) );
-			$this->SetValue("durationOfSunrise", ASTROSUN::DurationOfSunrise($latitude, $longitude, $jc));
-			
-			$ts = time();
-			if($sunrisetoday <= $ts and $ts <= $sunsettoday){
-				$this->SetValue("day", true);
-			}else{
-				$this->SetValue("day", false);
-			}
-			if($beginCivilTwilighttoday <= $ts and $ts <= $endCivilTwilightToday){
-				$this->SetValue("insideCivilTwilight", true);
-			}else{
-				$this->SetValue("insideCivilTwilight", false);
-			}
 
-			$this->SetValue("moonphase", ASTROMOON::PhaseStr());
-		}
+        $this->UpdateFormField("Current_JCE", "value", $moonDat['spa']['jce']);
 
-		
-	}
-	?>
+        $this->UpdateFormField("Current_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("Current_moon_mean_elongation", "value", $moonDat['d']);
+        $this->UpdateFormField("Current_sun_mean_anomaly", "value", $moonDat['m']);
+        $this->UpdateFormField("Current_moon_mean_anomaly", "value", $moonDat['m_prime']);
+        $this->UpdateFormField("Current_moon_latitude_argument", "value", $moonDat['f']);
+
+        $this->UpdateFormField("Current_l", "value", $moonDat['l']);
+        $this->UpdateFormField("Current_r", "value", $moonDat['r']);
+        $this->UpdateFormField("Current_b", "value", $moonDat['b']);
+
+        
+    }
+
+    public function CalcTestValues(int $date, float $deltaT, float $lat, float $long, float $elev, float $pressure, float $temperature): void{
+
+        $jd = new JulianDay($deltaT, 0, $date);
+        $sun = new Sun($deltaT, 0, $date, $lat, $long, $elev, $pressure, $temperature);
+
+        $moon = new Moon($deltaT, 0, $date, $lat, $long, $elev, $pressure, $temperature);
+
+        $moonDat = array();
+        $moon->sampa_calculate($moonDat);
+
+        $this->UpdateFormField("TestCalc_JD", "value", $jd->get_JD());
+        $this->UpdateFormField("TestCalc_JC", "value", $jd->get_JC());
+        $this->UpdateFormField("TestCalc_JM", "value", $jd->get_JM());
+        $this->UpdateFormField("TestCalc_JDE", "value", $jd->get_JDE());
+        $this->UpdateFormField("TestCalc_JCE", "value", $jd->get_JCE());
+        $this->UpdateFormField("TestCalc_JME", "value", $jd->get_JME());
+
+
+        $this->UpdateFormField("TestCalc_moon_mean_longitude", "value", $moonDat['l_prime']);
+        $this->UpdateFormField("TestCalc_moon_mean_elongation", "value", $moonDat['d']);
+        $this->UpdateFormField("TestCalc_sun_mean_anomaly", "value", $moonDat['m']);
+        $this->UpdateFormField("TestCalc_moon_mean_anomaly", "value", $moonDat['m_prime']);
+        $this->UpdateFormField("TestCalc_moon_latitude_argument", "value", $moonDat['f']);
+
+        $this->UpdateFormField("TestCalc_l", "value", $moonDat['l']);
+        $this->UpdateFormField("TestCalc_r", "value", $moonDat['r']);
+        $this->UpdateFormField("TestCalc_b", "value", $moonDat['b']);
+
+        $this->UpdateFormField("TestCalc_lamda_prime", "value", $moonDat['lamda_prime']);
+        $this->UpdateFormField("TestCalc_beta", "value", $moonDat['beta']);
+        $this->UpdateFormField("TestCalc_cap_delta", "value", $moonDat['cap_delta']);
+        $this->UpdateFormField("TestCalc_pi", "value", $moonDat['pi']);
+        $this->UpdateFormField("TestCalc_lamda", "value", $moonDat['lamda']);
+        $this->UpdateFormField("TestCalc_alpha", "value", $moonDat['alpha']);
+        $this->UpdateFormField("TestCalc_delta", "value", $moonDat['delta']);
+        $this->UpdateFormField("TestCalc_h", "value", $moonDat['h']);
+        $this->UpdateFormField("TestCalc_del_alpha", "value", $moonDat['del_alpha']);
+        $this->UpdateFormField("TestCalc_alpha_prime", "value", $moonDat['alpha_prime']);
+        $this->UpdateFormField("TestCalc_delta_prime", "value", $moonDat['delta_prime']);
+        $this->UpdateFormField("TestCalc_h_prime", "value", $moonDat['h_prime']);
+        $this->UpdateFormField("TestCalc_e0", "value", $moonDat['e0']);
+        $this->UpdateFormField("TestCalc_zenith", "value", $moonDat['zenith']);
+        $this->UpdateFormField("TestCalc_azimuth", "value", $moonDat['azimuth']);
+
+        $this->UpdateFormField("TestCalc_topocentric_zenith_angle", "value", $moonDat['zenith']);
+        $this->UpdateFormField("TestCalc_topocentric_azimuth_angle", "value", $moonDat['azimuth']);
+        $this->UpdateFormField("TestCalc_EclipticMeanObliquity", "value", $sun->EclipticMeanObliquity());
+        $this->UpdateFormField("TestCalc_EclipticTrueObliquity", "value", $sun->EclipticTrueObliquity());
+        $this->UpdateFormField("TestCalc_AberrationCorrection", "value", $sun->AberrationCorrection());
+        $this->UpdateFormField("TestCalc_ApparentSunLongitude", "value", $sun->ApparentSunLongitude());
+        $this->UpdateFormField("TestCalc_GreenwichMeanSiderealTime", "value", $sun->GreenwichMeanSiderealTime());
+        $this->UpdateFormField("TestCalc_GreenwichSiderealTime", "value", $sun->GreenwichSiderealTime());
+
+        $this->UpdateFormField("TestCalc_GeocentricRightAscension", "value", $sun->GeocentricRightAscension());
+        $this->UpdateFormField("TestCalc_GeocentricDeclination", "value", $sun->GeocentricDeclination());
+        $this->UpdateFormField("TestCalc_ObserverHourAngle", "value", $sun->ObserverHourAngle());
+        $this->UpdateFormField("TestCalc_SunEquatorialHorizontalParallax", "value", $sun->SunEquatorialHorizontalParallax());
+        $this->UpdateFormField("TestCalc_RightAscensionParallax", "value", $sun->RightAscensionParallax());
+        $this->UpdateFormField("TestCalc_TopocentricDeclination", "value", $sun->TopocentricDeclination());
+        $this->UpdateFormField("TestCalc_TopocentricRightAscension", "value", $sun->TopocentricRightAscension());
+        $this->UpdateFormField("TestCalc_TopocentricLocalHourAngle", "value", $sun->TopocentricLocalHourAngle());
+        $this->UpdateFormField("TestCalc_TopocentricElevationAngle", "value", $sun->TopocentricElevationAngle());
+        $this->UpdateFormField("TestCalc_AtmosphericRefractionCorrection", "value", $sun->AtmosphericRefractionCorrection());
+        $this->UpdateFormField("TestCalc_TopocentricElevationAngleCorrected", "value", $sun->TopocentricElevationAngleCorrected());
+        $this->UpdateFormField("TestCalc_TopocentricZenithAngle", "value", $sun->TopocentricZenithAngle());
+        $this->UpdateFormField("TestCalc_TopocentricAzimuthAngle", "value", $sun->TopocentricAzimuthAngle());
+        $this->UpdateFormField("TestCalc_SurfaceIncidenceAngle", "value", $sun->SurfaceIncidenceAngle(180,0));
+        $this->UpdateFormField("TestCalc_SunMeanLongitude", "value", $sun->SunMeanLongitude());
+
+        $sunDat = array();
+        $sun->calculate_eot_and_sun_rise_transit_set($sunDat);
+        $this->UpdateFormField("TestCalc_EOT", "value", $sunDat['eot']);
+        $this->UpdateFormField("TestCalc_SunRiseHourAngle", "value", $sunDat['srha']);
+        $this->UpdateFormField("TestCalc_SunSetHourAngle", "value", $sunDat['ssha']);
+        $this->UpdateFormField("TestCalc_SunTransitAltitude", "value", $sunDat['sta']);
+        $this->UpdateFormField("TestCalc_ApproxSunTransitTime", "value", $sunDat['suntransit']);
+        $this->UpdateFormField("TestCalc_SunRiseTime", "value", $sunDat['sunrise']);
+        $this->UpdateFormField("TestCalc_SunSetTime", "value", $sunDat['sunset']);
+
+    }
+
+    public function WriteDebugMessage($Message){
+        $this->SendDebug("Moon", $Message, 0);
+    }
+
+
+    public function WriteFloatAttribute(string $att, float $val)
+    {
+
+        $this->WriteAttributeFloat($att, $val);
+    }
+
+    public function WriteStringAttribute(string $att, string $val)
+    {
+
+        $this->WriteAttributeString($att, $val);
+    }
+
+    public function LoadSetupFromSun(){
+        $guid = "{8FEB8771-2E4C-CB78-EA91-52546AE77A79}";
+        $mods = IPS_GetInstanceListByModuleID($guid);
+        if(count($mods)==1){
+            $sett = DWIPSSUN_GetSettings($mods[0]);
+            print_r($sett);
+
+
+            $this->UpdateFormField("Latitude", "value", $sett["Latitude"]);
+            $this->UpdateFormField("Longitude", "value", $sett["Longitude"]);
+            $this->UpdateFormField("Elevation", "value", $sett["Elevation"]);
+            $this->UpdateFormField("UpdateInterval", "value", $sett["UpdateInterval"]);
+            $this->UpdateFormField("deltaT", "value", $sett["deltaT"]);
+        }
+
+    }
+
+}
+?>

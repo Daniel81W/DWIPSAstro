@@ -16,6 +16,8 @@
             "stopastronomicaltwilight": "Ende der astronomischen Dämmerung",
             "sunlightduration": "Tagesdauer",
             "sunazimut": "Sonnenazimuth",
+            "sunazimutSunrise": "Azimuth bei Sonnenaufgang",
+            "sunazimutSunset": "Azimuth bei Sonnenuntergang",
             "sundirection": "Sonnenrichtung",
             "sunelevation": "Sonnenhöhe",
             "sunelevationmin": "niedrigste Sonnenhöhe",
@@ -25,7 +27,9 @@
             "equationOfTime": "Zeitgleichung",
             "durationOfSunrise": "Dauer des Sonnenaufgangs",
             "season": "Jahreszeit",
+            "DayNight": "TagNacht",
             "day": "Tag",
+            "night": "Nacht",
             "insideCivilTwilight": "Innerhalb der bürgerlichen Dämmerung",
             "shadowlength": "Schattenlänge",
             "solarirradiancerectangular": "Solare Strahlungsenergie ( klarer Himmel)",
@@ -34,8 +38,20 @@
             "summer": "Sommer",
             "fall": "Herbst",
             "winter": "Winter",
-            
-            "moonphase": "Mondphase"
+            "compass_rose": "Kompassrose",
+            "NNE": "NNO",
+            "NE": "NO",
+            "ENE": "ONO",
+            "E": "O",
+            "ESE": "OSO",
+            "SE": "SO",
+            "SSE": "SSO",
+            "distance.km": "Distanz.km",
+            "moonphase": "Mondphase",
+            "springbegin": "Frühlingsanfang",
+            "summerbegin": "Sommeranfang",
+            "fallbegin": "Herbstanfang",
+            "winterbegin": "Winteranfang"
 
         }
     }
