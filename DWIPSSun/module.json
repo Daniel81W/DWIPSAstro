@@ -1,0 +1,12 @@
+{
+    "id": "{E67BB0C3-6F75-D46A-8009-31B4AEF3EC1C}",
+    "name": "DWIPSSun",
+    "type": 0,
+    "vendor": "DWIPS",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "DWIPSSUN",
+    "url": "https://github.com/Daniel81W/DWIPSAstro"
+}

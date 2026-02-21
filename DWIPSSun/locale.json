@@ -1,0 +1,42 @@
+{
+    "translations": {
+        "de": {
+            "Latitude": "Breite",
+            "Longitude": "Länge",
+            "juliandate": "Julianisches Datum",
+            "juliancentury": "Julianisches Jahrhundert",
+            "startastronomicaltwilight": "Beginn der astronomischen Dämmerung",
+            "startnauticaltwilight": "Beginn der nautischen Dämmerung",
+            "startciviltwilight": "Beginn der bürgerlichen Dämmerung",
+            "sunrise": "Sonnenaufgang",
+            "solarnoon": "Wahrer Mittag",
+            "sunset": "Sonnenuntergang",
+            "stopciviltwilight": "Ende der bürgerlichen Dämmerung",
+            "stopnauticaltwilight": "Ende der nautischen Dämmerung",
+            "stopastronomicaltwilight": "Ende der astronomischen Dämmerung",
+            "sunlightduration": "Tagesdauer",
+            "sunazimut": "Sonnenazimuth",
+            "sundirection": "Sonnenrichtung",
+            "sunelevation": "Sonnenhöhe",
+            "sunelevationmin": "niedrigste Sonnenhöhe",
+            "sunelevationmax": "höchste Sonnenhöhe",
+            "sundeclination": "Deklination",
+            "sundistance": "Abstand Sonne - Erde",
+            "equationOfTime": "Zeitgleichung",
+            "durationOfSunrise": "Dauer des Sonnenaufgangs",
+            "season": "Jahreszeit",
+            "day": "Tag",
+            "insideCivilTwilight": "Innerhalb der bürgerlichen Dämmerung",
+            "shadowlength": "Schattenlänge",
+            "solarirradiancerectangular": "Solare Strahlungsenergie ( klarer Himmel)",
+            "solarirradianceground": "Solare Strahlungsenergie auf den Boden (klarer Himmel)",
+            "spring": "Frühling",
+            "summer": "Sommer",
+            "fall": "Herbst",
+            "winter": "Winter",
+            
+            "moonphase": "Mondphase"
+
+        }
+    }
+}

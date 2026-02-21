@@ -1,7 +1,7 @@
 <?php
 
 	include_once("/var/lib/symcon/modules/DWIPSAstro/libs/astro.php");
-	class DWIPSAstronomy extends IPSModule {
+	class DWIPSMoon extends IPSModule {
 
 		public function Create()
 		{
@@ -71,7 +71,7 @@
 			parent::ApplyChanges();
 			$this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval")*60*1000);
 
-			DWIPSASTRO_Update($this->InstanceID);
+			DWIPSMOON_Update($this->InstanceID);
 		}
 
 		/**
