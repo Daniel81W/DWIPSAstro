@@ -155,7 +155,8 @@ class DWIPSSun extends IPSModule
         parent::ApplyChanges();
         $this->SetTimerInterval("Update", $this->ReadPropertyInteger("UpdateInterval") * 60 * 1000);
 
-        DWIPSSUN_Update($this->InstanceID);
+        $this->Update();
+        //DWIPSSUN_Update($this->InstanceID);
     }
 
     public function GetConfigurationForm()
